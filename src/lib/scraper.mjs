@@ -10,13 +10,13 @@ export async function loadClubs() {
 }
 
 /**
- * Fetch HTML from a URL with a proper User-Agent and UTF-8 handling.
+ * Fetch a URL with a proper User-Agent and timeout.
  *
  * @param {string} url - Full URL to fetch.
- * @param {number} timeoutMs - Timeout in milliseconds (default 15s).
+ * @param {number} timeoutMs - Timeout in milliseconds (default 10s).
  * @returns {Promise<string>} - The response body as a string.
  */
-export async function fetchURL(url, timeoutMs = 8000) {
+export async function fetchURL(url, timeoutMs = 10000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -41,20 +41,20 @@ export async function fetchURL(url, timeoutMs = 8000) {
 }
 
 /**
- * Extract text content from HTML using cheerio and a CSS selector.
- * Falls back to extracting from <body> if the selector doesn't match.
+ * Extract text content from HTML using cheerio and CSS selectors.
+ * Falls back to <body> if no selector matches enough content.
  *
  * @param {string} html - Raw HTML string.
- * @param {string} selector - CSS selector(s) to target content areas.
+ * @param {string} selector - Comma-separated CSS selectors.
  * @returns {string} - Extracted text content, cleaned up.
  */
 export function extractContent(html, selector) {
   const $ = cheerio.load(html);
 
-  // Remove script, style, nav, footer, header elements to reduce noise
-  $('script, style, nav, footer, header, .sidebar, .menu, .navigation, .widget').remove();
+  // Remove noise elements
+  $('script, style, nav, footer, header, .sidebar, .menu, .navigation, .widget, .comment, .comments').remove();
 
-  // Try each selector (comma-separated) until we find content
+  // Try each selector until we find substantial content
   const selectors = selector.split(',').map(s => s.trim());
   let text = '';
 
@@ -62,16 +62,16 @@ export function extractContent(html, selector) {
     const elements = $(sel);
     if (elements.length > 0) {
       text = elements.text();
-      if (text.trim().length > 100) break; // found substantial content
+      if (text.trim().length > 100) break;
     }
   }
 
-  // Fallback to body if no selector matched
+  // Fallback to body
   if (!text.trim() || text.trim().length < 100) {
     text = $('body').text();
   }
 
-  // Clean up whitespace: collapse multiple spaces/newlines
+  // Clean up whitespace
   return text
     .replace(/\s+/g, ' ')
     .replace(/\n\s*\n/g, '\n')
@@ -80,49 +80,9 @@ export function extractContent(html, selector) {
 }
 
 /**
- * Format Tribe Events API JSON response into text for Gemini parsing.
- *
- * @param {string} jsonStr - Raw JSON response from Tribe Events API.
- * @returns {string} - Formatted text with event details.
- */
-export function formatTribeEvents(jsonStr) {
-  try {
-    const data = JSON.parse(jsonStr);
-    const events = data.events || [];
-
-    if (events.length === 0) return '';
-
-    return events.slice(0, 10).map(event => {
-      const $ = cheerio.load(event.description || '');
-      const descText = $.text().replace(/\s+/g, ' ').trim();
-
-      const parts = [
-        `Title: ${event.title}`,
-        `Start: ${event.start_date || ''}`,
-        `End: ${event.end_date || ''}`,
-        `URL: ${event.url || ''}`,
-      ];
-
-      if (event.venue) {
-        parts.push(`Venue: ${event.venue.venue || ''} ${event.venue.address || ''} ${event.venue.city || ''}`);
-      }
-
-      if (descText) {
-        parts.push(`Description: ${descText.slice(0, 2000)}`);
-      }
-
-      return parts.join('\n');
-    }).join('\n---\n');
-  } catch (err) {
-    console.error(`Failed to parse Tribe API response: ${err.message}`);
-    return '';
-  }
-}
-
-/**
  * Scrape events content from a single club.
  *
- * @param {object} club - Club config object from clubs.mjs.
+ * @param {object} club - Club config object.
  * @returns {Promise<{clubId: string, clubName: string, content: string, url: string}>}
  */
 export async function scrapeClub(club) {
@@ -131,16 +91,10 @@ export async function scrapeClub(club) {
 
   try {
     const body = await fetchURL(url);
-    let content;
-
-    if (club.source_type === 'tribe_api') {
-      content = formatTribeEvents(body);
-    } else {
-      content = extractContent(body, club.content_selector);
-    }
+    const content = extractContent(body, club.content_selector);
 
     if (!content || content.length < 30) {
-      console.warn(`Very little content extracted from ${club.name_en} (${content.length} chars)`);
+      console.warn(`Very little content from ${club.name_en} (${content.length} chars)`);
     } else {
       console.log(`Extracted ${content.length} chars from ${club.name_en}`);
     }
@@ -149,7 +103,7 @@ export async function scrapeClub(club) {
       clubId: club.id,
       clubName: club.name_en,
       content,
-      url: club.source_type === 'tribe_api' ? club.url : url,
+      url,
     };
   } catch (err) {
     console.error(`Failed to scrape ${club.name_en}: ${err.message}`);
@@ -164,10 +118,10 @@ export async function scrapeClub(club) {
 }
 
 /**
- * Scrape all clubs in parallel for speed (Netlify functions have tight timeouts).
+ * Scrape all clubs in parallel.
  *
  * @param {object[]} clubs - Array of club config objects.
- * @returns {Promise<object[]>} - Array of scrape results.
+ * @returns {Promise<object[]>} - Array of scrape results with content.
  */
 export async function scrapeAllClubs(clubs) {
   const settled = await Promise.allSettled(

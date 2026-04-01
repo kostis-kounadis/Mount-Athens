@@ -53,7 +53,7 @@ EXAMPLE OUTPUT:
 
 /**
  * Parse event data from a single club's scraped content using Gemini API.
- * This is called once per club to keep each API call small and within limits.
+ * Uses a single retry with a short delay (compatible with Netlify function timeouts).
  *
  * @param {object} clubData - { clubId, clubName, content, url }
  * @param {string} apiKey - Gemini API key
@@ -61,7 +61,7 @@ EXAMPLE OUTPUT:
  */
 export async function parseOneClubWithGemini(clubData, apiKey) {
   if (!apiKey) {
-    throw new Error('GEMINI_API_KEY is not set');
+    return { events: [], error: 'GEMINI_API_KEY is not set' };
   }
 
   if (!clubData || !clubData.content || clubData.content.length < 30) {
@@ -82,17 +82,12 @@ ${clubData.content}`;
 
   console.log(`[gemini] Sending ${userPrompt.length} chars for ${clubData.clubId}...`);
 
-  // Retry with exponential backoff for rate limiting (429)
-  const MAX_RETRIES = 3;
-  let lastError = null;
-
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+  // Single attempt + one short retry (compatible with Netlify function timeout)
+  for (let attempt = 0; attempt < 2; attempt++) {
     try {
       if (attempt > 0) {
-        // Exponential backoff: 45s, 90s, 180s
-        const waitSec = 45 * Math.pow(2, attempt - 1);
-        console.log(`[gemini] Retry ${attempt}/${MAX_RETRIES} for ${clubData.clubId} after ${waitSec}s...`);
-        await new Promise(resolve => setTimeout(resolve, waitSec * 1000));
+        console.log(`[gemini] Retry for ${clubData.clubId} after 3s...`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
       }
 
       const response = await ai.models.generateContent({
@@ -124,14 +119,14 @@ ${clubData.content}`;
 
       text = text.trim();
 
-      // Strip markdown fences if Gemini adds them despite instructions
+      // Strip markdown fences if Gemini adds them
       let jsonStr = text;
       const fenceMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
       if (fenceMatch) {
         jsonStr = fenceMatch[1].trim();
       }
 
-      // Try to fix common JSON issues (trailing commas, single quotes)
+      // Fix common JSON issues (trailing commas)
       jsonStr = jsonStr.replace(/,\s*([}\]])/g, '$1');
 
       const parsed = JSON.parse(jsonStr);
@@ -140,24 +135,25 @@ ${clubData.content}`;
         return { events: [], error: 'Gemini returned non-array JSON' };
       }
 
-      console.log(`[gemini] Parsed ${parsed.length} events for ${clubData.clubId}`);
-      return { events: parsed, error: null };
+      // Add scraped_at timestamp to each event
+      const now = new Date().toISOString();
+      const timestamped = parsed.map(e => ({ ...e, scraped_at: now }));
+
+      console.log(`[gemini] Parsed ${timestamped.length} events for ${clubData.clubId}`);
+      return { events: timestamped, error: null };
     } catch (err) {
       const message = err.message || String(err);
-      lastError = message;
 
-      // Check if it's a rate limit error (429) -- retry
-      if (message.includes('429') || message.includes('RESOURCE_EXHAUSTED') || message.includes('quota')) {
-        console.warn(`[gemini] Rate limited for ${clubData.clubId} (attempt ${attempt + 1}/${MAX_RETRIES + 1})`);
+      // On rate limit, retry once
+      if (attempt === 0 && (message.includes('429') || message.includes('RESOURCE_EXHAUSTED') || message.includes('quota'))) {
+        console.warn(`[gemini] Rate limited for ${clubData.clubId}, retrying once...`);
         continue;
       }
 
-      // For non-rate-limit errors, don't retry
       console.error(`[gemini] Failed for ${clubData.clubId}: ${message}`);
       return { events: [], error: message };
     }
   }
 
-  console.error(`[gemini] All retries exhausted for ${clubData.clubId}`);
-  return { events: [], error: `Rate limited after ${MAX_RETRIES + 1} attempts: ${lastError}` };
+  return { events: [], error: 'Rate limited after retry' };
 }
