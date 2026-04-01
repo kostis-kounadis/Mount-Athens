@@ -1,0 +1,26 @@
+{
+  "name": "mount-athens",
+  "version": "1.0.0",
+  "description": "Athens mountaineering club event aggregator",
+  "type": "module",
+  "scripts": {
+    "lint": "echo 'No linter configured yet'",
+    "test": "node --test src/lib/__tests__/schema.test.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "@netlify/blobs": "^8.1.0",
+    "@netlify/functions": "^3.0.0",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "mountaineering",
+    "athens",
+    "events",
+    "aggregator"
+  ],
+  "license": "MIT"
+}
