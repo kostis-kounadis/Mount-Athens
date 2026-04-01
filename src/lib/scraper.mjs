@@ -76,7 +76,7 @@ export function extractContent(html, selector) {
     .replace(/\s+/g, ' ')
     .replace(/\n\s*\n/g, '\n')
     .trim()
-    .slice(0, 5000); // Cap at 5k chars per club to keep function fast
+    .slice(0, 15000); // Cap at 15k chars per club
 }
 
 /**

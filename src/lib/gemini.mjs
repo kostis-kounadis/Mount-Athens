@@ -52,32 +52,35 @@ EXAMPLE OUTPUT:
 [{"id":"eos-acharnon-2026-04-05-parnitha-bafi","date":"2026-04-05","club_id":"eos-acharnon","club_name":"EOS Acharnon","event_title":"Parnitha - Bafi Refuge","event_type":"hiking","difficulty":"BD","difficulty_label":"Easy","duration_hours":5,"elevation_gain_m":600,"meeting_point":null,"meeting_time":null,"description":"Spring hike to Bafi refuge on Parnitha mountain","original_url":"https://eosacharnon.gr/events"}]`;
 
 /**
- * Parse event data from scraped club content using Gemini API.
+ * Parse event data from a single club's scraped content using Gemini API.
+ * This is called once per club to keep each API call small and within limits.
  *
- * @param {object[]} scrapeResults - Array of { clubId, clubName, content, url }
+ * @param {object} clubData - { clubId, clubName, content, url }
  * @param {string} apiKey - Gemini API key
- * @returns {Promise<object[]>} - Parsed event objects
+ * @returns {Promise<{events: object[], error: string|null}>}
  */
-export async function parseEventsWithGemini(scrapeResults, apiKey) {
+export async function parseOneClubWithGemini(clubData, apiKey) {
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not set');
   }
 
-  if (!scrapeResults || scrapeResults.length === 0) {
-    console.warn('No scrape results to parse');
-    return { events: [], error: null, rawResponse: null };
+  if (!clubData || !clubData.content || clubData.content.length < 30) {
+    console.warn(`[gemini] Skipping ${clubData?.clubId} -- too little content (${clubData?.content?.length || 0} chars)`);
+    return { events: [], error: 'Too little content to parse' };
   }
 
   const ai = new GoogleGenAI({ apiKey });
 
-  // Build the user prompt with all club content
-  const clubSections = scrapeResults.map(result =>
-    `--- Club: ${result.clubId} (${result.clubName}) ---\nSource URL: ${result.url}\n\n${result.content}`
-  ).join('\n\n');
+  const userPrompt = `Extract all upcoming mountaineering events from the following Greek club website content.
+Today's date is ${new Date().toISOString().split('T')[0]}.
 
-  const userPrompt = `Extract all upcoming mountaineering events from the following Greek club website content.\nToday's date is ${new Date().toISOString().split('T')[0]}.\n\n${clubSections}`;
+Club: ${clubData.clubId} (${clubData.clubName})
+Source URL: ${clubData.url}
 
-  console.log(`[gemini] Sending ${userPrompt.length} chars to Gemini...`);
+Content:
+${clubData.content}`;
+
+  console.log(`[gemini] Sending ${userPrompt.length} chars for ${clubData.clubId}...`);
 
   try {
     const response = await ai.models.generateContent({
@@ -86,11 +89,11 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
       config: {
         systemInstruction: SYSTEM_PROMPT,
         temperature: 0.1,
-        maxOutputTokens: 8192,
+        maxOutputTokens: 4096,
       },
     });
 
-    // Access the response text - try different access patterns
+    // Access the response text
     let text = '';
     if (typeof response.text === 'string') {
       text = response.text;
@@ -101,19 +104,16 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
       }
     }
 
-    console.log(`[gemini] Raw response length: ${text.length}`);
-    console.log(`[gemini] Raw response preview: ${text.slice(0, 500)}`);
+    console.log(`[gemini] Response for ${clubData.clubId}: ${text.length} chars`);
 
     if (!text) {
-      return { events: [], error: 'Empty response from Gemini', rawResponse: JSON.stringify(response).slice(0, 1000) };
+      return { events: [], error: 'Empty response from Gemini' };
     }
 
     text = text.trim();
 
-    // Try to extract JSON from the response
-    let jsonStr = text;
-
     // Strip markdown fences if Gemini adds them despite instructions
+    let jsonStr = text;
     const fenceMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
     if (fenceMatch) {
       jsonStr = fenceMatch[1].trim();
@@ -122,13 +122,14 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
     const parsed = JSON.parse(jsonStr);
 
     if (!Array.isArray(parsed)) {
-      return { events: [], error: 'Gemini returned non-array JSON', rawResponse: text.slice(0, 500) };
+      return { events: [], error: 'Gemini returned non-array JSON' };
     }
 
-    return { events: parsed, error: null, rawResponse: null };
+    console.log(`[gemini] Parsed ${parsed.length} events for ${clubData.clubId}`);
+    return { events: parsed, error: null };
   } catch (err) {
-    console.error(`[gemini] Parsing failed: ${err.message}`);
-    console.error(`[gemini] Stack: ${err.stack}`);
-    return { events: [], error: err.message, rawResponse: null };
+    const message = err.message || String(err);
+    console.error(`[gemini] Failed for ${clubData.clubId}: ${message}`);
+    return { events: [], error: message };
   }
 }

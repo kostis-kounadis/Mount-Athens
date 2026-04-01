@@ -10,3 +10,9 @@
   from = "/api/events"
   to = "/.netlify/functions/events"
   status = 200
+
+# API endpoint for triggering parse manually
+[[redirects]]
+  from = "/api/parse"
+  to = "/.netlify/functions/parse-events"
+  status = 200
