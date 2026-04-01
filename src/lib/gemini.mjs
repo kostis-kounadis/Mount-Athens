@@ -82,54 +82,82 @@ ${clubData.content}`;
 
   console.log(`[gemini] Sending ${userPrompt.length} chars for ${clubData.clubId}...`);
 
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: userPrompt,
-      config: {
-        systemInstruction: SYSTEM_PROMPT,
-        temperature: 0.1,
-        maxOutputTokens: 4096,
-      },
-    });
+  // Retry with exponential backoff for rate limiting (429)
+  const MAX_RETRIES = 3;
+  let lastError = null;
 
-    // Access the response text
-    let text = '';
-    if (typeof response.text === 'string') {
-      text = response.text;
-    } else if (response.candidates && response.candidates[0]) {
-      const candidate = response.candidates[0];
-      if (candidate.content && candidate.content.parts) {
-        text = candidate.content.parts.map(p => p.text || '').join('');
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      if (attempt > 0) {
+        // Exponential backoff: 45s, 90s, 180s
+        const waitSec = 45 * Math.pow(2, attempt - 1);
+        console.log(`[gemini] Retry ${attempt}/${MAX_RETRIES} for ${clubData.clubId} after ${waitSec}s...`);
+        await new Promise(resolve => setTimeout(resolve, waitSec * 1000));
       }
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.0-flash',
+        contents: userPrompt,
+        config: {
+          systemInstruction: SYSTEM_PROMPT,
+          temperature: 0.1,
+          maxOutputTokens: 4096,
+        },
+      });
+
+      // Access the response text
+      let text = '';
+      if (typeof response.text === 'string') {
+        text = response.text;
+      } else if (response.candidates && response.candidates[0]) {
+        const candidate = response.candidates[0];
+        if (candidate.content && candidate.content.parts) {
+          text = candidate.content.parts.map(p => p.text || '').join('');
+        }
+      }
+
+      console.log(`[gemini] Response for ${clubData.clubId}: ${text.length} chars`);
+
+      if (!text) {
+        return { events: [], error: 'Empty response from Gemini' };
+      }
+
+      text = text.trim();
+
+      // Strip markdown fences if Gemini adds them despite instructions
+      let jsonStr = text;
+      const fenceMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (fenceMatch) {
+        jsonStr = fenceMatch[1].trim();
+      }
+
+      // Try to fix common JSON issues (trailing commas, single quotes)
+      jsonStr = jsonStr.replace(/,\s*([}\]])/g, '$1');
+
+      const parsed = JSON.parse(jsonStr);
+
+      if (!Array.isArray(parsed)) {
+        return { events: [], error: 'Gemini returned non-array JSON' };
+      }
+
+      console.log(`[gemini] Parsed ${parsed.length} events for ${clubData.clubId}`);
+      return { events: parsed, error: null };
+    } catch (err) {
+      const message = err.message || String(err);
+      lastError = message;
+
+      // Check if it's a rate limit error (429) -- retry
+      if (message.includes('429') || message.includes('RESOURCE_EXHAUSTED') || message.includes('quota')) {
+        console.warn(`[gemini] Rate limited for ${clubData.clubId} (attempt ${attempt + 1}/${MAX_RETRIES + 1})`);
+        continue;
+      }
+
+      // For non-rate-limit errors, don't retry
+      console.error(`[gemini] Failed for ${clubData.clubId}: ${message}`);
+      return { events: [], error: message };
     }
-
-    console.log(`[gemini] Response for ${clubData.clubId}: ${text.length} chars`);
-
-    if (!text) {
-      return { events: [], error: 'Empty response from Gemini' };
-    }
-
-    text = text.trim();
-
-    // Strip markdown fences if Gemini adds them despite instructions
-    let jsonStr = text;
-    const fenceMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (fenceMatch) {
-      jsonStr = fenceMatch[1].trim();
-    }
-
-    const parsed = JSON.parse(jsonStr);
-
-    if (!Array.isArray(parsed)) {
-      return { events: [], error: 'Gemini returned non-array JSON' };
-    }
-
-    console.log(`[gemini] Parsed ${parsed.length} events for ${clubData.clubId}`);
-    return { events: parsed, error: null };
-  } catch (err) {
-    const message = err.message || String(err);
-    console.error(`[gemini] Failed for ${clubData.clubId}: ${message}`);
-    return { events: [], error: message };
   }
+
+  console.error(`[gemini] All retries exhausted for ${clubData.clubId}`);
+  return { events: [], error: `Rate limited after ${MAX_RETRIES + 1} attempts: ${lastError}` };
 }

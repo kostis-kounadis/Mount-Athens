@@ -60,8 +60,9 @@ export default async function handler() {
           allEvents.push(...result.events);
         }
 
-        // Small delay between Gemini calls to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Longer delay between Gemini calls to respect free-tier rate limits
+        // Free tier: 20 requests/day, so we space them out generously
+        await new Promise(resolve => setTimeout(resolve, 15000));
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : String(err);
         console.error(`[parse-events] Failed to parse ${club.clubId}: ${message}`);
