@@ -1,58 +1,70 @@
 import { getStore } from '@netlify/blobs';
+import type { Context } from '@netlify/functions';
 import { parseOneClubWithGemini } from '../../src/lib/gemini.mjs';
 import { filterValidEvents } from '../../src/lib/schema.mjs';
 import { scrapeClub } from '../../src/lib/scraper.mjs';
 import { clubs } from '../../src/config/clubs.mjs';
 
+const VALID_CLUB_IDS = (clubs as any[]).map((c: any) => c.id);
+
 /**
  * Parse a SINGLE club's events with Gemini.
- * 
+ *
  * Usage: GET /api/parse-one?club=poa
- * 
+ *
  * This scrapes the club fresh AND parses with Gemini in one call,
  * so you only need one API request per club. Results are merged
  * into the existing events store.
- * 
+ *
  * Valid club IDs: eos-acharnon, poa, aos, epos-filis, eosh
  */
-export default async function handler(request: Request) {
-  const url = new URL(request.url);
-  const clubId = url.searchParams.get('club');
-
-  if (!clubId) {
-    return new Response(JSON.stringify({
-      error: 'Missing ?club= parameter',
-      valid_clubs: clubs.map((c: any) => c.id),
-      usage: '/api/parse-one?club=poa',
-    }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  const club = clubs.find((c: any) => c.id === clubId) as any;
-  if (!club) {
-    return new Response(JSON.stringify({
-      error: `Unknown club: ${clubId}`,
-      valid_clubs: clubs.map((c: any) => c.id),
-    }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'GEMINI_API_KEY not set' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  console.log(`[parse-one] Processing single club: ${clubId}`);
-  const startTime = Date.now();
-
+export default async function handler(request: Request, context: Context) {
   try {
+    // Parse query string safely
+    let clubId: string | null = null;
+    try {
+      const url = new URL(request.url);
+      clubId = url.searchParams.get('club');
+    } catch {
+      // Fallback: parse query string manually from the raw URL
+      const rawUrl = request.url || '';
+      const qsMatch = rawUrl.match(/[?&]club=([^&]+)/);
+      clubId = qsMatch ? decodeURIComponent(qsMatch[1]) : null;
+    }
+
+    if (!clubId) {
+      return new Response(JSON.stringify({
+        error: 'Missing ?club= parameter',
+        valid_clubs: VALID_CLUB_IDS,
+        usage: '/api/parse-one?club=poa',
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const club = (clubs as any[]).find((c: any) => c.id === clubId);
+    if (!club) {
+      return new Response(JSON.stringify({
+        error: `Unknown club: ${clubId}`,
+        valid_clubs: VALID_CLUB_IDS,
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: 'GEMINI_API_KEY not set' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log(`[parse-one] Processing single club: ${clubId}`);
+    const startTime = Date.now();
+
     // 1. Scrape this one club fresh
     console.log(`[parse-one] Scraping ${club.name_en}...`);
     const scrapeResult = await scrapeClub(club) as any;
@@ -89,8 +101,8 @@ export default async function handler(request: Request) {
     let existingData: any = null;
     try {
       existingData = await eventsStore.get('current', { type: 'json' });
-    } catch (_) {
-      // No existing data
+    } catch {
+      // No existing data yet
     }
 
     const existingEvents = existingData?.events || [];
@@ -124,12 +136,12 @@ export default async function handler(request: Request) {
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
-    console.error(`[parse-one] Error: ${message}`);
+    const stack = err instanceof Error ? err.stack : '';
+    console.error(`[parse-one] Fatal error: ${message}\n${stack}`);
     return new Response(JSON.stringify({
       status: 'error',
-      club: clubId,
       error: message,
-      elapsed_ms: Date.now() - startTime,
+      stack: stack?.split('\n').slice(0, 5),
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
