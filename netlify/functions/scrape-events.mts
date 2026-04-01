@@ -35,13 +35,27 @@ export default async function handler() {
       });
     }
 
+    // Debug: content lengths per club
+    const contentLengths = (scrapeResults as any[]).map((r: any) => ({
+      club: r.clubId,
+      chars: r.content.length,
+      preview: r.content.slice(0, 200),
+    }));
+    console.log(`[scrape-events] Content lengths: ${JSON.stringify(contentLengths.map(c => `${c.club}:${c.chars}`))}`);
+
     const rawEvents = await parseEventsWithGemini(scrapeResults, apiKey);
-    console.log(`[scrape-events] Gemini returned ${rawEvents.length} events`);
+    console.log(`[scrape-events] Gemini returned ${rawEvents.length} raw events`);
+
+    // Debug: log first raw event to see what Gemini returns
+    if (rawEvents.length > 0) {
+      console.log(`[scrape-events] Sample raw event: ${JSON.stringify(rawEvents[0])}`);
+    }
 
     // 4. Validate and deduplicate
     const validEvents = filterValidEvents(rawEvents);
+    console.log(`[scrape-events] ${validEvents.length} valid events after filtering (${rawEvents.length - validEvents.length} rejected)`);
     const events = deduplicateEvents(validEvents);
-    console.log(`[scrape-events] ${events.length} valid unique events after filtering`);
+    console.log(`[scrape-events] ${events.length} unique events after dedup`);
 
     // 5. Add scraped_at timestamp
     const scrapedAt = new Date().toISOString();
@@ -67,6 +81,12 @@ export default async function handler() {
       events_count: timestampedEvents.length,
       clubs_scraped: scrapeResults.length,
       elapsed_ms: elapsed,
+      debug: {
+        content_lengths: contentLengths.map(c => ({ club: c.club, chars: c.chars })),
+        gemini_raw_count: rawEvents.length,
+        valid_count: validEvents.length,
+        sample_raw_event: rawEvents.length > 0 ? rawEvents[0] : null,
+      },
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
