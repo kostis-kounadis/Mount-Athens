@@ -1,0 +1,40 @@
+/* Mount Athens - Custom overrides on top of Tailwind CDN */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Subtle card hover effect */
+a[class*="border-l-4"] {
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+a[class*="border-l-4"]:hover {
+  transform: translateX(2px);
+}
+
+/* Filter pill transitions */
+.filter-pill {
+  transition: all 0.15s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.filter-pill:focus-visible {
+  outline: 2px solid #16a34a;
+  outline-offset: 2px;
+}
+
+/* Loading spinner animation is handled by Tailwind's animate-spin */
+
+/* Print styles */
+@media print {
+  header, footer, #club-filters {
+    display: none;
+  }
+  body {
+    background: white;
+  }
+}
