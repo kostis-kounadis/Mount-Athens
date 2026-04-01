@@ -1,14 +1,12 @@
 import * as cheerio from 'cheerio';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
+import { clubs as clubsConfig } from '../config/clubs.mjs';
 
 /**
- * Load club configurations from clubs.json.
+ * Load club configurations.
  * @returns {Promise<object[]>}
  */
 export async function loadClubs() {
-  return require('../config/clubs.json');
+  return clubsConfig;
 }
 
 /**
