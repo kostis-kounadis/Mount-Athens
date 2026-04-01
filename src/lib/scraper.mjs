@@ -1,18 +1,14 @@
 import * as cheerio from 'cheerio';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { createRequire } from 'module';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
 
 /**
  * Load club configurations from clubs.json.
  * @returns {Promise<object[]>}
  */
 export async function loadClubs() {
-  const raw = await readFile(join(__dirname, '..', 'config', 'clubs.json'), 'utf-8');
-  return JSON.parse(raw);
+  return require('../config/clubs.json');
 }
 
 /**
