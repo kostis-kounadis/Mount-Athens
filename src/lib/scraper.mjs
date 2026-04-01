@@ -16,7 +16,7 @@ export async function loadClubs() {
  * @param {number} timeoutMs - Timeout in milliseconds (default 15s).
  * @returns {Promise<string>} - The response body as a string.
  */
-export async function fetchURL(url, timeoutMs = 15000) {
+export async function fetchURL(url, timeoutMs = 8000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -76,7 +76,7 @@ export function extractContent(html, selector) {
     .replace(/\s+/g, ' ')
     .replace(/\n\s*\n/g, '\n')
     .trim()
-    .slice(0, 15000); // Cap at 15k chars to stay within Gemini context limits
+    .slice(0, 5000); // Cap at 5k chars per club to keep function fast
 }
 
 /**
@@ -92,7 +92,7 @@ export function formatTribeEvents(jsonStr) {
 
     if (events.length === 0) return '';
 
-    return events.map(event => {
+    return events.slice(0, 10).map(event => {
       const $ = cheerio.load(event.description || '');
       const descText = $.text().replace(/\s+/g, ' ').trim();
 
@@ -164,27 +164,18 @@ export async function scrapeClub(club) {
 }
 
 /**
- * Scrape all clubs sequentially with a small delay to be polite.
+ * Scrape all clubs in parallel for speed (Netlify functions have tight timeouts).
  *
  * @param {object[]} clubs - Array of club config objects.
  * @returns {Promise<object[]>} - Array of scrape results.
  */
 export async function scrapeAllClubs(clubs) {
-  const results = [];
+  const settled = await Promise.allSettled(
+    clubs.map(club => scrapeClub(club))
+  );
 
-  for (const club of clubs) {
-    try {
-      const result = await scrapeClub(club);
-      if (result.content.length > 0) {
-        results.push(result);
-      }
-    } catch (err) {
-      console.error(`Unexpected error scraping ${club.name_en}: ${err.message}`);
-    }
-
-    // Small delay between requests to be polite
-    await new Promise(resolve => setTimeout(resolve, 500));
-  }
-
-  return results;
+  return settled
+    .filter(r => r.status === 'fulfilled')
+    .map(r => r.value)
+    .filter(r => r.content.length > 0);
 }
