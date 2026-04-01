@@ -43,8 +43,11 @@ export default async function handler() {
     }));
     console.log(`[scrape-events] Content lengths: ${JSON.stringify(contentLengths.map(c => `${c.club}:${c.chars}`))}`);
 
-    const rawEvents = await parseEventsWithGemini(scrapeResults, apiKey);
-    console.log(`[scrape-events] Gemini returned ${rawEvents.length} raw events`);
+    const geminiResult = await parseEventsWithGemini(scrapeResults, apiKey) as any;
+    const rawEvents = geminiResult.events || [];
+    const geminiError = geminiResult.error;
+    const geminiRawResponse = geminiResult.rawResponse;
+    console.log(`[scrape-events] Gemini returned ${rawEvents.length} raw events, error: ${geminiError}`);
 
     // Debug: log first raw event to see what Gemini returns
     if (rawEvents.length > 0) {
@@ -84,6 +87,8 @@ export default async function handler() {
       debug: {
         content_lengths: contentLengths.map(c => ({ club: c.club, chars: c.chars })),
         gemini_raw_count: rawEvents.length,
+        gemini_error: geminiError,
+        gemini_raw_response: geminiRawResponse,
         valid_count: validEvents.length,
         sample_raw_event: rawEvents.length > 0 ? rawEvents[0] : null,
       },

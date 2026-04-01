@@ -65,7 +65,7 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
 
   if (!scrapeResults || scrapeResults.length === 0) {
     console.warn('No scrape results to parse');
-    return [];
+    return { events: [], error: null, rawResponse: null };
   }
 
   const ai = new GoogleGenAI({ apiKey });
@@ -77,15 +77,12 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
 
   const userPrompt = `Extract all upcoming mountaineering events from the following Greek club website content.\nToday's date is ${new Date().toISOString().split('T')[0]}.\n\n${clubSections}`;
 
+  console.log(`[gemini] Sending ${userPrompt.length} chars to Gemini...`);
+
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.0-flash',
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: userPrompt }],
-        },
-      ],
+      contents: userPrompt,
       config: {
         systemInstruction: SYSTEM_PROMPT,
         temperature: 0.1,
@@ -93,7 +90,25 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
       },
     });
 
-    const text = response.text.trim();
+    // Access the response text - try different access patterns
+    let text = '';
+    if (typeof response.text === 'string') {
+      text = response.text;
+    } else if (response.candidates && response.candidates[0]) {
+      const candidate = response.candidates[0];
+      if (candidate.content && candidate.content.parts) {
+        text = candidate.content.parts.map(p => p.text || '').join('');
+      }
+    }
+
+    console.log(`[gemini] Raw response length: ${text.length}`);
+    console.log(`[gemini] Raw response preview: ${text.slice(0, 500)}`);
+
+    if (!text) {
+      return { events: [], error: 'Empty response from Gemini', rawResponse: JSON.stringify(response).slice(0, 1000) };
+    }
+
+    text = text.trim();
 
     // Try to extract JSON from the response
     let jsonStr = text;
@@ -107,13 +122,13 @@ export async function parseEventsWithGemini(scrapeResults, apiKey) {
     const parsed = JSON.parse(jsonStr);
 
     if (!Array.isArray(parsed)) {
-      console.error('Gemini returned non-array JSON');
-      return [];
+      return { events: [], error: 'Gemini returned non-array JSON', rawResponse: text.slice(0, 500) };
     }
 
-    return parsed;
+    return { events: parsed, error: null, rawResponse: null };
   } catch (err) {
-    console.error(`Gemini parsing failed: ${err.message}`);
-    return [];
+    console.error(`[gemini] Parsing failed: ${err.message}`);
+    console.error(`[gemini] Stack: ${err.stack}`);
+    return { events: [], error: err.message, rawResponse: null };
   }
 }
