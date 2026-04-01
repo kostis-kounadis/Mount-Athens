@@ -14,9 +14,9 @@ export async function loadClubs() {
  *
  * @param {string} url - Full URL to fetch.
  * @param {number} timeoutMs - Timeout in milliseconds (default 15s).
- * @returns {Promise<string>} - The HTML body as a string.
+ * @returns {Promise<string>} - The response body as a string.
  */
-export async function fetchHTML(url, timeoutMs = 15000) {
+export async function fetchURL(url, timeoutMs = 15000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -25,7 +25,7 @@ export async function fetchHTML(url, timeoutMs = 15000) {
       signal: controller.signal,
       headers: {
         'User-Agent': 'MountAthensBot/1.0 (+https://github.com/kostis-kounadis/Mount-Athens)',
-        'Accept': 'text/html,application/xhtml+xml',
+        'Accept': 'text/html,application/xhtml+xml,application/json',
         'Accept-Language': 'el,en;q=0.5',
       },
     });
@@ -52,7 +52,7 @@ export function extractContent(html, selector) {
   const $ = cheerio.load(html);
 
   // Remove script, style, nav, footer, header elements to reduce noise
-  $('script, style, nav, footer, header, .sidebar, .menu, .navigation').remove();
+  $('script, style, nav, footer, header, .sidebar, .menu, .navigation, .widget').remove();
 
   // Try each selector (comma-separated) until we find content
   const selectors = selector.split(',').map(s => s.trim());
@@ -62,12 +62,12 @@ export function extractContent(html, selector) {
     const elements = $(sel);
     if (elements.length > 0) {
       text = elements.text();
-      break;
+      if (text.trim().length > 100) break; // found substantial content
     }
   }
 
   // Fallback to body if no selector matched
-  if (!text.trim()) {
+  if (!text.trim() || text.trim().length < 100) {
     text = $('body').text();
   }
 
@@ -80,28 +80,76 @@ export function extractContent(html, selector) {
 }
 
 /**
+ * Format Tribe Events API JSON response into text for Gemini parsing.
+ *
+ * @param {string} jsonStr - Raw JSON response from Tribe Events API.
+ * @returns {string} - Formatted text with event details.
+ */
+export function formatTribeEvents(jsonStr) {
+  try {
+    const data = JSON.parse(jsonStr);
+    const events = data.events || [];
+
+    if (events.length === 0) return '';
+
+    return events.map(event => {
+      const $ = cheerio.load(event.description || '');
+      const descText = $.text().replace(/\s+/g, ' ').trim();
+
+      const parts = [
+        `Title: ${event.title}`,
+        `Start: ${event.start_date || ''}`,
+        `End: ${event.end_date || ''}`,
+        `URL: ${event.url || ''}`,
+      ];
+
+      if (event.venue) {
+        parts.push(`Venue: ${event.venue.venue || ''} ${event.venue.address || ''} ${event.venue.city || ''}`);
+      }
+
+      if (descText) {
+        parts.push(`Description: ${descText.slice(0, 2000)}`);
+      }
+
+      return parts.join('\n');
+    }).join('\n---\n');
+  } catch (err) {
+    console.error(`Failed to parse Tribe API response: ${err.message}`);
+    return '';
+  }
+}
+
+/**
  * Scrape events content from a single club.
  *
- * @param {object} club - Club config object from clubs.json.
+ * @param {object} club - Club config object from clubs.mjs.
  * @returns {Promise<{clubId: string, clubName: string, content: string, url: string}>}
  */
 export async function scrapeClub(club) {
   const url = `${club.url}${club.events_path}`;
-  console.log(`Scraping ${club.name_en} from ${url}...`);
+  console.log(`Scraping ${club.name_en} from ${url} (${club.source_type})...`);
 
   try {
-    const html = await fetchHTML(url);
-    const content = extractContent(html, club.content_selector);
+    const body = await fetchURL(url);
+    let content;
 
-    if (!content || content.length < 50) {
+    if (club.source_type === 'tribe_api') {
+      content = formatTribeEvents(body);
+    } else {
+      content = extractContent(body, club.content_selector);
+    }
+
+    if (!content || content.length < 30) {
       console.warn(`Very little content extracted from ${club.name_en} (${content.length} chars)`);
+    } else {
+      console.log(`Extracted ${content.length} chars from ${club.name_en}`);
     }
 
     return {
       clubId: club.id,
       clubName: club.name_en,
       content,
-      url,
+      url: club.source_type === 'tribe_api' ? club.url : url,
     };
   } catch (err) {
     console.error(`Failed to scrape ${club.name_en}: ${err.message}`);
@@ -116,18 +164,27 @@ export async function scrapeClub(club) {
 }
 
 /**
- * Scrape all clubs in parallel.
+ * Scrape all clubs sequentially with a small delay to be polite.
  *
  * @param {object[]} clubs - Array of club config objects.
  * @returns {Promise<object[]>} - Array of scrape results.
  */
 export async function scrapeAllClubs(clubs) {
-  const results = await Promise.allSettled(
-    clubs.map(club => scrapeClub(club))
-  );
+  const results = [];
 
-  return results
-    .filter(r => r.status === 'fulfilled')
-    .map(r => r.value)
-    .filter(r => r.content.length > 0);
+  for (const club of clubs) {
+    try {
+      const result = await scrapeClub(club);
+      if (result.content.length > 0) {
+        results.push(result);
+      }
+    } catch (err) {
+      console.error(`Unexpected error scraping ${club.name_en}: ${err.message}`);
+    }
+
+    // Small delay between requests to be polite
+    await new Promise(resolve => setTimeout(resolve, 500));
+  }
+
+  return results;
 }
