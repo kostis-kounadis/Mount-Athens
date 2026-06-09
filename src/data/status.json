@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-09T20:07:02.152Z",
+  "lastUpdated": "2026-06-09T20:14:23.833Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -9,7 +9,7 @@
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 0 events"
+      "details": "Parsed 10 events"
     },
     {
       "club": "ΠΟΑ",
@@ -19,7 +19,7 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 0 events"
+      "details": "Parsed 32 events"
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
@@ -29,12 +29,12 @@
     {
       "club": "ΦΟΝΙ",
       "status": "success",
-      "details": "Parsed 0 events"
+      "details": "Parsed 7 events"
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 0 events"
+      "details": "Parsed 3 events"
     }
   ]
 }
