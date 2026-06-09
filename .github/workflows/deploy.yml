@@ -1,0 +1,48 @@
+name: Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      # Automated Daily Crawling (Commented out until connection test is validated)
+      # - name: Fetch & Parse Latest Excursions
+      #   run: |
+      #     node scripts/fetch-raw.js
+      #     node scripts/parse-events.js
+      # 
+      # - name: Commit Updated Events
+      #   run: |
+      #     git config --global user.name "github-actions[bot]"
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      #     git add src/data/events.json src/data/status.json
+      #     git diff-index --quiet HEAD || git commit -m "Auto-update parsed events [cron]" && git push origin main
+
+      - name: Build Astro Site
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
