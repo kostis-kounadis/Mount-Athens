@@ -64,6 +64,45 @@ function parseEnglishMonth(monthStr) {
   return ENGLISH_MONTHS[clean] || null;
 }
 
+function cleanWord(word) {
+  return stripGreekAccents(word)
+    .toLowerCase()
+    .replace(/[^a-zα-ω0-9]/g, '')
+    .trim();
+}
+
+function getSignificantWords(text) {
+  if (!text) return [];
+  return text
+    .split(/\s+/)
+    .map(cleanWord)
+    .filter(w => w.length > 2 && !['και', 'του', 'της', 'στο', 'στα', 'εως', 'απο', 'για', 'από', 'αρα', 'εχει', 'μας', 'στον', 'στην', 'στη'].includes(w));
+}
+
+function matchTitleToUrl(parsedTitle, urlMap, defaultUrl) {
+  const parsedWords = getSignificantWords(parsedTitle);
+  if (parsedWords.length === 0) return defaultUrl;
+
+  let bestUrl = defaultUrl;
+  let maxMatchRatio = 0.5; // Threshold: at least 50% overlap of the smaller set of words
+
+  for (const [key, url] of Object.entries(urlMap)) {
+    const keyWords = getSignificantWords(key);
+    if (keyWords.length === 0) continue;
+
+    // Count overlap
+    const overlap = parsedWords.filter(w => keyWords.includes(w));
+    const ratio = overlap.length / Math.min(parsedWords.length, keyWords.length);
+
+    if (ratio > maxMatchRatio) {
+      maxMatchRatio = ratio;
+      bestUrl = url;
+    }
+  }
+
+  return bestUrl;
+}
+
 function parseDateRange(dateText, defaultYear = 2026) {
   // Normalize and clean day names
   let cleanText = dateText
@@ -323,11 +362,49 @@ function parseAos() {
   const txtPath = path.join(INPUT_DIR, 'aos_gr_trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis.txt');
   if (!fs.existsSync(txtPath)) return [];
 
+  // Build URL Map from raw HTML files
+  const urlMap = {};
+  const aosHtmlFiles = [
+    'aos_gr_trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis.html',
+    'aos_gr_programma-exormiseon-ianouarios-2026-septemvrios-2026.html'
+  ];
+  for (const file of aosHtmlFiles) {
+    const filePath = path.join(INPUT_DIR, file);
+    if (fs.existsSync(filePath)) {
+      const html = fs.readFileSync(filePath, 'utf-8');
+      const $ = cheerio.load(html);
+      let lastSeenTitle = '';
+      $('*').each((i, el) => {
+        const tagName = el.tagName.toLowerCase();
+        const text = $(el).text().trim();
+        
+        if (tagName === 'h2' || tagName === 'h3' || (tagName === 'p' && $(el).find('strong').length > 0)) {
+          if (text.length > 5 && text.length < 150) {
+            lastSeenTitle = text;
+          }
+        }
+        
+        if (tagName === 'a') {
+          const href = $(el).attr('href');
+          if (href && href.startsWith('https://aos.gr/') && !href.includes('/category/') && !href.includes('/feed/') && !href.includes('/wp-content/') && href.length > 25) {
+            const cleanText = stripGreekAccents(text);
+            if (cleanText.includes('λεπτομερειες') || cleanText.includes('δηλωση') || cleanText.includes('πατηστε') || cleanText.includes('details')) {
+              if (lastSeenTitle) {
+                urlMap[lastSeenTitle] = href;
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
   const content = fs.readFileSync(txtPath, 'utf-8');
   const lines = content.split('\n');
   const events = [];
 
   let currentMonthHeader = '';
+  const defaultUrl = 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/';
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
@@ -362,7 +439,7 @@ function parseAos() {
           displayDate: parsed.displayDate,
           title,
           club: 'ΑΟΣ',
-          url: 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/',
+          url: matchTitleToUrl(title, urlMap, defaultUrl),
           difficulty: ''
         });
       }
@@ -593,6 +670,27 @@ function parseEosHalioupolis() {
   const txtPath = path.join(INPUT_DIR, 'eosh_gr_wp-product-category-greek-mountains-climbs.txt');
   if (!fs.existsSync(txtPath)) return [];
 
+  // Build URL Map from WooCommerce catalog raw HTML
+  const urlMap = {};
+  const htmlPath = path.join(INPUT_DIR, 'eosh_gr_wp-product-category-greek-mountains-climbs.html');
+  const defaultUrl = 'https://eosh.gr/wp/product-category/greek-mountains-climbs/';
+
+  if (fs.existsSync(htmlPath)) {
+    try {
+      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const $ = cheerio.load(html);
+      $('.product').each((i, el) => {
+        const titleText = $(el).find('.woocommerce-loop-product__title').text().trim();
+        const href = $(el).find('a.woocommerce-LoopProduct-link').attr('href');
+        if (titleText && href) {
+          urlMap[titleText] = href;
+        }
+      });
+    } catch (e) {
+      console.error('Failed to parse EOS Hlioupolis product catalog:', e.message);
+    }
+  }
+
   const content = fs.readFileSync(txtPath, 'utf-8');
   const lines = content.split('\n');
   const events = [];
@@ -631,7 +729,7 @@ function parseEosHalioupolis() {
         displayDate,
         title: title.trim(),
         club: 'ΕΟΣ Ηλιούπολης',
-        url: 'https://eosh.gr/wp/product-category/greek-mountains-climbs/',
+        url: matchTitleToUrl(title.trim(), urlMap, defaultUrl),
         difficulty: ''
       });
     }
@@ -653,6 +751,28 @@ function parseEosHalioupolis() {
 function parseFoni() {
   const txtPath = path.join(INPUT_DIR, 'foni_org_gr_category-ekdromes.txt');
   if (!fs.existsSync(txtPath)) return [];
+
+  // Build URL Map from Elementor article blocks in raw HTML
+  const urlMap = {};
+  const htmlPath = path.join(INPUT_DIR, 'foni_org_gr_category-ekdromes.html');
+  const defaultUrl = 'https://www.foni.org.gr/category/ekdromes/';
+
+  if (fs.existsSync(htmlPath)) {
+    try {
+      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const $ = cheerio.load(html);
+      $('article').each((i, el) => {
+        const titleLink = $(el).find('.elementor-post__title a');
+        const titleText = titleLink.text().trim();
+        const href = titleLink.attr('href');
+        if (titleText && href) {
+          urlMap[titleText] = href;
+        }
+      });
+    } catch (e) {
+      console.error('Failed to parse FONI article list:', e.message);
+    }
+  }
 
   const content = fs.readFileSync(txtPath, 'utf-8');
   const lines = content.split('\n');
@@ -677,7 +797,7 @@ function parseFoni() {
           displayDate: parsed.displayDate,
           title,
           club: 'ΦΟΝΙ',
-          url: 'https://www.foni.org.gr/category/ekdromes/',
+          url: matchTitleToUrl(title, urlMap, defaultUrl),
           difficulty: ''
         });
       }
@@ -700,6 +820,36 @@ function parseFoni() {
 function parseEposFilis() {
   const txtPath = path.join(INPUT_DIR, 'eposfilis_gr_events-category-_ce_b7_ce_bc_ce_b5_cf_81_ce_bf_ce_bb_cf_8c_ce_b3_ce_b9_ce_bf.txt');
   if (!fs.existsSync(txtPath)) return [];
+
+  // Build URL Map from JSON-LD in raw HTML
+  const urlMap = {};
+  const htmlPath = path.join(INPUT_DIR, 'eposfilis_gr_events-category-_ce_b7_ce_bc_ce_b5_cf_81_ce_bf_ce_bb_cf_8c_ce_b3_ce_b9_ce_bf.html');
+  const defaultUrl = 'https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/';
+
+  if (fs.existsSync(htmlPath)) {
+    try {
+      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const $ = cheerio.load(html);
+      $('script[type="application/ld+json"]').each((i, el) => {
+        try {
+          const json = JSON.parse($(el).html());
+          const jsonArray = Array.isArray(json) ? json : [json];
+          for (const item of jsonArray) {
+            const events = item['@type'] === 'Event' ? [item] : (item['@graph'] ? item['@graph'].filter(x => x['@type'] === 'Event') : []);
+            for (const ev of events) {
+              if (ev.name && ev.url) {
+                urlMap[ev.name] = ev.url;
+              }
+            }
+          }
+        } catch (e) {
+          // ignore individual json parse errors
+        }
+      });
+    } catch (e) {
+      console.error('Failed to parse EPOS Filis JSON-LD:', e.message);
+    }
+  }
 
   const content = fs.readFileSync(txtPath, 'utf-8');
   const lines = content.split('\n');
@@ -747,7 +897,7 @@ function parseEposFilis() {
         displayDate,
         title,
         club: 'ΕΠΟΣ Φυλής',
-        url: 'https://eposfilis.gr/events/category/ημερολόγιο/',
+        url: matchTitleToUrl(title, urlMap, defaultUrl),
         difficulty: ''
       });
     }
@@ -765,7 +915,7 @@ function parseEposFilis() {
         displayDate: `${parseInt(day)}/${parseInt(month)}`,
         title: name,
         club: 'ΕΠΟΣ Φυλής',
-        url: 'https://eposfilis.gr/events/category/ημερολόγιο/',
+        url: matchTitleToUrl(name, urlMap, defaultUrl),
         difficulty: ''
       });
     }
@@ -788,7 +938,7 @@ function parseEposFilis() {
         displayDate: `${parseInt(sDay)}/${parseInt(sMonth)} - ${parseInt(eDay)}/${parseInt(eMonth)}`,
         title,
         club: 'ΕΠΟΣ Φυλής',
-        url: 'https://eposfilis.gr/events/category/ημερολόγιο/',
+        url: matchTitleToUrl(title, urlMap, defaultUrl),
         difficulty: ''
       });
     }

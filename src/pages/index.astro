@@ -208,7 +208,14 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                           <div class="flex-grow min-w-0 pr-0 sm:pr-4">
                             <!-- Event Title (IBM Plex Sans) on TOP -->
                             <h3 class="text-sm font-semibold text-slate-900 leading-snug mb-2 font-sans">
-                              {event.title}
+                              <a 
+                                href={event.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="hover:text-slate-500 transition-colors duration-150"
+                              >
+                                {event.title}
+                              </a>
                             </h3>
 
                             <div class="flex flex-wrap items-center gap-1.5">
