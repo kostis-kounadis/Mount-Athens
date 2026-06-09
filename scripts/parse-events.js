@@ -71,6 +71,24 @@ function parseDateRange(dateText, defaultYear = 2026) {
     .replace(/\s+/g, ' ')
     .trim();
 
+  // Format: "11 Ιουν 2026 - 13 Ιουν 2026"
+  const rangeTwoYearsMatch = cleanText.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i);
+  if (rangeTwoYearsMatch) {
+    const startDay = rangeTwoYearsMatch[1].padStart(2, '0');
+    const startMonthStr = rangeTwoYearsMatch[2];
+    const startYear = rangeTwoYearsMatch[3];
+    const endDay = rangeTwoYearsMatch[4].padStart(2, '0');
+    const endMonthStr = rangeTwoYearsMatch[5];
+    const endYear = rangeTwoYearsMatch[6];
+    const startMonth = parseGreekMonth(startMonthStr) || '06';
+    const endMonth = parseGreekMonth(endMonthStr) || '06';
+    return {
+      startDate: `${startYear}-${startMonth}-${startDay}`,
+      endDate: `${endYear}-${endMonth}-${endDay}`,
+      displayDate: `${parseInt(startDay)}/${parseInt(startMonth)} - ${parseInt(endDay)}/${parseInt(endMonth)}`
+    };
+  }
+
   // Format: "29 Μαΐου – 01 Ιουνίου 2026" or "21 Αυγούστου έως 30 Αυγούστου 2026"
   const rangeTwoMonthsMatch = cleanText.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*(?:[-–—]|έως|εως)\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i);
   if (rangeTwoMonthsMatch) {
@@ -183,68 +201,28 @@ function parseEosAcharnon() {
     const title = $(el).find('div[data-slot="card-title"]').text().trim();
     if (!title) return;
     
-    // Find the date text. In Acharnon: it's inside the card-description usually, e.g. "(6-16 Ιουνίου ’26)" or badge
-    const desc = $(el).find('div[data-slot="card-description"]').text().trim();
-    const badge = $(el).find('span[data-slot="badge"]').text().trim();
+    // Find the date text. In Acharnon: the first span under card-content is the raw date string
+    const cardSpans = $(el).find('div[data-slot="card-content"] span');
+    const rawDateText = cardSpans.eq(0).text().trim();
     
-    // Attempt to extract the date range.
-    // e.g. "(6-16 Ιουνίου ’26)" or "11 Ιουν 2026 - 13 Ιουν 2026"
-    let dateRangeStr = '';
-    const dateMatch = desc.match(/\((\d+(?:-\d+)?\s+[Α-Ωα-ωίϊΐόάέύώήώ’']+\s*['’]\d{2})\)/i) || 
-                      desc.match(/(\d+[\sΑ-Ωα-ωίϊΐόάέύώήώ]+\s*-\s*\d+[\sΑ-Ωα-ωίϊΐόάέύώήώ’']+\s*['’]\d{2})/i) ||
-                      desc.match(/(\d+[\sΑ-Ωα-ωίϊΐόάέύώήώ]+\d{4}\s*-\s*\d+[\sΑ-Ωα-ωίϊΐόάέύώήώ]+\d{4})/i);
-    
-    if (dateMatch) {
-      dateRangeStr = dateMatch[1];
-    } else {
-      // Look for a raw range like "11 Ιουν 2026 - 13 Ιουν 2026" or similar
-      const rawRangeMatch = desc.match(/(\d+(?:-\d+)?\s+[Α-Ωα-ωίϊΐόάέύώήώ]+(?:\s+20\d{2})?\s*-\s*\d+\s+[Α-Ωα-ωίϊΐόάέύώήώ]+\s+20\d{2})/i);
-      if (rawRangeMatch) {
-        dateRangeStr = rawRangeMatch[1];
-      } else {
-        // Fallback to badge
-        dateRangeStr = badge;
-      }
-    }
+    // Parse the date using parseDateRange
+    let parsed = parseDateRange(rawDateText);
+    let startDate = parsed ? parsed.startDate : '2026-06-09';
+    let endDate = parsed ? parsed.endDate : '2026-06-09';
+    let displayDate = parsed ? parsed.displayDate : rawDateText;
 
-    // Parse dateRangeStr into standardized dates
-    let startDate = '2026-06-05';
-    let endDate = '2026-06-05';
-    let displayDate = badge || dateRangeStr;
+    // Relative link to booking can be converted to absolute link
+    const relativeHref = $(el).find('a').first().attr('href') || '';
+    const url = relativeHref ? `https://eosacharnon.gr${relativeHref}` : 'https://eosacharnon.gr/booking/';
 
-    // Standardize Acharnon Greek date format: "(6-16 Ιουνίου ’26)"
-    if (dateRangeStr) {
-      // Remove parentheses
-      let clean = dateRangeStr.replace(/[()]/g, '').trim();
-      // "6-16 Ιουνίου ’26" -> "6-16 Ιουνίου 2026"
-      clean = clean.replace(/['’](\d{2})/, '20$1');
-      
-      // Try to parse range
-      // "6-16 Ιουνίου 2026"
-      const rMatch = clean.match(/^(\d+)-(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i);
-      if (rMatch) {
-        const sDay = rMatch[1].padStart(2, '0');
-        const eDay = rMatch[2].padStart(2, '0');
-        const monthStr = rMatch[3];
-        const year = rMatch[4];
-        const month = parseGreekMonth(monthStr) || '06';
-        startDate = `${year}-${month}-${sDay}`;
-        endDate = `${year}-${month}-${eDay}`;
-        displayDate = `${parseInt(sDay)}-${parseInt(eDay)} ${monthStr.substring(0, 4)}`;
-      } else {
-        // Single day or other format
-        const sMatch = clean.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i);
-        if (sMatch) {
-          const day = sMatch[1].padStart(2, '0');
-          const monthStr = sMatch[2];
-          const year = sMatch[3];
-          const month = parseGreekMonth(monthStr) || '06';
-          startDate = `${year}-${month}-${day}`;
-          endDate = `${year}-${month}-${day}`;
-          displayDate = `${parseInt(day)} ${monthStr.substring(0, 4)}`;
-        }
+    // Find difficulty inside spans under card-content
+    let difficulty = '';
+    cardSpans.each((idx, span) => {
+      const text = $(span).text().trim();
+      if (text.startsWith('Δυσκολία:')) {
+        difficulty = text.replace('Δυσκολία:', '').trim();
       }
-    }
+    });
 
     events.push({
       startDate,
@@ -252,8 +230,8 @@ function parseEosAcharnon() {
       displayDate,
       title: title.replace(/\s+/g, ' ').trim(),
       club: 'ΕΟΣ Αχαρνών',
-      url: 'https://eosacharnon.gr/booking/',
-      difficulty: desc.includes('Δυσκολία:') ? desc.match(/Δυσκολία:\s*([Α-Γ\d+-]+)/)?.[1] || '' : ''
+      url,
+      difficulty
     });
   });
 
