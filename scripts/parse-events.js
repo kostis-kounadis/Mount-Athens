@@ -811,61 +811,84 @@ function main() {
   console.log('Starting parsing across all clubs...');
   
   let allEvents = [];
+  const statusLogs = [];
+
+  const addLog = (club, status, countOrError) => {
+    statusLogs.push({
+      club,
+      status,
+      details: status === 'success' ? `Parsed ${countOrError} events` : `Error: ${countOrError}`
+    });
+  };
 
   try {
     const acharnon = parseEosAcharnon();
     console.log(`Parsed ${acharnon.length} events from EOS Acharnon`);
     allEvents = allEvents.concat(acharnon);
+    addLog('ΕΟΣ Αχαρνών', 'success', acharnon.length);
   } catch (e) {
     console.error('Error parsing EOS Acharnon:', e.message);
+    addLog('ΕΟΣ Αχαρνών', 'error', e.message);
   }
 
   try {
     const aos = parseAos();
     console.log(`Parsed ${aos.length} events from AOS`);
     allEvents = allEvents.concat(aos);
+    addLog('ΑΟΣ', 'success', aos.length);
   } catch (e) {
     console.error('Error parsing AOS:', e.message);
+    addLog('ΑΟΣ', 'error', e.message);
   }
 
   try {
     const poa = parsePoa();
     console.log(`Parsed ${poa.length} events from POA`);
     allEvents = allEvents.concat(poa);
+    addLog('ΠΟΑ', 'success', poa.length);
   } catch (e) {
     console.error('Error parsing POA:', e.message);
+    addLog('ΠΟΑ', 'error', e.message);
   }
 
   try {
     const athinon = parseEosAthinon();
     console.log(`Parsed ${athinon.length} events from EOS Athinon`);
     allEvents = allEvents.concat(athinon);
+    addLog('ΕΟΣ Αθηνών', 'success', athinon.length);
   } catch (e) {
     console.error('Error parsing EOS Athinon:', e.message);
+    addLog('ΕΟΣ Αθηνών', 'error', e.message);
   }
 
   try {
     const hlioupolis = parseEosHalioupolis();
     console.log(`Parsed ${hlioupolis.length} events from EOS Hlioupolis`);
     allEvents = allEvents.concat(hlioupolis);
+    addLog('ΕΟΣ Ηλιούπολης', 'success', hlioupolis.length);
   } catch (e) {
     console.error('Error parsing EOS Hlioupolis:', e.message);
+    addLog('ΕΟΣ Ηλιούπολης', 'error', e.message);
   }
 
   try {
     const foni = parseFoni();
     console.log(`Parsed ${foni.length} events from FONI`);
     allEvents = allEvents.concat(foni);
+    addLog('ΦΟΝΙ', 'success', foni.length);
   } catch (e) {
     console.error('Error parsing FONI:', e.message);
+    addLog('ΦΟΝΙ', 'error', e.message);
   }
 
   try {
     const filis = parseEposFilis();
     console.log(`Parsed ${filis.length} events from EPOS Filis`);
     allEvents = allEvents.concat(filis);
+    addLog('ΕΠΟΣ Φυλής', 'success', filis.length);
   } catch (e) {
     console.error('Error parsing EPOS Filis:', e.message);
+    addLog('ΕΠΟΣ Φυλής', 'error', e.message);
   }
 
   // Filter out invalid dates, and only include events from TODAY onwards
@@ -884,6 +907,14 @@ function main() {
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(allEvents, null, 2), 'utf-8');
   console.log(`\nSuccessfully aggregated and saved ${allEvents.length} upcoming events to ${OUTPUT_FILE}`);
+
+  // Write execution status logs
+  const statusFile = path.join(path.dirname(OUTPUT_FILE), 'status.json');
+  fs.writeFileSync(statusFile, JSON.stringify({
+    lastUpdated: new Date().toISOString(),
+    logs: statusLogs
+  }, null, 2), 'utf-8');
+  console.log(`Saved execution status logs to ${statusFile}`);
 }
 
 main();
