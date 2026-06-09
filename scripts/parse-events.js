@@ -463,6 +463,26 @@ function parsePoa() {
   const txtPath = path.join(INPUT_DIR, 'poa_gr_index_php-programma.txt');
   if (!fs.existsSync(txtPath)) return [];
 
+  // Parse HTML to extract anchor IDs for accordion auto-scrolling
+  const poaUrlMap = {};
+  const htmlPath = path.join(INPUT_DIR, 'poa_gr_index_php-programma.html');
+  if (fs.existsSync(htmlPath)) {
+    try {
+      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const $ = cheerio.load(html);
+      $('.elementor-toggle-item').each((i, el) => {
+        const titleEl = $(el).find('.elementor-toggle-title');
+        const id = $(el).find('.elementor-tab-title').attr('id');
+        if (titleEl.length && id) {
+          const text = titleEl.text().trim();
+          poaUrlMap[text] = `https://poa.gr/index.php/programma/#${id}`;
+        }
+      });
+    } catch (e) {
+      console.error('Error parsing POA HTML for IDs:', e.message);
+    }
+  }
+
   const content = fs.readFileSync(txtPath, 'utf-8');
   const lines = content.split('\n');
   const events = [];
@@ -525,7 +545,7 @@ function parsePoa() {
         displayDate: `${startDayPart}/${parseInt(startMonth)} - ${endDayPart}/${parseInt(endMonth)}`,
         title: title.replace(/\s+/g, ' ').trim(),
         club: 'ΠΟΑ',
-        url: 'https://poa.gr/index.php/programma/',
+        url: matchTitleToUrl(title.trim(), poaUrlMap, 'https://poa.gr/index.php/programma/'),
         difficulty
       });
       continue;
@@ -573,7 +593,7 @@ function parsePoa() {
         displayDate,
         title: title.replace(/\s+/g, ' ').trim(),
         club: 'ΠΟΑ',
-        url: 'https://poa.gr/index.php/programma/',
+        url: matchTitleToUrl(title.trim(), poaUrlMap, 'https://poa.gr/index.php/programma/'),
         difficulty
       });
     }
