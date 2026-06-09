@@ -1,40 +1,117 @@
 {
-  "lastUpdated": "2026-06-09T20:14:23.833Z",
+  "lastUpdated": "2026-06-09T20:17:10.714Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
       "status": "success",
-      "details": "Parsed 12 events"
+      "details": "Parsed 12 events",
+      "fetch": [
+        {
+          "url": "https://eosacharnon.xmiddleware.com/el",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 290526
+        }
+      ]
     },
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 10 events"
+      "details": "Parsed 10 events",
+      "fetch": [
+        {
+          "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 89080
+        },
+        {
+          "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 96879
+        }
+      ]
     },
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 0 events"
+      "details": "Parsed 0 events",
+      "fetch": [
+        {
+          "url": "https://poa.gr/index.php/programma/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 11923
+        }
+      ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 32 events"
+      "details": "Parsed 32 events",
+      "fetch": [
+        {
+          "url": "https://www.eosathinon.gr/anavaseis/programma/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 184597
+        },
+        {
+          "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 217163
+        }
+      ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 0 events"
+      "details": "Parsed 0 events",
+      "fetch": [
+        {
+          "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 11810
+        }
+      ]
     },
     {
       "club": "ΦΟΝΙ",
       "status": "success",
-      "details": "Parsed 7 events"
+      "details": "Parsed 7 events",
+      "fetch": [
+        {
+          "url": "https://www.foni.org.gr/category/ekdromes/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 77822
+        }
+      ]
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 3 events"
+      "details": "Parsed 3 events",
+      "fetch": [
+        {
+          "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 182081
+        }
+      ]
     }
   ]
 }
