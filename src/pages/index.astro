@@ -7,36 +7,11 @@ const GREEK_MONTHS = [
   "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"
 ];
 
-const GREEK_DAYS_SHORT = ["ΚΥΡ", "ΔΕΥ", "ΤΡΙ", "ΤΕΤ", "ΠΕΜ", "ΠΑΡ", "ΣΑΒ"];
-const GREEK_MONTHS_SHORT = [
-  "ΙΑΝ", "ΦΕΒ", "ΜΑΡ", "ΑΠΡ", "ΜΑΪ", "ΙΟΥΝ",
-  "ΙΟΥΛ", "ΑΥΓ", "ΣΕΠ", "ΟΚΤ", "ΝΟΕ", "ΔΕΚ"
+const GREEK_DAYS_FULL = ["ΚΥΡΙΑΚΗ", "ΔΕΥΤΕΡΑ", "ΤΡΙΤΗ", "ΤΕΤΑΡΤΗ", "ΠΕΜΠΤΗ", "ΠΑΡΑΣΚΕΥΗ", "ΣΑΒΒΑΤΟ"];
+const GREEK_MONTHS_FULL = [
+  "ΙΑΝΟΥΑΡΙΟΥ", "ΦΕΒΡΟΥΑΡΙΟΥ", "ΜΑΡΤΙΟΥ", "ΑΠΡΙΛΙΟΥ", "ΜΑΪΟΥ", "ΙΟΥΝΙΟΥ",
+  "ΙΟΥΛΙΟΥ", "ΑΥΓΟΥΣΤΟΥ", "ΣΕΠΤΕΜΒΡΙΟΥ", "ΟΚΤΩΒΡΙΟΥ", "ΝΟΕΜΒΡΙΟΥ", "ΔΕΚΕΜΒΡΙΟΥ"
 ];
-
-// Helper to format difficulty
-function formatDifficulty(diff: string) {
-  if (!diff) return "";
-  const cleaned = diff.trim();
-  if (/^\d[+-]?$/.test(cleaned)) {
-    return `ΒΔ ${cleaned}`;
-  }
-  return cleaned;
-}
-
-// Helper for difficulty style color badges in Light Theme
-function getDifficultyStyles(diff: string) {
-  const clean = diff ? diff.toLowerCase() : '';
-  if (clean.includes('3') || clean.includes('4') || clean.includes('5') || clean.includes('γ')) {
-    return 'bg-red-50 text-red-700 border-red-200/80';
-  }
-  if (clean.includes('2') || clean.includes('β')) {
-    return 'bg-amber-50 text-amber-800 border-amber-200/80';
-  }
-  if (clean.includes('1') || clean.includes('α')) {
-    return 'bg-emerald-50 text-emerald-700 border-emerald-200/80';
-  }
-  return 'bg-slate-50 text-slate-600 border-slate-200/80';
-}
 
 // Club styling themes for Light Theme
 const CLUB_THEMES: Record<string, { badge: string; border: string; active: string; dot: string }> = {
@@ -151,44 +126,30 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
         </div>
       </div>
 
-      <!-- Row 2: Club Pills & Difficulty selection -->
-      <div class="flex flex-col lg:flex-row gap-5 items-start justify-between">
-        <!-- Club filter pills -->
-        <div class="w-full lg:w-auto">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2 select-none font-mono">ΣΥΛΛΟΓΟΣ:</span>
-          <div class="flex flex-wrap gap-1.5" id="club-filters-container">
-            <button 
-              data-club-filter="all" 
-              class="px-2.5 py-1 rounded border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-club-btn"
-            >
-              Όλοι ({totalEvents})
-            </button>
-            {uniqueClubs.map(club => {
-              const count = eventsData.filter(e => e.club === club).length;
-              const theme = CLUB_THEMES[club] || defaultTheme;
-              return (
-                <button
-                  data-club-filter={club}
-                  data-active-class={theme.active}
-                  data-inactive-class={`${theme.badge} ${theme.border} text-slate-600 hover:bg-slate-100`}
-                  class={`px-2.5 py-1 rounded border text-xs font-semibold ${theme.badge} ${theme.border} transition-all duration-200`}
-                >
-                  {club} ({count})
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        <!-- Difficulty selector -->
-        <div class="w-full lg:w-auto flex-shrink-0">
-          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2 select-none font-mono">ΒΑΘΜΟΣ ΔΥΣΚΟΛΙΑΣ:</span>
-          <div class="flex items-center gap-1 bg-slate-50 border border-slate-200 p-0.5 rounded-lg">
-            <button data-diff-filter="all" class="px-2.5 py-1 rounded text-xs font-semibold bg-white border border-slate-200 text-slate-800 shadow-sm transition-all duration-200 active-diff-btn">Όλοι</button>
-            <button data-diff-filter="easy" class="px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition-all duration-200">Ήπιος (ΒΔ1)</button>
-            <button data-diff-filter="medium" class="px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition-all duration-200">Μέσος (ΒΔ2)</button>
-            <button data-diff-filter="hard" class="px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition-all duration-200">Δύσκολος (ΒΔ3+)</button>
-          </div>
+      <!-- Row 2: Club Filter pills -->
+      <div>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2 select-none font-mono">ΣΥΛΛΟΓΟΣ:</span>
+        <div class="flex flex-wrap gap-1.5" id="club-filters-container">
+          <button 
+            data-club-filter="all" 
+            class="px-2.5 py-1 rounded border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-club-btn"
+          >
+            Όλοι ({totalEvents})
+          </button>
+          {uniqueClubs.map(club => {
+            const count = eventsData.filter(e => e.club === club).length;
+            const theme = CLUB_THEMES[club] || defaultTheme;
+            return (
+              <button
+                data-club-filter={club}
+                data-active-class={theme.active}
+                data-inactive-class={`${theme.badge} ${theme.border} text-slate-600 hover:bg-slate-100`}
+                class={`px-2.5 py-1 rounded border text-xs font-semibold ${theme.badge} ${theme.border} transition-all duration-200`}
+              >
+                {club} ({count})
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>
@@ -211,70 +172,62 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
               const events = dateGroups[dateStr];
               const d = new Date(dateStr);
               const dayNum = d.getDate();
-              const dayOfWeek = GREEK_DAYS_SHORT[d.getDay()];
-              const monthShort = GREEK_MONTHS_SHORT[d.getMonth()];
+              const dayOfWeek = GREEK_DAYS_FULL[d.getDay()];
+              const monthFull = GREEK_MONTHS_FULL[d.getMonth()];
               
               return (
                 <div class="date-group flex flex-col md:flex-row items-stretch" data-date={dateStr}>
                   <!-- Date Column (Left) -->
-                  <div class="w-full md:w-32 bg-slate-50/40 md:border-r border-slate-200 p-4 flex flex-row md:flex-col items-baseline md:items-start justify-between md:justify-start gap-2 select-none font-mono flex-shrink-0">
+                  <div class="w-full md:w-28 bg-slate-50/40 md:border-r border-slate-200 p-4 flex flex-row md:flex-col items-baseline md:items-start justify-between md:justify-start gap-2 select-none font-mono flex-shrink-0">
                     <span class="text-3xl font-bold text-slate-800 leading-none">
                       {dayNum}
                     </span>
-                    <div class="flex md:flex-col items-baseline md:items-start gap-1.5 md:gap-0.5 text-[10px] text-slate-400 font-bold tracking-wider">
+                    <div class="flex md:flex-col items-baseline md:items-start gap-1.5 md:gap-0.5 text-[9px] text-slate-400 font-bold tracking-wider font-mono">
                       <span>{dayOfWeek}</span>
                       <span class="md:hidden">/</span>
-                      <span>{monthShort}</span>
+                      <span>{monthFull}</span>
                     </div>
                   </div>
 
                   <!-- Events List (Right) -->
                   <div class="flex-grow p-4 md:p-5 space-y-4 event-rows-container">
-                    {events.map(event => {
+                    {events.map((event, idx) => {
                       const theme = CLUB_THEMES[event.club] || defaultTheme;
-                      const formattedDiff = formatDifficulty(event.difficulty);
                       const isMultiDay = event.startDate !== event.endDate;
                       
-                      const searchText = `${event.title} ${event.club} ${monthYear} ${event.difficulty} ${isMultiDay ? 'πολυήμερο' : 'μονοήμερο'}`;
+                      const searchText = `${event.title} ${event.club} ${monthYear} ${isMultiDay ? 'πολυήμερο' : 'μονοήμερο'}`;
                       
                       return (
                         <div 
-                          class="event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-1.5 first:pt-0 last:pb-0"
+                          class={`event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-2.5 first:pt-0 last:pb-0 ${idx > 0 ? 'border-t border-slate-200/80 pt-4 mt-4' : ''}`}
                           data-club={event.club}
-                          data-difficulty={event.difficulty}
                           data-search-text={searchText}
                         >
                           <!-- Title & Meta Tags -->
                           <div class="flex-grow min-w-0 pr-0 sm:pr-4">
-                            <div class="flex flex-wrap items-center gap-1.5 mb-1.5">
-                              <!-- Club Name Badge -->
+                            <!-- Event Title (IBM Plex Sans) on TOP -->
+                            <h3 class="text-sm font-semibold text-slate-900 leading-snug mb-2 font-sans">
+                              {event.title}
+                            </h3>
+
+                            <div class="flex flex-wrap items-center gap-1.5">
+                              <!-- Club Name Badge (Fixed 22px Height) -->
                               <a 
                                 href={event.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                class={`px-2 py-0.5 border text-[10px] uppercase font-bold tracking-wider font-mono rounded transition-colors duration-150 ${theme.badge} ${theme.border}`}
+                                class={`inline-flex items-center h-[22px] px-2 border text-[9px] uppercase font-bold tracking-wider font-mono rounded transition-colors duration-150 ${theme.badge} ${theme.border}`}
                               >
                                 {event.club}
                               </a>
 
-                              <!-- Difficulty tag -->
-                              {formattedDiff && (
-                                <span class={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-semibold font-mono border ${getDifficultyStyles(event.difficulty)}`}>
-                                  {formattedDiff}
-                                </span>
-                              )}
-
-                              <!-- Excursion date tag if multi-day -->
+                              <!-- Excursion date tag if multi-day (Fixed 22px Height) -->
                               {isMultiDay && (
-                                <span class="text-[9px] font-bold font-mono text-slate-400 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded">
+                                <span class="inline-flex items-center h-[22px] px-2 border border-slate-200 text-[9px] font-bold font-mono text-slate-400 bg-slate-50 rounded select-none">
                                   {event.displayDate}
                                 </span>
                               )}
                             </div>
-                            
-                            <h3 class="text-sm font-semibold text-slate-900 leading-snug">
-                              {event.title}
-                            </h3>
                           </div>
 
                           <!-- Action Booking details link -->
@@ -320,9 +273,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
   <script>
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
     const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
-    
     const clubFiltersContainer = document.getElementById('club-filters-container');
-    const diffButtons = document.querySelectorAll('[data-diff-filter]');
     
     const eventRows = document.querySelectorAll('.event-row');
     const dateGroups = document.querySelectorAll('.date-group');
@@ -332,7 +283,6 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     const statTotalCount = document.getElementById('stat-total-count');
 
     let activeClub = 'all';
-    let activeDiff = 'all';
     let searchQuery = '';
 
     // Greek Accent Normalizer
@@ -350,21 +300,6 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
         .replace(/[ώώ]/g, 'o');
     }
 
-    // Helper to evaluate difficulty level
-    function matchesDifficulty(rowDiffRaw: string, filterVal: string): boolean {
-      if (filterVal === 'all') return true;
-      const diffStr = rowDiffRaw ? rowDiffRaw.toLowerCase() : '';
-      
-      const isEasy = diffStr.includes('1') || diffStr.includes('α');
-      const isMedium = diffStr.includes('2') || diffStr.includes('β');
-      const isHard = diffStr.includes('3') || diffStr.includes('4') || diffStr.includes('5') || diffStr.includes('γ');
-
-      if (filterVal === 'easy') return isEasy || (!isEasy && !isMedium && !isHard);
-      if (filterVal === 'medium') return isMedium;
-      if (filterVal === 'hard') return isHard;
-      return true;
-    }
-
     function applyFilters() {
       let visibleCount = 0;
       const cleanQuery = cleanString(searchQuery);
@@ -373,15 +308,13 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       eventRows.forEach(row => {
         const rowElement = row as HTMLElement;
         const clubVal = rowElement.getAttribute('data-club') || '';
-        const diffVal = rowElement.getAttribute('data-difficulty') || '';
         const searchRaw = rowElement.getAttribute('data-search-text') || '';
         const cleanSearchText = cleanString(searchRaw);
 
         const clubMatches = (activeClub === 'all' || clubVal === activeClub);
-        const diffMatches = matchesDifficulty(diffVal, activeDiff);
         const searchMatches = (cleanQuery === '' || cleanSearchText.includes(cleanQuery));
 
-        if (clubMatches && diffMatches && searchMatches) {
+        if (clubMatches && searchMatches) {
           rowElement.classList.remove('hidden');
           visibleCount++;
         } else {
@@ -403,9 +336,9 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
           visibleRowsInDg.forEach((row, idx) => {
             const rowElement = row as HTMLElement;
             if (idx === 0) {
-              rowElement.classList.remove('border-t', 'border-slate-100', 'pt-4', 'mt-4');
+              rowElement.classList.remove('border-t', 'border-slate-200/80', 'pt-4', 'mt-4');
             } else {
-              rowElement.classList.add('border-t', 'border-slate-100', 'pt-4', 'mt-4');
+              rowElement.classList.add('border-t', 'border-slate-200/80', 'pt-4', 'mt-4');
             }
           });
         }
@@ -496,35 +429,15 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       });
     }
 
-    // Difficulty filter buttons
-    diffButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filterVal = btn.getAttribute('data-diff-filter') || 'all';
-        activeDiff = filterVal;
-
-        diffButtons.forEach(b => {
-          b.className = 'px-2.5 py-1 rounded text-xs font-medium text-slate-600 hover:text-slate-900 transition-all duration-200';
-        });
-
-        btn.className = 'px-2.5 py-1 rounded text-xs font-semibold bg-white border border-slate-200 text-slate-800 shadow-sm transition-all duration-200 active-diff-btn';
-
-        applyFilters();
-      });
-    });
-
     // Reset filters
     function resetFilters() {
       activeClub = 'all';
-      activeDiff = 'all';
       searchQuery = '';
       if (searchInput) searchInput.value = '';
       if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
 
       const allClubBtn = document.querySelector('[data-club-filter="all"]') as HTMLButtonElement;
       if (allClubBtn) allClubBtn.click();
-
-      const allDiffBtn = document.querySelector('[data-diff-filter="all"]') as HTMLButtonElement;
-      if (allDiffBtn) allDiffBtn.click();
 
       applyFilters();
     }
