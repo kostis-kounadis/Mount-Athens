@@ -20,43 +20,43 @@ const CLUB_THEMES: Record<string, { badge: string; border: string; active: strin
     badge: 'bg-rose-50/50 text-rose-700 border-rose-200/60',
     border: 'hover:border-rose-300',
     dot: 'bg-rose-500',
-    active: 'bg-rose-900 border-rose-950 text-white font-bold ring-2 ring-rose-900/10'
+    active: 'bg-rose-900 border-rose-950 text-white ring-2 ring-rose-900/10'
   },
   'ΑΟΣ': {
     badge: 'bg-emerald-50/50 text-emerald-700 border-emerald-200/60',
     border: 'hover:border-emerald-300',
     dot: 'bg-emerald-500',
-    active: 'bg-emerald-900 border-emerald-950 text-white font-bold ring-2 ring-emerald-900/10'
+    active: 'bg-emerald-900 border-emerald-950 text-white ring-2 ring-emerald-900/10'
   },
   'ΠΟΑ': {
     badge: 'bg-amber-50/50 text-amber-800 border-amber-200/60',
     border: 'hover:border-amber-300',
     dot: 'bg-amber-500',
-    active: 'bg-amber-800 border-amber-900 text-white font-bold ring-2 ring-amber-800/10'
+    active: 'bg-amber-800 border-amber-900 text-white ring-2 ring-amber-800/10'
   },
   'ΕΟΣ Αχαρνών': {
     badge: 'bg-sky-50/50 text-sky-700 border-sky-200/60',
     border: 'hover:border-sky-300',
     dot: 'bg-sky-500',
-    active: 'bg-sky-900 border-sky-950 text-white font-bold ring-2 ring-sky-900/10'
+    active: 'bg-sky-900 border-sky-950 text-white ring-2 ring-sky-900/10'
   },
   'ΕΟΣ Ηλιούπολης': {
     badge: 'bg-indigo-50/50 text-indigo-700 border-indigo-200/60',
     border: 'hover:border-indigo-300',
     dot: 'bg-indigo-500',
-    active: 'bg-indigo-900 border-indigo-950 text-white font-bold ring-2 ring-indigo-900/10'
+    active: 'bg-indigo-900 border-indigo-950 text-white ring-2 ring-indigo-900/10'
   },
   'ΦΟΝΙ': {
     badge: 'bg-orange-50/50 text-orange-700 border-orange-200/60',
     border: 'hover:border-orange-300',
     dot: 'bg-orange-500',
-    active: 'bg-orange-800 border-orange-900 text-white font-bold ring-2 ring-orange-800/10'
+    active: 'bg-orange-800 border-orange-900 text-white ring-2 ring-orange-800/10'
   },
   'ΕΠΟΣ Φυλής': {
     badge: 'bg-pink-50/50 text-pink-700 border-pink-200/60',
     border: 'hover:border-pink-300',
     dot: 'bg-pink-500',
-    active: 'bg-pink-900 border-pink-950 text-white font-bold ring-2 ring-pink-900/10'
+    active: 'bg-pink-900 border-pink-950 text-white ring-2 ring-pink-900/10'
   }
 };
 
@@ -64,7 +64,7 @@ const defaultTheme = {
   badge: 'bg-slate-50 text-slate-600 border-slate-200/60',
   border: 'hover:border-slate-300',
   dot: 'bg-slate-400',
-  active: 'bg-slate-800 border-slate-900 text-white font-bold ring-2 ring-slate-800/10'
+  active: 'bg-slate-800 border-slate-900 text-white ring-2 ring-slate-800/10'
 };
 
 // Group events by month & year first
@@ -474,9 +474,9 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
           const inactiveClass = b.getAttribute('data-inactive-class') || '';
 
           if (isAll) {
-            b.className = 'px-2.5 py-1 rounded border transition-all duration-200';
+            b.className = 'px-2.5 py-1 rounded border text-xs font-semibold transition-all duration-200';
             if (activeClub === 'all') {
-              b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'font-semibold', 'active-club-btn');
+              b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-club-btn');
             } else {
               b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
             }
