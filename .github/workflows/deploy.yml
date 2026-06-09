@@ -29,6 +29,7 @@ jobs:
 
       - name: Fetch & Parse Latest Excursions
         run: |
+          node scripts/debug-fetch.js
           node scripts/fetch-raw.js
           node scripts/extract-text.js
           node scripts/parse-events.js
