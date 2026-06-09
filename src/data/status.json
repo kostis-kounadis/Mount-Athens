@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-09T20:17:10.714Z",
+  "lastUpdated": "2026-06-09T20:22:19.137Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 57 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 11923
+          "size": 243392
         }
       ]
     },
@@ -74,14 +74,14 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 6 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 11810
+          "size": 102583
         }
       ]
     },
