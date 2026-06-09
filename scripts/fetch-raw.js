@@ -28,14 +28,14 @@ async function fetchPage(url) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      return { html: null, success: false, status: `HTTP error! status: ${response.status}`, code: response.status };
     }
 
     const html = await response.text();
-    return html;
+    return { html, success: true, status: 'OK', code: response.status };
   } catch (error) {
     console.error(`Failed to fetch ${url}:`, error.message);
-    return null;
+    return { html: null, success: false, status: error.message, code: 0 };
   }
 }
 
@@ -83,18 +83,31 @@ async function main() {
   console.log(`Found ${urls.length} URLs to fetch in LINKS.md:`);
   urls.forEach((u, i) => console.log(`  [${i+1}] ${u}`));
 
+  const fetchLogs = {};
+
   for (const url of urls) {
     const slug = getSlug(url);
     const outputPath = path.join(INPUT_DIR, `${slug}.html`);
     
-    const html = await fetchPage(url);
-    if (html) {
-      fs.writeFileSync(outputPath, html, 'utf-8');
-      console.log(`Saved ${url} -> ${outputPath} (${html.length} bytes)`);
+    const result = await fetchPage(url);
+    fetchLogs[url] = {
+      success: result.success,
+      status: result.status,
+      code: result.code,
+      size: result.html ? result.html.length : 0
+    };
+
+    if (result.html) {
+      fs.writeFileSync(outputPath, result.html, 'utf-8');
+      console.log(`Saved ${url} -> ${outputPath} (${result.html.length} bytes)`);
     }
     // Small delay between requests
     await new Promise(resolve => setTimeout(resolve, 1500));
   }
+
+  const reportPath = path.join(INPUT_DIR, 'fetch-status.json');
+  fs.writeFileSync(reportPath, JSON.stringify(fetchLogs, null, 2), 'utf-8');
+  console.log(`Saved fetch report to ${reportPath}`);
 
   console.log('\nAll crawls finished.');
 }

@@ -813,12 +813,47 @@ function main() {
   let allEvents = [];
   const statusLogs = [];
 
+  const fetchReportPath = path.join(INPUT_DIR, 'fetch-status.json');
+  let fetchReport = null;
+  if (fs.existsSync(fetchReportPath)) {
+    try {
+      fetchReport = JSON.parse(fs.readFileSync(fetchReportPath, 'utf-8'));
+    } catch (e) {
+      console.error('Failed to parse fetch-status.json', e.message);
+    }
+  }
+
+  const CLUB_URLS = {
+    'ΕΟΣ Αχαρνών': ['https://eosacharnon.xmiddleware.com/el'],
+    'ΑΟΣ': [
+      'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/',
+      'https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/'
+    ],
+    'ΠΟΑ': ['https://poa.gr/index.php/programma/'],
+    'ΕΟΣ Αθηνών': [
+      'https://www.eosathinon.gr/anavaseis/programma/',
+      'https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/'
+    ],
+    'ΕΟΣ Ηλιούπολης': ['https://eosh.gr/wp/product-category/greek-mountains-climbs/'],
+    'ΦΟΝΙ': ['https://www.foni.org.gr/category/ekdromes/'],
+    'ΕΠΟΣ Φυλής': ['https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/']
+  };
+
   const addLog = (club, status, countOrError) => {
-    statusLogs.push({
+    const logEntry = {
       club,
       status,
       details: status === 'success' ? `Parsed ${countOrError} events` : `Error: ${countOrError}`
-    });
+    };
+
+    if (fetchReport && CLUB_URLS[club]) {
+      logEntry.fetch = CLUB_URLS[club].map(url => {
+        const urlLog = fetchReport[url];
+        return urlLog ? { url, ...urlLog } : { url, success: false, status: 'Not fetched', code: 0, size: 0 };
+      });
+    }
+
+    statusLogs.push(logEntry);
   };
 
   try {

@@ -288,14 +288,28 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
           <span>ΤΕΛΕΥΤΑΙΑ ΕΝΗΜΕΡΩΣΗ:</span>
           <span class="font-bold text-slate-800">{new Date(statusData.lastUpdated).toLocaleString('el-GR', { timeZone: 'Europe/Athens' })}</span>
         </div>
-        <div class="space-y-2">
+        <div class="space-y-2.5">
           {statusData.logs.map(log => (
-            <div class="flex items-center justify-between">
-              <span class="font-semibold text-slate-700">{log.club}:</span>
-              <div class="flex items-center gap-1.5">
-                <span class={`w-1 h-1 rounded-full ${log.status === 'success' ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
-                <span class={log.status === 'success' ? 'text-slate-600' : 'text-rose-600 font-medium'}>{log.details}</span>
+            <div class="border-b border-slate-100 pb-2.5 last:border-0 last:pb-0">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold text-slate-700">{log.club}:</span>
+                <div class="flex items-center gap-1.5">
+                  <span class={`w-1 h-1 rounded-full ${log.status === 'success' ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
+                  <span class={log.status === 'success' ? 'text-slate-600' : 'text-rose-600 font-medium'}>{log.details}</span>
+                </div>
               </div>
+              {log.fetch && (
+                <div class="mt-1 pl-3 text-[8px] text-slate-400 space-y-0.5 font-mono">
+                  {log.fetch.map((f: any) => (
+                    <div class="flex items-center justify-between gap-4">
+                      <span class="truncate max-w-[280px]" title={f.url}>{f.url}</span>
+                      <span class={f.success ? 'text-slate-500' : 'text-rose-500 font-medium'}>
+                        {f.success ? `${(f.size/1024).toFixed(1)} KB (HTTP ${f.code})` : `Failed: ${f.status}`}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
