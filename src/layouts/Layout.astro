@@ -1,0 +1,103 @@
+---
+import SEO from '../components/SEO.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description, image } = Astro.props;
+
+// Format current date in Greek
+const GREEK_DAYS = ['ΚΥΡΙΑΚΗ', 'ΔΕΥΤΕΡΑ', 'ΤΡΙΤΗ', 'ΤΕΤΑΡΤΗ', 'ΠΕΜΠΤΗ', 'ΠΑΡΑΣΚΕΥΗ', 'ΣΑΒΒΑΤΟ'];
+const GREEK_MONTHS = ['ΙΑΝΟΥΑΡΙΟΥ', 'ΦΕΒΡΟΥΑΡΙΟΥ', 'ΜΑΡΤΙΟΥ', 'ΑΠΡΙΛΙΟΥ', 'ΜΑΪΟΥ', 'ΙΟΥΝΙΟΥ', 'ΙΟΥΛΙΟΥ', 'ΑΥΓΟΥΣΤΟΥ', 'ΣΕΠΤΕΜΒΡΙΟΥ', 'ΟΚΤΩΒΡΙΟΥ', 'ΝΟΕΜΒΡΙΟΥ', 'ΔΕΚΕΜΒΡΙΟΥ'];
+
+const now = new Date('2026-06-09T20:04:40+03:00');
+const dayName = GREEK_DAYS[now.getDay()];
+const dateNum = String(now.getDate()).padStart(2, '0');
+const monthName = GREEK_MONTHS[now.getMonth()];
+const year = now.getFullYear();
+const formattedDate = `${dayName}, ${dateNum} ${monthName} ${year}`;
+---
+
+<!doctype html>
+<html lang="el" class="scroll-smooth">
+  <head>
+    <SEO title={title} description={description} image={image} />
+    <style is:global>
+      :root {
+        --color-bg: #f8fafc; /* Slate 50 */
+        --color-surface: #ffffff;
+        --color-border: #e2e8f0; /* Slate 200 */
+        --color-text: #0f172a; /* Slate 900 */
+        --color-text-muted: #64748b; /* Slate 500 */
+        --color-accent: #0f172a;
+        --font-sans: 'IBM Plex Sans', sans-serif;
+        --font-mono: 'IBM Plex Mono', monospace;
+      }
+
+      /* Custom scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--color-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .text-mono {
+        font-family: var(--font-mono);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between selection:bg-slate-200 selection:text-slate-800">
+
+    <!-- Global Header -->
+    <header class="sticky top-0 z-50 bg-white border-b border-slate-200 py-4.5 px-6 md:px-12 flex items-center justify-between shadow-sm">
+      <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+        <div class="w-2.5 h-2.5 bg-slate-900 rounded-sm group-hover:scale-110 transition-transform duration-200"></div>
+        <span class="font-bold tracking-tight text-lg text-slate-900 font-sans">Ορειβατικό Ημερολόγιο</span>
+      </a>
+      
+      <div class="text-mono text-[11px] font-medium tracking-wider text-slate-500 select-none">
+        {formattedDate}
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <slot />
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="border-t border-slate-200 bg-white py-8 text-[11px] text-slate-500">
+      <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="font-normal text-left leading-relaxed">
+          &copy; {new Date().getFullYear()} Ορειβατικό Ημερολόγιο.
+          <span class="text-slate-400 block sm:inline sm:ml-2">Τοπική βάση δεδομένων αθηναϊκών συλλόγων.</span>
+        </p>
+        <div class="flex items-center gap-5 font-mono">
+          <a href="https://github.com/kostis-kounadis/Mount-Athens" target="_blank" rel="noopener noreferrer" class="hover:underline transition-all">GITHUB</a>
+          <span class="text-slate-300">/</span>
+          <span class="font-bold text-slate-800">v1.0.0</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
