@@ -196,44 +196,122 @@ function parseEosAcharnon() {
   const $ = cheerio.load(html);
   const events = [];
 
-  $('div[data-slot="card"]').each((i, el) => {
-    // Exclude cards that don't look like events (e.g. search filters)
-    const title = $(el).find('div[data-slot="card-title"]').text().trim();
-    if (!title) return;
-    
-    // Find the date text. In Acharnon: the first span under card-content is the raw date string
-    const cardSpans = $(el).find('div[data-slot="card-content"] span');
-    const rawDateText = cardSpans.eq(0).text().trim();
-    
-    // Parse the date using parseDateRange
-    let parsed = parseDateRange(rawDateText);
-    let startDate = parsed ? parsed.startDate : '2026-06-09';
-    let endDate = parsed ? parsed.endDate : '2026-06-09';
-    let displayDate = parsed ? parsed.displayDate : rawDateText;
-
-    // Relative link to booking can be converted to absolute link
-    const relativeHref = $(el).find('a').first().attr('href') || '';
-    const url = relativeHref ? `https://eosacharnon.gr${relativeHref}` : 'https://eosacharnon.gr/booking/';
-
-    // Find difficulty inside spans under card-content
-    let difficulty = '';
-    cardSpans.each((idx, span) => {
-      const text = $(span).text().trim();
-      if (text.startsWith('Δυσκολία:')) {
-        difficulty = text.replace('Δυσκολία:', '').trim();
+  // Gather all __next_f.push content from Next.js hydration payload
+  let nextDataRaw = '';
+  $('script').each((i, el) => {
+    const text = $(el).text();
+    if (text.includes('self.__next_f.push')) {
+      const match = text.match(/self\.__next_f\.push\(\[\d+,\s*"(.*)"\]\)/s);
+      if (match) {
+        let content = match[1]
+          .replace(/\\"/g, '"')
+          .replace(/\\n/g, '\n')
+          .replace(/\\r/g, '\r')
+          .replace(/\\t/g, '\t')
+          .replace(/\\\\/g, '\\');
+        nextDataRaw += content;
+      } else {
+        const match2 = text.match(/self\.__next_f\.push\(\[\d+,\s*'(.*)'\]\)/s);
+        if (match2) {
+          let content = match2[1]
+            .replace(/\\'/g, "'")
+            .replace(/\\n/g, '\n')
+            .replace(/\\r/g, '\r')
+            .replace(/\\t/g, '\t')
+            .replace(/\\\\/g, '\\');
+          nextDataRaw += content;
+        }
       }
-    });
-
-    events.push({
-      startDate,
-      endDate,
-      displayDate,
-      title: title.replace(/\s+/g, ' ').trim(),
-      club: 'ΕΟΣ Αχαρνών',
-      url,
-      difficulty
-    });
+    }
   });
+
+  const eventsIndex = nextDataRaw.indexOf('"events":[');
+  if (eventsIndex === -1) return [];
+
+  let bracketCount = 1;
+  let i = eventsIndex + 10;
+  let start = i - 1;
+  
+  while (i < nextDataRaw.length && bracketCount > 0) {
+    if (nextDataRaw[i] === '[') bracketCount++;
+    else if (nextDataRaw[i] === ']') bracketCount--;
+    i++;
+  }
+  
+  const eventsJsonStr = nextDataRaw.substring(start, i);
+  const cleanJsonStr = eventsJsonStr
+    .replace(/"\$D(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)"/g, '"$1"');
+    
+  try {
+    const rawEvents = JSON.parse(cleanJsonStr);
+    
+    const DIFFICULTY_MAP = {
+      'A': 'Α',
+      'A_PLUS': 'Α+',
+      'B': 'Β',
+      'B_PLUS': 'Β+',
+      'C': 'Γ',
+      'C_PLUS': 'Γ+',
+      'D': 'Δ'
+    };
+
+    rawEvents.forEach(ev => {
+      // 1. Correct timezone offset: add 3 hours to UTC dates to get correct Greek local dates
+      const adjustDate = (dateStr) => {
+        if (!dateStr) return '';
+        const utcDate = new Date(dateStr);
+        if (isNaN(utcDate.getTime())) return '';
+        // Shift by +3 hours to align database UTC date with local Athens calendar date
+        const localDate = new Date(utcDate.getTime() + 3 * 60 * 60 * 1000);
+        return localDate.toISOString().split('T')[0];
+      };
+      
+      const startDate = adjustDate(ev.startDate);
+      const endDate = adjustDate(ev.endDate);
+      
+      // 2. Format display date range
+      let displayDate = '';
+      if (startDate && endDate) {
+        const startParts = startDate.split('-');
+        const endParts = endDate.split('-');
+        const startDay = parseInt(startParts[2]);
+        const startMonth = parseInt(startParts[1]);
+        const endDay = parseInt(endParts[2]);
+        const endMonth = parseInt(endParts[1]);
+        
+        if (startDate === endDate) {
+          displayDate = `${startDay}/${startMonth}`;
+        } else if (startMonth === endMonth) {
+          displayDate = `${startDay}-${endDay}/${startMonth}`;
+        } else {
+          displayDate = `${startDay}/${startMonth} - ${endDay}/${endMonth}`;
+        }
+      }
+      
+      // 3. Set direct booking URL to xmiddleware
+      const relativeHref = ev.id ? `/el/booking/${ev.id}` : '';
+      const url = relativeHref 
+        ? `https://eosacharnon.xmiddleware.com${relativeHref}` 
+        : 'https://eosacharnon.xmiddleware.com/el/booking';
+      
+      // 4. Set mapped difficulty
+      const difficulty = ev.difficulties && ev.difficulties.length > 0 
+        ? ev.difficulties.map(d => DIFFICULTY_MAP[d] || d).join(', ') 
+        : '';
+      
+      events.push({
+        startDate,
+        endDate,
+        displayDate,
+        title: ev.title ? ev.title.trim() : '',
+        club: 'ΕΟΣ Αχαρνών',
+        url,
+        difficulty
+      });
+    });
+  } catch (err) {
+    console.error('Failed to parse Acharnon Next.js hydration payload:', err.message);
+  }
 
   return events;
 }
