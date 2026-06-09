@@ -1,4 +1,4 @@
-# Ορειβατικό Ημερολόγιο (Mount Athens)
+# Ορειβατικό Ημερολόγιο
 
 A minimalist, design-first, local-only calendar aggregating upcoming mountaineering events and excursions from major Athenian alpine clubs. 
 
@@ -96,11 +96,9 @@ The output will be generated in the `dist/` directory.
 
 ---
 
-## 🎨 Creative & Architectural Disclaimer
+## 🎨 Creative & Technical Disclaimer
 
-This project is conceived and designed by a graphic designer with a strong intuition for typography, grid structures, and minimal aesthetics. The code, scripts, and static pipelines were constructed through active collaborative pair-programming with agentic AI coding assistants. 
-
-It stands as a testament to the idea that clean, production-grade applications can be built rapidly when design vision and AI reasoning intersect.
+This project is conceived and designed by a mediocre hiker graphic designer, with a decent amount of coffee, negligible coding skills, an unhealthy knack for how things work, and built with AI coding agents.
 
 ---
 
