@@ -30,6 +30,7 @@ jobs:
       - name: Fetch & Parse Latest Excursions
         run: |
           node scripts/fetch-raw.js
+          node scripts/extract-text.js
           node scripts/parse-events.js
 
       - name: Commit Updated Events
