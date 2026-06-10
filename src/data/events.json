@@ -54,6 +54,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-06-13",
+    "endDate": "2026-06-13",
+    "displayDate": "13/6",
+    "title": "ΠΑΡΝΑΣΣΟΣ (ΠΥΡΓΑΚΙΑ)",
+    "club": "ΦΟΠ",
+    "url": "https://fop.gr/",
+    "difficulty": "ΒΔ 1"
+  },
+  {
     "startDate": "2026-06-14",
     "endDate": "2026-06-14",
     "displayDate": "14/6",
@@ -144,6 +153,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-06-21",
+    "endDate": "2026-06-21",
+    "displayDate": "21/6",
+    "title": "ΛΙΒΑΔΑΚΙ ΑΧΑΪΑΣ",
+    "club": "ΦΟΠ",
+    "url": "https://fop.gr/",
+    "difficulty": "ΒΔ 2"
+  },
+  {
     "startDate": "2026-06-23",
     "endDate": "2026-06-30",
     "displayDate": "23-30/6",
@@ -169,6 +187,15 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/wp/product/erymanthos-mougila/",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-06-27",
+    "endDate": "2026-06-28",
+    "displayDate": "27-28/6",
+    "title": "ΠΑΝΤΑ ΒΡΕΧΕΙ (ΚΡΙΚΕΛΛΟΠΟΤΑΜΟΣ)",
+    "club": "ΦΟΠ",
+    "url": "https://fop.gr/",
+    "difficulty": "ΒΔ 1"
   },
   {
     "startDate": "2026-06-28",

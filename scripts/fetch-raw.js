@@ -62,20 +62,43 @@ async function main() {
 
   const content = fs.readFileSync(LINKS_FILE, 'utf-8');
   const lines = content.split('\n');
-  const urls = [];
+  const linkConfig = {};
+  let currentClub = '';
 
-  // Extract all URLs from LINKS.md (lines starting with url or containing url)
-  const urlRegex = /https?:\/\/[^\s]+/g;
+  const urlRegex = /https?:\/\/[^\s]+/i;
+
   for (const line of lines) {
-    const matches = line.match(urlRegex);
-    if (matches) {
-      for (const match of matches) {
-        // Clean trailing symbols (parentheses, commas, etc.)
-        let cleanUrl = match.replace(/[,;()]$/, '');
-        // We only care about URLs belonging to the clubs list
-        if (!urls.includes(cleanUrl)) {
-          urls.push(cleanUrl);
-        }
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    // Check for Heading (# Club Name)
+    if (trimmed.startsWith('#')) {
+      currentClub = trimmed.replace(/^#\s*/, '').trim();
+      linkConfig[currentClub] = [];
+      continue;
+    }
+
+    // Check for List item (- URL)
+    if (trimmed.startsWith('-') && currentClub) {
+      const match = trimmed.match(urlRegex);
+      if (match) {
+        let cleanUrl = match[0].replace(/[,;()]$/, '').trim();
+        linkConfig[currentClub].push(cleanUrl);
+      }
+    }
+  }
+
+  // Save the structured config for parse-events.js
+  const configPath = path.join(INPUT_DIR, 'link-config.json');
+  fs.writeFileSync(configPath, JSON.stringify(linkConfig, null, 2), 'utf-8');
+  console.log(`Saved link configuration mapping to ${configPath}`);
+
+  // Flatten active URLs for crawling
+  const urls = [];
+  for (const [club, clubUrls] of Object.entries(linkConfig)) {
+    for (const url of clubUrls) {
+      if (!urls.includes(url)) {
+        urls.push(url);
       }
     }
   }

@@ -981,6 +981,87 @@ function parseEposFilis() {
 }
 
 // ----------------------------------------------------
+// PARSER: ΦΟΠ (Text-based)
+// ----------------------------------------------------
+function parseFop() {
+  const txtPath = path.join(INPUT_DIR, 'fop_gr.txt');
+  if (!fs.existsSync(txtPath)) return [];
+
+  const content = fs.readFileSync(txtPath, 'utf-8');
+  const lines = content.split('\n');
+  const events = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+
+    // Match patterns like "7/6/2026 ΦΑΡΑΓΓΙ ΛΟΥΣΙΟΥ..." or "27-28/6/2026..."
+    const match = line.match(/^(\d+(?:-\d+)?)\/(\d+)\/(\d{4})\s+(.+)$/);
+    if (match) {
+      const dayPart = match[1];
+      const month = match[2].padStart(2, '0');
+      const year = match[3];
+      const rest = match[4].trim();
+
+      // Extract title by removing day name and anything after it
+      let title = rest;
+      const dayMatch = rest.match(/(.+?)(?:ΔΕΥΤΕΡΑ|ΤΡΙΤΗ|ΤΕΤΑΡΤΗ|ΠΕΜΠΤΗ|ΠΑΡΑΣΚΕΥΗ|ΣΑΒΒΑΤΟ|ΚΥΡΙΑΚΗ)/i);
+      if (dayMatch) {
+        title = dayMatch[1].trim();
+      }
+
+      // Look at next lines for difficulty (ΒΔ)
+      let difficulty = '';
+      for (let j = 1; j <= 3; j++) {
+        if (i + j < lines.length) {
+          const nextLine = lines[i + j].trim();
+          const bdMatch = nextLine.match(/ΒΔ:\s*([\d\w+]+)/i);
+          if (bdMatch) {
+            difficulty = 'ΒΔ ' + bdMatch[1].trim();
+            break;
+          }
+        }
+      }
+
+      // Handle date range
+      let startDate = '';
+      let endDate = '';
+      let displayDate = '';
+
+      if (dayPart.includes('-')) {
+        const [startDay, endDay] = dayPart.split('-');
+        startDate = `${year}-${month}-${startDay.padStart(2, '0')}`;
+        endDate = `${year}-${month}-${endDay.padStart(2, '0')}`;
+        displayDate = `${startDay}-${endDay}/${parseInt(month)}`;
+      } else {
+        startDate = `${year}-${month}-${dayPart.padStart(2, '0')}`;
+        endDate = `${year}-${month}-${dayPart.padStart(2, '0')}`;
+        displayDate = `${dayPart}/${parseInt(month)}`;
+      }
+
+      events.push({
+        startDate,
+        endDate,
+        displayDate,
+        title: title.replace(/\s+/g, ' ').trim(),
+        club: 'ΦΟΠ',
+        url: 'https://fop.gr/',
+        difficulty
+      });
+    }
+  }
+
+  // Deduplicate
+  const seen = new Set();
+  return events.filter(e => {
+    const key = `${e.startDate}_${e.title}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+// ----------------------------------------------------
 // MAIN AGGREGATOR
 // ----------------------------------------------------
 function main() {
@@ -999,21 +1080,15 @@ function main() {
     }
   }
 
-  const CLUB_URLS = {
-    'ΕΟΣ Αχαρνών': ['https://eosacharnon.xmiddleware.com/el'],
-    'ΑΟΣ': [
-      'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/',
-      'https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/'
-    ],
-    'ΠΟΑ': ['https://poa.gr/index.php/programma/'],
-    'ΕΟΣ Αθηνών': [
-      'https://www.eosathinon.gr/anavaseis/programma/',
-      'https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/'
-    ],
-    'ΕΟΣ Ηλιούπολης': ['https://eosh.gr/wp/product-category/greek-mountains-climbs/'],
-    'ΦΟΝΙ': ['https://www.foni.org.gr/category/ekdromes/'],
-    'ΕΠΟΣ Φυλής': ['https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/']
-  };
+  let CLUB_URLS = {};
+  const configPath = path.join(INPUT_DIR, 'link-config.json');
+  if (fs.existsSync(configPath)) {
+    try {
+      CLUB_URLS = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    } catch (e) {
+      console.error('Error reading link-config.json:', e.message);
+    }
+  }
 
   const addLog = (club, status, countOrError) => {
     const logEntry = {
@@ -1100,6 +1175,16 @@ function main() {
   } catch (e) {
     console.error('Error parsing EPOS Filis:', e.message);
     addLog('ΕΠΟΣ Φυλής', 'error', e.message);
+  }
+
+  try {
+    const fop = parseFop();
+    console.log(`Parsed ${fop.length} events from FOP`);
+    allEvents = allEvents.concat(fop);
+    addLog('ΦΟΠ', 'success', fop.length);
+  } catch (e) {
+    console.error('Error parsing FOP:', e.message);
+    addLog('ΦΟΠ', 'error', e.message);
   }
 
   // Filter out invalid dates, and only include events from TODAY onwards
