@@ -24,7 +24,20 @@ try {
   const date = parts.find(p => p.type === 'day').value;
   const month = parts.find(p => p.type === 'month').value.toUpperCase();
   const year = parts.find(p => p.type === 'year').value;
-  formattedDate = `${day}, ${date} ${month} ${year}`;
+  
+  const rawDate = `${day}, ${date} ${month} ${year}`;
+  
+  // Strip Greek accents from uppercase letters for standard Greek typography
+  formattedDate = rawDate
+    .replace(/Ά/g, 'Α')
+    .replace(/Έ/g, 'Ε')
+    .replace(/Ή/g, 'Η')
+    .replace(/Ί/g, 'Ι')
+    .replace(/Ό/g, 'Ο')
+    .replace(/Ύ/g, 'Υ')
+    .replace(/Ώ/g, 'Ω')
+    .replace(/Ϋ/g, 'Υ')
+    .replace(/Ϊ/g, 'Ι');
 } catch (e) {
   // Safe fallback
   formattedDate = 'ΤΕΤΑΡΤΗ, 10 ΙΟΥΝΙΟΥ 2026';
@@ -110,7 +123,19 @@ try {
           const month = parts.find(p => p.type === 'month').value.toUpperCase();
           const year = parts.find(p => p.type === 'year').value;
           
-          document.getElementById('current-date').textContent = `${day}, ${date} ${month} ${year}`;
+          const rawDate = `${day}, ${date} ${month} ${year}`;
+          const cleanDate = rawDate
+            .replace(/Ά/g, 'Α')
+            .replace(/Έ/g, 'Ε')
+            .replace(/Ή/g, 'Η')
+            .replace(/Ί/g, 'Ι')
+            .replace(/Ό/g, 'Ο')
+            .replace(/Ύ/g, 'Υ')
+            .replace(/Ώ/g, 'Ω')
+            .replace(/Ϋ/g, 'Υ')
+            .replace(/Ϊ/g, 'Ι');
+          
+          document.getElementById('current-date').textContent = cleanDate;
         } catch (e) {
           console.error('Error setting Athens local date:', e);
         }
