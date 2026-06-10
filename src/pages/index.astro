@@ -159,6 +159,31 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
           })}
         </div>
       </div>
+
+      <!-- Row 3: Duration Filter pills -->
+      <div>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2 select-none font-mono">ΔΙΑΡΚΕΙΑ:</span>
+        <div class="flex flex-wrap gap-1.5" id="duration-filters-container">
+          <button 
+            data-duration-filter="all" 
+            class="px-2.5 py-1 rounded border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-duration-btn"
+          >
+            Όλες
+          </button>
+          <button 
+            data-duration-filter="single" 
+            class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+          >
+            Μονοήμερη
+          </button>
+          <button 
+            data-duration-filter="multi" 
+            class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+          >
+            Πολυήμερη
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -208,6 +233,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                         <div 
                           class={`event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-2.5 first:pt-0 last:pb-0 ${idx > 0 ? 'border-t border-slate-200/80 pt-4 mt-4' : ''}`}
                           data-club={event.club}
+                          data-duration={isMultiDay ? 'multi' : 'single'}
                           data-search-text={searchText}
                         >
                           <!-- Title & Meta Tags -->
@@ -353,6 +379,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     const searchInput = document.getElementById('search-input') as HTMLInputElement;
     const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
     const clubFiltersContainer = document.getElementById('club-filters-container');
+    const durationFiltersContainer = document.getElementById('duration-filters-container');
     
     const eventRows = document.querySelectorAll('.event-row');
     const dateGroups = document.querySelectorAll('.date-group');
@@ -362,6 +389,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     const statTotalCount = document.getElementById('stat-total-count');
 
     let activeClub = 'all';
+    let activeDuration = 'all';
     let searchQuery = '';
 
     // Greek Accent Normalizer
@@ -387,13 +415,15 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       eventRows.forEach(row => {
         const rowElement = row as HTMLElement;
         const clubVal = rowElement.getAttribute('data-club') || '';
+        const durationVal = rowElement.getAttribute('data-duration') || '';
         const searchRaw = rowElement.getAttribute('data-search-text') || '';
         const cleanSearchText = cleanString(searchRaw);
 
         const clubMatches = (activeClub === 'all' || clubVal === activeClub);
+        const durationMatches = (activeDuration === 'all' || durationVal === activeDuration);
         const searchMatches = (cleanQuery === '' || cleanSearchText.includes(cleanQuery));
 
-        if (clubMatches && searchMatches) {
+        if (clubMatches && durationMatches && searchMatches) {
           rowElement.classList.remove('hidden');
           visibleCount++;
         } else {
@@ -508,9 +538,35 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       });
     }
 
+    // Duration selection filters
+    if (durationFiltersContainer) {
+      durationFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-duration-filter]') as HTMLButtonElement;
+        if (!button) return;
+
+        const selectedDuration = button.getAttribute('data-duration-filter') || 'all';
+        activeDuration = selectedDuration;
+
+        const allButtons = durationFiltersContainer.querySelectorAll('[data-duration-filter]');
+        allButtons.forEach(btn => {
+          const b = btn as HTMLButtonElement;
+          const durationAttr = b.getAttribute('data-duration-filter');
+
+          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
+          if (activeDuration === durationAttr) {
+            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-duration-btn');
+          } else {
+            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+          }
+        });
+
+        applyFilters();
+      });
+    }
+
     // Reset filters
     function resetFilters() {
-      activeClub = 'all';
       searchQuery = '';
       if (searchInput) searchInput.value = '';
       if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
@@ -518,7 +574,8 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       const allClubBtn = document.querySelector('[data-club-filter="all"]') as HTMLButtonElement;
       if (allClubBtn) allClubBtn.click();
 
-      applyFilters();
+      const allDurationBtn = document.querySelector('[data-duration-filter="all"]') as HTMLButtonElement;
+      if (allDurationBtn) allDurationBtn.click();
     }
 
     if (resetFiltersBtn) {
