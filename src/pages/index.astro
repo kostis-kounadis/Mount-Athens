@@ -220,14 +220,14 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
                             <div class="flex flex-wrap items-center gap-1.5">
                               <!-- Club Name Badge (Fixed 22px Height) -->
-                              <a 
-                                href={event.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class={`inline-flex items-center h-[22px] px-2 border text-[9px] uppercase font-bold tracking-wider font-mono rounded transition-colors duration-150 ${theme.badge} ${theme.border}`}
+                              <button 
+                                type="button"
+                                data-filter-club={event.club}
+                                class={`inline-flex items-center h-[22px] px-2 border text-[9px] uppercase font-bold tracking-wider font-mono rounded cursor-pointer transition-colors duration-150 ${theme.badge} ${theme.border}`}
+                                title={`Φιλτράρισμα κατά ${event.club}`}
                               >
                                 {event.club}
-                              </a>
+                              </button>
 
                               <!-- Excursion date tag if multi-day (Fixed 22px Height) -->
                               {isMultiDay && (
@@ -518,5 +518,28 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     if (resetFiltersBtn) {
       resetFiltersBtn.addEventListener('click', resetFilters);
     }
+
+    // Inline club badge click filter
+    document.addEventListener('click', (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+      
+      const badge = target.closest('[data-filter-club]');
+      if (!badge) return;
+
+      const selectedClub = badge.getAttribute('data-filter-club');
+      if (!selectedClub) return;
+
+      const filterButton = document.querySelector(`[data-club-filter="${selectedClub}"]`);
+      if (filterButton instanceof HTMLButtonElement) {
+        filterButton.click();
+        
+        // Scroll smoothly back to the top of the calendar
+        const container = document.getElementById('search-input');
+        if (container) {
+          container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
   </script>
 </Layout>
