@@ -9,16 +9,26 @@ interface Props {
 
 const { title, description, image } = Astro.props;
 
-// Format current date in Greek
-const GREEK_DAYS = ['ΚΥΡΙΑΚΗ', 'ΔΕΥΤΕΡΑ', 'ΤΡΙΤΗ', 'ΤΕΤΑΡΤΗ', 'ΠΕΜΠΤΗ', 'ΠΑΡΑΣΚΕΥΗ', 'ΣΑΒΒΑΤΟ'];
-const GREEK_MONTHS = ['ΙΑΝΟΥΑΡΙΟΥ', 'ΦΕΒΡΟΥΑΡΙΟΥ', 'ΜΑΡΤΙΟΥ', 'ΑΠΡΙΛΙΟΥ', 'ΜΑΪΟΥ', 'ΙΟΥΝΙΟΥ', 'ΙΟΥΛΙΟΥ', 'ΑΥΓΟΥΣΤΟΥ', 'ΣΕΠΤΕΜΒΡΙΟΥ', 'ΟΚΤΩΒΡΙΟΥ', 'ΝΟΕΜΒΡΙΟΥ', 'ΔΕΚΕΜΒΡΙΟΥ'];
+// Format current date in Greek (Athens timezone)
+let formattedDate = '';
+try {
+  const parts = new Intl.DateTimeFormat('el-GR', {
+    timeZone: 'Europe/Athens',
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  }).formatToParts(new Date());
 
-const now = new Date('2026-06-09T20:04:40+03:00');
-const dayName = GREEK_DAYS[now.getDay()];
-const dateNum = String(now.getDate()).padStart(2, '0');
-const monthName = GREEK_MONTHS[now.getMonth()];
-const year = now.getFullYear();
-const formattedDate = `${dayName}, ${dateNum} ${monthName} ${year}`;
+  const day = parts.find(p => p.type === 'weekday').value.toUpperCase();
+  const date = parts.find(p => p.type === 'day').value;
+  const month = parts.find(p => p.type === 'month').value.toUpperCase();
+  const year = parts.find(p => p.type === 'year').value;
+  formattedDate = `${day}, ${date} ${month} ${year}`;
+} catch (e) {
+  // Safe fallback
+  formattedDate = 'ΤΕΤΑΡΤΗ, 10 ΙΟΥΝΙΟΥ 2026';
+}
 ---
 
 <!doctype html>
@@ -81,9 +91,30 @@ const formattedDate = `${dayName}, ${dateNum} ${monthName} ${year}`;
         <span class="font-bold tracking-tight text-lg text-slate-900 font-sans leading-tight">Ορειβατικό Ημερολόγιο</span>
       </a>
       
-      <div class="text-mono text-[10px] md:text-[11px] font-medium tracking-wider text-slate-500 select-none whitespace-nowrap ml-4">
+      <div id="current-date" class="text-mono text-[10px] md:text-[11px] font-medium tracking-wider text-slate-500 select-none whitespace-nowrap ml-4">
         {formattedDate}
       </div>
+
+      <script is:inline>
+        try {
+          const parts = new Intl.DateTimeFormat('el-GR', {
+            timeZone: 'Europe/Athens',
+            weekday: 'long',
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          }).formatToParts(new Date());
+          
+          const day = parts.find(p => p.type === 'weekday').value.toUpperCase();
+          const date = parts.find(p => p.type === 'day').value;
+          const month = parts.find(p => p.type === 'month').value.toUpperCase();
+          const year = parts.find(p => p.type === 'year').value;
+          
+          document.getElementById('current-date').textContent = `${day}, ${date} ${month} ${year}`;
+        } catch (e) {
+          console.error('Error setting Athens local date:', e);
+        }
+      </script>
     </header>
 
     <!-- Main Content Area -->
