@@ -7,14 +7,24 @@ Built for sheer speed, typographic legibility, and zero unnecessary operational 
 ---
 
 ## ⛰️ Supported Clubs & Crawlers
-The application currently crawls, parses, and aggregates calendar events from:
+The application dynamically crawls, parses, and aggregates calendar events from:
 * **ΑΟΣ** (Αθηναϊκός Ορειβατικός Σύλλογος)
+  - Program & Events: https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/
+  - Excursion Program: https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/
 * **ΕΟΣ Αθηνών**
+  - Excursion Calendar: https://www.eosathinon.gr/anavaseis/programma/
 * **ΕΟΣ Αχαρνών**
+  - Live Booking Engine: https://eosacharnon.xmiddleware.com/el (sourced via portal)
 * **ΕΟΣ Ηλιούπολης**
+  - Mountain Excursions Category: https://eosh.gr/wp/product-category/greek-mountains-climbs/
 * **ΕΠΟΣ Φυλής**
+  - Calendar Category: https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/
 * **ΠΟΑ** (Πεζοπορικός Όμιλος Αθηνών)
+  - Detailed Program: https://poa.gr/index.php/programma/
 * **ΦΟΝΙ** (Φυσιολατρικός Όμιλος Νέας Ιωνίας)
+  - Excursions Category: https://www.foni.org.gr/category/ekdromes/
+* **ΦΟΠ** (Φυσιολατρικός Όμιλος Πειραιώς)
+  - Excursion Program: https://fop.gr/
 
 ---
 
