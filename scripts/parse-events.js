@@ -15,8 +15,14 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
-// Current date threshold
-const TODAY = new Date('2026-06-09');
+// Current date threshold in Europe/Athens timezone
+const athensFormatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Athens',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+});
+const TODAY = new Date(athensFormatter.format(new Date()));
 
 // Month translation helper
 const MONTH_MAP = {
