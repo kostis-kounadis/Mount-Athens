@@ -118,6 +118,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
             type="text" 
             id="search-input" 
             placeholder="Αναζήτηση βουνού, προορισμού (π.χ. Ταΰγετος)..." 
+            aria-label="Αναζήτηση βουνού, προορισμού ή συλλόγου"
             class="w-full pl-3 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:bg-white transition-all duration-200 font-sans"
           />
           <button 
@@ -135,7 +136,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
       <!-- Row 2: Club Filter pills -->
       <div>
-        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2 select-none font-mono">ΣΥΛΛΟΓΟΣ:</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΣΥΛΛΟΓΟΣ:</span>
         <div class="flex flex-wrap gap-1.5" id="club-filters-container">
           <button 
             data-club-filter="all" 
@@ -162,7 +163,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
       <!-- Row 3: Duration Filter pills -->
       <div>
-        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2 select-none font-mono">ΔΙΑΡΚΕΙΑ:</span>
+        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΔΙΑΡΚΕΙΑ:</span>
         <div class="flex flex-wrap gap-1.5" id="duration-filters-container">
           <button 
             data-duration-filter="all" 
@@ -194,7 +195,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       return (
         <div class="month-group" data-month-year={monthYear}>
           <!-- Minimal Month Separator -->
-          <h2 class="text-mono text-xs font-bold tracking-widest text-slate-400 mt-10 mb-5 uppercase select-none">
+          <h2 class="text-mono text-xs font-bold tracking-widest text-slate-600 mt-10 mb-5 uppercase select-none">
             {monthYear}
           </h2>
 
@@ -214,7 +215,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                     <span class="text-3xl font-bold text-slate-800 leading-none">
                       {dayNum}
                     </span>
-                    <div class="flex md:flex-col items-baseline md:items-start gap-1.5 md:gap-0.5 text-[9px] text-slate-400 font-bold tracking-wider font-mono">
+                    <div class="flex md:flex-col items-baseline md:items-start gap-1.5 md:gap-0.5 text-[9px] text-slate-600 font-bold tracking-wider font-mono">
                       <span>{dayOfWeek}</span>
                       <span class="md:hidden">/</span>
                       <span>{monthFull}</span>
@@ -263,7 +264,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
                               <!-- Excursion date tag if multi-day (Fixed 22px Height) -->
                               {isMultiDay && (
-                                <span class="inline-flex items-center h-[22px] px-2 border border-slate-200 text-[9px] font-bold font-mono text-slate-400 bg-slate-50 rounded select-none">
+                                <span class="inline-flex items-center h-[22px] px-2 border border-slate-200 text-[9px] font-bold font-mono text-slate-600 bg-slate-50 rounded select-none">
                                   {event.displayDate}
                                 </span>
                               )}
@@ -276,6 +277,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                               href={event.url}
                               target="_blank" 
                               rel="noopener noreferrer" 
+                              aria-label={`Λεπτομέρειες για την εκδρομή: ${event.title}`}
                               class="inline-flex items-center gap-1 text-mono text-xs font-semibold text-slate-800 hover:text-slate-500 transition-colors duration-150"
                             >
                               Λεπτομέρειες
