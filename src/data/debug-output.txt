@@ -1,212 +1,90 @@
-Debug run at 2026-06-12T03:32:57.924Z
+Debug run at 2026-06-13T02:58:13.213Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
-Size: 11908 chars
+Size: 183063 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
-  <meta charset="utf8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <script>
-      (function(){
-          setTimeout(function(){
-              window.location.reload();
-          }, 5000);
-      }())
-  </script>
-  <link rel="icon" href="data:,">
-  <title>Περιμένε μια στιγμή…</title>
-  <style>
-.spinner {
-    -webkit-animation: spin 1s ease-out;
-    animation: spin 1s ease-out;
-}
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-#outer-container {
-    text-align: center;
-}
-#container {
-        display: inline-block;
-        height: 100px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
+	 <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Πρόγραμμα - POA</title>
+	<link rel="canonical" href="https://poa.gr/index.php/programma/" />
+	<meta property="og:locale" content="el_GR" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Πρόγραμμα - POA" />
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Ιούνιος 2026 7/6 ΦΑΡΑΓΓΙ ΠΕΡΙΣΤΕΡΙΩΝΑ &#8211; ΑΚΡΑΤΑ ΒΔ 1 Κυριακή: Αναχώρηση στις 07:00 για τον οικισμό Φούρνοι, πάνω στην
 Snippet (last 1000 chars):
-fd21a8fb5fd0d03e0fdc3d3cedae52f',z='failedChecks',I=Object[E(0x1a8)](a0f)[E(a0g.c)](([Z,V])=>{try{return V()?Z:null;}catch(x){return null;}})[E(0x177)](Z=>Z!==null),O=I[E(a0g.m)]>0x0;if(O){var i=new URLSearchParams();i[E(0x1ad)]('id','a6105c0a61'+E(a0g.U)+E(a0g.v)+'9e'),i[E(0x1ad)]('ts','1781235167'),i[E(0x1ad)](U,t+m),i[E(a0g.l)](v,l),I[E(a0g.L)](Z=>i[E(0x1ad)](z,Z));var C=new XMLHttpRequest();C[E(0x17c)](E(0x187),L+'?'+i[E(0x19c)]()),C[E(a0g.z)](null);}else w['id']='ou6xh5dlogtk',w[E(a0g.I)]='display:no'+E(a0g.O),w['method']='GET',w[E(a0g.i)]=L,Y['id']='p9lc924xm6vb',Y[E(a0g.C)]=U,Y[E(a0g.Z)]=t+m,Y[E(0x1a3)]=E(a0g.V),f[E(0x184)]='id',f[E(0x1a4)]=E(a0g.x)+E(a0g.n)+E(0x1a5)+'c7',f['type']=E(0x192),c[E(a0g.C)]='ts',c[E(0x1a4)]='1781235167',c['type']=E(0x192),G['id']='tr2qhibgqyz7',G['name']=v,G[E(0x1a4)]=l,G[E(a0g.T)]=E(0x192),w['appendChil'+'d'](Y),w[E(a0g.F)+'d'](G),w['appendChil'+'d'](f),w[E(a0g.e)+'d'](c),W[E(a0g.e)+'d'](w),w[E(a0g.u)]();},0x3e8);},![]);
-  </script>
-</body>
+orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":905,"title":"%CE%A0%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1%20-%20POA","excerpt":"","featuredImage":false}};
+</script>
+<script src="https://poa.gr/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.27.7" id="elementor-frontend-js"></script>
+			<script>
+			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+			</script>
+				</body>
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
-Size: 11871 chars
+Size: 102582 chars
 Snippet (first 1000 chars):
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <script>
-      (function(){
-          setTimeout(function(){
-              window.location.reload();
-          }, 5000);
-      }())
-  </script>
-  <link rel="icon" href="data:,">
-  <title>Περιμένε μια στιγμή…</title>
-  <style>
-.spinner {
-    -webkit-animation: spin 1s ease-out;
-    animation: spin 1s ease-out;
-}
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-#outer-container {
-    text-align: center;
-}
-#container {
-        display: inline-block;
-        height: 100px;
-    }
+<!DOCTYPE html><html
+lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17269 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default"><head><meta
+charset="UTF-8" /><meta
+name="viewport" content="width=device-width, initial-scale=1"> <script>(function(s,e,n,d,er){s.Sender=er;s[er]=s[er]||function(){(s[er].q=s[er].q||[]).push(arguments)},s[er].l=1*new Date();var a=e.createElement(n),m=e.getElementsByTagName(n)[0];a.async=1;a.src=d;m.parentNode.insertBefore(a,m)})(window,document,'script','https://cdn
 Snippet (last 1000 chars):
-s%2F',I='/z0f76a1d14fd21a8fb5fd0d03e0fdc3d3cedae52f',F='failedChecks',w=Object['entries'](a0b)[x(a0m.A)](([B,l])=>{try{return l()?B:null;}catch(M){return null;}})[x(0xd9)](B=>B!==null),Y=w[x(a0m.W)]>0x0;if(Y){var q=new URLSearchParams();q['append']('id',x(0xc6)+x(0xb1)+x(0xdc)+'9e'),q[x(0xbd)]('ts','1781235162'),q[x(0xbd)](W,Q+A),q[x(0xbd)](p,z),w[x(0xc9)](B=>q[x(0xbd)](F,B));var D=new XMLHttpRequest();D[x(a0m.p)](x(0xec),I+'?'+q[x(0xb4)]()),D['send'](null);}else R['id']='fct7t2m6slza',R[x(a0m.z)]=x(a0m.I)+x(0xc3),R[x(a0m.F)]=x(a0m.w),R[x(a0m.Y)]=I,O['id']='cqzxt4swpp8z',O[x(a0m.q)]=W,O[x(0xcb)]=Q+A,O[x(0xea)]='hidden',b['name']='id',b[x(a0m.D)]=x(a0m.B)+x(a0m.l)+'d49030b349'+'c7',b[x(a0m.M)]=x(0xbe),r[x(a0m.q)]='ts',r['value']='1781235162',r[x(a0m.M)]=x(a0m.G),v['id']='bdn1yps5zf4d',v[x(0xd4)]=p,v[x(0xcb)]=z,v[x(a0m.i)]=x(0xbe),R['appendChil'+'d'](O),R[x(0xc0)+'d'](v),R['appendChil'+'d'](b),R[x(a0m.S)+'d'](r),V[x(0xc0)+'d'](R),R[x(0xbf)]();},0x3e8);},![]);
-  </script>
-</body>
-</html>
+pt-in')>=0||html.className.indexOf('av-cookies-can-opt-out')>=0;var allow_continue=!0;var silent_accept_cookie=html.className.indexOf('av-cookies-user-silent-accept')>=0;if(cookie_check&&!silent_accept_cookie){if(!document.cookie.match(/aviaCookieConsent/)||html.className.indexOf('av-cookies-session-refused')>=0){allow_continue=!1}else{if(!document.cookie.match(/aviaPrivacyRefuseCookiesHideBar/)){allow_continue=!1}else if(!document.cookie.match(/aviaPrivacyEssentialCookiesEnabled/)){allow_continue=!1}else if(document.cookie.match(/aviaPrivacyGoogleWebfontsDisabled/)){allow_continue=!1}}}
+if(allow_continue){var f=document.createElement('link');f.type='text/css';f.rel='stylesheet';f.href='https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=auto';f.id='avia-google-webfont';document.getElementsByTagName('head')[0].appendChild(f)}})()</script> </body></html>
+<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 13/06/2026 04:41 (UTC:2) -->
 
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
 Headers:
-  cache-control: private, no-cache, no-store, must-revalidate, max-age=0
-  cf-edge-cache: no-cache
   connection: keep-alive
-  content-length: 11863
-  content-type: text/html
-  date: Fri, 12 Jun 2026 03:32:58 GMT
-  server: openresty/1.29.2.3
-Length: 11803 chars
+  content-encoding: gzip
+  content-type: text/html; charset=UTF-8
+  date: Sat, 13 Jun 2026 02:58:14 GMT
+  link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
+  server: nginx
+  transfer-encoding: chunked
+  vary: Accept-Encoding
+Length: 183063 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
-  <meta charset="utf8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <script>
-      (function(){
-          setTimeout(function(){
-              window.location.reload();
-          }, 5000);
-      }())
-  </script>
-  <link rel="icon" href="data:,">
-  <title>Περιμένε μια στιγμή…</title>
-  <style>
-.spinner {
-    -webkit-animation: spin 1s ease-out;
-    animation: spin 1s ease-out;
-}
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-#outer-container {
-    text-align: center;
-}
-#container {
-        display: inline-block;
-        height: 100px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
+	 <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Πρόγραμμα - POA</title>
+	<link rel="canonical" href="https://poa.gr/index.php/programma/" />
+	<meta property="og:locale" content="el_GR" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Πρόγραμμα - POA" />
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Ιούνιος 2026 7/6 ΦΑΡΑΓΓΙ ΠΕΡΙΣΤΕΡΙΩΝΑ &#8211; ΑΚΡΑΤΑ ΒΔ 1 Κυριακή: Αναχώρηση στις 07:00 για τον οικισμό Φούρνοι, πάνω στην
 === Testing Fresh Fetch: https://eosh.gr/wp/product-category/greek-mountains-climbs/ ===
 Status: 200 OK
 Headers:
-  cache-control: private, no-cache, no-store, must-revalidate, max-age=0
-  cf-edge-cache: no-cache
+  cache-control: no-cache, no-cache, no-store, must-revalidate
   connection: keep-alive
-  content-length: 11849
-  content-type: text/html
-  date: Fri, 12 Jun 2026 03:32:59 GMT
-  server: openresty/1.29.2.3
-Length: 11789 chars
+  content-encoding: br
+  content-type: text/html; charset=UTF-8
+  date: Sat, 13 Jun 2026 02:58:15 GMT
+  last-modified: Sat, 13 Jun 2026 02:41:19 GMT
+  pragma: no-cache
+  server: nginx
+  transfer-encoding: chunked
+  vary: Accept-Encoding, Accept-Encoding
+  wpo-cache-status: cached
+Length: 102582 chars
 Snippet (first 1000 chars):
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <script>
-      (function(){
-          setTimeout(function(){
-              window.location.reload();
-          }, 5000);
-      }())
-  </script>
-  <link rel="icon" href="data:,">
-  <title>Περιμένε μια στιγμή…</title>
-  <style>
-.spinner {
-    -webkit-animation: spin 1s ease-out;
-    animation: spin 1s ease-out;
-}
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-#outer-container {
-    text-align: center;
-}
-#container {
-        display: inline-block;
-        height: 100px;
-    }
+<!DOCTYPE html><html
+lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17269 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default"><head><meta
+charset="UTF-8" /><meta
+name="viewport" content="width=device-width, initial-scale=1"> <script>(function(s,e,n,d,er){s.Sender=er;s[er]=s[er]||function(){(s[er].q=s[er].q||[]).push(arguments)},s[er].l=1*new Date();var a=e.createElement(n),m=e.getElementsByTagName(n)[0];a.async=1;a.src=d;m.parentNode.insertBefore(a,m)})(window,document,'script','https://cdn
