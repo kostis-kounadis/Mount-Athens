@@ -1,59 +1,5 @@
 [
   {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-14",
-    "displayDate": "13-14/6",
-    "title": "Άγραφα: Ίταμος (1504μ.) – Πέντε Πύργοι (2004μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#elementor-tab-title-2172",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-13",
-    "displayDate": "13 Ιουν",
-    "title": "Υμηττός (μουσική βραδιά στο καταφύγιο)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/wp/product/hymettus-music-night-at-eosh-refuge/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-13",
-    "displayDate": "13 Ιουν",
-    "title": "Φαράγγι Ασωπού & μονοπάτι σιδηροδρομικών",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/13-iouniou-2026-pezoporiki-farangi-asopou-monopati-sidirodromikon/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-14",
-    "displayDate": "13-14/6",
-    "title": "Ταΰγετος: Δάσος της Βασιλικής - Προφήτης Ηλίας (2.407μ.) – Αναβρυτή (2ήμερη διάσχιση)",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/%cf%84%ce%b1%ce%b0%ce%b3%ce%b5%cf%84%ce%bf%cf%82-%ce%b4%ce%ac%cf%83%ce%bf%cf%82-%cf%84%ce%b7%cf%82-%ce%b2%ce%b1%cf%83%ce%b9%ce%bb%ce%b9%ce%ba%ce%ae%cf%82-%cf%80%cf%81%ce%bf%cf%86%ce%ae%cf%84%ce%b7/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-13",
-    "displayDate": "13/6",
-    "title": "ΠΑΡΝΑΣΣΟΣ (ΠΥΡΓΑΚΙΑ)",
-    "club": "ΦΟΠ",
-    "url": "https://fop.gr/",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-06-14",
-    "endDate": "2026-06-14",
-    "displayDate": "14/6",
-    "title": "Χελμός - Ύδατα Στυγός - Διάσχιση",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmn7rv2l1006gqa01tmee0fbs",
-    "difficulty": "Γ"
-  },
-  {
     "startDate": "2026-06-14",
     "endDate": "2026-06-14",
     "displayDate": "14 Ιουν",
@@ -412,6 +358,24 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-10-04",
+    "endDate": "2026-10-04",
+    "displayDate": "4/10",
+    "title": "ΟΙΤΗ: Πυρά Ηρακλέους – Μακρυράχη – Πυργάκι",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmn063sqy0083o901qpeo5val",
+    "difficulty": "Α"
+  },
+  {
+    "startDate": "2026-10-06",
+    "endDate": "2026-10-14",
+    "displayDate": "6-14/10",
+    "title": "ΑΝΔΑΛΟΥΣΙΑ",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo7a971g0041oh01utpzqciu",
+    "difficulty": "Α"
   },
   {
     "startDate": "2026-10-10",
