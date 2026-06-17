@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-16T03:40:23.840Z",
+  "lastUpdated": "2026-06-17T03:40:23.722Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -32,7 +32,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 100375
+          "size": 100006
         }
       ]
     },
@@ -74,7 +74,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 98810
+          "size": 107864
         }
       ]
     },
@@ -95,14 +95,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 3 events",
+      "details": "Parsed 2 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 182081
+          "size": 177260
         }
       ]
     },
@@ -116,7 +116,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 95774
+          "size": 95766
         }
       ]
     }
