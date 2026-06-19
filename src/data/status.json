@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-18T03:32:20.597Z",
+  "lastUpdated": "2026-06-19T03:54:17.653Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 266675
+          "size": 266760
         }
       ]
     },
@@ -32,7 +32,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 100006
+          "size": 99861
         }
       ]
     },
@@ -74,21 +74,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 107864
+          "size": 107929
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
       "status": "success",
-      "details": "Parsed 7 events",
+      "details": "Parsed 8 events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 77823
+          "size": 77616
         }
       ]
     },
@@ -102,7 +102,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 180332
+          "size": 181033
         }
       ]
     },
@@ -116,7 +116,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 95771
+          "size": 95772
         }
       ]
     }
