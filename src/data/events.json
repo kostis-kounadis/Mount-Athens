@@ -1,14 +1,5 @@
 [
   {
-    "startDate": "2026-06-20",
-    "endDate": "2026-06-20",
-    "displayDate": "20/6",
-    "title": "Πύργος Φωκίδας-Σεργούλα-παραλία Σεργούλας",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo0bup68002jqa01yptiujtu",
-    "difficulty": "Α+"
-  },
-  {
     "startDate": "2026-06-21",
     "endDate": "2026-06-21",
     "displayDate": "21 Ιουν",
@@ -394,6 +385,15 @@
     "club": "ΕΟΣ Αχαρνών",
     "url": "https://eosacharnon.xmiddleware.com/el/booking/cmngc1ugx00hkqa01jhgwshk8",
     "difficulty": "Β"
+  },
+  {
+    "startDate": "2026-10-18",
+    "endDate": "2026-10-18",
+    "displayDate": "18/10",
+    "title": "Δάσος Φολόης & Φαράγγι Κενταύρων",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmnx0zdkr0006qa01auvshk40",
+    "difficulty": "Α"
   },
   {
     "startDate": "2026-10-18",
