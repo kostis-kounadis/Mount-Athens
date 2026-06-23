@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-22T03:46:12.034Z",
+  "lastUpdated": "2026-06-23T02:50:32.354Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -18,14 +18,14 @@
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 8 events",
+      "details": "Parsed 7 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 86676
+          "size": 85578
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
@@ -60,21 +60,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 184548
+          "size": 184575
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 5 events",
+      "details": "Parsed 4 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 108988
+          "size": 97746
         }
       ]
     },
@@ -88,7 +88,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 77586
+          "size": 77612
         }
       ]
     },
