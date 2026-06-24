@@ -672,7 +672,7 @@ function parseEosAthinon() {
           displayDate: parsed.displayDate,
           title: titlePart,
           club: 'ΕΟΣ Αθηνών',
-          url: 'https://www.eosathinon.gr/anavaseis/programma/',
+          url: 'https://www.eosathinon.gr/anavaseis/programma/#:~:text=' + encodeURIComponent(titlePart),
           difficulty: ''
         });
       }
@@ -1045,7 +1045,7 @@ function parseFop() {
         displayDate,
         title: title.replace(/\s+/g, ' ').trim(),
         club: 'ΦΟΠ',
-        url: 'https://fop.gr/',
+        url: 'https://fop.gr/#:~:text=' + encodeURIComponent(title.replace(/\s+/g, ' ').trim()),
         difficulty
       });
     }
