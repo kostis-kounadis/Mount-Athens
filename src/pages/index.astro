@@ -107,6 +107,10 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 ---
 
 <Layout>
+  <!-- Scroll Progress Bar (Fixed to bottom) -->
+  <div class="fixed bottom-0 left-0 w-full h-[3px] z-50 pointer-events-none">
+    <div id="scroll-progress-bar" class="h-full bg-orange-500 w-0"></div>
+  </div>
   
   <!-- Minimal Compact Filters Dashboard -->
   <div class="bg-white border border-slate-200 rounded-xl p-5 mb-8 shadow-sm">
@@ -342,9 +346,9 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
               {log.fetch && (
                 <div class="mt-1 pl-3 text-[8px] text-slate-400 space-y-0.5 font-mono">
                   {log.fetch.map((f: any) => (
-                    <div class="flex items-center justify-between gap-4">
-                      <span class="truncate max-w-[280px]" title={f.url}>{f.url}</span>
-                      <span class={f.success ? 'text-slate-500' : 'text-rose-500 font-medium'}>
+                    <div class="flex items-start justify-between gap-4">
+                      <span class="break-all pr-2" title={f.url}>{f.url}</span>
+                      <span class={`whitespace-nowrap flex-shrink-0 ${f.success ? 'text-slate-500' : 'text-rose-500 font-medium'}`}>
                         {f.success ? `${(f.size/1024).toFixed(1)} KB (HTTP ${f.code})` : `Failed: ${f.status}`}
                       </span>
                     </div>
@@ -376,6 +380,26 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
           statusPanelChevron.classList.remove('rotate-180');
         }
       });
+    }
+
+    // Scroll Progress Bar Logic
+    const progressBar = document.getElementById('scroll-progress-bar');
+    if (progressBar) {
+      const updateProgress = () => {
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        
+        if (scrollHeight > 0) {
+          const scrolled = (scrollTop / scrollHeight) * 100;
+          progressBar.style.width = scrolled + '%';
+        } else {
+          progressBar.style.width = '0%';
+        }
+      };
+      
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      // Initialize on load
+      updateProgress();
     }
 
     const searchInput = document.getElementById('search-input') as HTMLInputElement;

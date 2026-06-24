@@ -1,176 +1,5 @@
 [
   {
-    "startDate": "2026-06-12",
-    "endDate": "2026-06-14",
-    "displayDate": "12-14/6",
-    "title": "Νεμέρτσικα (Δούσκος)",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmmte3uis000hoc01qe691248",
-    "difficulty": "Β+, Α"
-  },
-  {
-    "startDate": "2026-06-12",
-    "endDate": "2026-06-14",
-    "displayDate": "12-14 Ιουν",
-    "title": "Ασπρόρεμα Αγράφων – Επινιανά – Καρβασαράς (Pindus Trail)",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/12-13-14-6-2026-dytika-agrafa-epiniana-karvasaras-pindus-trail/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-14",
-    "displayDate": "13-14/6",
-    "title": "Άγραφα: Ίταμος (1504μ.) – Πέντε Πύργοι (2004μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#elementor-tab-title-2172",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-13",
-    "displayDate": "13 Ιουν",
-    "title": "Υμηττός (μουσική βραδιά στο καταφύγιο)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/wp/product/hymettus-music-night-at-eosh-refuge/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-13",
-    "displayDate": "13 Ιουν",
-    "title": "Φαράγγι Ασωπού & μονοπάτι σιδηροδρομικών",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/13-iouniou-2026-pezoporiki-farangi-asopou-monopati-sidirodromikon/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-14",
-    "displayDate": "13-14/6",
-    "title": "Ταΰγετος: Δάσος της Βασιλικής - Προφήτης Ηλίας (2.407μ.) – Αναβρυτή (2ήμερη διάσχιση)",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/%cf%84%ce%b1%ce%b0%ce%b3%ce%b5%cf%84%ce%bf%cf%82-%ce%b4%ce%ac%cf%83%ce%bf%cf%82-%cf%84%ce%b7%cf%82-%ce%b2%ce%b1%cf%83%ce%b9%ce%bb%ce%b9%ce%ba%ce%ae%cf%82-%cf%80%cf%81%ce%bf%cf%86%ce%ae%cf%84%ce%b7/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-13",
-    "endDate": "2026-06-13",
-    "displayDate": "13/6",
-    "title": "ΠΑΡΝΑΣΣΟΣ (ΠΥΡΓΑΚΙΑ)",
-    "club": "ΦΟΠ",
-    "url": "https://fop.gr/",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-06-14",
-    "endDate": "2026-06-14",
-    "displayDate": "14/6",
-    "title": "Χελμός - Ύδατα Στυγός - Διάσχιση",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmn7rv2l1006gqa01tmee0fbs",
-    "difficulty": "Γ"
-  },
-  {
-    "startDate": "2026-06-14",
-    "endDate": "2026-06-14",
-    "displayDate": "14 Ιουν",
-    "title": "Παρνασσος: Αμφίκλεια – Κορυφή Κορφούλες (1764μ)",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/14-6-2026-parnassos-amfikleia-koryfi-korfoules-1764m/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-14",
-    "endDate": "2026-06-14",
-    "displayDate": "14/6",
-    "title": "ΠΑΡΝΑΣΣΟΣ – ΚΑΤΑΡΡΑΚΤΕΣ ΤΡΥΠΗΣ",
-    "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-14",
-    "endDate": "2026-06-14",
-    "displayDate": "14 Ιουν",
-    "title": "Φαράγγι Αράπη (Νηλέα)- Εύβοια",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/wp/product/arapis-gorge-evia/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-20",
-    "endDate": "2026-06-20",
-    "displayDate": "20/6",
-    "title": "Πύργος Φωκίδας-Σεργούλα-παραλία Σεργούλας",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo0bup68002jqa01yptiujtu",
-    "difficulty": "Α+"
-  },
-  {
-    "startDate": "2026-06-21",
-    "endDate": "2026-06-21",
-    "displayDate": "21 Ιουν",
-    "title": "Εύβοια: Φαράγγι Στροπώνων – Παραλία Χιλιαδού",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/kyriaki-21-6-farangi-stroponon-paralia-chiliadou/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-21",
-    "endDate": "2026-06-21",
-    "displayDate": "21/6",
-    "title": "Εύβοια: Φαράγγι Σχινοδαύλειας",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#elementor-tab-title-2173",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-21",
-    "endDate": "2026-06-21",
-    "displayDate": "21/6",
-    "title": "ΜΑΙΝΑΛΟ",
-    "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-21",
-    "endDate": "2026-06-21",
-    "displayDate": "21 Ιουν",
-    "title": "Παρνασσός (Νεραϊδοσπηλιά- Γερολέκας)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/wp/product/parnassos-gerolekas-neraidospilia/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-21",
-    "endDate": "2026-06-21",
-    "displayDate": "21/6",
-    "title": "ΜΕΘΑΝΑ",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/%ce%bc%ce%b5%ce%b8%ce%b1%ce%bd%ce%b1-21-06/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-06-21",
-    "endDate": "2026-06-21",
-    "displayDate": "21/6",
-    "title": "ΛΙΒΑΔΑΚΙ ΑΧΑΪΑΣ",
-    "club": "ΦΟΠ",
-    "url": "https://fop.gr/",
-    "difficulty": "ΒΔ 2"
-  },
-  {
-    "startDate": "2026-06-23",
-    "endDate": "2026-06-30",
-    "displayDate": "23-30/6",
-    "title": "Γύρος Ολύμπου Μια ολοκληρωμένη ορειβατική διάσχιση στα γνωστά κι άγνωστα μονοπάτια του μυθικού βουνού.",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#elementor-tab-title-2174",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-06-26",
     "endDate": "2026-06-28",
     "displayDate": "26-28/6",
@@ -194,7 +23,7 @@
     "displayDate": "27-28/6",
     "title": "ΠΑΝΤΑ ΒΡΕΧΕΙ (ΚΡΙΚΕΛΛΟΠΟΤΑΜΟΣ)",
     "club": "ΦΟΠ",
-    "url": "https://fop.gr/",
+    "url": "https://fop.gr/#:~:text=%CE%A0%CE%91%CE%9D%CE%A4%CE%91%20%CE%92%CE%A1%CE%95%CE%A7%CE%95%CE%99%20(%CE%9A%CE%A1%CE%99%CE%9A%CE%95%CE%9B%CE%9B%CE%9F%CE%A0%CE%9F%CE%A4%CE%91%CE%9C%CE%9F%CE%A3)",
     "difficulty": "ΒΔ 1"
   },
   {
@@ -212,7 +41,7 @@
     "displayDate": "28/6",
     "title": "ΛΙΜΝΗ ΔΟΞΑ – ΜΑΔΕΡΟ",
     "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9B%CE%99%CE%9C%CE%9D%CE%97%20%CE%94%CE%9F%CE%9E%CE%91%20%E2%80%93%20%CE%9C%CE%91%CE%94%CE%95%CE%A1%CE%9F",
     "difficulty": ""
   },
   {
@@ -320,7 +149,7 @@
     "displayDate": "6/9",
     "title": "ΜΥΣΤΡΑΣ – ΤΑΫΓΕΤΗ",
     "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9C%CE%A5%CE%A3%CE%A4%CE%A1%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%91%CE%AB%CE%93%CE%95%CE%A4%CE%97",
     "difficulty": ""
   },
   {
@@ -347,7 +176,7 @@
     "displayDate": "13/9",
     "title": "ΑΡΧΑΙΑ ΤΡΟΙΖΗΝΑ",
     "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%91%CE%A1%CE%A7%CE%91%CE%99%CE%91%20%CE%A4%CE%A1%CE%9F%CE%99%CE%96%CE%97%CE%9D%CE%91",
     "difficulty": ""
   },
   {
@@ -392,7 +221,7 @@
     "displayDate": "20/9",
     "title": "ΔΑΣΟΣ ΣΚΥΡΙΤΙΔΑΣ – ΜΟΝΟΠΑΤΙ ΒΛΑΧΟΚΕΡΑΣΙΑΣ",
     "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%94%CE%91%CE%A3%CE%9F%CE%A3%20%CE%A3%CE%9A%CE%A5%CE%A1%CE%99%CE%A4%CE%99%CE%94%CE%91%CE%A3%20%E2%80%93%20%CE%9C%CE%9F%CE%9D%CE%9F%CE%A0%CE%91%CE%A4%CE%99%20%CE%92%CE%9B%CE%91%CE%A7%CE%9F%CE%9A%CE%95%CE%A1%CE%91%CE%A3%CE%99%CE%91%CE%A3",
     "difficulty": ""
   },
   {
@@ -419,7 +248,7 @@
     "displayDate": "27/9",
     "title": "ΚΑΛΛΙΔΡΟΜΟ",
     "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9A%CE%91%CE%9B%CE%9B%CE%99%CE%94%CE%A1%CE%9F%CE%9C%CE%9F",
     "difficulty": ""
   },
   {
