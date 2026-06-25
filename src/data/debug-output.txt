@@ -1,4 +1,4 @@
-Debug run at 2026-06-24T20:22:44.897Z
+Debug run at 2026-06-25T02:51:04.597Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 183063 chars
@@ -29,16 +29,64 @@ orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpo
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
-Size: 97746 chars
+Size: 106788 chars
 Snippet (first 1000 chars):
-<!DOCTYPE html><html
-lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default"><head><meta
-charset="UTF-8" /><meta
-name="viewport" content="width=device-width, initial-scale=1"> <script>(function(s,e,n,d,er){s.Sender=er;s[er]=s[er]||function(){(s[er].q=s[er].q||[]).push(arguments)},s[er].l=1*new Date();var a=e.createElement(n),m=e.getElementsByTagName(n)[0];a.async=1;a.src=d;m.parentNode.insertBefore(a,m)})(window,document,'script','https://cdn
+<!DOCTYPE html>
+<html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
+<head>
+<meta charset="UTF-8" />
+
+
+<!-- mobile setting -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Scripts/CSS and wp_head hook -->
+        <script>
+            (function (s, e, n, d, er) {
+                s['Sender'] = er;
+                s[er] = s[er] || function () {
+                    (s[er].q = s[er].q || []).push(arguments)
+
 Snippet (last 1000 chars):
-pt-in')>=0||html.className.indexOf('av-cookies-can-opt-out')>=0;var allow_continue=!0;var silent_accept_cookie=html.className.indexOf('av-cookies-user-silent-accept')>=0;if(cookie_check&&!silent_accept_cookie){if(!document.cookie.match(/aviaCookieConsent/)||html.className.indexOf('av-cookies-session-refused')>=0){allow_continue=!1}else{if(!document.cookie.match(/aviaPrivacyRefuseCookiesHideBar/)){allow_continue=!1}else if(!document.cookie.match(/aviaPrivacyEssentialCookiesEnabled/)){allow_continue=!1}else if(document.cookie.match(/aviaPrivacyGoogleWebfontsDisabled/)){allow_continue=!1}}}
-if(allow_continue){var f=document.createElement('link');f.type='text/css';f.rel='stylesheet';f.href='https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=auto';f.id='avia-google-webfont';document.getElementsByTagName('head')[0].appendChild(f)}})()</script> </body></html>
-<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 24/06/2026 21:42 (UTC:2) -->
+Of('av-cookies-session-refused') >= 0 )
+						{
+							allow_continue = false;
+						}
+						else
+						{
+							if( ! document.cookie.match(/aviaPrivacyRefuseCookiesHideBar/) )
+							{
+								allow_continue = false;
+							}
+							else if( ! document.cookie.match(/aviaPrivacyEssentialCookiesEnabled/) )
+							{
+								allow_continue = false;
+							}
+							else if( document.cookie.match(/aviaPrivacyGoogleWebfontsDisabled/) )
+							{
+								allow_continue = false;
+							}
+						}
+					}
+
+					if( allow_continue )
+					{
+						var f = document.createElement('link');
+
+						f.type 	= 'text/css';
+						f.rel 	= 'stylesheet';
+						f.href 	= 'https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=auto';
+						f.id 	= 'avia-google-webfont';
+
+						document.getElementsByTagName('head')[0].appendChild(f);
+					}
+				})();
+
+			</script>
+			</body>
+</html>
+
+<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 25/06/2026 04:50 (UTC:2) -->
 
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
@@ -46,7 +94,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Wed, 24 Jun 2026 20:22:45 GMT
+  date: Thu, 25 Jun 2026 02:51:05 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -75,16 +123,28 @@ Headers:
   connection: keep-alive
   content-encoding: br
   content-type: text/html; charset=UTF-8
-  date: Wed, 24 Jun 2026 20:22:46 GMT
-  last-modified: Wed, 24 Jun 2026 19:42:44 GMT
+  date: Thu, 25 Jun 2026 02:51:06 GMT
+  last-modified: Thu, 25 Jun 2026 02:50:47 GMT
   pragma: no-cache
   server: nginx
   transfer-encoding: chunked
   vary: Accept-Encoding, Accept-Encoding
   wpo-cache-status: cached
-Length: 97746 chars
+Length: 106788 chars
 Snippet (first 1000 chars):
-<!DOCTYPE html><html
-lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default"><head><meta
-charset="UTF-8" /><meta
-name="viewport" content="width=device-width, initial-scale=1"> <script>(function(s,e,n,d,er){s.Sender=er;s[er]=s[er]||function(){(s[er].q=s[er].q||[]).push(arguments)},s[er].l=1*new Date();var a=e.createElement(n),m=e.getElementsByTagName(n)[0];a.async=1;a.src=d;m.parentNode.insertBefore(a,m)})(window,document,'script','https://cdn
+<!DOCTYPE html>
+<html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
+<head>
+<meta charset="UTF-8" />
+
+
+<!-- mobile setting -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Scripts/CSS and wp_head hook -->
+        <script>
+            (function (s, e, n, d, er) {
+                s['Sender'] = er;
+                s[er] = s[er] || function () {
+                    (s[er].q = s[er].q || []).push(arguments)
+
