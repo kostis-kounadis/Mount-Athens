@@ -466,144 +466,134 @@ function parseAos() {
 // PARSER: POA (Text-based)
 // ----------------------------------------------------
 function parsePoa() {
-  const txtPath = path.join(INPUT_DIR, 'poa_gr_index_php-programma.txt');
-  if (!fs.existsSync(txtPath)) return [];
-
-  // Parse HTML to extract anchor IDs for accordion auto-scrolling
-  const poaUrlMap = {};
   const htmlPath = path.join(INPUT_DIR, 'poa_gr_index_php-programma.html');
-  if (fs.existsSync(htmlPath)) {
-    try {
-      const html = fs.readFileSync(htmlPath, 'utf-8');
-      const $ = cheerio.load(html);
-      $('.elementor-toggle-item').each((i, el) => {
-        const titleEl = $(el).find('.elementor-toggle-title');
-        const id = $(el).find('.elementor-tab-title').attr('id');
-        if (titleEl.length && id) {
-          const text = titleEl.text().trim();
-          poaUrlMap[text] = `https://poa.gr/index.php/programma/#${id}`;
-        }
-      });
-    } catch (e) {
-      console.error('Error parsing POA HTML for IDs:', e.message);
-    }
-  }
+  if (!fs.existsSync(htmlPath)) return [];
 
-  const content = fs.readFileSync(txtPath, 'utf-8');
-  const lines = content.split('\n');
+  const html = fs.readFileSync(htmlPath, 'utf-8');
+  const $ = cheerio.load(html);
   const events = [];
 
   let currentMonth = '';
-  let currentYear = '2026'; // Default
+  let currentYear = '2026';
 
   const GREEK_MONTHS_MAP = {
     'ιανουαριος': '01', 'φεβρουαριος': '02', 'μαρτιος': '03', 'απριλιος': '04', 'μαιος': '05', 'ιουνιος': '06',
     'ιουλιος': '07', 'αυγουστος': '08', 'σεπτεμβριος': '09', 'οκτωβριος': '10', 'νοεμβριος': '11', 'δεκεμβριος': '12'
   };
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
+  $('h3.elementor-heading-title, .elementor-toggle-item, .elementor-accordion-item').each((i, el) => {
+    const $el = $(el);
+    const tagName = el.tagName.toLowerCase();
 
-    const monthHeaderMatch = line.match(/^([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})$/);
-    if (monthHeaderMatch) {
-      const mName = stripGreekAccents(monthHeaderMatch[1]).trim();
-      if (GREEK_MONTHS_MAP[mName]) {
-        currentMonth = GREEK_MONTHS_MAP[mName];
-        currentYear = monthHeaderMatch[2];
-        continue;
+    if (tagName === 'h3') {
+      const text = $el.text().trim().replace(/\s+/g, ' ');
+      // Match month name and 4 digit year
+      const match = text.match(/^([a-zA-ZΑ-Ωα-ωίϊΐόάέύώήώ\s]+)\s+(\d{4})$/i);
+      if (match) {
+        const monthName = stripGreekAccents(match[1]).trim().toLowerCase().replace(/\s+/g, '');
+        if (GREEK_MONTHS_MAP[monthName]) {
+          currentMonth = GREEK_MONTHS_MAP[monthName];
+          currentYear = match[2];
+        }
+      }
+    } else {
+      if (!currentMonth) return;
+
+      const titleEl = $el.find('.elementor-toggle-title, .elementor-accordion-title');
+      const tabTitleEl = $el.find('.elementor-tab-title');
+      const id = tabTitleEl.attr('id');
+      const fullTitleText = titleEl.text().trim().replace(/\s+/g, ' ');
+
+      // Format 1: Cross-month range "30-31/12 – 1/1 Title"
+      const crossMonthMatch = fullTitleText.match(/^(\d+(?:-\d+)?)\s*\/\s*(\d+)\s*[-–—]\s*(\d+(?:-\d+)?)\s*\/\s*(\d+)\s*(.+)$/);
+      if (crossMonthMatch) {
+        const startDayPart = crossMonthMatch[1];
+        const startMonth = crossMonthMatch[2].padStart(2, '0');
+        const endDayPart = crossMonthMatch[3];
+        const endMonth = crossMonthMatch[4].padStart(2, '0');
+        const rest = crossMonthMatch[5].trim();
+
+        // Skip itinerary lines
+        const cleanRest = stripGreekAccents(rest);
+        const isItinerary = /^(δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/i.test(cleanRest);
+        if (isItinerary) return;
+
+        const startDay = startDayPart.split('-')[0];
+        const endDay = endDayPart.split('-').pop() || '';
+
+        let title = rest;
+        let difficulty = '';
+        const bdMatch = rest.match(/(.+?)\s+(ΒΔ\s*[\d\w+]+|ΒΔ\s*X\d+|ΒΔ\s*Χ\d+)/i);
+        if (bdMatch) {
+          title = bdMatch[1].trim();
+          difficulty = bdMatch[2].trim();
+        }
+
+        let endYear = currentYear;
+        if (parseInt(endMonth) < parseInt(startMonth)) {
+          endYear = String(parseInt(currentYear) + 1);
+        }
+
+        events.push({
+          startDate: `${currentYear}-${startMonth}-${startDay.padStart(2, '0')}`,
+          endDate: `${endYear}-${endMonth}-${endDay.padStart(2, '0')}`,
+          displayDate: `${startDayPart}/${parseInt(startMonth)} - ${endDayPart}/${parseInt(endMonth)}`,
+          title: title.replace(/\s+/g, ' ').trim(),
+          club: 'ΠΟΑ',
+          url: id ? `https://poa.gr/index.php/programma/#${id}` : 'https://poa.gr/index.php/programma/',
+          difficulty
+        });
+        return;
+      }
+
+      // Format 2: Single-month range or single date: "23 – 30/6 Title"
+      const singleMonthMatch = fullTitleText.match(/^(\d+(?:\s*[-–—]\s*\d+)?)\s*\/\s*(\d+)\s+(.+)$/);
+      if (singleMonthMatch) {
+        const dayPart = singleMonthMatch[1];
+        const monthNum = singleMonthMatch[2].padStart(2, '0');
+        const rest = singleMonthMatch[3].trim();
+
+        // Skip itinerary lines
+        const cleanRest = stripGreekAccents(rest);
+        const isItinerary = /^(δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/i.test(cleanRest);
+        if (isItinerary) return;
+
+        let title = rest;
+        let difficulty = '';
+        const bdMatch = rest.match(/(.+?)\s+(ΒΔ\s*[\d\w+]+|ΒΔ\s*X\d+|ΒΔ\s*Χ\d+)/i);
+        if (bdMatch) {
+          title = bdMatch[1].trim();
+          difficulty = bdMatch[2].trim();
+        }
+
+        const dayPartClean = dayPart.replace(/\s*[-–—]\s*/g, '-').trim();
+        let startDate = '';
+        let endDate = '';
+        let displayDate = '';
+
+        if (dayPartClean.includes('-')) {
+          const [startDay, endDay] = dayPartClean.split('-');
+          startDate = `${currentYear}-${monthNum}-${startDay.padStart(2, '0')}`;
+          endDate = `${currentYear}-${monthNum}-${endDay.padStart(2, '0')}`;
+          displayDate = `${startDay}-${endDay}/${parseInt(monthNum)}`;
+        } else {
+          startDate = `${currentYear}-${monthNum}-${dayPartClean.padStart(2, '0')}`;
+          endDate = `${currentYear}-${monthNum}-${dayPartClean.padStart(2, '0')}`;
+          displayDate = `${dayPartClean}/${parseInt(monthNum)}`;
+        }
+
+        events.push({
+          startDate,
+          endDate,
+          displayDate,
+          title: title.replace(/\s+/g, ' ').trim(),
+          club: 'ΠΟΑ',
+          url: id ? `https://poa.gr/index.php/programma/#${id}` : 'https://poa.gr/index.php/programma/',
+          difficulty
+        });
       }
     }
-
-    // Match cross-month range: e.g. "30-31/12 – 1/1" or "29/5 – 1/6" followed by title
-    const crossMonthMatch = line.match(/^(\d+(?:-\d+)?)\/(\d+)\s*[-–—]\s*(\d+(?:-\d+)?)\/(\d+)\s+(.+)$/);
-    if (crossMonthMatch && currentMonth) {
-      const startDayPart = crossMonthMatch[1];
-      const startMonth = crossMonthMatch[2].padStart(2, '0');
-      const endDayPart = crossMonthMatch[3];
-      const endMonth = crossMonthMatch[4].padStart(2, '0');
-      const rest = crossMonthMatch[5].trim();
-
-      // Skip itinerary lines
-      const cleanRest = stripGreekAccents(rest);
-      const isItinerary = /^(δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)(\s|:|$)/i.test(cleanRest);
-      if (isItinerary) continue;
-
-      const startDay = startDayPart.split('-')[0];
-      const endDay = endDayPart.split('-').pop() || '';
-
-      let title = rest;
-      let difficulty = '';
-      const bdMatch = rest.match(/(.+?)\s+(ΒΔ\s*[\d\w+]+|ΒΔ\s*X\d+|ΒΔ\s*Χ\d+)/i);
-      if (bdMatch) {
-        title = bdMatch[1].trim();
-        difficulty = bdMatch[2].trim();
-      }
-
-      let endYear = currentYear;
-      if (parseInt(endMonth) < parseInt(startMonth)) {
-        endYear = String(parseInt(currentYear) + 1);
-      }
-
-      events.push({
-        startDate: `${currentYear}-${startMonth}-${startDay.padStart(2, '0')}`,
-        endDate: `${endYear}-${endMonth}-${endDay.padStart(2, '0')}`,
-        displayDate: `${startDayPart}/${parseInt(startMonth)} - ${endDayPart}/${parseInt(endMonth)}`,
-        title: title.replace(/\s+/g, ' ').trim(),
-        club: 'ΠΟΑ',
-        url: matchTitleToUrl(title.trim(), poaUrlMap, 'https://poa.gr/index.php/programma/'),
-        difficulty
-      });
-      continue;
-    }
-
-    // Match single-month date/range: e.g. "23 – 30/6" or "16-18/1" or "14/12" followed by title
-    const singleMonthMatch = line.match(/^(\d+(?:\s*[-–—]\s*\d+)?)\/(\d+)\s+(.+)$/);
-    if (singleMonthMatch && currentMonth) {
-      const dayPart = singleMonthMatch[1];
-      const monthNum = singleMonthMatch[2].padStart(2, '0');
-      const rest = singleMonthMatch[3].trim();
-
-      // Skip itinerary lines
-      const cleanRest = stripGreekAccents(rest);
-      const isItinerary = /^(δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)(\s|:|$)/i.test(cleanRest);
-      if (isItinerary) continue;
-
-      let title = rest;
-      let difficulty = '';
-      const bdMatch = rest.match(/(.+?)\s+(ΒΔ\s*[\d\w+]+|ΒΔ\s*X\d+|ΒΔ\s*Χ\d+)/i);
-      if (bdMatch) {
-        title = bdMatch[1].trim();
-        difficulty = bdMatch[2].trim();
-      }
-
-      const dayPartClean = dayPart.replace(/\s*[-–—]\s*/g, '-').trim();
-      let startDate = '';
-      let endDate = '';
-      let displayDate = '';
-
-      if (dayPartClean.includes('-')) {
-        const [startDay, endDay] = dayPartClean.split('-');
-        startDate = `${currentYear}-${monthNum}-${startDay.padStart(2, '0')}`;
-        endDate = `${currentYear}-${monthNum}-${endDay.padStart(2, '0')}`;
-        displayDate = `${startDay}-${endDay}/${parseInt(monthNum)}`;
-      } else {
-        startDate = `${currentYear}-${monthNum}-${dayPartClean.padStart(2, '0')}`;
-        endDate = `${currentYear}-${monthNum}-${dayPartClean.padStart(2, '0')}`;
-        displayDate = `${dayPartClean}/${parseInt(monthNum)}`;
-      }
-
-      events.push({
-        startDate,
-        endDate,
-        displayDate,
-        title: title.replace(/\s+/g, ' ').trim(),
-        club: 'ΠΟΑ',
-        url: matchTitleToUrl(title.trim(), poaUrlMap, 'https://poa.gr/index.php/programma/'),
-        difficulty
-      });
-    }
-  }
+  });
 
   // Deduplicate
   const seen = new Set();
@@ -618,65 +608,222 @@ function parsePoa() {
 // ----------------------------------------------------
 // PARSER: EOS Athinon (Text-based)
 // ----------------------------------------------------
-function parseEosAthinon() {
-  const txtPath = path.join(INPUT_DIR, 'eosathinon_gr_anavaseis-programma.txt');
-  if (!fs.existsSync(txtPath)) return [];
+function parseEosAthinonExoterikoy() {
+  const htmlPath = path.join(INPUT_DIR, 'eosathinon_gr_anavaseis-anavaseis-exoterikoy.html');
+  if (!fs.existsSync(htmlPath)) return [];
 
-  const content = fs.readFileSync(txtPath, 'utf-8');
-  const lines = content.split('\n');
+  const html = fs.readFileSync(htmlPath, 'utf-8');
+  const $ = cheerio.load(html);
   const events = [];
 
-  let currentYear = 2026;
+  const GREEK_MONTHS_MAP = {
+    'ιανουαριος': '01', 'φεβρουαριος': '02', 'μαρτιος': '03', 'απριλιος': '04', 'μαιος': '05', 'ιουνιος': '06',
+    'ιουλιος': '07', 'αυγουστος': '08', 'σεπτεμβριος': '09', 'οκτωβριος': '10', 'νοεμβριος': '11', 'δεκεμβριος': '12',
+    'ιανουαριου': '01', 'φεβρουαριου': '02', 'μαρτιου': '03', 'απριλιου': '04', 'μαιου': '05', 'ιουνιου': '06',
+    'ιουλιου': '07', 'αυγουστου': '08', 'σεπτεμβριου': '09', 'οκτωβριου': '10', 'νοεμβριου': '11', 'δεκεμβριου': '12'
+  };
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
+  const parseMonth = (mStr) => {
+    if (!mStr) return null;
+    const clean = stripGreekAccents(mStr).trim().toLowerCase();
+    return GREEK_MONTHS_MAP[clean] || null;
+  };
 
-    // Find lines starting with calendar icon 📅
-    if (line.startsWith('📅')) {
-      let cleanLine = line.replace('📅', '').trim();
+  $('.elementor-widget-text-editor').each((index, el) => {
+    const $el = $(el);
+    const pTags = $el.find('p');
+    if (pTags.length === 0) return;
+
+    const firstPText = $(pTags[0]).text().trim().replace(/\s+/g, ' ');
+    if (firstPText.length < 5) return;
+
+    const fullText = $el.text().replace(/\s+/g, ' ');
+    const yearMatch = fullText.match(/(202[5-9])/);
+    if (!yearMatch) return;
+    const year = yearMatch[1];
+
+    let startDate = '';
+    let endDate = '';
+    let displayDate = '';
+
+    for (let j = 0; j < Math.min(pTags.length, 5); j++) {
+      const pText = $(pTags[j]).text().trim().replace(/\s+/g, ' ');
       
-      let datePart = '';
-      const rangeTwoMonths = cleanLine.match(/(\d+\/\d+\s*[-–—]\s*\d+\/\d+)/);
-      const rangeOneMonth = cleanLine.match(/(\d+(?:\s*[-–—]\s*\d+)?\s*\/\s*\d+(?:\/\d{4})?)/);
-      const singleDate = cleanLine.match(/(\d+\/\d+(?:\/\d{4})?)/);
-
-      if (rangeTwoMonths) {
-        datePart = rangeTwoMonths[0];
-      } else if (rangeOneMonth) {
-        datePart = rangeOneMonth[0];
-      } else if (singleDate) {
-        datePart = singleDate[0];
-      }
-
-      if (!datePart) continue;
-
-      // Title is everything else with day names and leading/trailing punctuation stripped
-      let titlePart = cleanLine.replace(datePart, '');
-      titlePart = titlePart.replace(/(Δευτέρα|Τρίτη|Τετάρτη|Πέμπτη|Παρασκευή|Σάββατο|Κυριακή|δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/gi, '');
-      titlePart = titlePart
-        .replace(/^[–\-:\s]+|[–\-:\s]+$/g, '') // Strip leading/trailing dashes, colons, spaces
+      // Normalize string: strip accents and make lowercase
+      let cleanText = stripGreekAccents(pText).toLowerCase();
+      
+      // Remove week days, holidays and their common abbreviations (ORDER MATTERS: long phrases first!)
+      cleanText = cleanText
+        .replace(/(?:megalo sabbato|μεγαλο σαββατο|megali paraskeyi|μεγαλη παρασκευη)/g, '')
+        .replace(/(?:δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/g, '')
+        .replace(/(?:δευτ|τρι|τετ|πεμ|παρ|σαβ|κυρ)\.?/g, '')
         .replace(/\s+/g, ' ')
         .trim();
 
-      // Clean title from departure times
-      titlePart = titlePart.split(/\d+:/)[0].trim().replace(/[–\-:\s]+$/, '');
+      // Pattern 1: "απο [startDay] έως [endDay] [endMonth]"
+      const rangeMatch = cleanText.match(/απο\s+(\d+)\s*([a-zα-ω]+)?\s*εως\s+(\d+)\s+([a-zα-ω]+)/i);
+      if (rangeMatch) {
+        const startDay = rangeMatch[1].padStart(2, '0');
+        const startMonthStr = rangeMatch[2];
+        const endDay = rangeMatch[3].padStart(2, '0');
+        const endMonthStr = rangeMatch[4];
+        
+        const endMonthNum = parseMonth(endMonthStr);
+        const startMonthNum = parseMonth(startMonthStr) || endMonthNum;
+        
+        if (endMonthNum && startMonthNum) {
+          startDate = `${year}-${startMonthNum}-${startDay}`;
+          let endYear = year;
+          if (parseInt(endMonthNum) < parseInt(startMonthNum)) {
+            endYear = String(parseInt(year) + 1);
+          }
+          endDate = `${endYear}-${endMonthNum}-${endDay}`;
+          displayDate = `${parseInt(startDay)}/${parseInt(startMonthNum)} - ${parseInt(endDay)}/${parseInt(endMonthNum)}`;
+          break;
+        }
+      }
 
-      // Parse datePart
-      const parsed = parseDateRange(datePart, currentYear);
+      // Pattern 2: "[startDay] έως [endDay] [endMonth]" (no "απο")
+      const rangeMatchNoApo = cleanText.match(/^(\d+)\s*([a-zα-ω]+)?\s*εως\s+(\d+)\s+([a-zα-ω]+)/i);
+      if (rangeMatchNoApo) {
+        const startDay = rangeMatchNoApo[1].padStart(2, '0');
+        const startMonthStr = rangeMatchNoApo[2];
+        const endDay = rangeMatchNoApo[3].padStart(2, '0');
+        const endMonthStr = rangeMatchNoApo[4];
+        
+        const endMonthNum = parseMonth(endMonthStr);
+        const startMonthNum = parseMonth(startMonthStr) || endMonthNum;
+        
+        if (endMonthNum && startMonthNum) {
+          startDate = `${year}-${startMonthNum}-${startDay}`;
+          let endYear = year;
+          if (parseInt(endMonthNum) < parseInt(startMonthNum)) {
+            endYear = String(parseInt(year) + 1);
+          }
+          endDate = `${endYear}-${endMonthNum}-${endDay}`;
+          displayDate = `${parseInt(startDay)}/${parseInt(startMonthNum)} - ${parseInt(endDay)}/${parseInt(endMonthNum)}`;
+          break;
+        }
+      }
 
-      if (parsed) {
-        events.push({
-          startDate: parsed.startDate,
-          endDate: parsed.endDate,
-          displayDate: parsed.displayDate,
-          title: titlePart,
-          club: 'ΕΟΣ Αθηνών',
-          url: 'https://www.eosathinon.gr/anavaseis/programma/#:~:text=' + encodeURIComponent(titlePart),
-          difficulty: ''
-        });
+      // Pattern 3: "αναχωρηση [startDay]/[startMonth], επιστροφη [endDay]/[endMonth]"
+      const altRangeMatch = cleanText.match(/αναχωρηση\s+(\d+)\/(\d+)\s*,\s*επιστροφη\s+(\d+)\s*[-–—]\s*(\d+)\/(\d+)/i);
+      if (altRangeMatch) {
+        const startDay = altRangeMatch[1].padStart(2, '0');
+        const startMonth = altRangeMatch[2].padStart(2, '0');
+        const endDay = altRangeMatch[4].padStart(2, '0');
+        const endMonth = altRangeMatch[5].padStart(2, '0');
+        
+        startDate = `${year}-${startMonth}-${startDay}`;
+        let endYear = year;
+        if (parseInt(endMonth) < parseInt(startMonth)) {
+          endYear = String(parseInt(year) + 1);
+        }
+        endDate = `${endYear}-${endMonth}-${endDay}`;
+        displayDate = `${parseInt(startDay)}/${parseInt(startMonth)} - ${parseInt(endDay)}/${parseInt(endMonth)}`;
+        break;
       }
     }
+
+    if (!startDate) return;
+
+    // Extract Title from the first paragraph
+    let title = firstPText;
+    const stripPattern = new RegExp(`\\s*[-–—]?\\s*(?:[A-Za-zΑ-Ωα-ωίϊΐόάέύώήώ]+)?\\s*${year}`, 'i');
+    title = title.replace(stripPattern, '').trim();
+    title = title.replace(/\s*[-–—]\s*$/, '').trim();
+
+    // Try to find a PDF link inside the widget
+    let pdfUrl = 'https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/';
+    const aTags = $el.find('a');
+    aTags.each((j, aEl) => {
+      const href = $(aEl).attr('href');
+      if (href && href.endsWith('.pdf')) {
+        pdfUrl = href;
+      }
+    });
+
+    events.push({
+      startDate,
+      endDate,
+      displayDate,
+      title,
+      club: 'ΕΟΣ Αθηνών',
+      url: pdfUrl,
+      difficulty: ''
+    });
+  });
+
+  return events;
+}
+
+function parseEosAthinon() {
+  const txtPath = path.join(INPUT_DIR, 'eosathinon_gr_anavaseis-programma.txt');
+  let events = [];
+
+  if (fs.existsSync(txtPath)) {
+    const content = fs.readFileSync(txtPath, 'utf-8');
+    const lines = content.split('\n');
+    let currentYear = 2026;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      // Find lines starting with calendar icon 📅
+      if (line.startsWith('📅')) {
+        let cleanLine = line.replace('📅', '').trim();
+        
+        let datePart = '';
+        const rangeTwoMonths = cleanLine.match(/(\d+\/\d+\s*[-–—]\s*\d+\/\d+)/);
+        const rangeOneMonth = cleanLine.match(/(\d+(?:\s*[-–—]\s*\d+)?\s*\/\s*\d+(?:\/\d{4})?)/);
+        const singleDate = cleanLine.match(/(\d+\/\d+(?:\/\d{4})?)/);
+
+        if (rangeTwoMonths) {
+          datePart = rangeTwoMonths[0];
+        } else if (rangeOneMonth) {
+          datePart = rangeOneMonth[0];
+        } else if (singleDate) {
+          datePart = singleDate[0];
+        }
+
+        if (!datePart) continue;
+
+        // Title is everything else with day names and leading/trailing punctuation stripped
+        let titlePart = cleanLine.replace(datePart, '');
+        titlePart = titlePart.replace(/(Δευτέρα|Τρίτη|Τετάρτη|Πέμπτη|Παρασκευή|Σάββατο|Κυριακή|δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/gi, '');
+        titlePart = titlePart
+          .replace(/^[–\-:\s]+|[–\-:\s]+$/g, '') // Strip leading/trailing dashes, colons, spaces
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        // Clean title from departure times
+        titlePart = titlePart.split(/\d+:/)[0].trim().replace(/[–\-:\s]+$/, '');
+
+        // Parse datePart
+        const parsed = parseDateRange(datePart, currentYear);
+
+        if (parsed) {
+          events.push({
+            startDate: parsed.startDate,
+            endDate: parsed.endDate,
+            displayDate: parsed.displayDate,
+            title: titlePart,
+            club: 'ΕΟΣ Αθηνών',
+            url: 'https://www.eosathinon.gr/anavaseis/programma/#:~:text=' + encodeURIComponent(titlePart),
+            difficulty: ''
+          });
+        }
+      }
+    }
+  }
+
+  // Combine with climbs abroad
+  try {
+    const exoterikoy = parseEosAthinonExoterikoy();
+    events = events.concat(exoterikoy);
+  } catch (e) {
+    console.error('Error parsing EOS Athinon Exoterikoy:', e.message);
   }
 
   // Deduplicate
@@ -693,71 +840,114 @@ function parseEosAthinon() {
 // PARSER: EOS Halandriou / Ilioupolis (Text-based)
 // ----------------------------------------------------
 function parseEosHalioupolis() {
-  const txtPath = path.join(INPUT_DIR, 'eosh_gr_wp-product-category-greek-mountains-climbs.txt');
-  if (!fs.existsSync(txtPath)) return [];
-
-  // Build URL Map from WooCommerce catalog raw HTML
-  const urlMap = {};
-  const htmlPath = path.join(INPUT_DIR, 'eosh_gr_wp-product-category-greek-mountains-climbs.html');
-  const defaultUrl = 'https://eosh.gr/wp/product-category/greek-mountains-climbs/';
-
-  if (fs.existsSync(htmlPath)) {
-    try {
-      const html = fs.readFileSync(htmlPath, 'utf-8');
-      const $ = cheerio.load(html);
-      $('.product').each((i, el) => {
-        const titleText = $(el).find('.woocommerce-loop-product__title').text().trim();
-        const href = $(el).find('a.woocommerce-LoopProduct-link').attr('href');
-        if (titleText && href) {
-          urlMap[titleText] = href;
-        }
-      });
-    } catch (e) {
-      console.error('Failed to parse EOS Hlioupolis product catalog:', e.message);
+  const sources = [
+    {
+      txt: 'eosh_gr_wp-product-category-greek-mountains-climbs.txt',
+      html: 'eosh_gr_wp-product-category-greek-mountains-climbs.html',
+      defaultUrl: 'https://eosh.gr/wp/product-category/greek-mountains-climbs/'
+    },
+    {
+      txt: 'eosh_gr_wp-product-category-climbs-abroad.txt',
+      html: 'eosh_gr_wp-product-category-climbs-abroad.html',
+      defaultUrl: 'https://eosh.gr/wp/product-category/climbs-abroad/'
     }
-  }
+  ];
 
-  const content = fs.readFileSync(txtPath, 'utf-8');
-  const lines = content.split('\n');
-  const events = [];
+  let events = [];
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
+  for (const src of sources) {
+    const txtPath = path.join(INPUT_DIR, src.txt);
+    const htmlPath = path.join(INPUT_DIR, src.html);
+    if (!fs.existsSync(txtPath)) continue;
 
-    // Format: "13 Ιουν 2026: Υμηττός (μουσική βραδιά στο καταφύγιο)"
-    // Format: "27-28 Ιουν 2026: Ερύμανθος (Μουγγίλα)"
-    const match = line.match(/^(\d+(?:-\d+)?)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
-    if (match) {
-      const dayStr = match[1];
-      const monthStr = match[2];
-      const year = match[3];
-      const title = match[4];
-      
-      const monthNum = parseGreekMonth(monthStr) || '06';
+    // Build URL Map from WooCommerce catalog raw HTML
+    const urlMap = {};
+    if (fs.existsSync(htmlPath)) {
+      try {
+        const html = fs.readFileSync(htmlPath, 'utf-8');
+        const $ = cheerio.load(html);
+        $('.product').each((i, el) => {
+          const titleText = $(el).find('.woocommerce-loop-product__title').text().trim();
+          const href = $(el).find('a.woocommerce-LoopProduct-link').attr('href');
+          if (titleText && href) {
+            urlMap[titleText] = href;
+          }
+        });
+      } catch (e) {
+        console.error(`Failed to parse EOS Hlioupolis product catalog ${src.html}:`, e.message);
+      }
+    }
 
-      let startDate = '';
-      let endDate = '';
-      let displayDate = `${dayStr} ${monthStr.substring(0, 4)}`;
+    const content = fs.readFileSync(txtPath, 'utf-8');
+    const lines = content.split('\n');
 
-      if (dayStr.includes('-')) {
-        const [sDay, eDay] = dayStr.split('-');
-        startDate = `${year}-${monthNum}-${sDay.padStart(2, '0')}`;
-        endDate = `${year}-${monthNum}-${eDay.padStart(2, '0')}`;
-      } else {
-        startDate = `${year}-${monthNum}-${dayStr.padStart(2, '0')}`;
-        endDate = `${year}-${monthNum}-${dayStr.padStart(2, '0')}`;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      // Format: "26 Ιουλ- 3 Αυγ 2026: Βόρεια Σουηδία (Kungsleden trail)"
+      const crossMatch = line.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
+      if (crossMatch) {
+        const startDay = crossMatch[1];
+        const startMonthStr = crossMatch[2];
+        const endDay = crossMatch[3];
+        const endMonthStr = crossMatch[4];
+        const year = crossMatch[5];
+        const title = crossMatch[6];
+
+        const startMonthNum = parseGreekMonth(startMonthStr) || '07';
+        const endMonthNum = parseGreekMonth(endMonthStr) || '08';
+
+        const startDate = `${year}-${startMonthNum}-${startDay.padStart(2, '0')}`;
+        const endDate = `${year}-${endMonthNum}-${endDay.padStart(2, '0')}`;
+        const displayDate = `${parseInt(startDay)}/${parseInt(startMonthNum)} - ${parseInt(endDay)}/${parseInt(endMonthNum)}`;
+
+        events.push({
+          startDate,
+          endDate,
+          displayDate,
+          title: title.trim(),
+          club: 'ΕΟΣ Ηλιούπολης',
+          url: matchTitleToUrl(title.trim(), urlMap, src.defaultUrl),
+          difficulty: ''
+        });
+        continue;
       }
 
-      events.push({
-        startDate,
-        endDate,
-        displayDate,
-        title: title.trim(),
-        club: 'ΕΟΣ Ηλιούπολης',
-        url: matchTitleToUrl(title.trim(), urlMap, defaultUrl),
-        difficulty: ''
-      });
+      // Format: "13 Ιουν 2026: Υμηττός (μουσική βραδιά στο καταφύγιο)"
+      // Format: "27-28 Ιουν 2026: Ερύμανθος (Μουγγίλα)"
+      const match = line.match(/^(\d+(?:-\d+)?)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
+      if (match) {
+        const dayStr = match[1];
+        const monthStr = match[2];
+        const year = match[3];
+        const title = match[4];
+        
+        const monthNum = parseGreekMonth(monthStr) || '06';
+
+        let startDate = '';
+        let endDate = '';
+        let displayDate = `${dayStr} ${monthStr.substring(0, 4)}`;
+
+        if (dayStr.includes('-')) {
+          const [sDay, eDay] = dayStr.split('-');
+          startDate = `${year}-${monthNum}-${sDay.padStart(2, '0')}`;
+          endDate = `${year}-${monthNum}-${eDay.padStart(2, '0')}`;
+        } else {
+          startDate = `${year}-${monthNum}-${dayStr.padStart(2, '0')}`;
+          endDate = `${year}-${monthNum}-${dayStr.padStart(2, '0')}`;
+        }
+
+        events.push({
+          startDate,
+          endDate,
+          displayDate,
+          title: title.trim(),
+          club: 'ΕΟΣ Ηλιούπολης',
+          url: matchTitleToUrl(title.trim(), urlMap, src.defaultUrl),
+          difficulty: ''
+        });
+      }
     }
   }
 
