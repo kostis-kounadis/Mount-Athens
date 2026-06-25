@@ -5,9 +5,11 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  mainClass?: string;
+  footerClass?: string;
 }
 
-const { title, description, image } = Astro.props;
+const { title, description, image, mainClass = "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", footerClass = "max-w-5xl mx-auto px-4" } = Astro.props;
 
 // Format current date in Greek (Athens timezone)
 let formattedDate = '';
@@ -84,7 +86,7 @@ try {
         background-color: var(--color-bg);
         color: var(--color-text);
         min-height: 100vh;
-        overflow-x: hidden;
+        overflow-x: clip;
       }
 
       button, input, select, textarea {
@@ -149,13 +151,13 @@ try {
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <main class={`flex-grow w-full py-8 md:py-12 ${mainClass}`}>
       <slot />
     </main>
 
     <!-- Global Footer -->
     <footer class="border-t border-slate-200 bg-white py-8 text-[11px] text-slate-500 flex-shrink-0">
-      <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class={`w-full flex flex-col sm:flex-row items-center justify-between gap-4 ${footerClass}`}>
         <a href={import.meta.env.BASE_URL} class="font-mono text-slate-600 uppercase tracking-widest text-center sm:text-left hover:text-slate-900 transition-colors">
           ΟΡΕΙΒΑΤΙΚΟ ΗΜΕΡΟΛΟΓΙΟ
         </a>

@@ -4,12 +4,14 @@
 
 # ΕΟΣ Αθηνών
 - https://www.eosathinon.gr/anavaseis/programma/
+- https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/
 
 # ΕΟΣ Αχαρνών
 - https://eosacharnon.xmiddleware.com/el
 
 # ΕΟΣ Ηλιούπολης
 - https://eosh.gr/wp/product-category/greek-mountains-climbs/
+- https://eosh.gr/wp/product-category/climbs-abroad/
 
 # ΕΠΟΣ Φυλής
 - https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/
