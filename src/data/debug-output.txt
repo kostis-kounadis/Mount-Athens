@@ -1,4 +1,4 @@
-Debug run at 2026-06-26T02:56:12.334Z
+Debug run at 2026-06-26T12:46:19.521Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 183063 chars
@@ -86,7 +86,7 @@ Of('av-cookies-session-refused') >= 0 )
 			</body>
 </html>
 
-<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 26/06/2026 04:55 (UTC:2) -->
+<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 26/06/2026 14:46 (UTC:2) -->
 
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
@@ -94,7 +94,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Fri, 26 Jun 2026 02:56:13 GMT
+  date: Fri, 26 Jun 2026 12:46:20 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -123,8 +123,8 @@ Headers:
   connection: keep-alive
   content-encoding: br
   content-type: text/html; charset=UTF-8
-  date: Fri, 26 Jun 2026 02:56:15 GMT
-  last-modified: Fri, 26 Jun 2026 02:55:48 GMT
+  date: Fri, 26 Jun 2026 12:46:21 GMT
+  last-modified: Fri, 26 Jun 2026 12:46:00 GMT
   pragma: no-cache
   server: nginx
   transfer-encoding: chunked
