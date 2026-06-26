@@ -542,7 +542,7 @@ function parsePoa() {
           displayDate: `${startDayPart}/${parseInt(startMonth)} - ${endDayPart}/${parseInt(endMonth)}`,
           title: title.replace(/\s+/g, ' ').trim(),
           club: 'ΠΟΑ',
-          url: currentMonthStr ? `https://poa.gr/index.php/programma/#:~:text=${encodeURIComponent(currentMonthStr)}` : 'https://poa.gr/index.php/programma/',
+          url: title ? `https://poa.gr/index.php/programma/#:~:text=${encodeURIComponent(title.replace(/\s+/g, ' ').trim())}` : 'https://poa.gr/index.php/programma/',
           difficulty
         });
         return;
@@ -590,7 +590,7 @@ function parsePoa() {
           displayDate,
           title: title.replace(/\s+/g, ' ').trim(),
           club: 'ΠΟΑ',
-          url: currentMonthStr ? `https://poa.gr/index.php/programma/#:~:text=${encodeURIComponent(currentMonthStr)}` : 'https://poa.gr/index.php/programma/',
+          url: title ? `https://poa.gr/index.php/programma/#:~:text=${encodeURIComponent(title.replace(/\s+/g, ' ').trim())}` : 'https://poa.gr/index.php/programma/',
           difficulty
         });
       }
