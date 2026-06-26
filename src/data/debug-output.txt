@@ -1,4 +1,4 @@
-Debug run at 2026-06-25T08:45:07.832Z
+Debug run at 2026-06-26T02:56:12.334Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 183063 chars
@@ -29,7 +29,7 @@ orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpo
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
-Size: 106789 chars
+Size: 106984 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
@@ -86,7 +86,7 @@ Of('av-cookies-session-refused') >= 0 )
 			</body>
 </html>
 
-<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 25/06/2026 10:23 (UTC:2) -->
+<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 26/06/2026 04:55 (UTC:2) -->
 
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
@@ -94,7 +94,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Thu, 25 Jun 2026 08:45:08 GMT
+  date: Fri, 26 Jun 2026 02:56:13 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -123,14 +123,14 @@ Headers:
   connection: keep-alive
   content-encoding: br
   content-type: text/html; charset=UTF-8
-  date: Thu, 25 Jun 2026 08:45:09 GMT
-  last-modified: Thu, 25 Jun 2026 08:23:31 GMT
+  date: Fri, 26 Jun 2026 02:56:15 GMT
+  last-modified: Fri, 26 Jun 2026 02:55:48 GMT
   pragma: no-cache
   server: nginx
   transfer-encoding: chunked
   vary: Accept-Encoding, Accept-Encoding
   wpo-cache-status: cached
-Length: 106789 chars
+Length: 106984 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
