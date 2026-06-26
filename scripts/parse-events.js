@@ -475,6 +475,7 @@ function parsePoa() {
 
   let currentMonth = '';
   let currentYear = '2026';
+  let currentMonthStr = '';
 
   const GREEK_MONTHS_MAP = {
     'ιανουαριος': '01', 'φεβρουαριος': '02', 'μαρτιος': '03', 'απριλιος': '04', 'μαιος': '05', 'ιουνιος': '06',
@@ -494,6 +495,7 @@ function parsePoa() {
         if (GREEK_MONTHS_MAP[monthName]) {
           currentMonth = GREEK_MONTHS_MAP[monthName];
           currentYear = match[2];
+          currentMonthStr = text;
         }
       }
     } else {
@@ -540,7 +542,7 @@ function parsePoa() {
           displayDate: `${startDayPart}/${parseInt(startMonth)} - ${endDayPart}/${parseInt(endMonth)}`,
           title: title.replace(/\s+/g, ' ').trim(),
           club: 'ΠΟΑ',
-          url: id ? `https://poa.gr/index.php/programma/#${id}` : 'https://poa.gr/index.php/programma/',
+          url: title ? `https://poa.gr/index.php/programma/#:~:text=${encodeURIComponent(title.replace(/\s+/g, ' ').trim())}` : 'https://poa.gr/index.php/programma/',
           difficulty
         });
         return;
@@ -588,7 +590,7 @@ function parsePoa() {
           displayDate,
           title: title.replace(/\s+/g, ' ').trim(),
           club: 'ΠΟΑ',
-          url: id ? `https://poa.gr/index.php/programma/#${id}` : 'https://poa.gr/index.php/programma/',
+          url: title ? `https://poa.gr/index.php/programma/#:~:text=${encodeURIComponent(title.replace(/\s+/g, ' ').trim())}` : 'https://poa.gr/index.php/programma/',
           difficulty
         });
       }
