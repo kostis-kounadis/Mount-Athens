@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-27T02:45:54.032Z",
+  "lastUpdated": "2026-06-28T03:25:02.479Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 267424
+          "size": 274556
         }
       ]
     },
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 36 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 183063
+          "size": 11959
         }
       ]
     },
@@ -74,21 +74,21 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 5 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 97926
+          "size": 12015
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 91928
+          "size": 11969
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94511
+          "size": 94516
         }
       ]
     }
