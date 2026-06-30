@@ -153,6 +153,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-09-11",
+    "endDate": "2026-09-13",
+    "displayDate": "11-13/9",
+    "title": "Ορειβατική Διάσχιση με διανυκτέρευση στον Σμόλικα",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmqzdj2dy00kepf01386gzfqw",
+    "difficulty": "Γ, Β"
+  },
+  {
     "startDate": "2026-09-13",
     "endDate": "2026-09-13",
     "displayDate": "13/9",
@@ -252,6 +261,24 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-10-02",
+    "endDate": "2026-10-04",
+    "displayDate": "2-4/10",
+    "title": "ΟΛΥΜΠΟΣ 2/",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9F%CE%9B%CE%A5%CE%9C%CE%A0%CE%9F%CE%A3%202%2F",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-02",
+    "endDate": "2026-10-04",
+    "displayDate": "2-4/10",
+    "title": "ΟΛΥΜΠΟΣ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9F%CE%9B%CE%A5%CE%9C%CE%A0%CE%9F%CE%A3",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-10-03",
     "endDate": "2026-10-04",
     "displayDate": "3-4/10",
@@ -288,6 +315,15 @@
     "difficulty": "ΒΔ 1"
   },
   {
+    "startDate": "2026-10-11",
+    "endDate": "2026-10-11",
+    "displayDate": "11/10",
+    "title": "ΠΑΡΝΑΣΣΟΣ – ΛΙΑΚΟΥΡΑ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A0%CE%91%CE%A1%CE%9D%CE%91%CE%A3%CE%A3%CE%9F%CE%A3%20%E2%80%93%20%CE%9B%CE%99%CE%91%CE%9A%CE%9F%CE%A5%CE%A1%CE%91",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-10-18",
     "endDate": "2026-10-18",
     "displayDate": "18/10",
@@ -306,13 +342,13 @@
     "difficulty": "ΒΔ 1"
   },
   {
-    "startDate": "2026-10-23",
-    "endDate": "2026-10-25",
-    "displayDate": "23-25/10",
-    "title": "ΠΙΕΡΙΑ: ΚΟΡΥΦΗ ΦΛΑΜΠΟΥΡΟ (2.188μ.) – ΚΑΤΑΡΡΑΚΤΕΣ ΣΚΕΠΑΣΜΕΝΟΥ",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmqbx8qdf005hpf010gzk6w5v",
-    "difficulty": "Β+, Β"
+    "startDate": "2026-10-18",
+    "endDate": "2026-10-18",
+    "displayDate": "18/10",
+    "title": "ΚΑΣΤΑΝΙΤΣΑ – ΠΡΑΣΤΟΣ – Αρκαδία",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9A%CE%91%CE%A3%CE%A4%CE%91%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20%E2%80%93%20%CE%A0%CE%A1%CE%91%CE%A3%CE%A4%CE%9F%CE%A3%20%E2%80%93%20%CE%91%CF%81%CE%BA%CE%B1%CE%B4%CE%AF%CE%B1",
+    "difficulty": ""
   },
   {
     "startDate": "2026-10-24",
@@ -324,6 +360,24 @@
     "difficulty": "ΒΔ 1"
   },
   {
+    "startDate": "2026-10-24",
+    "endDate": "2026-10-25",
+    "displayDate": "24-25/10",
+    "title": "ΠΡΟΦΗΤΗΣ ΗΛΙΑΣ & ΧΑΛΑΣΜΕΝΟ ΒΟΥΝΟ 24/",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A0%CE%A1%CE%9F%CE%A6%CE%97%CE%A4%CE%97%CE%A3%20%CE%97%CE%9B%CE%99%CE%91%CE%A3%20%26%20%CE%A7%CE%91%CE%9B%CE%91%CE%A3%CE%9C%CE%95%CE%9D%CE%9F%20%CE%92%CE%9F%CE%A5%CE%9D%CE%9F%2024%2F",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-24",
+    "endDate": "2026-10-25",
+    "displayDate": "24-25/10",
+    "title": "ΠΡΟΦΗΤΗΣ ΗΛΙΑΣ & ΧΑΛΑΣΜΕΝΟ ΒΟΥΝΟ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A0%CE%A1%CE%9F%CE%A6%CE%97%CE%A4%CE%97%CE%A3%20%CE%97%CE%9B%CE%99%CE%91%CE%A3%20%26%20%CE%A7%CE%91%CE%9B%CE%91%CE%A3%CE%9C%CE%95%CE%9D%CE%9F%20%CE%92%CE%9F%CE%A5%CE%9D%CE%9F",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-10-30",
     "endDate": "2026-11-01",
     "displayDate": "30/10 - 1/11",
@@ -331,6 +385,33 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A7%CE%B1%CF%84%CE%B6%CE%AE%20(2038%CE%BC.)",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-01",
+    "displayDate": "1/11",
+    "title": "ΚΑΡΥΕΣ ΛΑΚΩΝΙΑΣ – Το μονοπάτι της Καστανιάς",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9A%CE%91%CE%A1%CE%A5%CE%95%CE%A3%20%CE%9B%CE%91%CE%9A%CE%A9%CE%9D%CE%99%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%BF%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CF%84%CE%B7%CF%82%20%CE%9A%CE%B1%CF%83%CF%84%CE%B1%CE%BD%CE%B9%CE%AC%CF%82",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-11-07",
+    "endDate": "2026-11-08",
+    "displayDate": "7-8/11",
+    "title": "ΑΓΡΑΦΑ – ΒΟΥΤΣΙΚΑΚΙ 7/",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%91%CE%93%CE%A1%CE%91%CE%A6%CE%91%20%E2%80%93%20%CE%92%CE%9F%CE%A5%CE%A4%CE%A3%CE%99%CE%9A%CE%91%CE%9A%CE%99%207%2F",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-11-07",
+    "endDate": "2026-11-08",
+    "displayDate": "7-8/11",
+    "title": "ΑΓΡΑΦΑ – ΒΟΥΤΣΙΚΑΚΙ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%91%CE%93%CE%A1%CE%91%CE%A6%CE%91%20%E2%80%93%20%CE%92%CE%9F%CE%A5%CE%A4%CE%A3%CE%99%CE%9A%CE%91%CE%9A%CE%99",
+    "difficulty": ""
   },
   {
     "startDate": "2026-11-08",
@@ -351,6 +432,15 @@
     "difficulty": "ΒΔ 1"
   },
   {
+    "startDate": "2026-11-15",
+    "endDate": "2026-11-15",
+    "displayDate": "15/11",
+    "title": "ΜΟΝΗ ΙΕΡΟΥΣΑΛΗΜ – ΜΑΥΡΑ ΛΙΘΑΡΙΑ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9C%CE%9F%CE%9D%CE%97%20%CE%99%CE%95%CE%A1%CE%9F%CE%A5%CE%A3%CE%91%CE%9B%CE%97%CE%9C%20%E2%80%93%20%CE%9C%CE%91%CE%A5%CE%A1%CE%91%20%CE%9B%CE%99%CE%98%CE%91%CE%A1%CE%99%CE%91",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-11-20",
     "endDate": "2026-11-22",
     "displayDate": "20-22/11",
@@ -358,6 +448,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9D%CF%8C%CF%84%CE%B9%CE%BF%20%CE%A0%CE%AE%CE%BB%CE%B9%CE%BF%3A%20%CE%9B%CE%B1%CF%8D%CE%BA%CE%BF%CF%82%20%E2%80%93%20%CE%A4%CE%B9%CF%83%CE%B1%CE%AF%CE%BF%20(644%CE%BC.)%20%E2%80%93%20%CE%A4%CF%81%CE%AF%CE%BA%CE%B5%CF%81%CE%B9",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-11-22",
+    "endDate": "2026-11-22",
+    "displayDate": "22/11",
+    "title": "ΠΟΛΥΔΡΟΣΟ – ΑΓΟΡΙΑΝΗ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A0%CE%9F%CE%9B%CE%A5%CE%94%CE%A1%CE%9F%CE%A3%CE%9F%20%E2%80%93%20%CE%91%CE%93%CE%9F%CE%A1%CE%99%CE%91%CE%9D%CE%97",
+    "difficulty": ""
   },
   {
     "startDate": "2026-11-29",
@@ -369,6 +468,15 @@
     "difficulty": "ΒΔ 1"
   },
   {
+    "startDate": "2026-11-29",
+    "endDate": "2026-11-29",
+    "displayDate": "29/11",
+    "title": "ΔΙΡΦΥΣ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%94%CE%99%CE%A1%CE%A6%CE%A5%CE%A3",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-12-05",
     "endDate": "2026-12-06",
     "displayDate": "5-6/12",
@@ -378,6 +486,15 @@
     "difficulty": "ΒΔ 1"
   },
   {
+    "startDate": "2026-12-06",
+    "endDate": "2026-12-06",
+    "displayDate": "6/12",
+    "title": "ΟΙΤΗ – Πυρά Ηρακλέους – Καταβόθρες",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9F%CE%99%CE%A4%CE%97%20%E2%80%93%20%CE%A0%CF%85%CF%81%CE%AC%20%CE%97%CF%81%CE%B1%CE%BA%CE%BB%CE%AD%CE%BF%CF%85%CF%82%20%E2%80%93%20%CE%9A%CE%B1%CF%84%CE%B1%CE%B2%CF%8C%CE%B8%CF%81%CE%B5%CF%82",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-12-13",
     "endDate": "2026-12-13",
     "displayDate": "13/12",
@@ -385,6 +502,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9F%CF%81%CE%B5%CE%B9%CE%BD%CE%AE%20%CE%91%CF%81%CE%B3%CE%BF%CE%BB%CE%AF%CE%B4%CE%B1%3A%20%CE%92%CF%81%CE%BF%CF%8D%CF%83%CF%84%CE%B9%20%E2%80%93%20%CE%A7%CE%BF%CF%8D%CE%BD%CE%B7",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-12-13",
+    "endDate": "2026-12-13",
+    "displayDate": "13/12",
+    "title": "ΣΥΚΙΑ – ΚΟΝΙΑΚΟΣ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A3%CE%A5%CE%9A%CE%99%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%9D%CE%99%CE%91%CE%9A%CE%9F%CE%A3",
+    "difficulty": ""
   },
   {
     "startDate": "2026-12-20",
@@ -403,6 +529,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%83%CF%8C%CF%82%3A%20%CE%9A%CE%BF%CF%81%CF%86%CE%BF%CF%8D%CE%BB%CE%B5%CF%82%20(1764%CE%BC.)",
     "difficulty": "ΒΔ 3"
+  },
+  {
+    "startDate": "2026-12-20",
+    "endDate": "2026-12-20",
+    "displayDate": "20/12",
+    "title": "ΣΤΕΜΝΙΤΣΑ – ΚΟΡΥΦΗ ΚΛΙΝΙΤΣΑ (1546 μ.)",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%A1%CE%A5%CE%A6%CE%97%20%CE%9A%CE%9B%CE%99%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20(1546%20%CE%BC.)",
+    "difficulty": ""
   },
   {
     "startDate": "2026-12-24",
