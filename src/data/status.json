@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-01T03:24:59.178Z",
+  "lastUpdated": "2026-07-02T02:51:39.969Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -32,21 +32,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 99972
+          "size": 99994
         }
       ]
     },
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 36 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 11932
+          "size": 183063
         }
       ]
     },
@@ -67,28 +67,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 217163
+          "size": 217136
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 3 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 11995
+          "size": 93463
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 11990
+          "size": 91747
         }
       ]
     },
@@ -109,14 +109,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 1 events",
+      "details": "Parsed 2 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172762
+          "size": 172837
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94502
+          "size": 94511
         }
       ]
     }
