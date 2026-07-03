@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-02T02:51:39.969Z",
+  "lastUpdated": "2026-07-03T02:34:24.949Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 268053
+          "size": 268061
         }
       ]
     },
@@ -81,14 +81,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 93463
+          "size": 102511
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 91747
+          "size": 100790
         }
       ]
     },
@@ -102,7 +102,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 77612
+          "size": 78006
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94511
+          "size": 94517
         }
       ]
     }
