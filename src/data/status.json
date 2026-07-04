@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-03T02:34:24.949Z",
+  "lastUpdated": "2026-07-04T02:31:41.935Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 268061
+          "size": 279845
         }
       ]
     },
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 36 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 183063
+          "size": 11922
         }
       ]
     },
@@ -74,21 +74,21 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 3 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 102511
+          "size": 11923
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 100790
+          "size": 11979
         }
       ]
     },
@@ -109,14 +109,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 2 events",
+      "details": "Parsed 6 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172837
+          "size": 190537
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94517
+          "size": 94519
         }
       ]
     }
