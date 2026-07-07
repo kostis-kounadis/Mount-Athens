@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-06T02:46:40.245Z",
+  "lastUpdated": "2026-07-07T02:42:15.222Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -25,7 +25,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 84598
+          "size": 84729
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 36 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 183063
+          "size": 11933
         }
       ]
     },
@@ -74,21 +74,21 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 3 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 93463
+          "size": 12029
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 91747
+          "size": 12056
         }
       ]
     },
@@ -109,14 +109,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 6 events",
+      "details": "Parsed 10 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 190537
+          "size": 220153
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94513
+          "size": 94517
         }
       ]
     }
