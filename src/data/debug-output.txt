@@ -1,4 +1,4 @@
-Debug run at 2026-07-08T02:19:03.368Z
+Debug run at 2026-07-09T02:34:14.568Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 183063 chars
@@ -29,7 +29,7 @@ orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpo
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
-Size: 102482 chars
+Size: 102512 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
@@ -48,7 +48,7 @@ Snippet (first 1000 chars):
                     (s[er].q = s[er].q || []).push(arguments)
 
 Snippet (last 1000 chars):
-sent/) || html.className.indexOf('av-cookies-session-refused') >= 0 )
+Of('av-cookies-session-refused') >= 0 )
 						{
 							allow_continue = false;
 						}
@@ -86,7 +86,7 @@ sent/) || html.className.indexOf('av-cookies-session-refused') >= 0 )
 			</body>
 </html>
 
-<!-- WP Optimize page cache - https://teamupdraft.com/wp-optimize/ - page NOT cached -->
+<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 09/07/2026 04:33 (UTC:2) -->
 
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
@@ -94,7 +94,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Wed, 08 Jul 2026 02:19:04 GMT
+  date: Thu, 09 Jul 2026 02:34:15 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -123,16 +123,14 @@ Headers:
   connection: keep-alive
   content-encoding: br
   content-type: text/html; charset=UTF-8
-  date: Wed, 08 Jul 2026 02:19:07 GMT
-  link: <https://eosh.gr/wp/wp-json/>; rel="https://api.w.org/", <https://eosh.gr/wp/wp-json/wp/v2/product_cat/208>; rel="alternate"; title="JSON"; type="application/json"
+  date: Thu, 09 Jul 2026 02:34:16 GMT
+  last-modified: Thu, 09 Jul 2026 02:33:54 GMT
   pragma: no-cache
   server: nginx
-  set-cookie: swpm_session=4bd585b1f27a778ea09c66a5ef6af433; path=/; secure; HttpOnly
   transfer-encoding: chunked
   vary: Accept-Encoding, Accept-Encoding
-  wpo-cache-message: Attempt to create subfolder within cache directory failed (eosh.gr/wp/product-category/greek-mountains-climbs)
-  wpo-cache-status: not cached
-Length: 102482 chars
+  wpo-cache-status: cached
+Length: 102512 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17275 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
