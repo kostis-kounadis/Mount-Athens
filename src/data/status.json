@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-13T02:24:22.789Z",
+  "lastUpdated": "2026-07-14T02:04:09.070Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 281906
+          "size": 281907
         }
       ]
     },
@@ -74,21 +74,21 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 3 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 91104
+          "size": 6609
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 91497
+          "size": 6609
         }
       ]
     },
@@ -116,7 +116,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 231232
+          "size": 231235
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94508
+          "size": 94517
         }
       ]
     }
