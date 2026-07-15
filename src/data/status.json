@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-14T02:04:09.070Z",
+  "lastUpdated": "2026-07-15T02:01:28.088Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 281907
+          "size": 281915
         }
       ]
     },
@@ -60,7 +60,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172463
+          "size": 172436
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
@@ -81,14 +81,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 6609
+          "size": 5330
         },
         {
           "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 6609
+          "size": 5330
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94517
+          "size": 94514
         }
       ]
     }

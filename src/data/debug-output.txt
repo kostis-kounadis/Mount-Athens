@@ -1,4 +1,4 @@
-Debug run at 2026-07-14T02:04:09.111Z
+Debug run at 2026-07-15T02:01:28.118Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 183063 chars
@@ -29,19 +29,18 @@ orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpo
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
-Size: 6609 chars
+Size: 5330 chars
 Snippet (first 1000 chars):
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:title" content="Ε.Ο.Σ. Ηλιούπολης · Ilioupolis Alpine Club"/><meta property="og:description" conten
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:locale" content="el_GR"/><meta property="og:locale:alternate" content="en_GB"/><meta name="twitter:
 Snippet (last 1000 chars):
-opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing Ss debug xs getPageViewId captureTraceFeedback captureTraceMetric".split(" "),s=0;s<t.length;s++)c(g,t[s]);r._i.push([n,a,p])},r.__SV=1)}(document,window.posthog||[]),posthog.init("phc_yJW1VjHGGwmCbbrtczfqqNxgBDbhlhOWcdzcIJEOTFE",{api_host:"https://ap.emergent.sh",person_profiles:"identified_only",session_recording:{recordCrossOriginIframes:!0,capturePerformance:!1}})</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"bc4481b4b62d40aea089131a51a198e8","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
-</body></html>
+sionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty Es $s createPersonProfile Is opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing Ss debug xs getPageViewId captureTraceFeedback captureTraceMetric".split(" "),s=0;s<t.length;s++)c(g,t[s]);r._i.push([n,a,p])},r.__SV=1)}(document,window.posthog||[]),posthog.init("phc_yJW1VjHGGwmCbbrtczfqqNxgBDbhlhOWcdzcIJEOTFE",{api_host:"https://ap.emergent.sh",person_profiles:"identified_only",session_recording:{recordCrossOriginIframes:!0,capturePerformance:!1}})</script></body></html>
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
 Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Tue, 14 Jul 2026 02:04:10 GMT
+  date: Wed, 15 Jul 2026 02:01:29 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -67,19 +66,18 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a1acf4887f0f61f7-ORD
+  cf-ray: a1b52dfe4af85113-MSP
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Tue, 14 Jul 2026 02:04:11 GMT
+  date: Wed, 15 Jul 2026 02:01:31 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  server-timing: cfEdge;dur=4,cfOrigin;dur=0,cfWorker;dur=759
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
-Length: 6609 chars
+Length: 5330 chars
 Snippet (first 1000 chars):
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:title" content="Ε.Ο.Σ. Ηλιούπολης · Ilioupolis Alpine Club"/><meta property="og:description" conten
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:locale" content="el_GR"/><meta property="og:locale:alternate" content="en_GB"/><meta name="twitter:
