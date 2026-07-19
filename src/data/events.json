@@ -1,14 +1,5 @@
 [
   {
-    "startDate": "2026-07-18",
-    "endDate": "2026-07-19",
-    "displayDate": "18-19/7",
-    "title": "Λάκμος (Διάσχιση)",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmqnqb0oh00bmpf01widac0w9",
-    "difficulty": "Β+"
-  },
-  {
     "startDate": "2026-07-25",
     "endDate": "2026-07-26",
     "displayDate": "25-26/7",
@@ -63,15 +54,6 @@
     "difficulty": "Β"
   },
   {
-    "startDate": "2026-09-05",
-    "endDate": "2026-09-06",
-    "displayDate": "5-6/9",
-    "title": "Συντήρηση και εφοδιασμός καταφυγίων",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%85%CE%BD%CF%84%CE%AE%CF%81%CE%B7%CF%83%CE%B7%20%CE%BA%CE%B1%CE%B9%20%CE%B5%CF%86%CE%BF%CE%B4%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%BA%CE%B1%CF%84%CE%B1%CF%86%CF%85%CE%B3%CE%AF%CF%89%CE%BD",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-09-06",
     "endDate": "2026-09-06",
     "displayDate": "6/9",
@@ -88,15 +70,6 @@
     "club": "ΕΟΣ Αχαρνών",
     "url": "https://eosacharnon.xmiddleware.com/el/booking/cmn060p6h007zo901ur8l14au",
     "difficulty": "Β"
-  },
-  {
-    "startDate": "2026-09-13",
-    "endDate": "2026-09-13",
-    "displayDate": "13/9",
-    "title": "Πατέρας: Καλιακούδα (916μ.) – αρχαίοι πύργοι",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A0%CE%B1%CF%84%CE%AD%CF%81%CE%B1%CF%82%3A%20%CE%9A%CE%B1%CE%BB%CE%B9%CE%B1%CE%BA%CE%BF%CF%8D%CE%B4%CE%B1%20(916%CE%BC.)%20%E2%80%93%20%CE%B1%CF%81%CF%87%CE%B1%CE%AF%CE%BF%CE%B9%20%CF%80%CF%8D%CF%81%CE%B3%CE%BF%CE%B9",
-    "difficulty": "ΒΔ 2"
   },
   {
     "startDate": "2026-09-13",
@@ -144,24 +117,6 @@
     "difficulty": ""
   },
   {
-    "startDate": "2026-09-19",
-    "endDate": "2026-09-20",
-    "displayDate": "19-20/9",
-    "title": "Λεωνίδιο – Μονή Έλωνας - Κυπαρίσσι",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9B%CE%B5%CF%89%CE%BD%CE%AF%CE%B4%CE%B9%CE%BF%20%E2%80%93%20%CE%9C%CE%BF%CE%BD%CE%AE%20%CE%88%CE%BB%CF%89%CE%BD%CE%B1%CF%82%20-%20%CE%9A%CF%85%CF%80%CE%B1%CF%81%CE%AF%CF%83%CF%83%CE%B9",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-09-19",
-    "endDate": "2026-09-20",
-    "displayDate": "19-20/9",
-    "title": "Πανελλήνια Αναρριχητική Συνάντηση στα Μετέωρα",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A0%CE%B1%CE%BD%CE%B5%CE%BB%CE%BB%CE%AE%CE%BD%CE%B9%CE%B1%20%CE%91%CE%BD%CE%B1%CF%81%CF%81%CE%B9%CF%87%CE%B7%CF%84%CE%B9%CE%BA%CE%AE%20%CE%A3%CF%85%CE%BD%CE%AC%CE%BD%CF%84%CE%B7%CF%83%CE%B7%20%CF%83%CF%84%CE%B1%20%CE%9C%CE%B5%CF%84%CE%AD%CF%89%CF%81%CE%B1",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-09-20",
     "endDate": "2026-09-20",
     "displayDate": "20/9",
@@ -192,28 +147,10 @@
     "startDate": "2026-09-26",
     "endDate": "2026-09-27",
     "displayDate": "26-27/9",
-    "title": "Οίτη: Γρεβενό (2114μ.) – Πύργος (2150μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9F%CE%AF%CF%84%CE%B7%3A%20%CE%93%CF%81%CE%B5%CE%B2%CE%B5%CE%BD%CF%8C%20(2114%CE%BC.)%20%E2%80%93%20%CE%A0%CF%8D%CF%81%CE%B3%CE%BF%CF%82%20(2150%CE%BC.)",
-    "difficulty": "ΒΔ 2"
-  },
-  {
-    "startDate": "2026-09-26",
-    "endDate": "2026-09-27",
-    "displayDate": "26-27/9",
     "title": "Ταΰγετος, Προφήτης Ηλίας (2.407μ.). Διήμερη διάσχιση : Δάσος Βασιλικής – Προφ.Ηλίας – Ε4 –...",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/event/%cf%84%ce%b1%ce%b0%ce%b3%ce%b5%cf%84%ce%bf%cf%82-%cf%80%cf%81%ce%bf%cf%86%ce%ae%cf%84%ce%b7%cf%82-%ce%b7%ce%bb%ce%af%ce%b1%cf%82-2-407%ce%bc-%ce%b4%ce%b9%ce%ae%ce%bc%ce%b5%cf%81%ce%b7-%ce%b4/",
     "difficulty": ""
-  },
-  {
-    "startDate": "2026-09-27",
-    "endDate": "2026-09-27",
-    "displayDate": "27/9",
-    "title": "Τζιά",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A4%CE%B6%CE%B9%CE%AC",
-    "difficulty": "ΒΔ 1"
   },
   {
     "startDate": "2026-09-27",
@@ -243,15 +180,6 @@
     "difficulty": ""
   },
   {
-    "startDate": "2026-10-03",
-    "endDate": "2026-10-04",
-    "displayDate": "3-4/10",
-    "title": "Φθινοπωρινή Σέριφος",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A6%CE%B8%CE%B9%CE%BD%CE%BF%CF%80%CF%89%CF%81%CE%B9%CE%BD%CE%AE%20%CE%A3%CE%AD%CF%81%CE%B9%CF%86%CE%BF%CF%82",
-    "difficulty": "ΒΔ 1"
-  },
-  {
     "startDate": "2026-10-04",
     "endDate": "2026-10-04",
     "displayDate": "4/10",
@@ -279,15 +207,6 @@
     "difficulty": "Α"
   },
   {
-    "startDate": "2026-10-10",
-    "endDate": "2026-10-11",
-    "displayDate": "10-11/10",
-    "title": "Γουλινάς (1459μ.) – Οξυά (1923μ.) – Κοκκάλια (1741μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%93%CE%BF%CF%85%CE%BB%CE%B9%CE%BD%CE%AC%CF%82%20(1459%CE%BC.)%20%E2%80%93%20%CE%9F%CE%BE%CF%85%CE%AC%20(1923%CE%BC.)%20%E2%80%93%20%CE%9A%CE%BF%CE%BA%CE%BA%CE%AC%CE%BB%CE%B9%CE%B1%20(1741%CE%BC.)",
-    "difficulty": "ΒΔ 1"
-  },
-  {
     "startDate": "2026-10-11",
     "endDate": "2026-10-11",
     "displayDate": "11/10",
@@ -313,15 +232,6 @@
     "club": "ΕΟΣ Αχαρνών",
     "url": "https://eosacharnon.xmiddleware.com/el/booking/cmnx0zdkr0006qa01auvshk40",
     "difficulty": "Α"
-  },
-  {
-    "startDate": "2026-10-18",
-    "endDate": "2026-10-18",
-    "displayDate": "18/10",
-    "title": "Αρκαδικά Μονοπάτια: Βάστας – Αγ. Θεοδώρα – Ίσαρης",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%91%CF%81%CE%BA%CE%B1%CE%B4%CE%B9%CE%BA%CE%AC%20%CE%9C%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%CE%B1%3A%20%CE%92%CE%AC%CF%83%CF%84%CE%B1%CF%82%20%E2%80%93%20%CE%91%CE%B3.%20%CE%98%CE%B5%CE%BF%CE%B4%CF%8E%CF%81%CE%B1%20%E2%80%93%20%CE%8A%CF%83%CE%B1%CF%81%CE%B7%CF%82",
-    "difficulty": "ΒΔ 1"
   },
   {
     "startDate": "2026-10-18",
@@ -363,15 +273,6 @@
     "startDate": "2026-10-24",
     "endDate": "2026-10-25",
     "displayDate": "24-25/10",
-    "title": "Στα μονοπάτια της Ρούμελης",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%84%CE%B1%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%CE%B1%20%CF%84%CE%B7%CF%82%20%CE%A1%CE%BF%CF%8D%CE%BC%CE%B5%CE%BB%CE%B7%CF%82",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-10-24",
-    "endDate": "2026-10-25",
-    "displayDate": "24-25/10",
     "title": "ΠΡΟΦΗΤΗΣ ΗΛΙΑΣ & ΧΑΛΑΣΜΕΝΟ ΒΟΥΝΟ 24/",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A0%CE%A1%CE%9F%CE%A6%CE%97%CE%A4%CE%97%CE%A3%20%CE%97%CE%9B%CE%99%CE%91%CE%A3%20%26%20%CE%A7%CE%91%CE%9B%CE%91%CE%A3%CE%9C%CE%95%CE%9D%CE%9F%20%CE%92%CE%9F%CE%A5%CE%9D%CE%9F%2024%2F",
@@ -396,13 +297,13 @@
     "difficulty": ""
   },
   {
-    "startDate": "2026-10-30",
+    "startDate": "2026-11-01",
     "endDate": "2026-11-01",
-    "displayDate": "30/10 - 1/11",
-    "title": "Χατζή (2038μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A7%CE%B1%CF%84%CE%B6%CE%AE%20(2038%CE%BC.)",
-    "difficulty": "ΒΔ 1"
+    "displayDate": "1/11",
+    "title": "Χελμός: Διάσχιση κορυφογραμμών",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmngc1ugx00hkqa01jhgwshk8",
+    "difficulty": "Β"
   },
   {
     "startDate": "2026-11-01",
@@ -412,6 +313,15 @@
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9A%CE%91%CE%A1%CE%A5%CE%95%CE%A3%20%CE%9B%CE%91%CE%9A%CE%A9%CE%9D%CE%99%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%BF%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CF%84%CE%B7%CF%82%20%CE%9A%CE%B1%CF%83%CF%84%CE%B1%CE%BD%CE%B9%CE%AC%CF%82",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-11-06",
+    "endDate": "2026-11-08",
+    "displayDate": "6-8/11",
+    "title": "Φθιώτιδα -Κοιλάδα Σπερχειού",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmr0rt4o700lgpf01j3imhawd",
+    "difficulty": "Α+, Α"
   },
   {
     "startDate": "2026-11-07",
@@ -432,24 +342,6 @@
     "difficulty": ""
   },
   {
-    "startDate": "2026-11-08",
-    "endDate": "2026-11-08",
-    "displayDate": "8/11",
-    "title": "Καλλίδρομο – Γκιόζα (1419μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9A%CE%B1%CE%BB%CE%BB%CE%AF%CE%B4%CF%81%CE%BF%CE%BC%CE%BF%20%E2%80%93%20%CE%93%CE%BA%CE%B9%CF%8C%CE%B6%CE%B1%20(1419%CE%BC.)",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-11-15",
-    "endDate": "2026-11-15",
-    "displayDate": "15/11",
-    "title": "Μαίναλο Αλωνίσταινα – Βυτίνα",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9C%CE%B1%CE%AF%CE%BD%CE%B1%CE%BB%CE%BF%20%CE%91%CE%BB%CF%89%CE%BD%CE%AF%CF%83%CF%84%CE%B1%CE%B9%CE%BD%CE%B1%20%E2%80%93%20%CE%92%CF%85%CF%84%CE%AF%CE%BD%CE%B1",
-    "difficulty": "ΒΔ 1"
-  },
-  {
     "startDate": "2026-11-15",
     "endDate": "2026-11-15",
     "displayDate": "15/11",
@@ -457,15 +349,6 @@
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9C%CE%9F%CE%9D%CE%97%20%CE%99%CE%95%CE%A1%CE%9F%CE%A5%CE%A3%CE%91%CE%9B%CE%97%CE%9C%20%E2%80%93%20%CE%9C%CE%91%CE%A5%CE%A1%CE%91%20%CE%9B%CE%99%CE%98%CE%91%CE%A1%CE%99%CE%91",
     "difficulty": ""
-  },
-  {
-    "startDate": "2026-11-20",
-    "endDate": "2026-11-22",
-    "displayDate": "20-22/11",
-    "title": "Νότιο Πήλιο: Λαύκος – Τισαίο (644μ.) – Τρίκερι",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9D%CF%8C%CF%84%CE%B9%CE%BF%20%CE%A0%CE%AE%CE%BB%CE%B9%CE%BF%3A%20%CE%9B%CE%B1%CF%8D%CE%BA%CE%BF%CF%82%20%E2%80%93%20%CE%A4%CE%B9%CF%83%CE%B1%CE%AF%CE%BF%20(644%CE%BC.)%20%E2%80%93%20%CE%A4%CF%81%CE%AF%CE%BA%CE%B5%CF%81%CE%B9",
-    "difficulty": "ΒΔ 1"
   },
   {
     "startDate": "2026-11-22",
@@ -489,28 +372,10 @@
     "startDate": "2026-11-29",
     "endDate": "2026-11-29",
     "displayDate": "29/11",
-    "title": "Μαίναλο: Πιάνα – Αρκουδόρεμα – Λιμποβίσι",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9C%CE%B1%CE%AF%CE%BD%CE%B1%CE%BB%CE%BF%3A%20%CE%A0%CE%B9%CE%AC%CE%BD%CE%B1%20%E2%80%93%20%CE%91%CF%81%CE%BA%CE%BF%CF%85%CE%B4%CF%8C%CF%81%CE%B5%CE%BC%CE%B1%20%E2%80%93%20%CE%9B%CE%B9%CE%BC%CF%80%CE%BF%CE%B2%CE%AF%CF%83%CE%B9",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-11-29",
-    "endDate": "2026-11-29",
-    "displayDate": "29/11",
     "title": "ΔΙΡΦΥΣ",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%94%CE%99%CE%A1%CE%A6%CE%A5%CE%A3",
     "difficulty": ""
-  },
-  {
-    "startDate": "2026-12-05",
-    "endDate": "2026-12-06",
-    "displayDate": "5-6/12",
-    "title": "Λουτρά Σμοκόβου – Βουλγάρα (1683μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9B%CE%BF%CF%85%CF%84%CF%81%CE%AC%20%CE%A3%CE%BC%CE%BF%CE%BA%CF%8C%CE%B2%CE%BF%CF%85%20%E2%80%93%20%CE%92%CE%BF%CF%85%CE%BB%CE%B3%CE%AC%CF%81%CE%B1%20(1683%CE%BC.)",
-    "difficulty": "ΒΔ 1"
   },
   {
     "startDate": "2026-12-06",
@@ -525,15 +390,6 @@
     "startDate": "2026-12-13",
     "endDate": "2026-12-13",
     "displayDate": "13/12",
-    "title": "Ορεινή Αργολίδα: Βρούστι – Χούνη",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9F%CF%81%CE%B5%CE%B9%CE%BD%CE%AE%20%CE%91%CF%81%CE%B3%CE%BF%CE%BB%CE%AF%CE%B4%CE%B1%3A%20%CE%92%CF%81%CE%BF%CF%8D%CF%83%CF%84%CE%B9%20%E2%80%93%20%CE%A7%CE%BF%CF%8D%CE%BD%CE%B7",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-12-13",
-    "endDate": "2026-12-13",
-    "displayDate": "13/12",
     "title": "ΣΥΚΙΑ – ΚΟΝΙΑΚΟΣ",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A3%CE%A5%CE%9A%CE%99%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%9D%CE%99%CE%91%CE%9A%CE%9F%CE%A3",
@@ -543,135 +399,9 @@
     "startDate": "2026-12-20",
     "endDate": "2026-12-20",
     "displayDate": "20/12",
-    "title": "Μονοπάτι Παρνασσού",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9C%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%83%CE%BF%CF%8D",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2026-12-20",
-    "endDate": "2026-12-20",
-    "displayDate": "20/12",
-    "title": "Παρνασσός: Κορφούλες (1764μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%83%CF%8C%CF%82%3A%20%CE%9A%CE%BF%CF%81%CF%86%CE%BF%CF%8D%CE%BB%CE%B5%CF%82%20(1764%CE%BC.)",
-    "difficulty": "ΒΔ 3"
-  },
-  {
-    "startDate": "2026-12-20",
-    "endDate": "2026-12-20",
-    "displayDate": "20/12",
     "title": "ΣΤΕΜΝΙΤΣΑ – ΚΟΡΥΦΗ ΚΛΙΝΙΤΣΑ (1546 μ.)",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%A1%CE%A5%CE%A6%CE%97%20%CE%9A%CE%9B%CE%99%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20(1546%20%CE%BC.)",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-12-24",
-    "endDate": "2026-12-27",
-    "displayDate": "24-27/12",
-    "title": "Χριστούγεννα: Φλώρινα – Πρέσπες – Λούτζερ (1977μ.) – Νυμφαίο",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A7%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%8D%CE%B3%CE%B5%CE%BD%CE%BD%CE%B1%3A%20%CE%A6%CE%BB%CF%8E%CF%81%CE%B9%CE%BD%CE%B1%20%E2%80%93%20%CE%A0%CF%81%CE%AD%CF%83%CF%80%CE%B5%CF%82%20%E2%80%93%20%CE%9B%CE%BF%CF%8D%CF%84%CE%B6%CE%B5%CF%81%20(1977%CE%BC.)%20%E2%80%93%20%CE%9D%CF%85%CE%BC%CF%86%CE%B1%CE%AF%CE%BF",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2027-01-10",
-    "endDate": "2027-01-10",
-    "displayDate": "10/1",
-    "title": "Δελφοί – Κωρύκειο Άντρο",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%94%CE%B5%CE%BB%CF%86%CE%BF%CE%AF%20%E2%80%93%20%CE%9A%CF%89%CF%81%CF%8D%CE%BA%CE%B5%CE%B9%CE%BF%20%CE%86%CE%BD%CF%84%CF%81%CE%BF",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2027-01-17",
-    "endDate": "2027-01-17",
-    "displayDate": "17/1",
-    "title": "Κοπή Πίτας ΠΟΑ: Ζήρεια – λίμνη Δασίου",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9A%CE%BF%CF%80%CE%AE%20%CE%A0%CE%AF%CF%84%CE%B1%CF%82%20%CE%A0%CE%9F%CE%91%3A%20%CE%96%CE%AE%CF%81%CE%B5%CE%B9%CE%B1%20%E2%80%93%20%CE%BB%CE%AF%CE%BC%CE%BD%CE%B7%20%CE%94%CE%B1%CF%83%CE%AF%CE%BF%CF%85",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2027-01-17",
-    "endDate": "2027-01-17",
-    "displayDate": "17/1",
-    "title": "Κοπή πίτας ΠΟΑ: Ζήρεια – Σημείο (2374μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9A%CE%BF%CF%80%CE%AE%20%CF%80%CE%AF%CF%84%CE%B1%CF%82%20%CE%A0%CE%9F%CE%91%3A%20%CE%96%CE%AE%CF%81%CE%B5%CE%B9%CE%B1%20%E2%80%93%20%CE%A3%CE%B7%CE%BC%CE%B5%CE%AF%CE%BF%20(2374%CE%BC.)",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2027-01-24",
-    "endDate": "2027-01-24",
-    "displayDate": "24/1",
-    "title": "Δυτική Πεντέλη",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AE%20%CE%A0%CE%B5%CE%BD%CF%84%CE%AD%CE%BB%CE%B7",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2027-01-30",
-    "endDate": "2027-01-31",
-    "displayDate": "30-31/1",
-    "title": "Σπάνιες Χειμερινές. Γκιώνα: Πυραμίδα (2508μ.) – Προφ. Ηλίας (2299μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%80%CE%AC%CE%BD%CE%B9%CE%B5%CF%82%20%CE%A7%CE%B5%CE%B9%CE%BC%CE%B5%CF%81%CE%B9%CE%BD%CE%AD%CF%82.%20%CE%93%CE%BA%CE%B9%CF%8E%CE%BD%CE%B1%3A%20%CE%A0%CF%85%CF%81%CE%B1%CE%BC%CE%AF%CE%B4%CE%B1%20(2508%CE%BC.)%20%E2%80%93%20%CE%A0%CF%81%CE%BF%CF%86.%20%CE%97%CE%BB%CE%AF%CE%B1%CF%82%20(2299%CE%BC.)",
-    "difficulty": "ΒΔ Χ2"
-  },
-  {
-    "startDate": "2027-01-31",
-    "endDate": "2027-01-31",
-    "displayDate": "31/1",
-    "title": "Στρώμη – μονοπάτι Εθνικής Αντίστασης – σπηλιά Μάγερ",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%84%CF%81%CF%8E%CE%BC%CE%B7%20%E2%80%93%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CE%95%CE%B8%CE%BD%CE%B9%CE%BA%CE%AE%CF%82%20%CE%91%CE%BD%CF%84%CE%AF%CF%83%CF%84%CE%B1%CF%83%CE%B7%CF%82%20%E2%80%93%20%CF%83%CF%80%CE%B7%CE%BB%CE%B9%CE%AC%20%CE%9C%CE%AC%CE%B3%CE%B5%CF%81",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2027-02-05",
-    "endDate": "2027-02-08",
-    "displayDate": "5-8/2",
-    "title": "Λασιθιώτικα: Αφέντης Χριστός (2141μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9B%CE%B1%CF%83%CE%B9%CE%B8%CE%B9%CF%8E%CF%84%CE%B9%CE%BA%CE%B1%3A%20%CE%91%CF%86%CE%AD%CE%BD%CF%84%CE%B7%CF%82%20%CE%A7%CF%81%CE%B9%CF%83%CF%84%CF%8C%CF%82%20(2141%CE%BC.)",
-    "difficulty": "ΒΔ Χ2"
-  },
-  {
-    "startDate": "2027-02-13",
-    "endDate": "2027-02-14",
-    "displayDate": "13-14/2",
-    "title": "Σπάνιες Χειμερινές. Μικρή Ζήρεια (2082μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%80%CE%AC%CE%BD%CE%B9%CE%B5%CF%82%20%CE%A7%CE%B5%CE%B9%CE%BC%CE%B5%CF%81%CE%B9%CE%BD%CE%AD%CF%82.%20%CE%9C%CE%B9%CE%BA%CF%81%CE%AE%20%CE%96%CE%AE%CF%81%CE%B5%CE%B9%CE%B1%20(2082%CE%BC.)",
-    "difficulty": "ΒΔ Χ2"
-  },
-  {
-    "startDate": "2027-02-21",
-    "endDate": "2027-02-21",
-    "displayDate": "21/2",
-    "title": "Σαγμάτειο Όρος – Αρχαιολογικό Μουσείο Θηβών",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CE%B1%CE%B3%CE%BC%CE%AC%CF%84%CE%B5%CE%B9%CE%BF%20%CE%8C%CF%81%CE%BF%CF%82%20%E2%80%93%20%CE%91%CF%81%CF%87%CE%B1%CE%B9%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CE%BA%CF%8C%20%CE%9C%CE%BF%CF%85%CF%83%CE%B5%CE%AF%CE%BF%20%CE%98%CE%B7%CE%B2%CF%8E%CE%BD",
-    "difficulty": "ΒΔ 1"
-  },
-  {
-    "startDate": "2027-02-27",
-    "endDate": "2027-02-28",
-    "displayDate": "27-28/2",
-    "title": "Σπάνιες Χειμερινές. Παρνασσός: Χαμπίμπια – Τσάρκος (2416μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%80%CE%AC%CE%BD%CE%B9%CE%B5%CF%82%20%CE%A7%CE%B5%CE%B9%CE%BC%CE%B5%CF%81%CE%B9%CE%BD%CE%AD%CF%82.%20%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%83%CF%8C%CF%82%3A%20%CE%A7%CE%B1%CE%BC%CF%80%CE%AF%CE%BC%CF%80%CE%B9%CE%B1%20%E2%80%93%20%CE%A4%CF%83%CE%AC%CF%81%CE%BA%CE%BF%CF%82%20(2416%CE%BC.)",
-    "difficulty": "ΒΔ 2"
-  },
-  {
-    "startDate": "2027-02-28",
-    "endDate": "2027-02-28",
-    "displayDate": "28/2",
-    "title": "Στις κρυφές συνοικίες και τους λόφους της αρχαίας Αθήνας",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%84%CE%B9%CF%82%20%CE%BA%CF%81%CF%85%CF%86%CE%AD%CF%82%20%CF%83%CF%85%CE%BD%CE%BF%CE%B9%CE%BA%CE%AF%CE%B5%CF%82%20%CE%BA%CE%B1%CE%B9%20%CF%84%CE%BF%CF%85%CF%82%20%CE%BB%CF%8C%CF%86%CE%BF%CF%85%CF%82%20%CF%84%CE%B7%CF%82%20%CE%B1%CF%81%CF%87%CE%B1%CE%AF%CE%B1%CF%82%20%CE%91%CE%B8%CE%AE%CE%BD%CE%B1%CF%82",
     "difficulty": ""
   }
 ]
