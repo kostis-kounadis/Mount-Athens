@@ -1,7 +1,33 @@
-Debug run at 2026-07-19T02:15:51.068Z
+Debug run at 2026-07-20T03:16:41.623Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
-File does not exist: /home/runner/work/Mount-Athens/Mount-Athens/_input/poa_gr_index_php-programma.html
+Size: 183063 chars
+Snippet (first 1000 chars):
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
+	 <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Πρόγραμμα - POA</title>
+	<link rel="canonical" href="https://poa.gr/index.php/programma/" />
+	<meta property="og:locale" content="el_GR" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Πρόγραμμα - POA" />
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Ιούνιος 2026 7/6 ΦΑΡΑΓΓΙ ΠΕΡΙΣΤΕΡΙΩΝΑ &#8211; ΑΚΡΑΤΑ ΒΔ 1 Κυριακή: Αναχώρηση στις 07:00 για τον οικισμό Φούρνοι, πάνω στην
+Snippet (last 1000 chars):
+orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":905,"title":"%CE%A0%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1%20-%20POA","excerpt":"","featuredImage":false}};
+</script>
+<script src="https://poa.gr/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.27.7" id="elementor-frontend-js"></script>
+			<script>
+			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+			</script>
+				</body>
+</html>
+
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
 Size: 5330 chars
 Snippet (first 1000 chars):
@@ -11,10 +37,10 @@ sionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRende
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
 Headers:
-  connection: close
+  connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Sun, 19 Jul 2026 02:15:59 GMT
+  date: Mon, 20 Jul 2026 03:16:42 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -40,11 +66,11 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a1d638b80b7c2414-IAD
+  cf-ray: a1decf0fe84a393c-MSP
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Sun, 19 Jul 2026 02:16:00 GMT
+  date: Mon, 20 Jul 2026 03:16:44 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
