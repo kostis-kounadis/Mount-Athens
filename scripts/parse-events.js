@@ -874,13 +874,17 @@ function parseEosAthinon() {
         const parsed = parseDateRange(datePart, currentYear);
 
         if (parsed) {
+          const monthStr = parsed.startDate.split('-')[1];
+          const yearStr = parsed.startDate.split('-')[0].slice(-2);
+          const accId = `${monthStr}-${yearStr}`;
+          
           events.push({
             startDate: parsed.startDate,
             endDate: parsed.endDate,
             displayDate: parsed.displayDate,
             title: titlePart,
             club: 'ΕΟΣ Αθηνών',
-            url: 'https://www.eosathinon.gr/anavaseis/programma/#:~:text=' + encodeURIComponent(titlePart),
+            url: titlePart ? `https://www.eosathinon.gr/anavaseis/programma/#${accId}:~:text=${encodeURIComponent(titlePart)}` : 'https://www.eosathinon.gr/anavaseis/programma/',
             difficulty: ''
           });
         }
