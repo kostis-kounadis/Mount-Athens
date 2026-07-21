@@ -34,7 +34,7 @@ const MONTH_MAP = {
   'ιουν': '06', 'ιουνιος': '06', 'ιουνιου': '06', 'ιουνίου': '06',
   'ιουλ': '07', 'ιουλιος': '07', 'ιουλιου': '07', 'ιουλίου': '07',
   'αυγ': '08', 'αυγουστος': '08', 'αυγουστου': '08', 'αυγούστου': '08',
-  'σεπ': '09', 'σεπτεμβριος': '09', 'σεπτεμβριου': '09', 'σεπτεμβρίου': '09',
+  'σεπ': '09', 'σεπτ': '09', 'σεπτεμβριος': '09', 'σεπτεμβριου': '09', 'σεπτεμβρίου': '09',
   'οκτ': '10', 'οκτωβριος': '10', 'οκτωβριου': '10', 'οκτωβρίου': '10',
   'νοε': '11', 'νοεμβριος': '11', 'νοεμβριου': '11', 'νοεμβρίου': '11',
   'δεκ': '12', 'δεκεμβριος': '12', 'δεκεμβριου': '12', 'δεκεμβρίου': '12'
@@ -87,10 +87,12 @@ function getSignificantWords(text) {
 
 function matchTitleToUrl(parsedTitle, urlMap, defaultUrl) {
   const parsedWords = getSignificantWords(parsedTitle);
-  if (parsedWords.length === 0) return defaultUrl;
+  const fallbackUrl = defaultUrl.includes('#') ? defaultUrl : defaultUrl + '#:~:text=' + encodeURIComponent(parsedTitle.replace(/\s+/g, ' ').trim());
+  
+  if (parsedWords.length === 0) return fallbackUrl;
 
-  let bestUrl = defaultUrl;
-  let maxMatchRatio = 0.5; // Threshold: at least 50% overlap of the smaller set of words
+  let bestUrl = fallbackUrl;
+  let maxMatchRatio = 0.6; // Threshold: at least 60% overlap of the larger set of words
 
   for (const [key, url] of Object.entries(urlMap)) {
     const keyWords = getSignificantWords(key);
@@ -98,7 +100,7 @@ function matchTitleToUrl(parsedTitle, urlMap, defaultUrl) {
 
     // Count overlap
     const overlap = parsedWords.filter(w => keyWords.includes(w));
-    const ratio = overlap.length / Math.min(parsedWords.length, keyWords.length);
+    const ratio = overlap.length / Math.max(parsedWords.length, keyWords.length);
 
     if (ratio > maxMatchRatio) {
       maxMatchRatio = ratio;
@@ -365,9 +367,6 @@ function parseEosAcharnon() {
 // PARSER: AOS (Text-based)
 // ----------------------------------------------------
 function parseAos() {
-  const txtPath = path.join(INPUT_DIR, 'aos_gr_trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis.txt');
-  if (!fs.existsSync(txtPath)) return [];
-
   // Build URL Map from raw HTML files
   const urlMap = {};
   const aosHtmlFiles = [
@@ -405,49 +404,116 @@ function parseAos() {
     }
   }
 
-  const content = fs.readFileSync(txtPath, 'utf-8');
-  const lines = content.split('\n');
+  const aosTxtFiles = [
+    { file: 'aos_gr_trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis.txt', defaultUrl: 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/' },
+    { file: 'aos_gr_programma-exormiseon-ianouarios-2026-septemvrios-2026.txt', defaultUrl: 'https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/' }
+  ];
+
   const events = [];
 
-  let currentMonthHeader = '';
-  const defaultUrl = 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/';
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
+  for (const src of aosTxtFiles) {
+    const txtPath = path.join(INPUT_DIR, src.file);
+    if (!fs.existsSync(txtPath)) continue;
+    const content = fs.readFileSync(txtPath, 'utf-8');
+    const lines = content.split('\n');
 
-    // Check for month header like "Ιουνιος 2026"
-    if (/^[Α-Ωα-ωίϊΐόάέύώήώ]+\s+\d{4}$/.test(line) && !line.includes('Δηλώσεις')) {
-      currentMonthHeader = line;
-      continue;
-    }
+    let currentMonthHeader = '';
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
 
-    // Check for date line:
-    // "12-14 Ιουνίου 2026" or "14 Ιουνίου 2026"
-    const isRange = /^(\d+)-(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
-    const isSingle = /^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
-    const isMultiMonth = /^Παρασκευή\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+έως\s+Κυριακή\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
-    const isMultiMonthSep = /^Παρασκευή\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+έως\s+Τρίτη\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
+      // Check for month header like "Ιουνιος 2026"
+      if (/^[Α-Ωα-ωίϊΐόάέύώήώ]+\s+\d{4}$/.test(line) && !line.includes('Δηλώσεις')) {
+        currentMonthHeader = line;
+        continue;
+      }
 
-    if (isRange || isSingle || isMultiMonth || isMultiMonthSep) {
-      const dateStr = line;
-      // Next line should be title
-      let title = '';
-      if (lines[i+1]) title = lines[i+1].trim();
-      
-      // Try to parse dates
-      let parsed = parseDateRange(dateStr);
-      
-      if (parsed) {
-        events.push({
-          startDate: parsed.startDate,
-          endDate: parsed.endDate,
-          displayDate: parsed.displayDate,
-          title,
-          club: 'ΑΟΣ',
-          url: matchTitleToUrl(title, urlMap, defaultUrl),
-          difficulty: ''
-        });
+      // Numeric formats
+      // 1: 31/01 - 01/02/26 or 21/08/26 - 1/9/2026
+      const numCrossMonth = /^(\d+)\/(\d+)(?:\/\d+)?\s*[-–—]\s*(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]?\s*(.+)/.exec(line);
+      // 2: 03-05/01/26 or 14-15/02 or 21-22-23/02
+      const numRangeMonth = /^(\d+)(?:-\d+)*-(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]?\s*(.+)/.exec(line);
+      // 3: 11/01/26 or 19/4
+      const numSingleMonth = /^(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]?\s*(.+)/.exec(line);
+
+      let pStartDay, pEndDay, pStartMonth, pEndMonth, pYear, pTitle;
+
+      if (numCrossMonth) {
+        pStartDay = numCrossMonth[1];
+        pStartMonth = numCrossMonth[2];
+        pEndDay = numCrossMonth[3];
+        pEndMonth = numCrossMonth[4];
+        pYear = numCrossMonth[5];
+        pTitle = numCrossMonth[6];
+      } else if (numRangeMonth) {
+        pStartDay = numRangeMonth[1];
+        pEndDay = numRangeMonth[2];
+        pStartMonth = numRangeMonth[3];
+        pEndMonth = numRangeMonth[3];
+        pYear = numRangeMonth[4];
+        pTitle = numRangeMonth[5];
+      } else if (numSingleMonth) {
+        pStartDay = numSingleMonth[1];
+        pEndDay = numSingleMonth[1];
+        pStartMonth = numSingleMonth[2];
+        pEndMonth = numSingleMonth[2];
+        pYear = numSingleMonth[3];
+        pTitle = numSingleMonth[4];
+      }
+
+      if (pStartDay) {
+        const yStr = pYear ? (pYear.length === 2 ? '20' + pYear : pYear) : '2026';
+        const sDate = `${yStr}-${pStartMonth.padStart(2, '0')}-${pStartDay.padStart(2, '0')}`;
+        
+        let eYStr = yStr;
+        if (parseInt(pEndMonth) < parseInt(pStartMonth)) {
+            eYStr = String(parseInt(yStr) + 1);
+        }
+        const eDate = `${eYStr}-${pEndMonth.padStart(2, '0')}-${pEndDay.padStart(2, '0')}`;
+        
+        const dDate = pStartDay !== pEndDay ? `${parseInt(pStartDay)}/${parseInt(pStartMonth)} - ${parseInt(pEndDay)}/${parseInt(pEndMonth)}` : `${parseInt(pStartDay)}/${parseInt(pStartMonth)}`;
+
+        let cleanTitle = pTitle.split('Λεπτομέρειες')[0].trim();
+        cleanTitle = cleanTitle.split('Αρχηγοί')[0].trim();
+        if (cleanTitle) {
+           events.push({
+             startDate: sDate,
+             endDate: eDate,
+             displayDate: dDate,
+             title: cleanTitle,
+             club: 'ΑΟΣ',
+             url: matchTitleToUrl(cleanTitle, urlMap, src.defaultUrl),
+             difficulty: ''
+           });
+        }
+        continue;
+      }
+
+      // Existing String formats
+      const isRange = /^(\d+)-(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
+      const isSingle = /^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
+      const isMultiMonth = /^Παρασκευή\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+έως\s+Κυριακή\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
+      const isMultiMonthSep = /^Παρασκευή\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+έως\s+Τρίτη\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i.test(line);
+
+      if (isRange || isSingle || isMultiMonth || isMultiMonthSep) {
+        const dateStr = line;
+        let title = '';
+        if (lines[i+1]) title = lines[i+1].trim();
+        
+        let parsed = parseDateRange(dateStr);
+        
+        if (parsed) {
+          events.push({
+            startDate: parsed.startDate,
+            endDate: parsed.endDate,
+            displayDate: parsed.displayDate,
+            title,
+            club: 'ΑΟΣ',
+            url: matchTitleToUrl(title, urlMap, src.defaultUrl),
+            difficulty: ''
+          });
+        }
       }
     }
   }
@@ -801,6 +867,8 @@ function parseEosAthinon() {
 
         // Clean title from departure times
         titlePart = titlePart.split(/\d+:/)[0].trim().replace(/[–\-:\s]+$/, '');
+        // Remove trailing date-like fragments that got left behind (e.g. '2/' or '2/10')
+        titlePart = titlePart.replace(/\d+\/\d*\s*$/, '').trim();
 
         // Parse datePart
         const parsed = parseDateRange(datePart, currentYear);
@@ -842,50 +910,24 @@ function parseEosAthinon() {
 // PARSER: EOS Halandriou / Ilioupolis (Text-based)
 // ----------------------------------------------------
 function parseEosHalioupolis() {
-  const sources = [
-    {
-      txt: 'eosh_gr_wp-product-category-greek-mountains-climbs.txt',
-      html: 'eosh_gr_wp-product-category-greek-mountains-climbs.html',
-      defaultUrl: 'https://eosh.gr/wp/product-category/greek-mountains-climbs/'
-    },
-    {
-      txt: 'eosh_gr_wp-product-category-climbs-abroad.txt',
-      html: 'eosh_gr_wp-product-category-climbs-abroad.html',
-      defaultUrl: 'https://eosh.gr/wp/product-category/climbs-abroad/'
-    }
-  ];
-
   let events = [];
 
-  for (const src of sources) {
-    const txtPath = path.join(INPUT_DIR, src.txt);
-    const htmlPath = path.join(INPUT_DIR, src.html);
-    if (!fs.existsSync(txtPath)) continue;
+  const apiPath = path.join(INPUT_DIR, 'eosh_gr_api-trips.html');
+  if (!fs.existsSync(apiPath)) return events;
 
-    // Build URL Map from WooCommerce catalog raw HTML
-    const urlMap = {};
-    if (fs.existsSync(htmlPath)) {
-      try {
-        const html = fs.readFileSync(htmlPath, 'utf-8');
-        const $ = cheerio.load(html);
-        $('.product').each((i, el) => {
-          const titleText = $(el).find('.woocommerce-loop-product__title').text().trim();
-          const href = $(el).find('a.woocommerce-LoopProduct-link').attr('href');
-          if (titleText && href) {
-            urlMap[titleText] = href;
-          }
-        });
-      } catch (e) {
-        console.error(`Failed to parse EOS Hlioupolis product catalog ${src.html}:`, e.message);
-      }
+  try {
+    const rawData = fs.readFileSync(apiPath, 'utf-8');
+    const json = JSON.parse(rawData);
+
+    if (!json.trips || !Array.isArray(json.trips)) {
+      return events;
     }
 
-    const content = fs.readFileSync(txtPath, 'utf-8');
-    const lines = content.split('\n');
+    const defaultUrl = 'https://eosh.gr/expeditions';
 
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
+    for (const trip of json.trips) {
+      if (!trip.title_gr) continue;
+      const line = trip.title_gr.trim();
 
       // Format: "26 Ιουλ- 3 Αυγ 2026: Βόρεια Σουηδία (Kungsleden trail)"
       const crossMatch = line.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
@@ -910,7 +952,7 @@ function parseEosHalioupolis() {
           displayDate,
           title: title.trim(),
           club: 'ΕΟΣ Ηλιούπολης',
-          url: matchTitleToUrl(title.trim(), urlMap, src.defaultUrl),
+          url: trip.slug ? `https://eosh.gr/expeditions/${trip.slug}` : defaultUrl,
           difficulty: ''
         });
         continue;
@@ -946,11 +988,13 @@ function parseEosHalioupolis() {
           displayDate,
           title: title.trim(),
           club: 'ΕΟΣ Ηλιούπολης',
-          url: matchTitleToUrl(title.trim(), urlMap, src.defaultUrl),
+          url: trip.slug ? `https://eosh.gr/expeditions/${trip.slug}` : defaultUrl,
           difficulty: ''
         });
       }
     }
+  } catch (e) {
+    console.error('Failed to parse EOS Hlioupolis API payload:', e.message);
   }
 
   // Deduplicate
@@ -1387,6 +1431,49 @@ function main() {
     // Keep only future/current events (from TODAY onwards)
     return evDate >= TODAY;
   });
+
+  // Global Smarter Deduplication
+  const dedupedEvents = [];
+  for (const ev of allEvents) {
+    const duplicate = dedupedEvents.find(u => 
+      u.club === ev.club && 
+      u.startDate === ev.startDate && 
+      u.endDate === ev.endDate
+    );
+
+    if (duplicate) {
+      const t1 = stripGreekAccents(ev.title).toLowerCase().trim();
+      const t2 = stripGreekAccents(duplicate.title).toLowerCase().trim();
+      
+      const words1 = getSignificantWords(ev.title);
+      const words2 = getSignificantWords(duplicate.title);
+      const overlap = words1.filter(w => words2.includes(w)).length;
+      
+      // If one string includes the other, or they share a significant word overlap (>= 1 word if short, otherwise 40%+)
+      const isSubset = t1.includes(t2) || t2.includes(t1);
+      const isWordMatch = overlap >= 1 && (overlap / Math.min(words1.length, words2.length)) >= 0.4;
+
+      if (isSubset || isWordMatch) {
+        // Merge them: prefer the shorter title if one is a subset (usually the longer is messy), otherwise prefer longer
+        if (isSubset) {
+          if (ev.title.length < duplicate.title.length) duplicate.title = ev.title;
+        } else {
+          if (ev.title.length > duplicate.title.length) duplicate.title = ev.title;
+        }
+        // Keep the better URL (if one has a real URL vs a text fragment fallback)
+        const evHasFrag = ev.url.includes('#:~:text=');
+        const dupHasFrag = duplicate.url.includes('#:~:text=');
+        if (!evHasFrag && dupHasFrag) {
+          duplicate.url = ev.url;
+        } else if (evHasFrag && dupHasFrag && ev.url.length > duplicate.url.length) {
+          duplicate.url = ev.url;
+        }
+        continue; // Skip adding this event since we merged it
+      }
+    }
+    dedupedEvents.push(ev);
+  }
+  allEvents = dedupedEvents;
 
   // Sort chronologically by startDate
   allEvents.sort((a, b) => {

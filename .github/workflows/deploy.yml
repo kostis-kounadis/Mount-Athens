@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   build-and-deploy:
@@ -30,10 +31,27 @@ jobs:
       - name: Fetch & Parse Latest Excursions
         continue-on-error: true
         run: |
+          cp src/data/events.json src/data/events_old.json || true
           node scripts/fetch-raw.js
           node scripts/extract-text.js
           node scripts/parse-events.js
           node scripts/debug-fetch.js
+          node scripts/detect-anomalies.js
+
+      - name: Report Anomalies via GitHub Issues
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f src/data/anomaly_report.md ]; then
+            # Check if an anomaly issue is already open
+            OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number')
+            if [ -z "$OPEN_ISSUE_NUM" ] || [ "$OPEN_ISSUE_NUM" == "null" ]; then
+              gh issue create --title "⚠️ Parsing Anomaly Detected!" --body-file src/data/anomaly_report.md --label "anomaly"
+            else
+              gh issue comment $OPEN_ISSUE_NUM --body-file src/data/anomaly_report.md
+            fi
+          fi
 
       - name: Commit Updated Events
         run: |

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-26T14:38:08.635Z",
+  "lastUpdated": "2026-07-21T14:13:01.786Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,28 +11,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 266925
+          "size": 280708
         }
       ]
     },
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 7 events",
+      "details": "Parsed 59 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 85723
+          "size": 84729
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 99972
+          "size": 99938
         }
       ]
     },
@@ -53,42 +53,35 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 41 events",
+      "details": "Parsed 35 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 184071
+          "size": 171811
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 216659
+          "size": 217123
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 5 events",
+      "details": "Parsed 20 events",
       "fetch": [
         {
-          "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
+          "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 106789
-        },
-        {
-          "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 100821
+          "size": 292079
         }
       ]
     },
@@ -102,21 +95,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 77612
+          "size": 77941
         }
       ]
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 3 events",
+      "details": "Parsed 10 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 181033
+          "size": 226842
         }
       ]
     },
@@ -130,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 94517
+          "size": 94519
         }
       ]
     }
