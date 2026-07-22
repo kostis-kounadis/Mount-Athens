@@ -1,4 +1,4 @@
-Debug run at 2026-07-21T02:13:46.619Z
+Debug run at 2026-07-22T02:11:51.533Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 183063 chars
@@ -40,7 +40,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Tue, 21 Jul 2026 02:13:47 GMT
+  date: Wed, 22 Jul 2026 02:11:52 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -66,11 +66,11 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a1e6b040dd087a20-SJC
+  cf-ray: a1eeead0cf85b6cc-ORD
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Tue, 21 Jul 2026 02:13:48 GMT
+  date: Wed, 22 Jul 2026 02:11:53 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
