@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-23T02:23:27.493Z",
+  "lastUpdated": "2026-07-23T20:17:30.984Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,14 +11,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 281221
+          "size": 280709
         }
       ]
     },
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 6 events",
+      "details": "Parsed 59 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
@@ -53,42 +53,35 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 38 events",
+      "details": "Parsed 35 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172170
+          "size": 171811
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 217482
+          "size": 217096
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 20 events",
       "fetch": [
         {
-          "url": "https://eosh.gr/wp/product-category/greek-mountains-climbs/",
+          "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 5330
-        },
-        {
-          "url": "https://eosh.gr/wp/product-category/climbs-abroad/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 5330
+          "size": 292456
         }
       ]
     },
@@ -130,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 160855
+          "size": 160865
         }
       ]
     }
