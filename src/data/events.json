@@ -72,6 +72,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-09-06",
+    "endDate": "2026-09-06",
+    "displayDate": "6/9",
+    "title": "Αχαΐα: Φαράγγι Βουραϊκού ,  Μέγα Σπήλαιο-Διακοπτό (κατάβαση). Κατά την μυθολογία, ο Βουραϊκός ποταμός πήρε...",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/6-9-%ce%b1%cf%87%ce%b1%ce%90%ce%b1-%cf%86%ce%b1%cf%81%ce%ac%ce%b3%ce%b3%ce%b9-%ce%b2%ce%bf%cf%85%cf%81%ce%b1%cf%8a%ce%ba%ce%bf%cf%8d-%ce%bc%ce%ad%ce%b3%ce%b1-%cf%83%cf%80%ce%ae%ce%bb%ce%b1/",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-09-13",
     "endDate": "2026-09-13",
     "displayDate": "13/9",
@@ -102,9 +111,9 @@
     "startDate": "2026-09-13",
     "endDate": "2026-09-13",
     "displayDate": "13/9",
-    "title": "Αχαΐα: Φαράγγι Βουραϊκού ,  Μέγα Σπήλαιο-Διακοπτό (κατάβαση).  Κατά την μυθολογία, ο Βουραϊκός ποταμός πήρε...",
+    "title": "Αργοσαρωνικός: ΑΙΓΙΝΑ. Ελλάνιο Όρος – Αρχαίος Ελαιώνας  Συνάντηση μία ώρα πριν την",
     "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/%ce%b2%ce%bf%cf%85%cf%81%ce%b1%cf%8a%ce%ba%ce%bf%cf%82/",
+    "url": "https://eposfilis.gr/event/13-9-%ce%b1%cf%81%ce%b3%ce%bf%cf%83%ce%b1%cf%81%cf%89%ce%bd%ce%b9%ce%ba%cf%8c%cf%82-%ce%b1%ce%b9%ce%b3%ce%b9%ce%bd%ce%b1-%ce%b5%ce%bb%ce%bb%ce%ac%ce%bd%ce%b9%ce%bf-%cf%8c%cf%81%ce%bf%cf%82/",
     "difficulty": ""
   },
   {
@@ -270,6 +279,15 @@
     "difficulty": "Α"
   },
   {
+    "startDate": "2026-10-09",
+    "endDate": "2026-10-11",
+    "displayDate": "9-11/10",
+    "title": "Παρασκευή",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-10-10",
     "endDate": "2026-10-11",
     "displayDate": "10-11/10",
@@ -396,6 +414,15 @@
     "difficulty": "ΒΔ 1"
   },
   {
+    "startDate": "2026-10-30",
+    "endDate": "2026-10-31",
+    "displayDate": "30-31/10",
+    "title": "- 1/11 Πήλιο",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/30-31-10-1-11-%cf%80%ce%ae%ce%bb%ce%b9%ce%bf-%cf%80%ce%b5%ce%b6%ce%bf%cf%80%ce%bf%cf%81%ce%af%ce%b5%cf%82-%cf%83%cf%84%ce%bf-%ce%b2%ce%bf%cf%85%ce%bd%cf%8c-%cf%84%cf%89%ce%bd-%ce%ba/",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-11-01",
     "endDate": "2026-11-01",
     "displayDate": "1/11",
@@ -448,6 +475,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9A%CE%B1%CE%BB%CE%BB%CE%AF%CE%B4%CF%81%CE%BF%CE%BC%CE%BF%20%E2%80%93%20%CE%93%CE%BA%CE%B9%CF%8C%CE%B6%CE%B1%20(1419%CE%BC.)",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-11-08",
+    "endDate": "2026-11-08",
+    "displayDate": "8/11",
+    "title": "Πάρνηθα, Λάκα Ζηρέλι (κυκλική) (σύντομα η αναλυτική περιγραφή)",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/8-11-%cf%80%ce%ac%cf%81%ce%bd%ce%b7%ce%b8%ce%b1-%ce%bb%ce%ac%ce%ba%ce%b1-%ce%b6%ce%b7%cf%81%ce%ad%ce%bb%ce%b9-%ce%ba%cf%85%ce%ba%ce%bb%ce%b9%ce%ba%ce%ae/",
+    "difficulty": ""
   },
   {
     "startDate": "2026-11-15",
@@ -528,6 +564,24 @@
     "title": "ΟΙΤΗ – Πυρά Ηρακλέους – Καταβόθρες",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#:~:text=%CE%9F%CE%99%CE%A4%CE%97%20%E2%80%93%20%CE%A0%CF%85%CF%81%CE%AC%20%CE%97%CF%81%CE%B1%CE%BA%CE%BB%CE%AD%CE%BF%CF%85%CF%82%20%E2%80%93%20%CE%9A%CE%B1%CF%84%CE%B1%CE%B2%CF%8C%CE%B8%CF%81%CE%B5%CF%82",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-12-06",
+    "endDate": "2026-12-06",
+    "displayDate": "6/12",
+    "title": "Μαίναλο: Βαλτετσίνικο – Μαγούλιανα – Παναγιά Σφυρίδα - Νυμφασία (θα ανακοινωθεί σύντομα) Συντονιστής: Σταύρος...",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/6-12-%ce%bc%ce%b1%ce%af%ce%bd%ce%b1%ce%bb%ce%bf-%ce%b2%ce%b1%ce%bb%cf%84%ce%b5%cf%84%cf%83%ce%af%ce%bd%ce%b9%ce%ba%ce%bf-%ce%bc%ce%b1%ce%b3%ce%bf%cf%8d%ce%bb%ce%b9%ce%b1%ce%bd%ce%b1/",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-12-11",
+    "endDate": "2026-12-13",
+    "displayDate": "11-13/12",
+    "title": "Αχαϊα:  Χελμός, «Χτένια». Γαρδίκι (2.182μ.), Ψηλή Κορφή (2.355μ.) διάσχιση κορυφογραμμής Η εξόρμηση συστήνεται για...",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/11-13-12-%ce%b1%cf%87%ce%b1%cf%8a%ce%b1-%cf%87%ce%b5%ce%bb%ce%bc%cf%8c%cf%82-%cf%87%cf%84%ce%ad%ce%bd%ce%b9%ce%b1-%ce%b3%ce%b1%cf%81%ce%b4%ce%af%ce%ba%ce%b9-2-182%ce%bc/",
     "difficulty": ""
   },
   {
