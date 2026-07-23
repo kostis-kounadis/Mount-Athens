@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-07-23
+
+### Fixed
+- Fixed GitHub Actions deployment pipeline by making anomaly issue reporting step non-blocking (`continue-on-error: true`) and passing `GH_TOKEN`.
+
 ## [1.2.0] - 2026-07-23
 
 ### Added
