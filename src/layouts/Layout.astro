@@ -1,5 +1,6 @@
 ---
 import SEO from '../components/SEO.astro';
+import pkg from '../../package.json';
 
 interface Props {
   title?: string;
@@ -168,7 +169,7 @@ try {
           <span class="text-slate-300">/</span>
           <a href="https://github.com/kostis-kounadis/Mount-Athens" target="_blank" rel="noopener noreferrer" class="hover:underline transition-all hover:text-slate-900">GITHUB</a>
           <span class="text-slate-300">/</span>
-          <span class="font-bold text-slate-800">v1.0.0</span>
+          <span class="font-bold text-slate-800">v{pkg.version}</span>
         </div>
       </div>
     </footer>
