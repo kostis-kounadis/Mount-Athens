@@ -40,16 +40,18 @@ jobs:
 
       - name: Report Anomalies via GitHub Issues
         if: always()
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -f src/data/anomaly_report.md ]; then
             # Check if an anomaly issue is already open
-            OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number')
+            OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number' 2>/dev/null || true)
             if [ -z "$OPEN_ISSUE_NUM" ] || [ "$OPEN_ISSUE_NUM" == "null" ]; then
-              gh issue create --title "⚠️ Parsing Anomaly Detected!" --body-file src/data/anomaly_report.md --label "anomaly"
+              gh issue create --title "⚠️ Parsing Anomaly Detected!" --body-file src/data/anomaly_report.md --label "anomaly" || true
             else
-              gh issue comment $OPEN_ISSUE_NUM --body-file src/data/anomaly_report.md
+              gh issue comment $OPEN_ISSUE_NUM --body-file src/data/anomaly_report.md || true
             fi
           fi
 
