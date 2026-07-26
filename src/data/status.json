@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-25T02:14:02.829Z",
+  "lastUpdated": "2026-07-26T02:24:51.868Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 281091
+          "size": 267363
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 160863
+          "size": 160865
         }
       ]
     }
