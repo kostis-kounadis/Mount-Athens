@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -60,6 +61,13 @@ async function main() {
     process.exit(1);
   }
 
+  // Preserve previous content hashes if file exists
+  const currentHashFile = path.join(INPUT_DIR, 'content-hashes.json');
+  const oldHashFile = path.join(INPUT_DIR, 'content-hashes-old.json');
+  if (fs.existsSync(currentHashFile)) {
+    fs.copyFileSync(currentHashFile, oldHashFile);
+  }
+
   const content = fs.readFileSync(LINKS_FILE, 'utf-8');
   const lines = content.split('\n');
   const linkConfig = {};
@@ -107,6 +115,7 @@ async function main() {
   urls.forEach((u, i) => console.log(`  [${i+1}] ${u}`));
 
   const fetchLogs = {};
+  const contentHashes = {};
 
   for (const url of urls) {
     const slug = getSlug(url);
@@ -123,6 +132,8 @@ async function main() {
     if (result.html) {
       fs.writeFileSync(outputPath, result.html, 'utf-8');
       console.log(`Saved ${url} -> ${outputPath} (${result.html.length} bytes)`);
+      const hash = crypto.createHash('sha256').update(result.html).digest('hex');
+      contentHashes[url] = hash;
     }
     // Small delay between requests
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -131,6 +142,9 @@ async function main() {
   const reportPath = path.join(INPUT_DIR, 'fetch-status.json');
   fs.writeFileSync(reportPath, JSON.stringify(fetchLogs, null, 2), 'utf-8');
   console.log(`Saved fetch report to ${reportPath}`);
+
+  fs.writeFileSync(currentHashFile, JSON.stringify(contentHashes, null, 2), 'utf-8');
+  console.log(`Saved content SHA-256 hashes to ${currentHashFile}`);
 
   console.log('\nAll crawls finished.');
 }
