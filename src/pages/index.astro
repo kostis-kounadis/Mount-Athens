@@ -107,6 +107,13 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 ---
 
 <Layout mainClass="px-6 md:px-12" footerClass="px-6 md:px-12">
+  <style>
+    /* Dynamic border separation for visible event rows */
+    .event-row:not(.hidden) ~ .event-row:not(.hidden) {
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+    }
+  </style>
+
   <!-- Scroll Progress Bar (Fixed to bottom) -->
   <div class="fixed bottom-0 left-0 w-full h-[3px] z-50 pointer-events-none">
     <div id="scroll-progress-bar" class="h-full bg-orange-500 w-0"></div>
@@ -196,6 +203,28 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
               </button>
             </div>
           </div>
+
+          <!-- Row 4: Favorites / Starred Filter pills -->
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΑΓΑΠΗΜΕΝΑ:</span>
+            <div class="flex flex-wrap gap-1.5" id="star-filters-container">
+              <button 
+                data-star-filter="all" 
+                class="px-2.5 py-1 rounded border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-star-btn"
+              >
+                Όλες
+              </button>
+              <button 
+                data-star-filter="starred" 
+                class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200 flex items-center gap-1.5"
+              >
+                <svg class="w-3.5 h-3.5 text-orange-500 fill-orange-500" viewBox="0 0 24 24">
+                  <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+                <span>Αγαπημένα (<span id="stat-starred-count">0</span>)</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </aside>
@@ -223,7 +252,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
               return (
                 <div class="date-group flex flex-col md:flex-row items-stretch" data-date={dateStr}>
                   <!-- Date Column (Left) -->
-                  <div class="w-full md:w-28 bg-slate-50/40 md:border-r border-slate-200 p-4 flex flex-row md:flex-col items-baseline md:items-start justify-between md:justify-start gap-2 select-none font-mono flex-shrink-0">
+                  <div class="w-full md:w-28 bg-slate-50/40 md:border-r border-slate-200 p-4 md:py-5 flex flex-row md:flex-col items-baseline md:items-start justify-between md:justify-center gap-2 select-none font-mono flex-shrink-0">
                     <span class="text-3xl font-bold text-slate-800 leading-none">
                       {dayNum}
                     </span>
@@ -235,51 +264,68 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                   </div>
 
                   <!-- Events List (Right) -->
-                  <div class="flex-grow p-4 md:p-5 space-y-4 event-rows-container">
+                  <div class="flex-grow px-4 md:px-5 py-1 event-rows-container flex flex-col justify-center">
                     {events.map((event, idx) => {
                       const theme = CLUB_THEMES[event.club] || defaultTheme;
                       const isMultiDay = event.startDate !== event.endDate;
+                      const eventId = event.url || `${event.club}_${event.startDate}_${event.title}`;
                       
                       const searchText = `${event.title} ${event.club} ${monthYear} ${isMultiDay ? 'πολυήμερο' : 'μονοήμερο'}`;
                       
                       return (
                         <div 
-                          class={`event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-2.5 first:pt-0 last:pb-0 ${idx > 0 ? 'border-t border-slate-200/80 pt-4 mt-4' : ''}`}
+                          class="event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3.5"
                           data-club={event.club}
                           data-duration={isMultiDay ? 'multi' : 'single'}
                           data-search-text={searchText}
+                          data-event-id={eventId}
                         >
-                          <!-- Title & Meta Tags -->
-                          <div class="flex-grow min-w-0 pr-0 sm:pr-4">
-                            <!-- Event Title (IBM Plex Sans) on TOP -->
-                            <h3 class="text-sm font-semibold text-slate-900 leading-snug mb-2 font-sans">
-                              <a 
-                                href={event.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="hover:text-slate-500 transition-colors duration-150"
-                              >
-                                {event.title}
-                              </a>
-                            </h3>
+                          <!-- Title & Meta Tags + Star Button -->
+                          <div class="flex items-center gap-2.5 flex-grow min-w-0 pr-0 sm:pr-4">
+                            <!-- Star Toggle Button -->
+                            <button 
+                              type="button"
+                              class="star-toggle-btn group p-1 -ml-1 text-slate-300 hover:text-orange-500 focus:outline-none transition-colors duration-150 flex-shrink-0 cursor-pointer"
+                              data-event-id={eventId}
+                              aria-label="Προσθήκη στα αγαπημένα"
+                              title="Προσθήκη στα αγαπημένα"
+                            >
+                              <svg class="w-5 h-5 star-icon stroke-current fill-none transition-all duration-150" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385c.116.489-.413.873-.83.619l-4.708-2.884a.563.563 0 00-.582 0l-4.708 2.884c-.417.254-.946-.13-.83-.619l1.285-5.385a.563.563 0 00-.182-.557l-4.204-3.602c-.38-.325-.178-.948.32-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                              </svg>
+                            </button>
 
-                            <div class="flex flex-wrap items-center gap-1.5">
-                              <!-- Club Name Badge (Fixed 22px Height) -->
-                              <button 
-                                type="button"
-                                data-filter-club={event.club}
-                                class={`inline-flex items-center h-[22px] px-2 border text-[9px] uppercase font-bold tracking-wider font-mono rounded cursor-pointer transition-colors duration-150 ${theme.badge} ${theme.border}`}
-                                title={`Φιλτράρισμα κατά ${event.club}`}
-                              >
-                                {event.club}
-                              </button>
+                            <div class="min-w-0 flex-grow">
+                              <!-- Event Title (IBM Plex Sans) on TOP -->
+                              <h3 class="text-sm font-semibold text-slate-900 leading-snug mb-1.5 font-sans">
+                                <a 
+                                  href={event.url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  class="hover:text-slate-500 transition-colors duration-150"
+                                >
+                                  {event.title}
+                                </a>
+                              </h3>
 
-                              <!-- Excursion date tag if multi-day (Fixed 22px Height) -->
-                              {isMultiDay && (
-                                <span class="inline-flex items-center h-[22px] px-2 border border-slate-200 text-[9px] font-bold font-mono text-slate-600 bg-slate-50 rounded select-none">
-                                  {event.displayDate}
-                                </span>
-                              )}
+                              <div class="flex flex-wrap items-center gap-1.5">
+                                <!-- Club Name Badge (Fixed 22px Height) -->
+                                <button 
+                                  type="button"
+                                  data-filter-club={event.club}
+                                  class={`inline-flex items-center h-[22px] px-2 border text-[9px] uppercase font-bold tracking-wider font-mono rounded cursor-pointer transition-colors duration-150 ${theme.badge} ${theme.border}`}
+                                  title={`Φιλτράρισμα κατά ${event.club}`}
+                                >
+                                  {event.club}
+                                </button>
+
+                                <!-- Excursion date tag if multi-day (Fixed 22px Height) -->
+                                {isMultiDay && (
+                                  <span class="inline-flex items-center h-[22px] px-2 border border-slate-200 text-[9px] font-bold font-mono text-slate-600 bg-slate-50 rounded select-none">
+                                    {event.displayDate}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
 
@@ -415,6 +461,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
     const clubFiltersContainer = document.getElementById('club-filters-container');
     const durationFiltersContainer = document.getElementById('duration-filters-container');
+    const starFiltersContainer = document.getElementById('star-filters-container');
     
     const eventRows = document.querySelectorAll('.event-row');
     const dateGroups = document.querySelectorAll('.date-group');
@@ -422,10 +469,91 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     const emptyState = document.getElementById('empty-state');
     const resetFiltersBtn = document.getElementById('reset-filters-btn');
     const statTotalCount = document.getElementById('stat-total-count');
+    const statStarredCount = document.getElementById('stat-starred-count');
 
     let activeClub = 'all';
     let activeDuration = 'all';
+    let activeStarFilter = 'all';
     let searchQuery = '';
+
+    // Starred Events local storage manager
+    const STORAGE_KEY = 'mount_athens_starred_events';
+
+    function getStarredEvents(): Set<string> {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? new Set(JSON.parse(raw)) : new Set();
+      } catch (e) {
+        return new Set();
+      }
+    }
+
+    function saveStarredEvents(set: Set<string>) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(set)));
+      } catch (e) {
+        // Safe fallback
+      }
+    }
+
+    let starredEvents = getStarredEvents();
+
+    function updateStarUI() {
+      const allStarBtns = document.querySelectorAll('.star-toggle-btn');
+      allStarBtns.forEach(btn => {
+        const b = btn as HTMLButtonElement;
+        const eventId = b.getAttribute('data-event-id');
+        const svg = b.querySelector('.star-icon');
+        
+        if (eventId && starredEvents.has(eventId)) {
+          b.classList.remove('text-slate-300');
+          b.classList.add('text-orange-500', 'is-starred');
+          b.setAttribute('title', 'Αφαίρεση από τα αγαπημένα');
+          if (svg) {
+            svg.classList.remove('fill-none');
+            svg.classList.add('fill-orange-500');
+          }
+        } else {
+          b.classList.remove('text-orange-500', 'is-starred');
+          b.classList.add('text-slate-300');
+          b.setAttribute('title', 'Προσθήκη στα αγαπημένα');
+          if (svg) {
+            svg.classList.remove('fill-orange-500');
+            svg.classList.add('fill-none');
+          }
+        }
+      });
+
+      if (statStarredCount) {
+        statStarredCount.textContent = starredEvents.size.toString();
+      }
+    }
+
+    // Initialize Star UI states on load
+    updateStarUI();
+
+    // Star Toggle Click Handler
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const starBtn = target.closest('.star-toggle-btn') as HTMLButtonElement;
+      if (!starBtn) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const eventId = starBtn.getAttribute('data-event-id');
+      if (!eventId) return;
+
+      if (starredEvents.has(eventId)) {
+        starredEvents.delete(eventId);
+      } else {
+        starredEvents.add(eventId);
+      }
+
+      saveStarredEvents(starredEvents);
+      updateStarUI();
+      applyFilters();
+    });
 
     // Greek Accent Normalizer
     function cleanString(str: string): string {
@@ -451,14 +579,18 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
         const rowElement = row as HTMLElement;
         const clubVal = rowElement.getAttribute('data-club') || '';
         const durationVal = rowElement.getAttribute('data-duration') || '';
+        const eventId = rowElement.getAttribute('data-event-id') || '';
         const searchRaw = rowElement.getAttribute('data-search-text') || '';
         const cleanSearchText = cleanString(searchRaw);
 
+        const isStarred = starredEvents.has(eventId);
+
         const clubMatches = (activeClub === 'all' || clubVal === activeClub);
         const durationMatches = (activeDuration === 'all' || durationVal === activeDuration);
+        const starMatches = (activeStarFilter === 'all' || isStarred);
         const searchMatches = (cleanQuery === '' || cleanSearchText.includes(cleanQuery));
 
-        if (clubMatches && durationMatches && searchMatches) {
+        if (clubMatches && durationMatches && starMatches && searchMatches) {
           rowElement.classList.remove('hidden');
           visibleCount++;
         } else {
@@ -475,16 +607,6 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
           dgElement.classList.add('hidden');
         } else {
           dgElement.classList.remove('hidden');
-          
-          // Re-add top borders dynamically for visible items inside the date group
-          visibleRowsInDg.forEach((row, idx) => {
-            const rowElement = row as HTMLElement;
-            if (idx === 0) {
-              rowElement.classList.remove('border-t', 'border-slate-200/80', 'pt-4', 'mt-4');
-            } else {
-              rowElement.classList.add('border-t', 'border-slate-200/80', 'pt-4', 'mt-4');
-            }
-          });
         }
       });
 
@@ -600,6 +722,33 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       });
     }
 
+    // Star selection filters
+    if (starFiltersContainer) {
+      starFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-star-filter]') as HTMLButtonElement;
+        if (!button) return;
+
+        const selectedStarFilter = button.getAttribute('data-star-filter') || 'all';
+        activeStarFilter = selectedStarFilter;
+
+        const allButtons = starFiltersContainer.querySelectorAll('[data-star-filter]');
+        allButtons.forEach(btn => {
+          const b = btn as HTMLButtonElement;
+          const filterAttr = b.getAttribute('data-star-filter');
+
+          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
+          if (activeStarFilter === filterAttr) {
+            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-star-btn');
+          } else {
+            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+          }
+        });
+
+        applyFilters();
+      });
+    }
+
     // Reset filters
     function resetFilters() {
       searchQuery = '';
@@ -611,6 +760,9 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
       const allDurationBtn = document.querySelector('[data-duration-filter="all"]') as HTMLButtonElement;
       if (allDurationBtn) allDurationBtn.click();
+
+      const allStarBtn = document.querySelector('[data-star-filter="all"]') as HTMLButtonElement;
+      if (allStarBtn) allStarBtn.click();
     }
 
     if (resetFiltersBtn) {
