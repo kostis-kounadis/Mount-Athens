@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-07-28
+
+### Added
+- Interactive Star / Favorite excursions feature with local storage persistence (`mount_athens_starred_events`) and UI filter button.
+- SHA-256 raw webpage content hashing (`content-hashes.json`) during daily crawl to track website updates.
+- Enhanced anomaly detector (`detect-anomalies.js`) alerting when a club updates its website overnight but parser yields 0 events.
+
+### Fixed
+- Refactored `fop.gr` parser (`parseFop`) to use Cheerio DOM accordion selectors (`.gdlr-core-accordion-item-tab`) and enhanced date range matching for dot-separated formats (`DD.MM.YYYY`).
+- Prefix and folk month name resolution (`parseGreekMonth`) supporting truncated month names (`ΙΑΝ`, `ΙΑΝΟΥΡ`, `ΦΕΒΡ`, `ΓΕΝΑΡΗΣ`, `ΦΛΕΒ`).
+
 ## [1.2.1] - 2026-07-23
 
 ### Fixed
