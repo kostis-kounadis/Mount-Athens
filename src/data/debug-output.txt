@@ -1,7 +1,7 @@
-Debug run at 2026-06-10T02:58:28.673Z
+Debug run at 2026-07-28T02:07:02.776Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
-Size: 243392 chars
+Size: 183063 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el">
@@ -17,7 +17,7 @@ Snippet (first 1000 chars):
 	<meta property="og:locale" content="el_GR" />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content="Πρόγραμμα - POA" />
-	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Δεκέμβριος 2025 6-7/12 8 κλασικές κορυφογραμμές. Διάσχιση κορυφογραμμής Όθρυος με πανσέληνο ΒΔ 3 Σάββατο: Αναχώρηση με ΙΧ 
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Ιούνιος 2026 7/6 ΦΑΡΑΓΓΙ ΠΕΡΙΣΤΕΡΙΩΝΑ &#8211; ΑΚΡΑΤΑ ΒΔ 1 Κυριακή: Αναχώρηση στις 07:00 για τον οικισμό Φούρνοι, πάνω στην
 Snippet (last 1000 chars):
 orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":905,"title":"%CE%A0%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1%20-%20POA","excerpt":"","featuredImage":false}};
 </script>
@@ -29,77 +29,19 @@ orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpo
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
-Size: 111647 chars
-Snippet (first 1000 chars):
-<!DOCTYPE html>
-<html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17269 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
-<head>
-<meta charset="UTF-8" />
-
-
-<!-- mobile setting -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Scripts/CSS and wp_head hook -->
-        <script>
-            (function (s, e, n, d, er) {
-                s['Sender'] = er;
-                s[er] = s[er] || function () {
-                    (s[er].q = s[er].q || []).push(arguments)
-
-Snippet (last 1000 chars):
-Of('av-cookies-session-refused') >= 0 )
-						{
-							allow_continue = false;
-						}
-						else
-						{
-							if( ! document.cookie.match(/aviaPrivacyRefuseCookiesHideBar/) )
-							{
-								allow_continue = false;
-							}
-							else if( ! document.cookie.match(/aviaPrivacyEssentialCookiesEnabled/) )
-							{
-								allow_continue = false;
-							}
-							else if( document.cookie.match(/aviaPrivacyGoogleWebfontsDisabled/) )
-							{
-								allow_continue = false;
-							}
-						}
-					}
-
-					if( allow_continue )
-					{
-						var f = document.createElement('link');
-
-						f.type 	= 'text/css';
-						f.rel 	= 'stylesheet';
-						f.href 	= 'https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=auto';
-						f.id 	= 'avia-google-webfont';
-
-						document.getElementsByTagName('head')[0].appendChild(f);
-					}
-				})();
-
-			</script>
-			</body>
-</html>
-
-<!-- Cached by WP-Optimize (gzip) - https://teamupdraft.com/wp-optimize/ - Last modified: 10/06/2026 04:52 (UTC:2) -->
-
+File does not exist: /home/runner/work/Mount-Athens/Mount-Athens/_input/eosh_gr_wp-product-category-greek-mountains-climbs.html
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
 Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Wed, 10 Jun 2026 02:58:30 GMT
+  date: Tue, 28 Jul 2026 02:07:03 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
   vary: Accept-Encoding
-Length: 243392 chars
+Length: 183063 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el">
@@ -115,36 +57,23 @@ Snippet (first 1000 chars):
 	<meta property="og:locale" content="el_GR" />
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content="Πρόγραμμα - POA" />
-	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Δεκέμβριος 2025 6-7/12 8 κλασικές κορυφογραμμές. Διάσχιση κορυφογραμμής Όθρυος με πανσέληνο ΒΔ 3 Σάββατο: Αναχώρηση με ΙΧ 
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Ιούνιος 2026 7/6 ΦΑΡΑΓΓΙ ΠΕΡΙΣΤΕΡΙΩΝΑ &#8211; ΑΚΡΑΤΑ ΒΔ 1 Κυριακή: Αναχώρηση στις 07:00 για τον οικισμό Φούρνοι, πάνω στην
 === Testing Fresh Fetch: https://eosh.gr/wp/product-category/greek-mountains-climbs/ ===
 Status: 200 OK
 Headers:
-  cache-control: no-cache, no-cache, no-store, must-revalidate
+  cache-control: no-cache, no-store, must-revalidate
+  cf-ray: a2205403ec5be811-ORD
   connection: keep-alive
-  content-encoding: br
-  content-type: text/html; charset=UTF-8
-  date: Wed, 10 Jun 2026 02:58:31 GMT
-  last-modified: Wed, 10 Jun 2026 02:52:17 GMT
+  content-encoding: gzip
+  content-type: text/html; charset=utf-8
+  date: Tue, 28 Jul 2026 02:07:04 GMT
+  expires: 0
   pragma: no-cache
-  server: nginx
+  referrer-policy: strict-origin-when-cross-origin
+  server: cloudflare
+  strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
-  vary: Accept-Encoding, Accept-Encoding
-  wpo-cache-status: cached
-Length: 111647 chars
+  x-content-type-options: nosniff
+Length: 5330 chars
 Snippet (first 1000 chars):
-<!DOCTYPE html>
-<html lang="el" class="html_stretched responsive av-preloader-disabled  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_header_topbar_active html_mobile_menu_phone html_header_searchicon html_content_align_right html_header_unstick_top_disabled html_header_stretch html_minimal_header html_minimal_header_shadow html_av-overlay-side html_av-overlay-side-classic html_av-submenu-noclone html_entry_id_17269 html_visible_cart av-cookies-no-cookie-consent av-no-preview av-default-lightbox html_text_menu_active av-mobile-menu-switch-default">
-<head>
-<meta charset="UTF-8" />
-
-
-<!-- mobile setting -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Scripts/CSS and wp_head hook -->
-        <script>
-            (function (s, e, n, d, er) {
-                s['Sender'] = er;
-                s[er] = s[er] || function () {
-                    (s[er].q = s[er].q || []).push(arguments)
-
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:locale" content="el_GR"/><meta property="og:locale:alternate" content="en_GB"/><meta name="twitter:
