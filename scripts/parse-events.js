@@ -24,7 +24,6 @@ const athensFormatter = new Intl.DateTimeFormat('en-CA', {
 });
 const TODAY = new Date(athensFormatter.format(new Date()));
 
-// Month translation helper
 const MONTH_MAP = {
   'ιαν': '01', 'ιανουαριος': '01', 'ιανουαριου': '01',
   'φεβ': '02', 'φεβρουαριος': '02', 'φεβρουαριου': '02',
@@ -47,6 +46,7 @@ const ENGLISH_MONTHS = {
 };
 
 function stripGreekAccents(str) {
+  if (!str) return '';
   return str
     .toLowerCase()
     .normalize('NFD')
@@ -60,9 +60,37 @@ function stripGreekAccents(str) {
     .replace(/[ώώ]/g, 'ω');
 }
 
+const MONTH_PREFIXES = [
+  { month: '01', prefixes: ['ιαν', 'γεν'] },
+  { month: '02', prefixes: ['φεβ', 'φλεβ'] },
+  { month: '03', prefixes: ['μαρ'] },
+  { month: '04', prefixes: ['απρ'] },
+  { month: '05', prefixes: ['μαι', 'μαϊ', 'μαη'] },
+  { month: '06', prefixes: ['ιουν'] },
+  { month: '07', prefixes: ['ιουλ'] },
+  { month: '08', prefixes: ['αυγ'] },
+  { month: '09', prefixes: ['σεπ', 'σεπτ'] },
+  { month: '10', prefixes: ['οκτ', 'οκτωβ'] },
+  { month: '11', prefixes: ['νοε', 'νοεμ', 'νοεμβ'] },
+  { month: '12', prefixes: ['δεκ', 'δεκεμ', 'δεκεμβ'] }
+];
+
 function parseGreekMonth(monthStr) {
+  if (!monthStr) return null;
   const clean = stripGreekAccents(monthStr).replace(/[^a-zα-ω]/g, '').trim();
-  return MONTH_MAP[clean] || null;
+  if (!clean) return null;
+
+  if (MONTH_MAP[clean]) return MONTH_MAP[clean];
+
+  for (const entry of MONTH_PREFIXES) {
+    for (const pref of entry.prefixes) {
+      if (clean.startsWith(pref)) {
+        return entry.month;
+      }
+    }
+  }
+
+  return null;
 }
 
 function parseEnglishMonth(monthStr) {
@@ -117,6 +145,54 @@ function parseDateRange(dateText, defaultYear = 2026) {
     .replace(/(Δευτέρα|Τρίτη|Τετάρτη|Πέμπτη|Παρασκευή|Σάββατο|Κυριακή|δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/gi, '')
     .replace(/\s+/g, ' ')
     .trim();
+
+  // Format: "18.09.- 20.09.2026" or "18.09 - 20.09.2026" or "31.10.- 01.11.2026"
+  const dotCrossMonthMatch = cleanText.match(/(\d{1,2})[\.\/](\d{1,2})\.?\s*[-–—]\s*(\d{1,2})[\.\/](\d{1,2})[\.\/](\d{2,4})/);
+  if (dotCrossMonthMatch) {
+    const startDay = dotCrossMonthMatch[1].padStart(2, '0');
+    const startMonth = dotCrossMonthMatch[2].padStart(2, '0');
+    const endDay = dotCrossMonthMatch[3].padStart(2, '0');
+    const endMonth = dotCrossMonthMatch[4].padStart(2, '0');
+    let year = dotCrossMonthMatch[5];
+    if (year.length === 2) year = '20' + year;
+    else if (year.length === 3) year = '2026';
+    return {
+      startDate: `${year}-${startMonth}-${startDay}`,
+      endDate: `${year}-${endMonth}-${endDay}`,
+      displayDate: `${parseInt(startDay)}/${parseInt(startMonth)} - ${parseInt(endDay)}/${parseInt(endMonth)}`
+    };
+  }
+
+  // Format: "27-28.09.2026" or "27-28.9.2026"
+  const dotSameMonthMatch = cleanText.match(/(\d{1,2})\s*[-–—]\s*(\d{1,2})[\.\/](\d{1,2})[\.\/](\d{2,4})/);
+  if (dotSameMonthMatch) {
+    const startDay = dotSameMonthMatch[1].padStart(2, '0');
+    const endDay = dotSameMonthMatch[2].padStart(2, '0');
+    const month = dotSameMonthMatch[3].padStart(2, '0');
+    let year = dotSameMonthMatch[4];
+    if (year.length === 2) year = '20' + year;
+    else if (year.length === 3) year = '2026';
+    return {
+      startDate: `${year}-${month}-${startDay}`,
+      endDate: `${year}-${month}-${endDay}`,
+      displayDate: `${parseInt(startDay)}-${parseInt(endDay)}/${parseInt(month)}`
+    };
+  }
+
+  // Format: "27/09/2026" or "27.09.2026"
+  const dotSingleMatch = cleanText.match(/(\d{1,2})[\.\/](\d{1,2})[\.\/](\d{2,4})/);
+  if (dotSingleMatch) {
+    const day = dotSingleMatch[1].padStart(2, '0');
+    const month = dotSingleMatch[2].padStart(2, '0');
+    let year = dotSingleMatch[3];
+    if (year.length === 2) year = '20' + year;
+    else if (year.length === 3) year = '2026';
+    return {
+      startDate: `${year}-${month}-${day}`,
+      endDate: `${year}-${month}-${day}`,
+      displayDate: `${parseInt(day)}/${parseInt(month)}`
+    };
+  }
 
   // Format: "11 Ιουν 2026 - 13 Ιουν 2026"
   const rangeTwoYearsMatch = cleanText.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4})/i);
@@ -1224,70 +1300,93 @@ function parseEposFilis() {
 // PARSER: ΦΟΠ (Text-based)
 // ----------------------------------------------------
 function parseFop() {
+  const htmlPath = path.join(INPUT_DIR, 'fop_gr.html');
   const txtPath = path.join(INPUT_DIR, 'fop_gr.txt');
-  if (!fs.existsSync(txtPath)) return [];
-
-  const content = fs.readFileSync(txtPath, 'utf-8');
-  const lines = content.split('\n');
   const events = [];
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
+  // Strategy 1: HTML DOM parsing using Cheerio (Primary)
+  if (fs.existsSync(htmlPath)) {
+    const html = fs.readFileSync(htmlPath, 'utf-8');
+    const $ = cheerio.load(html);
 
-    // Match patterns like "7/6/2026 ΦΑΡΑΓΓΙ ΛΟΥΣΙΟΥ..." or "27-28/6/2026..."
-    const match = line.match(/^(\d+(?:-\d+)?)\/(\d+)\/(\d{4})\s+(.+)$/);
-    if (match) {
-      const dayPart = match[1];
-      const month = match[2].padStart(2, '0');
-      const year = match[3];
-      const rest = match[4].trim();
+    $('.gdlr-core-accordion-item-tab').each((i, el) => {
+      const dateHead = $(el).find('.gdlr-core-head').text().trim();
+      
+      const titleEl = $(el).find('.gdlr-core-accordion-item-title').clone();
+      titleEl.find('.gdlr-core-head').remove();
+      const rawTitle = titleEl.text().trim();
 
-      // Extract title by removing day name and anything after it
-      let title = rest;
-      const dayMatch = rest.match(/(.+?)(?:ΔΕΥΤΕΡΑ|ΤΡΙΤΗ|ΤΕΤΑΡΤΗ|ΠΕΜΠΤΗ|ΠΑΡΑΣΚΕΥΗ|ΣΑΒΒΑΤΟ|ΚΥΡΙΑΚΗ)/i);
-      if (dayMatch) {
-        title = dayMatch[1].trim();
+      const contentText = $(el).find('.gdlr-core-accordion-item-content').text().trim();
+
+      if (!dateHead && !rawTitle) return;
+
+      const fullDateStr = dateHead || rawTitle;
+      const parsedDate = parseDateRange(fullDateStr, 2026);
+
+      let difficulty = '';
+      const bdMatch = contentText.match(/ΒΔ:\s*([\d\w+]+)/i);
+      if (bdMatch) {
+        difficulty = 'ΒΔ ' + bdMatch[1].trim();
       }
 
-      // Look at next lines for difficulty (ΒΔ)
-      let difficulty = '';
-      for (let j = 1; j <= 3; j++) {
-        if (i + j < lines.length) {
-          const nextLine = lines[i + j].trim();
-          const bdMatch = nextLine.match(/ΒΔ:\s*([\d\w+]+)/i);
-          if (bdMatch) {
-            difficulty = 'ΒΔ ' + bdMatch[1].trim();
-            break;
+      let cleanTitle = rawTitle.replace(/\s+/g, ' ').trim();
+      if (!cleanTitle && dateHead) {
+        cleanTitle = fullDateStr.replace(dateHead, '').trim();
+      }
+
+      if (parsedDate && parsedDate.startDate && cleanTitle.length >= 3) {
+        events.push({
+          startDate: parsedDate.startDate,
+          endDate: parsedDate.endDate,
+          displayDate: parsedDate.displayDate,
+          title: cleanTitle,
+          club: 'ΦΟΠ',
+          url: 'https://fop.gr/#:~:text=' + encodeURIComponent(cleanTitle),
+          difficulty
+        });
+      }
+    });
+  }
+
+  // Strategy 2: Text regex parsing fallback if Strategy 1 yields 0 events
+  if (events.length === 0 && fs.existsSync(txtPath)) {
+    const content = fs.readFileSync(txtPath, 'utf-8');
+    const lines = content.split('\n');
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      const match = line.match(/(?:[Α-Ωα-ω\s]+)?(\d{1,2}(?:[\.\/]\d{1,2})?(?:\s*[-–—]\s*\d{1,2}[\.\/]\d{1,2})?[\.\/]\d{2,4})\s*(.*)/i);
+      if (match) {
+        const dateStr = match[1];
+        const restTitle = match[2];
+        const parsedDate = parseDateRange(dateStr, 2026);
+
+        let difficulty = '';
+        for (let j = 1; j <= 3; j++) {
+          if (i + j < lines.length) {
+            const nextLine = lines[i + j].trim();
+            const bdMatch = nextLine.match(/ΒΔ:\s*([\d\w+]+)/i);
+            if (bdMatch) {
+              difficulty = 'ΒΔ ' + bdMatch[1].trim();
+              break;
+            }
           }
         }
+
+        if (parsedDate && parsedDate.startDate && restTitle.trim().length >= 3) {
+          events.push({
+            startDate: parsedDate.startDate,
+            endDate: parsedDate.endDate,
+            displayDate: parsedDate.displayDate,
+            title: restTitle.replace(/\s+/g, ' ').trim(),
+            club: 'ΦΟΠ',
+            url: 'https://fop.gr/#:~:text=' + encodeURIComponent(restTitle.replace(/\s+/g, ' ').trim()),
+            difficulty
+          });
+        }
       }
-
-      // Handle date range
-      let startDate = '';
-      let endDate = '';
-      let displayDate = '';
-
-      if (dayPart.includes('-')) {
-        const [startDay, endDay] = dayPart.split('-');
-        startDate = `${year}-${month}-${startDay.padStart(2, '0')}`;
-        endDate = `${year}-${month}-${endDay.padStart(2, '0')}`;
-        displayDate = `${startDay}-${endDay}/${parseInt(month)}`;
-      } else {
-        startDate = `${year}-${month}-${dayPart.padStart(2, '0')}`;
-        endDate = `${year}-${month}-${dayPart.padStart(2, '0')}`;
-        displayDate = `${dayPart}/${parseInt(month)}`;
-      }
-
-      events.push({
-        startDate,
-        endDate,
-        displayDate,
-        title: title.replace(/\s+/g, ' ').trim(),
-        club: 'ΦΟΠ',
-        url: 'https://fop.gr/#:~:text=' + encodeURIComponent(title.replace(/\s+/g, ' ').trim()),
-        difficulty
-      });
     }
   }
 

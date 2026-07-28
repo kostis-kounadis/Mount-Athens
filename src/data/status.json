@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-28T02:07:02.730Z",
+  "lastUpdated": "2026-07-28T08:47:58.695Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -8,10 +8,10 @@
       "fetch": [
         {
           "url": "https://eosacharnon.xmiddleware.com/el",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 267362
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -22,17 +22,17 @@
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 83964
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 99173
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -43,10 +43,10 @@
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 183063
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -57,17 +57,17 @@
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 172421
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 217455
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -78,10 +78,10 @@
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 292514
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -92,10 +92,10 @@
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 77941
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -106,24 +106,24 @@
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 251941
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΦΟΠ",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 35 events",
       "fetch": [
         {
           "url": "https://fop.gr/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 160859
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     }
