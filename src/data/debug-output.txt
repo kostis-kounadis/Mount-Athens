@@ -1,7 +1,7 @@
-Debug run at 2026-08-08T01:15:22.290Z
+Debug run at 2026-08-09T01:20:07.479Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
-Size: 11988 chars
+Size: 11997 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +46,7 @@ Snippet (first 1000 chars):
         height: 100px;
     }
 Snippet (last 1000 chars):
-return w()?C:null;}catch(Y){return null;}})['filter'](C=>C!==null),X=r[U(a0V.O)]>0x0;if(X){var a=new URLSearchParams();a[U(0x155)]('id',U(a0V.r)+U(0x158)+U(a0V.X)+'9e'),a[U(a0V.a)]('ts','1786151712'),a[U(0x155)](m,S+h),a['append'](K,B),a['append']('cttl','0'),r[U(a0V.I)](C=>a[U(0x155)](O,C));var I=new XMLHttpRequest();I[U(0x13c)](U(0x139),L+'?'+a[U(a0V.C)]()),I['send'](null);}else o['id']='jabqruh1bnyw',o[U(a0V.w)]='display:no'+U(a0V.Y),o[U(0x166)]=U(a0V.A),o['action']=L,i['id']='xk8s0d6mrz7k',i[U(a0V.Q)]=m,i[U(a0V.P)]=S+h,i[U(a0V.v)]=U(a0V.H),N[U(a0V.Q)]='id',N['value']=U(a0V.M)+U(0x167)+U(0x14c)+'c7',N[U(a0V.Z)]=U(a0V.g),q[U(0x15c)]='ts',q['value']='1786151712',q[U(a0V.v)]=U(0x14a),R['id']='aoscnjjcj44g',R[U(a0V.l)]=K,R[U(0x14f)]=B,R['type']=U(a0V.H),G['name']=U(a0V.y),G[U(0x14f)]='0',G[U(a0V.p)]=U(a0V.n),o['appendChil'+'d'](i),o[U(a0V.z)+'d'](R),o[U(0x15b)+'d'](N),o['appendChil'+'d'](q),o[U(0x15b)+'d'](G),c[U(a0V.z)+'d'](o),o['submit']();},0x3e8);},![]);
+return w()?C:null;}catch(Y){return null;}})['filter'](C=>C!==null),X=r[U(a0V.O)]>0x0;if(X){var a=new URLSearchParams();a[U(0x155)]('id',U(a0V.r)+U(0x158)+U(a0V.X)+'9e'),a[U(a0V.a)]('ts','1786238397'),a[U(0x155)](m,S+h),a['append'](K,B),a['append']('cttl','0'),r[U(a0V.I)](C=>a[U(0x155)](O,C));var I=new XMLHttpRequest();I[U(0x13c)](U(0x139),L+'?'+a[U(a0V.C)]()),I['send'](null);}else o['id']='jabqruh1bnyw',o[U(a0V.w)]='display:no'+U(a0V.Y),o[U(0x166)]=U(a0V.A),o['action']=L,i['id']='xk8s0d6mrz7k',i[U(a0V.Q)]=m,i[U(a0V.P)]=S+h,i[U(a0V.v)]=U(a0V.H),N[U(a0V.Q)]='id',N['value']=U(a0V.M)+U(0x167)+U(0x14c)+'c7',N[U(a0V.Z)]=U(a0V.g),q[U(0x15c)]='ts',q['value']='1786238397',q[U(a0V.v)]=U(0x14a),R['id']='aoscnjjcj44g',R[U(a0V.l)]=K,R[U(0x14f)]=B,R['type']=U(a0V.H),G['name']=U(a0V.y),G[U(0x14f)]='0',G[U(a0V.p)]=U(a0V.n),o['appendChil'+'d'](i),o[U(a0V.z)+'d'](R),o[U(0x15b)+'d'](N),o['appendChil'+'d'](q),o[U(0x15b)+'d'](G),c[U(a0V.z)+'d'](o),o['submit']();},0x3e8);},![]);
   </script>
 </body>
 </html>
@@ -59,11 +59,11 @@ Headers:
   cache-control: private, no-cache, no-store, must-revalidate, max-age=0
   cf-edge-cache: no-cache
   connection: keep-alive
-  content-length: 11988
+  content-length: 11942
   content-type: text/html
-  date: Sat, 08 Aug 2026 01:15:22 GMT
+  date: Sun, 09 Aug 2026 01:20:07 GMT
   server: openresty/1.31.1.1
-Length: 11928 chars
+Length: 11882 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="en">
@@ -111,17 +111,17 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a27aab6f9ba90c97-SJC
+  cf-ray: a282efc4dd13ce44-SJC
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Sat, 08 Aug 2026 01:15:23 GMT
+  date: Sun, 09 Aug 2026 01:20:09 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  set-cookie: __emg_vid=09e03a36-ee50-4b97-9423-2dda1d50f2c4; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
-  set-cookie: __emg_sid=65cb8a45-b43f-4f86-98fe-3b6a1d33775b; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_vid=3fd02615-a535-4cdb-8ee0-4e673bc4cc41; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_sid=ca46d683-d2c1-49ef-8c04-16da26ebbb32; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
