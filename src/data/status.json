@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-09T01:20:07.424Z",
+  "lastUpdated": "2026-08-10T01:21:37.034Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 36 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 11997
+          "size": 183063
         }
       ]
     },
@@ -102,14 +102,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 0 events",
+      "details": "Parsed 16 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 12176
+          "size": 257102
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 155424
+          "size": 155403
         }
       ]
     }
