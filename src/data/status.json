@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-21T01:02:21.326Z",
+  "lastUpdated": "2026-08-22T00:58:41.712Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 31 events",
+      "details": "Parsed 30 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 166933
+          "size": 167202
         }
       ]
     },
@@ -74,14 +74,14 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 19 events",
+      "details": "Parsed 0 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 274834
+          "size": 340246
         }
       ]
     },
@@ -95,7 +95,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 78538
+          "size": 78508
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 155416
+          "size": 155415
         }
       ]
     }
