@@ -46,12 +46,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -f src/data/anomaly_report.md ]; then
+            # Ensure anomaly label exists
+            gh label create "anomaly" --color "d73a4a" --description "Data parsing anomaly detected" --force || true
             # Check if an anomaly issue is already open
             OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number' 2>/dev/null || true)
             if [ -z "$OPEN_ISSUE_NUM" ] || [ "$OPEN_ISSUE_NUM" == "null" ]; then
-              gh issue create --title "⚠️ Parsing Anomaly Detected!" --body-file src/data/anomaly_report.md --label "anomaly" || true
+              gh issue create --title "⚠️ [Mount Athens] Parsing Anomaly Detected!" --body-file src/data/anomaly_report.md --label "anomaly,bug" --assignee "kostis-kounadis"
             else
-              gh issue comment $OPEN_ISSUE_NUM --body-file src/data/anomaly_report.md || true
+              gh issue comment "$OPEN_ISSUE_NUM" --body-file src/data/anomaly_report.md
             fi
           fi
 
@@ -70,3 +72,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
+      - name: Trigger Email Alert via Workflow Failure on Anomaly
+        run: |
+          if [ -f src/data/anomaly_report.md ]; then
+            echo "::error file=src/data/anomaly_report.md::Parsing anomalies detected! Failing workflow to send email alert."
+            cat src/data/anomaly_report.md
+            exit 1
+          fi

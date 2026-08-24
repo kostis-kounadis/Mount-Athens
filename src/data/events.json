@@ -57,19 +57,37 @@
     "startDate": "2026-09-06",
     "endDate": "2026-09-06",
     "displayDate": "6/9",
+    "title": "Τζιά (Κορησσία- Ιουλίδα- Οτζιάς)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/06-sept-2026-tzia-island",
+    "difficulty": "1"
+  },
+  {
+    "startDate": "2026-09-06",
+    "endDate": "2026-09-06",
+    "displayDate": "6/9",
     "title": "Αχαΐα: Φαράγγι Βουραϊκού ,  Μέγα Σπήλαιο-Διακοπτό (κατάβαση). Κατά την μυθολογία, ο Βουραϊκός ποταμός πήρε...",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/#:~:text=%CE%91%CF%87%CE%B1%CE%90%CE%B1%3A%20%CE%A6%CE%B1%CF%81%CE%AC%CE%B3%CE%B3%CE%B9%20%CE%92%CE%BF%CF%85%CF%81%CE%B1%CF%8A%CE%BA%CE%BF%CF%8D%20%2C%20%CE%9C%CE%AD%CE%B3%CE%B1%20%CE%A3%CF%80%CE%AE%CE%BB%CE%B1%CE%B9%CE%BF-%CE%94%CE%B9%CE%B1%CE%BA%CE%BF%CF%80%CF%84%CF%8C%20(%CE%BA%CE%B1%CF%84%CE%AC%CE%B2%CE%B1%CF%83%CE%B7).%20%CE%9A%CE%B1%CF%84%CE%AC%20%CF%84%CE%B7%CE%BD%20%CE%BC%CF%85%CE%B8%CE%BF%CE%BB%CE%BF%CE%B3%CE%AF%CE%B1%2C%20%CE%BF%20%CE%92%CE%BF%CF%85%CF%81%CE%B1%CF%8A%CE%BA%CF%8C%CF%82%20%CF%80%CE%BF%CF%84%CE%B1%CE%BC%CF%8C%CF%82%20%CF%80%CE%AE%CF%81%CE%B5...",
     "difficulty": ""
   },
   {
+    "startDate": "2026-09-11",
+    "endDate": "2026-09-11",
+    "displayDate": "11/9",
+    "title": "Άγιο Όρος (Άθως- διάσχιση δυτικής χερσονήσου)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/11-15-sept-2026-mount-athos-crossing-the-western-peninsula",
+    "difficulty": "3"
+  },
+  {
     "startDate": "2026-09-12",
-    "endDate": "2026-09-13",
-    "displayDate": "12-13 Σεπτ",
-    "title": "Εύβοια : Κάρυστος – φαράγγι Αγ. Δημητρίου – φαράγγι Πλατανιστού",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/category/ekdromes/#:~:text=%CE%95%CF%8D%CE%B2%CE%BF%CE%B9%CE%B1%20%3A%20%CE%9A%CE%AC%CF%81%CF%85%CF%83%CF%84%CE%BF%CF%82%20%E2%80%93%20%CF%86%CE%B1%CF%81%CE%AC%CE%B3%CE%B3%CE%B9%20%CE%91%CE%B3.%20%CE%94%CE%B7%CE%BC%CE%B7%CF%84%CF%81%CE%AF%CE%BF%CF%85%20%E2%80%93%20%CF%86%CE%B1%CF%81%CE%AC%CE%B3%CE%B3%CE%B9%20%CE%A0%CE%BB%CE%B1%CF%84%CE%B1%CE%BD%CE%B9%CF%83%CF%84%CE%BF%CF%8D",
-    "difficulty": ""
+    "endDate": "2026-10-22",
+    "displayDate": "12/9 - 22/10",
+    "title": "Ε Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/e-rock-climbing-course-beginners-2026-autumn",
+    "difficulty": "Beginners"
   },
   {
     "startDate": "2026-09-13",
@@ -93,10 +111,28 @@
     "startDate": "2026-09-13",
     "endDate": "2026-09-13",
     "displayDate": "13/9",
-    "title": "ΑΚΡΟΚΟΡΙΝΘΟΣ – ΠΕΝΤΕΣΚΟΥΦΙ",
+    "title": "ΑΡΧΑΙΑ ΤΡΟΙΖΗΝΑ",
     "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/#09-26:~:text=%CE%91%CE%9A%CE%A1%CE%9F%CE%9A%CE%9F%CE%A1%CE%99%CE%9D%CE%98%CE%9F%CE%A3%20%E2%80%93%20%CE%A0%CE%95%CE%9D%CE%A4%CE%95%CE%A3%CE%9A%CE%9F%CE%A5%CE%A6%CE%99",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#09-26:~:text=%CE%91%CE%A1%CE%A7%CE%91%CE%99%CE%91%20%CE%A4%CE%A1%CE%9F%CE%99%CE%96%CE%97%CE%9D%CE%91",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-09-13",
+    "endDate": "2026-09-13",
+    "displayDate": "13/9",
+    "title": "Υμηττός (Ηλιούπολη- κτφ ΕΟΣΗ-πλατεία Προσκόπων)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-eosh-refuge-scouts-square",
+    "difficulty": "1"
+  },
+  {
+    "startDate": "2026-09-13",
+    "endDate": "2026-09-13",
+    "displayDate": "13/9",
+    "title": "Μαίναλο (Αρκουδόρεμα)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/mainalo-arkoudrema",
+    "difficulty": "1"
   },
   {
     "startDate": "2026-09-13",
@@ -172,11 +208,29 @@
   },
   {
     "startDate": "2026-09-19",
+    "endDate": "2026-10-21",
+    "displayDate": "19/9 - 21/10",
+    "title": "Δ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/d-rock-climbing-school-beginners-2026-autumn",
+    "difficulty": "Beginners"
+  },
+  {
+    "startDate": "2026-09-19",
     "endDate": "2026-09-19",
     "displayDate": "19/9",
-    "title": "ΕΚΤΑΚΤΗ ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/%ce%b5%ce%ba%cf%84%ce%b1%ce%ba%cf%84%ce%b7-%ce%b3%ce%b5%ce%bd%ce%b9%ce%ba%ce%b7-%cf%83%cf%85%ce%bd%ce%b5%ce%bb%ce%b5%cf%85%cf%83%ce%b7-19-09-2026/",
+    "title": "Γκιώνα (μονοπάτι Μπέκου)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/giona-bekos-trail",
+    "difficulty": "4+"
+  },
+  {
+    "startDate": "2026-09-19",
+    "endDate": "2026-09-19",
+    "displayDate": "19/9",
+    "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus",
     "difficulty": ""
   },
   {
@@ -196,6 +250,15 @@
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#09-26:~:text=%CE%94%CE%91%CE%A3%CE%9F%CE%A3%20%CE%A3%CE%9A%CE%A5%CE%A1%CE%99%CE%A4%CE%99%CE%94%CE%91%CE%A3%20%E2%80%93%20%CE%9C%CE%9F%CE%9D%CE%9F%CE%A0%CE%91%CE%A4%CE%99%20%CE%92%CE%9B%CE%91%CE%A7%CE%9F%CE%9A%CE%95%CE%A1%CE%91%CE%A3%CE%99%CE%91%CE%A3",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-09-20",
+    "endDate": "2026-09-20",
+    "displayDate": "20/9",
+    "title": "Υμηττός (Καισαριανή-Ταξιάρχες-Ανάληψη-Καλοπούλα)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-kaisariani-taxiarches-analipsi-kalopoula",
+    "difficulty": "1"
   },
   {
     "startDate": "2026-09-20",
@@ -223,6 +286,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9F%CE%AF%CF%84%CE%B7%3A%20%CE%93%CF%81%CE%B5%CE%B2%CE%B5%CE%BD%CF%8C%20(2114%CE%BC.)%20%E2%80%93%20%CE%A0%CF%8D%CF%81%CE%B3%CE%BF%CF%82%20(2150%CE%BC.)",
     "difficulty": "ΒΔ 2"
+  },
+  {
+    "startDate": "2026-09-26",
+    "endDate": "2026-09-26",
+    "displayDate": "26/9",
+    "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-2",
+    "difficulty": ""
   },
   {
     "startDate": "2026-09-26",
@@ -255,6 +327,24 @@
     "startDate": "2026-09-27",
     "endDate": "2026-09-27",
     "displayDate": "27/9",
+    "title": "Γεράνεια (Πίντιζα- Πέτρα)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/gerania-pintiza-petra",
+    "difficulty": "3"
+  },
+  {
+    "startDate": "2026-09-27",
+    "endDate": "2026-09-27",
+    "displayDate": "27/9",
+    "title": "Υμηττός (Ηλιούπολη- Μιχαηλίδης- Αρχαίων- κτφ ΕΟΣΗ)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-michaelidis-archeon-eosh-refuge",
+    "difficulty": "1+"
+  },
+  {
+    "startDate": "2026-09-27",
+    "endDate": "2026-09-27",
+    "displayDate": "27/9",
     "title": "ΥΔΡΑ (Μονή Ζούρβας - Ύδρα)",
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%A5%CE%94%CE%A1%CE%91%20(%CE%9C%CE%BF%CE%BD%CE%AE%20%CE%96%CE%BF%CF%8D%CF%81%CE%B2%CE%B1%CF%82%20-%20%CE%8E%CE%B4%CF%81%CE%B1)",
@@ -268,6 +358,15 @@
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#10-26:~:text=%CE%9F%CE%9B%CE%A5%CE%9C%CE%A0%CE%9F%CE%A3",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-02",
+    "endDate": "2026-10-02",
+    "displayDate": "2/10",
+    "title": "Όλυμπος (κόψη Μπαρμπαλά- Μύτικας- Στεφάνι- Πριόνια)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/olympus-barbalala-ridge-mytikas-stefani-prionia",
+    "difficulty": "4+"
   },
   {
     "startDate": "2026-10-03",
@@ -333,15 +432,6 @@
     "difficulty": "Α"
   },
   {
-    "startDate": "2026-10-08",
-    "endDate": "2026-10-11",
-    "displayDate": "8-11 Οκτω",
-    "title": "Αγώνας Ορεινού Τρεξίματος – Δονούσα",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/category/ekdromes/#:~:text=%CE%91%CE%B3%CF%8E%CE%BD%CE%B1%CF%82%20%CE%9F%CF%81%CE%B5%CE%B9%CE%BD%CE%BF%CF%8D%20%CE%A4%CF%81%CE%B5%CE%BE%CE%AF%CE%BC%CE%B1%CF%84%CE%BF%CF%82%20%E2%80%93%20%CE%94%CE%BF%CE%BD%CE%BF%CF%8D%CF%83%CE%B1",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-10-09",
     "endDate": "2026-10-11",
     "displayDate": "9-11/10",
@@ -358,6 +448,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%93%CE%BF%CF%85%CE%BB%CE%B9%CE%BD%CE%AC%CF%82%20(1459%CE%BC.)%20%E2%80%93%20%CE%9F%CE%BE%CF%85%CE%AC%20(1923%CE%BC.)%20%E2%80%93%20%CE%9A%CE%BF%CE%BA%CE%BA%CE%AC%CE%BB%CE%B9%CE%B1%20(1741%CE%BC.)",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-10-10",
+    "endDate": "2026-10-10",
+    "displayDate": "10/10",
+    "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-3",
+    "difficulty": ""
   },
   {
     "startDate": "2026-10-10",
@@ -387,6 +486,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-10-11",
+    "endDate": "2026-10-11",
+    "displayDate": "11/10",
+    "title": "Λακωνία - Μονοπάτι Καστανιάς",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/laconia-monopati-kastanias",
+    "difficulty": "1"
+  },
+  {
     "startDate": "2026-10-17",
     "endDate": "2026-10-18",
     "displayDate": "17/10 - 18/10",
@@ -394,6 +502,15 @@
     "club": "ΑΟΣ",
     "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/#:~:text=%CE%A4%CE%B1%CE%B0%CE%B3%CE%B5%CF%84%CE%BF%CF%82%20%E2%80%93%20%CE%A6%CE%B1%CF%81%CE%AC%CE%B3%CE%B3%CE%B9%20%CE%A1%CE%B9%CE%BD%CF%84%CF%8C%CE%BC%CE%BF%CF%85",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-17",
+    "endDate": "2026-10-17",
+    "displayDate": "17/10",
+    "title": "Βαρδούσια (διάσχιση Αθ Διάκος-Αρτοτίνα)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/vardousia-crossing-ath-diakos-artotina",
+    "difficulty": "3"
   },
   {
     "startDate": "2026-10-17",
@@ -486,6 +603,33 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-10-24",
+    "endDate": "2026-10-24",
+    "displayDate": "24/10",
+    "title": "Ιορδανία (Petra-Wadi Rum)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/jordan-petra-wadi-rum",
+    "difficulty": "2"
+  },
+  {
+    "startDate": "2026-10-24",
+    "endDate": "2026-10-24",
+    "displayDate": "24/10",
+    "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-4",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-24",
+    "endDate": "2026-11-26",
+    "displayDate": "24/10 - 26/11",
+    "title": "ΣΤ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/f-rock-climbing-course-beginners-2026-autumn",
+    "difficulty": "Beginners"
+  },
+  {
     "startDate": "2026-10-25",
     "endDate": "2026-10-25",
     "displayDate": "25/10",
@@ -493,6 +637,15 @@
     "club": "ΑΟΣ",
     "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/#:~:text=%CE%94%CE%AF%CF%81%CF%86%CF%85%CF%82%20%E2%80%93%20%CE%8A%CF%84%CE%B1%CE%BC%CE%BF%CF%82",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-25",
+    "endDate": "2026-10-25",
+    "displayDate": "25/10",
+    "title": "Μεγάλη Ζήρεια (μονοπάτι Φαρμακίλας)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/megali-zireia-farmakila-trail",
+    "difficulty": "2"
   },
   {
     "startDate": "2026-10-25",
@@ -567,6 +720,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-01",
+    "displayDate": "1/11",
+    "title": "Αρτεμίσιο (Καρυά-Μαλεβός-Νεστάνη, κλασσική & χτένια)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/artemisio-karya-malevos-nestani-classic-ridge",
+    "difficulty": "2+"
+  },
+  {
     "startDate": "2026-11-06",
     "endDate": "2026-11-08",
     "displayDate": "6-8/11",
@@ -615,6 +777,15 @@
     "startDate": "2026-11-08",
     "endDate": "2026-11-08",
     "displayDate": "8/11",
+    "title": "Μαίναλο (Σιλίμνα-Χρυσοβίτσι)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/mainalo-silimna-chrysovitsi",
+    "difficulty": "1"
+  },
+  {
+    "startDate": "2026-11-08",
+    "endDate": "2026-11-08",
+    "displayDate": "8/11",
     "title": "Πάρνηθα, Λάκα Ζηρέλι (κυκλική) (σύντομα η αναλυτική περιγραφή)",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CE%B7%CE%B8%CE%B1%2C%20%CE%9B%CE%AC%CE%BA%CE%B1%20%CE%96%CE%B7%CF%81%CE%AD%CE%BB%CE%B9%20(%CE%BA%CF%85%CE%BA%CE%BB%CE%B9%CE%BA%CE%AE)%20(%CF%83%CF%8D%CE%BD%CF%84%CE%BF%CE%BC%CE%B1%20%CE%B7%20%CE%B1%CE%BD%CE%B1%CE%BB%CF%85%CF%84%CE%B9%CE%BA%CE%AE%20%CF%80%CE%B5%CF%81%CE%B9%CE%B3%CF%81%CE%B1%CF%86%CE%AE)",
@@ -628,6 +799,15 @@
     "club": "ΑΟΣ",
     "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CF%89%CE%BD%CE%B1%CF%82%20%E2%80%93%20%CE%9A%CE%BF%CF%83%CE%BC%CE%AC%CF%82%20(%CE%9A%CF%85%CE%BD%CE%AE%CE%B3%CE%B9%20%CE%BC%CE%B1%CE%BD%CE%B9%CF%84%CE%B1%CF%81%CE%B9%CF%8E%CE%BD)",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-11-14",
+    "endDate": "2026-11-14",
+    "displayDate": "14/11",
+    "title": "Άγραφα (Λιβάδια Πετρίλου-Βουτσικάκι-Τέμπλα-κτφ Αγράφων)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/agrafa-livadia-petrilou-voutsikaki-templa-agrafa-refuge",
+    "difficulty": "2"
   },
   {
     "startDate": "2026-11-15",
@@ -687,6 +867,15 @@
     "startDate": "2026-11-22",
     "endDate": "2026-11-22",
     "displayDate": "22/11",
+    "title": "Πάρνηθα (κόψη Φλαμπουρίου-Μόλα-Χούνη)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/parnitha-flabouri-ridge-mola-chouni",
+    "difficulty": "2+"
+  },
+  {
+    "startDate": "2026-11-22",
+    "endDate": "2026-11-22",
+    "displayDate": "22/11",
     "title": "Εύβοια, Δίρφυς.  Ράχη Συκά – Καταφύγιο Δίρφυς – Κορυφή Δίρφυς – Καταφύγιο Αγάλης ....",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/event/%ce%b5%cf%8d%ce%b2%ce%bf%ce%b9%ce%b1-%ce%b4%ce%af%cf%81%cf%86%cf%85%cf%82-%cf%81%ce%ac%cf%87%ce%b7-%cf%83%cf%85%ce%ba%ce%ac-%ce%ba%ce%b1%cf%84%ce%b1%cf%86%cf%8d%ce%b3%ce%b9%ce%bf/",
@@ -700,6 +889,15 @@
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%91%CE%A1%CE%A4%CE%95%CE%9C%CE%97%CE%A3%CE%99%CE%9F%20(%CE%9A%CE%91%CE%A1%CE%A5%CE%91%20-%20%CE%9C%CE%91%CE%9B%CE%95%CE%92%CE%9F%CE%A3%20-%20%CE%9D%CE%95%CE%A3%CE%A4%CE%91%CE%9D%CE%97)",
     "difficulty": "ΒΔ 2"
+  },
+  {
+    "startDate": "2026-11-28",
+    "endDate": "2026-11-28",
+    "displayDate": "28/11",
+    "title": "Βόρειος Ταύγετος (Καστόρι-Φαράγγι Μύλων)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/28-29-noe-2026-voreios-taygetos-kastori-faraggi-mylon",
+    "difficulty": "2"
   },
   {
     "startDate": "2026-11-28",
@@ -777,6 +975,15 @@
     "startDate": "2026-12-06",
     "endDate": "2026-12-06",
     "displayDate": "6/12",
+    "title": "Ελικώνας (Αγία Άννα-Κορυφή Παλιοβούνα)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/6-dek-2026-elikonas-kyriaki-megali-loytsa",
+    "difficulty": "2"
+  },
+  {
+    "startDate": "2026-12-06",
+    "endDate": "2026-12-06",
+    "displayDate": "6/12",
     "title": "Μαίναλο: Βαλτετσίνικο – Μαγούλιανα – Παναγιά Σφυρίδα - Νυμφασία (θα ανακοινωθεί σύντομα) Συντονιστής: Σταύρος...",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/#:~:text=%CE%9C%CE%B1%CE%AF%CE%BD%CE%B1%CE%BB%CE%BF%3A%20%CE%92%CE%B1%CE%BB%CF%84%CE%B5%CF%84%CF%83%CE%AF%CE%BD%CE%B9%CE%BA%CE%BF%20%E2%80%93%20%CE%9C%CE%B1%CE%B3%CE%BF%CF%8D%CE%BB%CE%B9%CE%B1%CE%BD%CE%B1%20%E2%80%93%20%CE%A0%CE%B1%CE%BD%CE%B1%CE%B3%CE%B9%CE%AC%20%CE%A3%CF%86%CF%85%CF%81%CE%AF%CE%B4%CE%B1%20-%20%CE%9D%CF%85%CE%BC%CF%86%CE%B1%CF%83%CE%AF%CE%B1%20(%CE%B8%CE%B1%20%CE%B1%CE%BD%CE%B1%CE%BA%CE%BF%CE%B9%CE%BD%CF%89%CE%B8%CE%B5%CE%AF%20%CF%83%CF%8D%CE%BD%CF%84%CE%BF%CE%BC%CE%B1)%20%CE%A3%CF%85%CE%BD%CF%84%CE%BF%CE%BD%CE%B9%CF%83%CF%84%CE%AE%CF%82%3A%20%CE%A3%CF%84%CE%B1%CF%8D%CF%81%CE%BF%CF%82...",
@@ -817,6 +1024,15 @@
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A5%CE%9A%CE%99%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%9D%CE%99%CE%91%CE%9A%CE%9F%CE%A3",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-12-13",
+    "endDate": "2026-12-13",
+    "displayDate": "13/12",
+    "title": "Παρνασσός (Επτάλοφος-Κωρύκειο Άντρο)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/13-dek-2026-parnassos-eptalofos-korykeio-antro",
+    "difficulty": "1"
   },
   {
     "startDate": "2026-12-13",
@@ -867,6 +1083,15 @@
     "startDate": "2026-12-20",
     "endDate": "2026-12-20",
     "displayDate": "20/12",
+    "title": "Υμηττός-Πορεία Π Αλεκιζόγλου (διάσχιση 10: Αγ Ιωάννης Κυνηγός-Βάρη)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/20-dec-2026-hymettus-crossing-10-ag-ioannis-kynigos-vari-p-alekizoglou-hike",
+    "difficulty": "3"
+  },
+  {
+    "startDate": "2026-12-20",
+    "endDate": "2026-12-20",
+    "displayDate": "20/12",
     "title": "ΠΑΡΝΗΘΑ (ΑΓ. ΜΕΡΚΟΥΡΙΟΣ – ΜΟΛΑ - ΜΑΚΡΥΧΩΡΑΦΟ)",
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%A0%CE%91%CE%A1%CE%9D%CE%97%CE%98%CE%91%20(%CE%91%CE%93.%20%CE%9C%CE%95%CE%A1%CE%9A%CE%9F%CE%A5%CE%A1%CE%99%CE%9F%CE%A3%20%E2%80%93%20%CE%9C%CE%9F%CE%9B%CE%91%20-%20%CE%9C%CE%91%CE%9A%CE%A1%CE%A5%CE%A7%CE%A9%CE%A1%CE%91%CE%A6%CE%9F)",
@@ -889,6 +1114,15 @@
     "club": "ΑΟΣ",
     "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CE%B7%CE%B8%CE%B1%20%E2%80%93%20%CE%9A%CF%8C%CF%88%CE%B7%20%CE%A6%CE%BB%CE%B1%CE%BC%CF%80%CE%BF%CF%85%CF%81%CE%AF%CE%BF%CF%85",
     "difficulty": ""
+  },
+  {
+    "startDate": "2027-01-07",
+    "endDate": "2027-03-04",
+    "displayDate": "7/1 - 4/3",
+    "title": "Α Σχολή Ορειβασίας Αρχαρίων_2027",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/a-beginners-mountaineering-course-2027",
+    "difficulty": "Beginners"
   },
   {
     "startDate": "2027-01-10",
@@ -1006,6 +1240,15 @@
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%92.%CE%A4%CE%91%CE%A5%CE%93%CE%95%CE%A4%CE%9F%CE%A3%20(%CE%9A%CE%91%CE%A3%CE%A4%CE%9F%CE%A1%CE%99%20-%20%CE%9E%CE%95%CE%A1%CE%9F%CE%92%CE%9F%CE%A5%CE%9D%CE%91)",
     "difficulty": "ΒΔ 2+"
+  },
+  {
+    "startDate": "2027-02-16",
+    "endDate": "2027-04-08",
+    "displayDate": "16/2 - 8/4",
+    "title": "Β Σχολή Ορειβασίας Αρχαρίων_2027 (τετραήμερα)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/v-beginners-mountaineering-course-2027-four-days-sessions",
+    "difficulty": "Beginners"
   },
   {
     "startDate": "2027-02-21",

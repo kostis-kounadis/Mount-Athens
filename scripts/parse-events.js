@@ -1006,52 +1006,76 @@ function parseEosHalioupolis() {
     const defaultUrl = 'https://eosh.gr/expeditions';
 
     for (const trip of json.trips) {
-      if (!trip.title_gr) continue;
-      const line = trip.title_gr.trim();
+      if (trip.cancelled || trip.archived || trip.published === false) continue;
+      const title = (trip.title_gr || trip.title || '').trim();
+      if (!title) continue;
 
-      // Format: "26 Ιουλ- 3 Αυγ 2026: Βόρεια Σουηδία (Kungsleden trail)"
-      const crossMatch = line.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
+      let startDate = '';
+      let endDate = '';
+      let displayDate = '';
+
+      // Direct structured date fields from JSON API
+      if (trip.start_date && /^\d{4}-\d{2}-\d{2}$/.test(trip.start_date)) {
+        startDate = trip.start_date;
+        endDate = (trip.end_date && /^\d{4}-\d{2}-\d{2}$/.test(trip.end_date)) ? trip.end_date : startDate;
+        const [sy, sm, sd] = startDate.split('-');
+        const [ey, em, ed] = endDate.split('-');
+        if (startDate === endDate) {
+          displayDate = `${parseInt(sd, 10)}/${parseInt(sm, 10)}`;
+        } else {
+          displayDate = `${parseInt(sd, 10)}/${parseInt(sm, 10)} - ${parseInt(ed, 10)}/${parseInt(em, 10)}`;
+        }
+
+        events.push({
+          startDate,
+          endDate,
+          displayDate,
+          title,
+          club: 'ΕΟΣ Ηλιούπολης',
+          url: trip.slug ? `https://eosh.gr/expeditions/${trip.slug}` : defaultUrl,
+          difficulty: trip.difficulty ? String(trip.difficulty).trim() : ''
+        });
+        continue;
+      }
+
+      // Fallback: Check if title contains prefix dates
+      const crossMatch = title.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
       if (crossMatch) {
         const startDay = crossMatch[1];
         const startMonthStr = crossMatch[2];
         const endDay = crossMatch[3];
         const endMonthStr = crossMatch[4];
         const year = crossMatch[5];
-        const title = crossMatch[6];
+        const eventTitle = crossMatch[6];
 
         const startMonthNum = parseGreekMonth(startMonthStr) || '07';
         const endMonthNum = parseGreekMonth(endMonthStr) || '08';
 
-        const startDate = `${year}-${startMonthNum}-${startDay.padStart(2, '0')}`;
-        const endDate = `${year}-${endMonthNum}-${endDay.padStart(2, '0')}`;
-        const displayDate = `${parseInt(startDay)}/${parseInt(startMonthNum)} - ${parseInt(endDay)}/${parseInt(endMonthNum)}`;
+        startDate = `${year}-${startMonthNum}-${startDay.padStart(2, '0')}`;
+        endDate = `${year}-${endMonthNum}-${endDay.padStart(2, '0')}`;
+        displayDate = `${parseInt(startDay, 10)}/${parseInt(startMonthNum, 10)} - ${parseInt(endDay, 10)}/${parseInt(endMonthNum, 10)}`;
 
         events.push({
           startDate,
           endDate,
           displayDate,
-          title: title.trim(),
+          title: eventTitle.trim(),
           club: 'ΕΟΣ Ηλιούπολης',
           url: trip.slug ? `https://eosh.gr/expeditions/${trip.slug}` : defaultUrl,
-          difficulty: ''
+          difficulty: trip.difficulty ? String(trip.difficulty).trim() : ''
         });
         continue;
       }
 
-      // Format: "13 Ιουν 2026: Υμηττός (μουσική βραδιά στο καταφύγιο)"
-      // Format: "27-28 Ιουν 2026: Ερύμανθος (Μουγγίλα)"
-      const match = line.match(/^(\d+(?:-\d+)?)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
+      const match = title.match(/^(\d+(?:-\d+)?)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d{4}):\s*(.+)$/i);
       if (match) {
         const dayStr = match[1];
         const monthStr = match[2];
         const year = match[3];
-        const title = match[4];
+        const eventTitle = match[4];
         
         const monthNum = parseGreekMonth(monthStr) || '06';
-
-        let startDate = '';
-        let endDate = '';
-        let displayDate = `${dayStr} ${monthStr.substring(0, 4)}`;
+        displayDate = `${dayStr} ${monthStr.substring(0, 4)}`;
 
         if (dayStr.includes('-')) {
           const [sDay, eDay] = dayStr.split('-');
@@ -1066,10 +1090,10 @@ function parseEosHalioupolis() {
           startDate,
           endDate,
           displayDate,
-          title: title.trim(),
+          title: eventTitle.trim(),
           club: 'ΕΟΣ Ηλιούπολης',
           url: trip.slug ? `https://eosh.gr/expeditions/${trip.slug}` : defaultUrl,
-          difficulty: ''
+          difficulty: trip.difficulty ? String(trip.difficulty).trim() : ''
         });
       }
     }

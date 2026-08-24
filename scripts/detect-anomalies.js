@@ -107,7 +107,7 @@ function detectAnomalies() {
 
   // Write report if anomalies exist
   if (anomalies.length > 0) {
-    const reportBody = `### ⚠️ Data Parsing Anomalies Detected\n\nThe automated daily scraper encountered unexpected data issues. Please manually check the parsers.\n\n${anomalies.join('\n')}\n\n*Action required: Fix the parsers or website structure, then close this issue to receive future alerts.*`;
+    const reportBody = `### ⚠️ Data Parsing Anomalies Detected\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered unexpected data issues during the latest run. Please manually check the parsers.\n\n${anomalies.join('\n')}\n\n*Action required: Fix the parsers or website structure, then close this issue.*`;
     fs.writeFileSync(REPORT_FILE, reportBody, 'utf-8');
     console.log(`Anomalies detected! Wrote report to ${REPORT_FILE}`);
   } else {
