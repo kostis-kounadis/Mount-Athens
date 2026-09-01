@@ -1,14 +1,5 @@
 [
   {
-    "startDate": "2026-08-31",
-    "endDate": "2026-09-06",
-    "displayDate": "31/8 - 6/9",
-    "title": "ΙΤΑΛΙΑ – ΔΟΛΟΜΙΤΕΣ – TREKKING & VIA FERRATA",
-    "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/wp-content/uploads/2026/02/Αναλυτικό-Πρόγραμμα-Δολομίτες-31-Αυγούστου-6-Σεπτεμβρίου-2026.pdf",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-09-04",
     "endDate": "2026-09-06",
     "displayDate": "4-6/9",
@@ -96,6 +87,15 @@
     "title": "Φαράγγι Νέδας",
     "club": "ΑΟΣ",
     "url": "https://aos.gr/farangi-nedas-13-9-2026/",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-09-13",
+    "endDate": "2026-09-13",
+    "displayDate": "13/9",
+    "title": "Γεράνεια: Δίκαστρο – Σκάλα Γερακίνας",
+    "club": "ΠΟΑ",
+    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%93%CE%B5%CF%81%CE%AC%CE%BD%CE%B5%CE%B9%CE%B1%3A%20%CE%94%CE%AF%CE%BA%CE%B1%CF%83%CF%84%CF%81%CE%BF%20%E2%80%93%20%CE%A3%CE%BA%CE%AC%CE%BB%CE%B1%20%CE%93%CE%B5%CF%81%CE%B1%CE%BA%CE%AF%CE%BD%CE%B1%CF%82",
     "difficulty": ""
   },
   {

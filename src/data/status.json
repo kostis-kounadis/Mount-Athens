@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-31T03:14:06.825Z",
+  "lastUpdated": "2026-09-01T03:17:48.420Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 272810
+          "size": 272815
         }
       ]
     },
@@ -39,14 +39,14 @@
     {
       "club": "ΠΟΑ",
       "status": "success",
-      "details": "Parsed 30 events",
+      "details": "Parsed 31 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 167202
+          "size": 167250
         }
       ]
     },
@@ -67,7 +67,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 217482
+          "size": 217455
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 340607
+          "size": 340726
         }
       ]
     },
@@ -95,7 +95,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 78508
+          "size": 78540
         }
       ]
     },
@@ -109,7 +109,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 263632
+          "size": 263543
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150662
+          "size": 150667
         }
       ]
     }
