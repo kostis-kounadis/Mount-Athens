@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-02T02:36:38.141Z",
+  "lastUpdated": "2026-09-02T06:37:48.878Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,14 +11,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 272815
+          "size": 272451
         }
       ]
     },
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 59 events",
+      "details": "Parsed 58 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
@@ -53,21 +53,21 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 36 events",
+      "details": "Parsed 42 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172803
+          "size": 172062
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 217482
+          "size": 217123
         }
       ]
     },
@@ -81,14 +81,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 340737
+          "size": 340726
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
       "status": "success",
-      "details": "Parsed 8 events",
+      "details": "Parsed 12 events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
@@ -102,14 +102,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 16 events",
+      "details": "Parsed 24 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 260590
+          "size": 263543
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150687
+          "size": 150677
         }
       ]
     }
