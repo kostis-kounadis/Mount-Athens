@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
+import * as cheerio from 'cheerio';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -96,11 +97,6 @@ async function main() {
     }
   }
 
-  // Save the structured config for parse-events.js
-  const configPath = path.join(INPUT_DIR, 'link-config.json');
-  fs.writeFileSync(configPath, JSON.stringify(linkConfig, null, 2), 'utf-8');
-  console.log(`Saved link configuration mapping to ${configPath}`);
-
   // Flatten active URLs for crawling
   const urls = [];
   for (const [club, clubUrls] of Object.entries(linkConfig)) {
@@ -111,13 +107,15 @@ async function main() {
     }
   }
 
-  console.log(`Found ${urls.length} URLs to fetch in LINKS.md:`);
+  console.log(`Found ${urls.length} initial URLs to fetch in LINKS.md:`);
   urls.forEach((u, i) => console.log(`  [${i+1}] ${u}`));
 
   const fetchLogs = {};
   const contentHashes = {};
 
-  for (const url of urls) {
+  // Process queue to allow dynamic link discovery
+  for (let idx = 0; idx < urls.length; idx++) {
+    const url = urls[idx];
     const slug = getSlug(url);
     const outputPath = path.join(INPUT_DIR, `${slug}.html`);
     
@@ -134,10 +132,37 @@ async function main() {
       console.log(`Saved ${url} -> ${outputPath} (${result.html.length} bytes)`);
       const hash = crypto.createHash('sha256').update(result.html).digest('hex');
       contentHashes[url] = hash;
+
+      // Dynamic discovery for AOS seasonal program URLs
+      if (url.includes('aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis')) {
+        try {
+          const $ = cheerio.load(result.html);
+          $('a').each((i, el) => {
+            const href = $(el).attr('href');
+            if (href && href.startsWith('https://aos.gr/programma-exormiseon-') && !href.includes('/tag/') && !href.includes('/category/')) {
+              const cleanHref = href.split('#')[0].replace(/\/$/, '') + '/';
+              if (!urls.includes(cleanHref)) {
+                console.log(`✨ Dynamically discovered new AOS seasonal program URL: ${cleanHref}`);
+                urls.push(cleanHref);
+                if (linkConfig['ΑΟΣ'] && !linkConfig['ΑΟΣ'].includes(cleanHref)) {
+                  linkConfig['ΑΟΣ'].push(cleanHref);
+                }
+              }
+            }
+          });
+        } catch (e) {
+          console.error('Error discovering AOS dynamic links:', e.message);
+        }
+      }
     }
     // Small delay between requests
     await new Promise(resolve => setTimeout(resolve, 1500));
   }
+
+  // Save the final structured config for parse-events.js
+  const configPath = path.join(INPUT_DIR, 'link-config.json');
+  fs.writeFileSync(configPath, JSON.stringify(linkConfig, null, 2), 'utf-8');
+  console.log(`Saved link configuration mapping to ${configPath}`);
 
   const reportPath = path.join(INPUT_DIR, 'fetch-status.json');
   fs.writeFileSync(reportPath, JSON.stringify(fetchLogs, null, 2), 'utf-8');

@@ -13,9 +13,16 @@ const CURRENT_HASHES_FILE = path.join(__dirname, '../_input/content-hashes.json'
 const OLD_HASHES_FILE = path.join(__dirname, '../_input/content-hashes-old.json');
 const REPORT_FILE = path.join(__dirname, '../src/data/anomaly_report.md');
 
-// Only care about events that haven't naturally expired based on local system time
-const TODAY = new Date();
-TODAY.setHours(0, 0, 0, 0);
+// Current Athens date
+const athensFormatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Athens',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+});
+const TODAY = new Date(athensFormatter.format(new Date()));
+const TWO_YEARS_AHEAD = new Date(TODAY);
+TWO_YEARS_AHEAD.setFullYear(TWO_YEARS_AHEAD.getFullYear() + 2);
 
 function detectAnomalies() {
   if (!fs.existsSync(NEW_FILE)) {
@@ -30,7 +37,8 @@ function detectAnomalies() {
   const currentHashes = fs.existsSync(CURRENT_HASHES_FILE) ? JSON.parse(fs.readFileSync(CURRENT_HASHES_FILE, 'utf-8')) : {};
   const oldHashes = fs.existsSync(OLD_HASHES_FILE) ? JSON.parse(fs.readFileSync(OLD_HASHES_FILE, 'utf-8')) : {};
 
-  const anomalies = [];
+  const criticalAnomalies = [];
+  const warnings = [];
 
   // Map club status from status.json
   const clubStatusMap = {};
@@ -57,13 +65,12 @@ function detectAnomalies() {
     newByClub[ev.club].push(ev);
   }
 
-  // 1. Check configured active clubs for zero parsed events in status.json
+  // 1. Check configured active clubs for zero parsed events or error status
   for (const club in linkConfig) {
     const clubInfo = clubStatusMap[club] || { parsedCount: 0, status: 'unknown' };
+    const clubUrls = linkConfig[club] || [];
     
     if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
-      // Check if website content changed overnight
-      const clubUrls = linkConfig[club] || [];
       let contentChanged = false;
       for (const url of clubUrls) {
         if (oldHashes[url] && currentHashes[url] && oldHashes[url] !== currentHashes[url]) {
@@ -73,46 +80,111 @@ function detectAnomalies() {
       }
 
       if (contentChanged) {
-        anomalies.push(`- **🚨 Website Updated But Parser Failed for ${club}:** The club updated its website content overnight, but the parser returned 0 events!`);
+        criticalAnomalies.push(`- **🚨 Website Updated But Parser Failed for ${club}:** The club updated its website content overnight, but the parser returned 0 events! Possible HTML selector change.`);
       } else {
-        anomalies.push(`- **⚠️ Complete Data Loss for ${club}:** Parser returned 0 events for configured club.`);
+        criticalAnomalies.push(`- **⚠️ Complete Data Loss for ${club}:** Parser returned 0 events for configured club.`);
       }
     }
   }
 
-  // 2. Check for drastic drops from yesterday
+  // 2. Check for drastic count drops from yesterday
   for (const club in oldByClub) {
-    // Skip if already flagged under absolute zero check
-    if (anomalies.some(a => a.includes(club))) continue;
+    if (criticalAnomalies.some(a => a.includes(club))) continue;
 
-    const upcomingOld = oldByClub[club].filter(e => new Date(e.startDate) >= TODAY);
+    const upcomingOld = oldByClub[club].filter(e => new Date(e.endDate || e.startDate) >= TODAY);
     const newClubEvents = newByClub[club] || [];
 
     if (upcomingOld.length > 0 && newClubEvents.length === 0) {
-      anomalies.push(`- **Complete Data Loss for ${club}:** Had ${upcomingOld.length} upcoming events yesterday, but 0 today!`);
-    } else if (upcomingOld.length >= 4 && newClubEvents.length < (upcomingOld.length / 2)) {
-      anomalies.push(`- **Drastic Drop for ${club}:** Upcoming events dropped from ${upcomingOld.length} yesterday to ${newClubEvents.length} today.`);
+      criticalAnomalies.push(`- **Complete Data Loss for ${club}:** Had ${upcomingOld.length} upcoming events yesterday, but 0 today!`);
+    } else if (upcomingOld.length >= 4 && newClubEvents.length < Math.floor(upcomingOld.length / 2)) {
+      criticalAnomalies.push(`- **Drastic Drop for ${club}:** Upcoming events dropped from ${upcomingOld.length} yesterday to ${newClubEvents.length} today.`);
     }
   }
 
-  // 3. Check for overall drastic drop
+  // 3. Overall drastic drop
   if (oldEvents.length > 0) {
-    const totalUpcomingOld = oldEvents.filter(e => new Date(e.startDate) >= TODAY).length;
+    const totalUpcomingOld = oldEvents.filter(e => new Date(e.endDate || e.startDate) >= TODAY).length;
     const totalNew = newEvents.length;
 
-    if (totalUpcomingOld >= 10 && totalNew < (totalUpcomingOld / 2)) {
-      anomalies.push(`- **Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingOld} to ${totalNew} overnight!`);
+    if (totalUpcomingOld >= 10 && totalNew < Math.floor(totalUpcomingOld / 2)) {
+      criticalAnomalies.push(`- **Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingOld} to ${totalNew} overnight!`);
     }
   }
 
-  // Write report if anomalies exist
-  if (anomalies.length > 0) {
-    const reportBody = `### ⚠️ Data Parsing Anomalies Detected\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered unexpected data issues during the latest run. Please manually check the parsers.\n\n${anomalies.join('\n')}\n\n*Action required: Fix the parsers or website structure, then close this issue.*`;
+  // 4. Data Quality & Date Validity Checks
+  for (const ev of newEvents) {
+    // Malformed date
+    if (!ev.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(ev.startDate) || isNaN(new Date(ev.startDate).getTime())) {
+      criticalAnomalies.push(`- **Invalid Date Format:** Event "${ev.title}" for club ${ev.club} has invalid startDate "${ev.startDate}".`);
+      break;
+    }
+    const dStart = new Date(ev.startDate);
+    const dEnd = new Date(ev.endDate || ev.startDate);
+
+    // Past event check (should not be in output)
+    if (dEnd < TODAY && dStart < TODAY) {
+      warnings.push(`- **Past Event Included:** "${ev.title}" (${ev.club}) dated ${ev.startDate} is in the past.`);
+    }
+
+    // Suspicious future date (> 2 years)
+    if (dStart > TWO_YEARS_AHEAD) {
+      warnings.push(`- **Suspicious Distant Date:** "${ev.title}" (${ev.club}) is dated ${ev.startDate} (> 2 years in the future). Check year resolution.`);
+    }
+
+    // Empty or too short title
+    if (!ev.title || ev.title.trim().length < 3) {
+      warnings.push(`- **Empty / Short Title:** Event for club ${ev.club} on ${ev.startDate} has invalid title "${ev.title}".`);
+    }
+
+    // Missing URL
+    if (!ev.url || !ev.url.startsWith('http')) {
+      warnings.push(`- **Missing or Invalid URL:** Event "${ev.title}" (${ev.club}) has invalid URL "${ev.url}".`);
+    }
+  }
+
+  // 5. Stale Program Check (no events in next 45 days)
+  const in45Days = new Date(TODAY);
+  in45Days.setDate(in45Days.getDate() + 45);
+
+  for (const club in linkConfig) {
+    const clubEvents = newByClub[club] || [];
+    const hasSoonEvents = clubEvents.some(e => {
+      const d = new Date(e.startDate);
+      return d >= TODAY && d <= in45Days;
+    });
+
+    if (clubEvents.length > 0 && !hasSoonEvents) {
+      warnings.push(`- **📅 Stale Program Warning for ${club}:** Has ${clubEvents.length} events scheduled, but none in the next 45 days. The seasonal program may have concluded and a new schedule might be available on their site.`);
+    }
+  }
+
+  // Summary Table Generation
+  const clubSummaryRows = Object.keys(linkConfig).map(club => {
+    const evList = newByClub[club] || [];
+    const count = evList.length;
+    const earliest = evList.length > 0 ? evList[0].startDate : '-';
+    const latest = evList.length > 0 ? evList[evList.length - 1].startDate : '-';
+    return `| ${club} | ${count} | ${earliest} | ${latest} |`;
+  });
+
+  const summaryTable = [
+    `| Club | Active Events | Next Event | Furthest Event |`,
+    `| :--- | :---: | :---: | :---: |`,
+    ...clubSummaryRows
+  ].join('\n');
+
+  // Write report if critical anomalies exist or write clean status report
+  if (criticalAnomalies.length > 0) {
+    const reportBody = `### ⚠️ Data Parsing Anomalies Detected\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered unexpected data issues during the latest run. Please review the errors below.\n\n### Critical Errors\n${criticalAnomalies.join('\n')}\n\n${warnings.length > 0 ? `### Warnings\n${warnings.join('\n')}\n\n` : ''}### Club Overview\n${summaryTable}\n\n*Action required: Fix the parsers or website structure, then close this issue.*`;
     fs.writeFileSync(REPORT_FILE, reportBody, 'utf-8');
-    console.log(`Anomalies detected! Wrote report to ${REPORT_FILE}`);
+    console.log(`\n🚨 Critical anomalies detected! Wrote alert report to ${REPORT_FILE}`);
   } else {
     if (fs.existsSync(REPORT_FILE)) fs.unlinkSync(REPORT_FILE);
-    console.log('All good! No anomalies detected.');
+    console.log('\n✅ All good! No critical anomalies detected.');
+    if (warnings.length > 0) {
+      console.log(`\nℹ️ Warnings (${warnings.length}):\n${warnings.join('\n')}`);
+    }
+    console.log(`\n📊 Club Overview:\n${summaryTable}`);
   }
 }
 
