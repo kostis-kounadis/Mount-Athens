@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-01T03:17:48.420Z",
+  "lastUpdated": "2026-09-02T02:36:38.141Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -53,21 +53,21 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 35 events",
+      "details": "Parsed 36 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172421
+          "size": 172803
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 217455
+          "size": 217482
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 340726
+          "size": 340737
         }
       ]
     },
@@ -95,21 +95,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 78540
+          "size": 78510
         }
       ]
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 18 events",
+      "details": "Parsed 16 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 263543
+          "size": 260590
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150667
+          "size": 150687
         }
       ]
     }
