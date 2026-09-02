@@ -38,7 +38,14 @@ function detectAnomalies() {
   const oldHashes = fs.existsSync(OLD_HASHES_FILE) ? JSON.parse(fs.readFileSync(OLD_HASHES_FILE, 'utf-8')) : {};
 
   const criticalAnomalies = [];
+  const notifications = [];
   const warnings = [];
+
+  // Support intentional test alert via CLI arg or ENV
+  const isTestMode = process.argv.includes('--test-alert') || process.env.TEST_ANOMALY === '1';
+  if (isTestMode) {
+    criticalAnomalies.push(`- **🧪 [TEST ALERT] Notification Pipeline Verification:** This is an intentional test alert to verify that GitHub Issues creation, Assignee mention (@kostis-kounadis), and GitHub Actions failure email notifications are working end-to-end.`);
+  }
 
   // Map club status from status.json
   const clubStatusMap = {};
@@ -65,29 +72,31 @@ function detectAnomalies() {
     newByClub[ev.club].push(ev);
   }
 
-  // 1. Check configured active clubs for zero parsed events or error status
+  // 1. Check all HTML updates & zero-event failures
   for (const club in linkConfig) {
     const clubInfo = clubStatusMap[club] || { parsedCount: 0, status: 'unknown' };
     const clubUrls = linkConfig[club] || [];
     
-    if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
-      let contentChanged = false;
-      for (const url of clubUrls) {
-        if (oldHashes[url] && currentHashes[url] && oldHashes[url] !== currentHashes[url]) {
-          contentChanged = true;
-          break;
-        }
+    let contentChangedUrls = [];
+    for (const url of clubUrls) {
+      if (oldHashes[url] && currentHashes[url] && oldHashes[url] !== currentHashes[url]) {
+        contentChangedUrls.push(url);
       }
+    }
 
-      if (contentChanged) {
-        criticalAnomalies.push(`- **🚨 Website Updated But Parser Failed for ${club}:** The club updated its website content overnight, but the parser returned 0 events! Possible HTML selector change.`);
+    if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
+      if (contentChangedUrls.length > 0) {
+        criticalAnomalies.push(`- **🚨 CRITICAL: Website Updated But Parser Returned 0 Events for ${club}:** The club updated its website content overnight (${contentChangedUrls.join(', ')}), but the parser returned 0 events! Possible HTML selector or layout change.`);
       } else {
         criticalAnomalies.push(`- **⚠️ Complete Data Loss for ${club}:** Parser returned 0 events for configured club.`);
       }
+    } else if (contentChangedUrls.length > 0) {
+      // Club updated their HTML and parsed events successfully -> Alert the user as requested
+      notifications.push(`- **📢 Website Content Updated for ${club}:** The webpage content was updated overnight (${contentChangedUrls.join(', ')}). Successfully parsed ${clubInfo.parsedCount} events.`);
     }
   }
 
-  // 2. Check for drastic count drops from yesterday
+  // 2. Sensitive Drop Detection (Flags drop of >= 2 upcoming events)
   for (const club in oldByClub) {
     if (criticalAnomalies.some(a => a.includes(club))) continue;
 
@@ -95,9 +104,10 @@ function detectAnomalies() {
     const newClubEvents = newByClub[club] || [];
 
     if (upcomingOld.length > 0 && newClubEvents.length === 0) {
-      criticalAnomalies.push(`- **Complete Data Loss for ${club}:** Had ${upcomingOld.length} upcoming events yesterday, but 0 today!`);
-    } else if (upcomingOld.length >= 4 && newClubEvents.length < Math.floor(upcomingOld.length / 2)) {
-      criticalAnomalies.push(`- **Drastic Drop for ${club}:** Upcoming events dropped from ${upcomingOld.length} yesterday to ${newClubEvents.length} today.`);
+      criticalAnomalies.push(`- **🚨 Complete Data Loss for ${club}:** Had ${upcomingOld.length} upcoming events yesterday, but 0 today!`);
+    } else if (upcomingOld.length >= 2 && (upcomingOld.length - newClubEvents.length) >= 2) {
+      // Even a drop of -2 events triggers an alert
+      criticalAnomalies.push(`- **⚠️ Event Count Drop for ${club}:** Scheduled upcoming events dropped by ${upcomingOld.length - newClubEvents.length} (was ${upcomingOld.length} yesterday, now ${newClubEvents.length}). Check if events were cancelled, removed, or parser missed them.`);
     }
   }
 
@@ -107,7 +117,7 @@ function detectAnomalies() {
     const totalNew = newEvents.length;
 
     if (totalUpcomingOld >= 10 && totalNew < Math.floor(totalUpcomingOld / 2)) {
-      criticalAnomalies.push(`- **Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingOld} to ${totalNew} overnight!`);
+      criticalAnomalies.push(`- **🚨 Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingOld} to ${totalNew} overnight!`);
     }
   }
 
@@ -173,14 +183,17 @@ function detectAnomalies() {
     ...clubSummaryRows
   ].join('\n');
 
-  // Write report if critical anomalies exist or write clean status report
-  if (criticalAnomalies.length > 0) {
-    const reportBody = `### ⚠️ Data Parsing Anomalies Detected\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered unexpected data issues during the latest run. Please review the errors below.\n\n### Critical Errors\n${criticalAnomalies.join('\n')}\n\n${warnings.length > 0 ? `### Warnings\n${warnings.join('\n')}\n\n` : ''}### Club Overview\n${summaryTable}\n\n*Action required: Fix the parsers or website structure, then close this issue.*`;
+  // Any critical anomalies or website update notifications trigger the issue & alert
+  const hasAlerts = criticalAnomalies.length > 0 || notifications.length > 0;
+
+  if (hasAlerts) {
+    const reportBody = `### ⚠️ Data Parsing & Website Update Report\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered updates or anomalies during the latest run.\n\n${criticalAnomalies.length > 0 ? `### 🚨 Critical Alerts\n${criticalAnomalies.join('\n')}\n\n` : ''}${notifications.length > 0 ? `### 📢 Website Updates Detected\n${notifications.join('\n')}\n\n` : ''}${warnings.length > 0 ? `### ℹ️ Warnings\n${warnings.join('\n')}\n\n` : ''}### 📊 Club Overview\n${summaryTable}\n\n*Action required: Review updates, check calendar, and close this issue.*`;
+    
     fs.writeFileSync(REPORT_FILE, reportBody, 'utf-8');
-    console.log(`\n🚨 Critical anomalies detected! Wrote alert report to ${REPORT_FILE}`);
+    console.log(`\n🚨 Anomalies or updates detected! Wrote alert report to ${REPORT_FILE}`);
   } else {
     if (fs.existsSync(REPORT_FILE)) fs.unlinkSync(REPORT_FILE);
-    console.log('\n✅ All good! No critical anomalies detected.');
+    console.log('\n✅ All good! No anomalies or webpage changes detected.');
     if (warnings.length > 0) {
       console.log(`\nℹ️ Warnings (${warnings.length}):\n${warnings.join('\n')}`);
     }
