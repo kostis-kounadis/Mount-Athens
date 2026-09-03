@@ -9,15 +9,6 @@
     "difficulty": ""
   },
   {
-    "startDate": "2026-09-04",
-    "endDate": "2026-09-06",
-    "displayDate": "4-6/9",
-    "title": "Ηπειρος: Δροσοπηγή (Κάντσικο) - Αγία Παρασκευή (Κεράσοβο) - Παλιοσέλλι",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmnac5uvw00asqa01utpf3ybg",
-    "difficulty": "Β"
-  },
-  {
     "startDate": "2026-09-05",
     "endDate": "2026-09-06",
     "displayDate": "5-6/9",
@@ -79,15 +70,6 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/e-rock-climbing-course-beginners-2026-autumn",
     "difficulty": "Beginners"
-  },
-  {
-    "startDate": "2026-09-12",
-    "endDate": "2026-09-13",
-    "displayDate": "12-13 Σεπτ",
-    "title": "Εύβοια : Κάρυστος – φαράγγι Αγ. Δημητρίου – φαράγγι Πλατανιστού",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/12-13-septemvriou-2026-pezoporiki-notia-evvoia-karystos-farangi-ag-dimitriou-farangi-platanistou/",
-    "difficulty": ""
   },
   {
     "startDate": "2026-09-12",
@@ -380,24 +362,6 @@
   {
     "startDate": "2026-09-27",
     "endDate": "2026-09-27",
-    "displayDate": "27 Σεπτ",
-    "title": "Αρχαιολογικό Μουσείο Μαραθώνα & Μουσείο Μαραθωνίου Δρόμου",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/27-septemvriou-2026-archaiologiko-mouseio-marathona-mouseio-marathoniou-dromou/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-09-27",
-    "endDate": "2026-09-27",
-    "displayDate": "27 Σεπτ",
-    "title": "Πάρνωνας : Μονή Λουκούς – Αρχαία Θυρέα",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/01-fevrouariou-2026-parnonas-moni-loukous-archaia-thyrea/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-09-27",
-    "endDate": "2026-09-27",
     "displayDate": "27/9",
     "title": "ΥΔΡΑ (Μονή Ζούρβας - Ύδρα)",
     "club": "ΦΟΠ",
@@ -484,15 +448,6 @@
     "club": "ΕΟΣ Αχαρνών",
     "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo7a971g0041oh01utpzqciu",
     "difficulty": "Α"
-  },
-  {
-    "startDate": "2026-10-08",
-    "endDate": "2026-10-11",
-    "displayDate": "8-11 Οκτω",
-    "title": "Αγώνας Ορεινού Τρεξίματος – Δονούσα",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/08-11-oktovriou-2026-pezoporiki-agonas-oreinou-treximatos-donousa/",
-    "difficulty": ""
   },
   {
     "startDate": "2026-10-09",
@@ -1177,6 +1132,15 @@
     "club": "ΑΟΣ",
     "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CE%B7%CE%B8%CE%B1%20%E2%80%93%20%CE%9A%CF%8C%CF%88%CE%B7%20%CE%A6%CE%BB%CE%B1%CE%BC%CF%80%CE%BF%CF%85%CF%81%CE%AF%CE%BF%CF%85",
     "difficulty": ""
+  },
+  {
+    "startDate": "2027-01-04",
+    "endDate": "2027-01-14",
+    "displayDate": "4-14/1",
+    "title": "Kilimanjaro – Lemosho Route",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmrc8goy2000upf01jjqdhzjc",
+    "difficulty": "Β, Γ"
   },
   {
     "startDate": "2027-01-07",
