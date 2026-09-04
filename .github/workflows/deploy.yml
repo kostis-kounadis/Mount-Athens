@@ -80,10 +80,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
 
-      - name: Trigger Email Alert via Workflow Failure on Anomaly
-        run: |
-          if [ -f src/data/anomaly_report.md ]; then
-            echo "::error file=src/data/anomaly_report.md::Parsing anomalies detected! Failing workflow to send email alert."
-            cat src/data/anomaly_report.md
-            exit 1
-          fi

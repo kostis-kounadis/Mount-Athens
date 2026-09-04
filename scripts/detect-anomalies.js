@@ -204,17 +204,20 @@ function detectAnomalies() {
     ...clubSummaryRows
   ].join('\n');
 
-  // Any critical anomalies or website update notifications trigger the issue & alert
-  const hasAlerts = criticalAnomalies.length > 0 || notifications.length > 0;
+  // Only real critical anomalies trigger GitHub issues and alerts
+  const hasAlerts = criticalAnomalies.length > 0;
 
   if (hasAlerts) {
-    const reportBody = `### ⚠️ Data Parsing & Website Update Report\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered updates or anomalies during the latest run.\n\n${criticalAnomalies.length > 0 ? `### 🚨 Critical Alerts\n${criticalAnomalies.join('\n')}\n\n` : ''}${notifications.length > 0 ? `### 📢 Website Updates Detected\n${notifications.join('\n')}\n\n` : ''}${warnings.length > 0 ? `### ℹ️ Warnings\n${warnings.join('\n')}\n\n` : ''}### 📊 Club Overview\n${summaryTable}\n\n*Action required: Review updates, check calendar, and close this issue.*`;
+    const reportBody = `### ⚠️ Data Parsing Anomaly Detected\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered unexpected anomalies during the latest run.\n\n### 🚨 Critical Alerts\n${criticalAnomalies.join('\n')}\n\n${notifications.length > 0 ? `### 📢 Website Updates Detected\n${notifications.join('\n')}\n\n` : ''}${warnings.length > 0 ? `### ℹ️ Warnings\n${warnings.join('\n')}\n\n` : ''}### 📊 Club Overview\n${summaryTable}\n\n*Action required: Review anomalies, check calendar, and close this issue.*`;
     
     fs.writeFileSync(REPORT_FILE, reportBody, 'utf-8');
-    console.log(`\n🚨 Anomalies or updates detected! Wrote alert report to ${REPORT_FILE}`);
+    console.log(`\n🚨 Critical anomalies detected! Wrote alert report to ${REPORT_FILE}`);
   } else {
     if (fs.existsSync(REPORT_FILE)) fs.unlinkSync(REPORT_FILE);
-    console.log('\n✅ All good! No anomalies or webpage changes detected.');
+    console.log('\n✅ All good! No anomalies detected across all clubs.');
+    if (notifications.length > 0) {
+      console.log(`\n📢 Website Updates (${notifications.length}):\n${notifications.join('\n')}`);
+    }
     if (warnings.length > 0) {
       console.log(`\nℹ️ Warnings (${warnings.length}):\n${warnings.join('\n')}`);
     }
