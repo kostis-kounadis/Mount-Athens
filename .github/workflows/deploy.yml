@@ -32,6 +32,7 @@ jobs:
         continue-on-error: true
         run: |
           cp src/data/events.json src/data/events_old.json || true
+          cp src/data/content-hashes.json src/data/content-hashes-old.json || true
           node scripts/fetch-raw.js
           node scripts/extract-text.js
           node scripts/parse-events.js
@@ -55,13 +56,20 @@ jobs:
             else
               gh issue comment "$OPEN_ISSUE_NUM" --body-file src/data/anomaly_report.md
             fi
+          else
+            # If no anomalies detected, auto-resolve any open anomaly issues
+            OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number' 2>/dev/null || true)
+            if [ -n "$OPEN_ISSUE_NUM" ] && [ "$OPEN_ISSUE_NUM" != "null" ]; then
+              gh issue comment "$OPEN_ISSUE_NUM" --body "✅ **Resolved:** The latest daily scrape ran successfully with 0 anomalies across all clubs. All events restored."
+              gh issue close "$OPEN_ISSUE_NUM" --reason "completed"
+            fi
           fi
 
       - name: Commit Updated Events
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f src/data/events.json src/data/status.json src/data/debug-output.txt
+          git add -f src/data/events.json src/data/status.json src/data/debug-output.txt src/data/content-hashes.json
           git diff-index --quiet HEAD || (git commit -m "Auto-update parsed events [cron]" && git push origin main)
 
       - name: Build Astro Site

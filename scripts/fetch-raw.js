@@ -18,26 +18,38 @@ if (!fs.existsSync(INPUT_DIR)) {
 // User-Agent to mimic a browser
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
-async function fetchPage(url) {
-  console.log(`Fetching: ${url}...`);
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': USER_AGENT,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'el-GR,el;q=0.9,en-US;q=0.8,en;q=0.7',
-      },
-    });
+async function fetchPage(url, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    console.log(`Fetching (attempt ${attempt}/${retries}): ${url}...`);
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'User-Agent': USER_AGENT,
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept-Language': 'el-GR,el;q=0.9,en-US;q=0.8,en;q=0.7',
+        },
+      });
 
-    if (!response.ok) {
-      return { html: null, success: false, status: `HTTP error! status: ${response.status}`, code: response.status };
+      if (!response.ok) {
+        if (attempt < retries && (response.status >= 500 || response.status === 429)) {
+          console.warn(`Attempt ${attempt} returned HTTP ${response.status}. Retrying in ${attempt * 3}s...`);
+          await new Promise(r => setTimeout(r, attempt * 3000));
+          continue;
+        }
+        return { html: null, success: false, status: `HTTP error! status: ${response.status}`, code: response.status };
+      }
+
+      const html = await response.text();
+      return { html, success: true, status: 'OK', code: response.status };
+    } catch (error) {
+      if (attempt < retries) {
+        console.warn(`Attempt ${attempt} failed with network error: ${error.message}. Retrying in ${attempt * 3}s...`);
+        await new Promise(r => setTimeout(r, attempt * 3000));
+        continue;
+      }
+      console.error(`Failed to fetch ${url} after ${retries} attempts:`, error.message);
+      return { html: null, success: false, status: error.message, code: 0 };
     }
-
-    const html = await response.text();
-    return { html, success: true, status: 'OK', code: response.status };
-  } catch (error) {
-    console.error(`Failed to fetch ${url}:`, error.message);
-    return { html: null, success: false, status: error.message, code: 0 };
   }
 }
 
@@ -63,8 +75,8 @@ async function main() {
   }
 
   // Preserve previous content hashes if file exists
-  const currentHashFile = path.join(INPUT_DIR, 'content-hashes.json');
-  const oldHashFile = path.join(INPUT_DIR, 'content-hashes-old.json');
+  const currentHashFile = path.join(__dirname, '../src/data/content-hashes.json');
+  const oldHashFile = path.join(__dirname, '../src/data/content-hashes-old.json');
   if (fs.existsSync(currentHashFile)) {
     fs.copyFileSync(currentHashFile, oldHashFile);
   }

@@ -9,8 +9,8 @@ const OLD_FILE = path.join(__dirname, '../src/data/events_old.json');
 const NEW_FILE = path.join(__dirname, '../src/data/events.json');
 const STATUS_FILE = path.join(__dirname, '../src/data/status.json');
 const LINK_CONFIG_FILE = path.join(__dirname, '../_input/link-config.json');
-const CURRENT_HASHES_FILE = path.join(__dirname, '../_input/content-hashes.json');
-const OLD_HASHES_FILE = path.join(__dirname, '../_input/content-hashes-old.json');
+const CURRENT_HASHES_FILE = path.join(__dirname, '../src/data/content-hashes.json');
+const OLD_HASHES_FILE = path.join(__dirname, '../src/data/content-hashes-old.json');
 const REPORT_FILE = path.join(__dirname, '../src/data/anomaly_report.md');
 
 // Current Athens date
