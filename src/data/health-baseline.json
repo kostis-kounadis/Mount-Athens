@@ -496,28 +496,19 @@
       "startDate": "2026-09-13",
       "endDate": "2026-09-13",
       "displayDate": "13/9",
-      "title": "Υμηττός (Ηλιούπολη- κτφ ΕΟΣΗ-πλατεία Προσκόπων)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-eosh-refuge-scouts-square",
-      "difficulty": "1"
-    },
-    {
-      "startDate": "2026-09-13",
-      "endDate": "2026-09-13",
-      "displayDate": "13/9",
       "title": "Μαίναλο (Αρκουδόρεμα)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/mainalo-arkoudorema",
       "difficulty": "1"
     },
     {
-      "startDate": "2026-09-19",
-      "endDate": "2026-10-21",
-      "displayDate": "19/9 - 21/10",
-      "title": "Δ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
+      "startDate": "2026-09-13",
+      "endDate": "2026-09-13",
+      "displayDate": "13/9",
+      "title": "Υμηττός (Ηλιούπολη- κτφ ΕΟΣΗ-πλατεία Προσκόπων)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/d-rock-climbing-school-beginners-2026-autumn",
-      "difficulty": "Beginners"
+      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-eosh-refuge-scouts-square",
+      "difficulty": "1"
     },
     {
       "startDate": "2026-09-19",
@@ -527,6 +518,15 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/giona-bekos-trail",
       "difficulty": "4+"
+    },
+    {
+      "startDate": "2026-09-19",
+      "endDate": "2026-10-21",
+      "displayDate": "19/9 - 21/10",
+      "title": "Δ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/d-rock-climbing-school-beginners-2026-autumn",
+      "difficulty": "Beginners"
     },
     {
       "startDate": "2026-09-19",
