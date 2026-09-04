@@ -18,6 +18,15 @@ if (!fs.existsSync(INPUT_DIR)) {
 // User-Agent to mimic a browser
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
+function isChallengeOrBlockPage(html) {
+  if (!html) return true;
+  if (html.includes('Περιμένε μια στιγμή') || html.includes('Περιμένετε μια στιγμή')) return true;
+  if (html.includes('Just a moment...') && html.includes('Cloudflare')) return true;
+  if (html.includes('cf-browser-verification') || html.includes('challenge-running') || html.includes('cf_chl_prog')) return true;
+  if (html.length < 15000 && html.includes('spinner') && html.includes('setTimeout')) return true;
+  return false;
+}
+
 async function fetchPage(url, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     console.log(`Fetching (attempt ${attempt}/${retries}): ${url}...`);
@@ -25,8 +34,16 @@ async function fetchPage(url, retries = 3) {
       const response = await fetch(url, {
         headers: {
           'User-Agent': USER_AGENT,
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
           'Accept-Language': 'el-GR,el;q=0.9,en-US;q=0.8,en;q=0.7',
+          'Sec-Ch-Ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
+          'Sec-Ch-Ua-Mobile': '?0',
+          'Sec-Ch-Ua-Platform': '"macOS"',
+          'Sec-Fetch-Dest': 'document',
+          'Sec-Fetch-Mode': 'navigate',
+          'Sec-Fetch-Site': 'none',
+          'Sec-Fetch-User': '?1',
+          'Upgrade-Insecure-Requests': '1',
         },
       });
 
@@ -40,6 +57,16 @@ async function fetchPage(url, retries = 3) {
       }
 
       const html = await response.text();
+
+      if (isChallengeOrBlockPage(html)) {
+        if (attempt < retries) {
+          console.warn(`Attempt ${attempt} received Cloudflare / anti-bot challenge page (${html.length} bytes). Retrying in ${attempt * 4}s...`);
+          await new Promise(r => setTimeout(r, attempt * 4000));
+          continue;
+        }
+        return { html: null, success: false, status: 'Cloudflare / Anti-bot Challenge Detected', code: 403 };
+      }
+
       return { html, success: true, status: 'OK', code: response.status };
     } catch (error) {
       if (attempt < retries) {
@@ -167,8 +194,8 @@ async function main() {
         }
       }
     }
-    // Small delay between requests
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Small delay between requests to avoid rate limits
+    await new Promise(resolve => setTimeout(resolve, 3000));
   }
 
   // Save the final structured config for parse-events.js

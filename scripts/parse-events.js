@@ -1468,84 +1468,108 @@ function main() {
     statusLogs.push(logEntry);
   };
 
+  const BASELINE_FILE = path.join(__dirname, '..', 'src', 'data', 'health-baseline.json');
+  let baselineData = {};
+  if (fs.existsSync(BASELINE_FILE)) {
+    try {
+      baselineData = JSON.parse(fs.readFileSync(BASELINE_FILE, 'utf-8'));
+    } catch (e) {
+      console.warn('Failed to parse health-baseline.json');
+    }
+  }
+
+  const addClubEvents = (club, parsedList) => {
+    if (parsedList && parsedList.length > 0) {
+      allEvents = allEvents.concat(parsedList);
+      addLog(club, 'success', parsedList.length);
+    } else if (baselineData[club] && baselineData[club].length > 0) {
+      const activeBase = baselineData[club].filter(e => {
+        const evEndDate = new Date(e.endDate || e.startDate);
+        const evStartDate = new Date(e.startDate);
+        return evEndDate >= TODAY || evStartDate >= TODAY;
+      });
+      if (activeBase.length > 0) {
+        console.warn(`⚠️ [RESILIENCE FALLBACK] ${club} yielded 0 newly parsed events (e.g. anti-bot challenge or server down). Preserving ${activeBase.length} active events from healthy baseline!`);
+        allEvents = allEvents.concat(activeBase);
+        addLog(club, 'warning', `0 parsed (bot challenge/network error) - preserved ${activeBase.length} healthy events`);
+        return;
+      }
+      addLog(club, 'error', 0);
+    } else {
+      addLog(club, 'error', 0);
+    }
+  };
+
   try {
     const acharnon = parseEosAcharnon();
     console.log(`Parsed ${acharnon.length} events from EOS Acharnon`);
-    allEvents = allEvents.concat(acharnon);
-    addLog('ΕΟΣ Αχαρνών', 'success', acharnon.length);
+    addClubEvents('ΕΟΣ Αχαρνών', acharnon);
   } catch (e) {
     console.error('Error parsing EOS Acharnon:', e.message);
-    addLog('ΕΟΣ Αχαρνών', 'error', e.message);
+    addClubEvents('ΕΟΣ Αχαρνών', []);
   }
 
   try {
     const aos = parseAos();
     console.log(`Parsed ${aos.length} events from AOS`);
-    allEvents = allEvents.concat(aos);
-    addLog('ΑΟΣ', 'success', aos.length);
+    addClubEvents('ΑΟΣ', aos);
   } catch (e) {
     console.error('Error parsing AOS:', e.message);
-    addLog('ΑΟΣ', 'error', e.message);
+    addClubEvents('ΑΟΣ', []);
   }
 
   try {
     const poa = parsePoa();
     console.log(`Parsed ${poa.length} events from POA`);
-    allEvents = allEvents.concat(poa);
-    addLog('ΠΟΑ', 'success', poa.length);
+    addClubEvents('ΠΟΑ', poa);
   } catch (e) {
     console.error('Error parsing POA:', e.message);
-    addLog('ΠΟΑ', 'error', e.message);
+    addClubEvents('ΠΟΑ', []);
   }
 
   try {
     const athinon = parseEosAthinon();
     console.log(`Parsed ${athinon.length} events from EOS Athinon`);
-    allEvents = allEvents.concat(athinon);
-    addLog('ΕΟΣ Αθηνών', 'success', athinon.length);
+    addClubEvents('ΕΟΣ Αθηνών', athinon);
   } catch (e) {
     console.error('Error parsing EOS Athinon:', e.message);
-    addLog('ΕΟΣ Αθηνών', 'error', e.message);
+    addClubEvents('ΕΟΣ Αθηνών', []);
   }
 
   try {
     const hlioupolis = parseEosHalioupolis();
     console.log(`Parsed ${hlioupolis.length} events from EOS Hlioupolis`);
-    allEvents = allEvents.concat(hlioupolis);
-    addLog('ΕΟΣ Ηλιούπολης', 'success', hlioupolis.length);
+    addClubEvents('ΕΟΣ Ηλιούπολης', hlioupolis);
   } catch (e) {
     console.error('Error parsing EOS Hlioupolis:', e.message);
-    addLog('ΕΟΣ Ηλιούπολης', 'error', e.message);
+    addClubEvents('ΕΟΣ Ηλιούπολης', []);
   }
 
   try {
     const foni = parseFoni();
     console.log(`Parsed ${foni.length} events from FONI`);
-    allEvents = allEvents.concat(foni);
-    addLog('ΦΟΝΙ', 'success', foni.length);
+    addClubEvents('ΦΟΝΙ', foni);
   } catch (e) {
     console.error('Error parsing FONI:', e.message);
-    addLog('ΦΟΝΙ', 'error', e.message);
+    addClubEvents('ΦΟΝΙ', []);
   }
 
   try {
     const filis = parseEposFilis();
     console.log(`Parsed ${filis.length} events from EPOS Filis`);
-    allEvents = allEvents.concat(filis);
-    addLog('ΕΠΟΣ Φυλής', 'success', filis.length);
+    addClubEvents('ΕΠΟΣ Φυλής', filis);
   } catch (e) {
     console.error('Error parsing EPOS Filis:', e.message);
-    addLog('ΕΠΟΣ Φυλής', 'error', e.message);
+    addClubEvents('ΕΠΟΣ Φυλής', []);
   }
 
   try {
     const fop = parseFop();
     console.log(`Parsed ${fop.length} events from FOP`);
-    allEvents = allEvents.concat(fop);
-    addLog('ΦΟΠ', 'success', fop.length);
+    addClubEvents('ΦΟΠ', fop);
   } catch (e) {
     console.error('Error parsing FOP:', e.message);
-    addLog('ΦΟΠ', 'error', e.message);
+    addClubEvents('ΦΟΠ', []);
   }
 
   // Filter out invalid dates, and keep only upcoming / current events (endDate >= TODAY or startDate >= TODAY)
