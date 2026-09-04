@@ -365,15 +365,6 @@
   ],
   "ΕΟΣ Αχαρνών": [
     {
-      "startDate": "2026-09-04",
-      "endDate": "2026-09-06",
-      "displayDate": "4-6/9",
-      "title": "Ηπειρος: Δροσοπηγή (Κάντσικο) - Αγία Παρασκευή (Κεράσοβο) - Παλιοσέλλι",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmnac5uvw00asqa01utpf3ybg",
-      "difficulty": "Β"
-    },
-    {
       "startDate": "2026-09-13",
       "endDate": "2026-09-13",
       "displayDate": "13/9",
@@ -471,6 +462,15 @@
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmr0rt4o700lgpf01j3imhawd",
       "difficulty": "Α+, Α"
+    },
+    {
+      "startDate": "2027-01-04",
+      "endDate": "2027-01-14",
+      "displayDate": "4-14/1",
+      "title": "Kilimanjaro – Lemosho Route",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmrc8goy2000upf01jjqdhzjc",
+      "difficulty": "Β, Γ"
     }
   ],
   "ΕΟΣ Ηλιούπολης": [
@@ -498,7 +498,7 @@
       "displayDate": "13/9",
       "title": "Μαίναλο (Αρκουδόρεμα)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/mainalo-arkoudrema",
+      "url": "https://eosh.gr/expeditions/mainalo-arkoudorema",
       "difficulty": "1"
     },
     {
@@ -795,7 +795,7 @@
       "startDate": "2026-09-19",
       "endDate": "2026-09-19",
       "displayDate": "19/9",
-      "title": "ΕΚΤΑΚΤΗ ΓΕΝΙΚΗ ΣΥΝΕΛΕΥΣΗ 19/09/2026",
+      "title": "ΕΚΤΑΚΤΗ Γ.Σ. και ΑΡΧΑΙΡΕΣΙΕΣ 19/09/2026",
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/%ce%b5%ce%ba%cf%84%ce%b1%ce%ba%cf%84%ce%b7-%ce%b3%ce%b5%ce%bd%ce%b9%ce%ba%ce%b7-%cf%83%cf%85%ce%bd%ce%b5%ce%bb%ce%b5%cf%85%cf%83%ce%b7-19-09-2026/",
       "difficulty": ""
@@ -858,7 +858,7 @@
       "startDate": "2026-10-18",
       "endDate": "2026-10-18",
       "displayDate": "18/10",
-      "title": "Κορινθία: Γεράνεια όρη κορυφή μεγάλη Ντουσκιά (1.068μ. )",
+      "title": "Κορινθία: Γεράνεια όρη κορυφή Πίντιζα (1032μ) Δεντρόσπιτο",
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/%ce%ba%ce%bf%cf%81%ce%b9%ce%bd%ce%b8%ce%af%ce%b1-%ce%b3%ce%b5%cf%81%ce%ac%ce%bd%ce%b5%ce%b9%ce%b1-%cf%8c%cf%81%ce%b7-%ce%ba%ce%bf%cf%81%cf%85%cf%86%ce%ae-%ce%bc%ce%b5%ce%b3%ce%ac%ce%bb%ce%b7-%ce%bd-2/",
       "difficulty": ""
@@ -1001,9 +1001,9 @@
       "difficulty": "ΒΔ 1"
     },
     {
-      "startDate": "2026-10-03",
+      "startDate": "2026-10-02",
       "endDate": "2026-10-04",
-      "displayDate": "3-4/10",
+      "displayDate": "2-4/10",
       "title": "Φθινοπωρινή Σέριφος",
       "club": "ΠΟΑ",
       "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A6%CE%B8%CE%B9%CE%BD%CE%BF%CF%80%CF%89%CF%81%CE%B9%CE%BD%CE%AE%20%CE%A3%CE%AD%CF%81%CE%B9%CF%86%CE%BF%CF%82",

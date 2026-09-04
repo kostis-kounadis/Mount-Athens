@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-04T11:37:49.376Z",
+  "lastUpdated": "2026-09-04T11:42:25.123Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,28 +11,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 272451
+          "size": 268733
         }
       ]
     },
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 58 events",
+      "details": "Parsed 57 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 87758
+          "size": 86774
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 99407
+          "size": 99388
         }
       ]
     },
@@ -46,28 +46,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 167250
+          "size": 167452
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 42 events",
+      "details": "Parsed 43 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 172062
+          "size": 175177
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 217123
+          "size": 219818
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 340726
+          "size": 372556
         }
       ]
     },
@@ -102,14 +102,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 24 events",
+      "details": "Parsed 23 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 263543
+          "size": 260590
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150677
+          "size": 150378
         }
       ]
     }
