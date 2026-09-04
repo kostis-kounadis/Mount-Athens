@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const OLD_FILE = path.join(__dirname, '../src/data/events_old.json');
 const NEW_FILE = path.join(__dirname, '../src/data/events.json');
+const BASELINE_FILE = path.join(__dirname, '../src/data/health-baseline.json');
 const STATUS_FILE = path.join(__dirname, '../src/data/status.json');
 const LINK_CONFIG_FILE = path.join(__dirname, '../_input/link-config.json');
 const CURRENT_HASHES_FILE = path.join(__dirname, '../src/data/content-hashes.json');
@@ -30,12 +30,21 @@ function detectAnomalies() {
     return;
   }
 
-  const oldEvents = fs.existsSync(OLD_FILE) ? JSON.parse(fs.readFileSync(OLD_FILE, 'utf-8')) : [];
   const newEvents = JSON.parse(fs.readFileSync(NEW_FILE, 'utf-8'));
   const linkConfig = fs.existsSync(LINK_CONFIG_FILE) ? JSON.parse(fs.readFileSync(LINK_CONFIG_FILE, 'utf-8')) : {};
   const statusData = fs.existsSync(STATUS_FILE) ? JSON.parse(fs.readFileSync(STATUS_FILE, 'utf-8')) : { logs: [] };
   const currentHashes = fs.existsSync(CURRENT_HASHES_FILE) ? JSON.parse(fs.readFileSync(CURRENT_HASHES_FILE, 'utf-8')) : {};
   const oldHashes = fs.existsSync(OLD_HASHES_FILE) ? JSON.parse(fs.readFileSync(OLD_HASHES_FILE, 'utf-8')) : {};
+
+  // Load persistent health baseline (last known healthy state per club)
+  let healthBaseline = {};
+  if (fs.existsSync(BASELINE_FILE)) {
+    try {
+      healthBaseline = JSON.parse(fs.readFileSync(BASELINE_FILE, 'utf-8'));
+    } catch (e) {
+      console.warn('Failed to parse health-baseline.json, will reinitialize.');
+    }
+  }
 
   const criticalAnomalies = [];
   const notifications = [];
@@ -59,18 +68,14 @@ function detectAnomalies() {
     };
   }
 
-  // Group by club
-  const oldByClub = {};
-  for (const ev of oldEvents) {
-    if (!oldByClub[ev.club]) oldByClub[ev.club] = [];
-    oldByClub[ev.club].push(ev);
-  }
-
+  // Group new events by club
   const newByClub = {};
   for (const ev of newEvents) {
     if (!newByClub[ev.club]) newByClub[ev.club] = [];
     newByClub[ev.club].push(ev);
   }
+
+  const clubsWithAnomalies = new Set();
 
   // 1. Check all HTML updates & zero-event failures
   for (const club in linkConfig) {
@@ -85,40 +90,44 @@ function detectAnomalies() {
     }
 
     if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
+      clubsWithAnomalies.add(club);
       if (contentChangedUrls.length > 0) {
         criticalAnomalies.push(`- **🚨 CRITICAL: Website Updated But Parser Returned 0 Events for ${club}:** The club updated its website content overnight (${contentChangedUrls.join(', ')}), but the parser returned 0 events! Possible HTML selector or layout change.`);
       } else {
         criticalAnomalies.push(`- **⚠️ Complete Data Loss for ${club}:** Parser returned 0 events for configured club.`);
       }
     } else if (contentChangedUrls.length > 0) {
-      // Club updated their HTML and parsed events successfully -> Alert the user as requested
+      // Club updated their HTML and parsed events successfully -> Alert the user
       notifications.push(`- **📢 Website Content Updated for ${club}:** The webpage content was updated overnight (${contentChangedUrls.join(', ')}). Successfully parsed ${clubInfo.parsedCount} events.`);
     }
   }
 
-  // 2. Sensitive Drop Detection (Flags drop of >= 2 upcoming events)
-  for (const club in oldByClub) {
-    if (criticalAnomalies.some(a => a.includes(club))) continue;
+  // 2. Sensitive Drop Detection against Persistent Healthy Baseline
+  for (const club in linkConfig) {
+    if (clubsWithAnomalies.has(club)) continue;
 
-    const upcomingOld = oldByClub[club].filter(e => new Date(e.endDate || e.startDate) >= TODAY);
+    const baseClubEvents = (healthBaseline[club] || []).filter(e => new Date(e.endDate || e.startDate) >= TODAY);
     const newClubEvents = newByClub[club] || [];
 
-    if (upcomingOld.length > 0 && newClubEvents.length === 0) {
-      criticalAnomalies.push(`- **🚨 Complete Data Loss for ${club}:** Had ${upcomingOld.length} upcoming events yesterday, but 0 today!`);
-    } else if (upcomingOld.length >= 2 && (upcomingOld.length - newClubEvents.length) >= 2) {
-      // Even a drop of -2 events triggers an alert
-      criticalAnomalies.push(`- **⚠️ Event Count Drop for ${club}:** Scheduled upcoming events dropped by ${upcomingOld.length - newClubEvents.length} (was ${upcomingOld.length} yesterday, now ${newClubEvents.length}). Check if events were cancelled, removed, or parser missed them.`);
+    if (baseClubEvents.length > 0 && newClubEvents.length === 0) {
+      clubsWithAnomalies.add(club);
+      criticalAnomalies.push(`- **🚨 Complete Data Loss for ${club}:** Had ${baseClubEvents.length} upcoming events in healthy baseline, but 0 today!`);
+    } else if (baseClubEvents.length >= 2 && (baseClubEvents.length - newClubEvents.length) >= 2) {
+      // Even a drop of -2 events against baseline triggers an alert
+      clubsWithAnomalies.add(club);
+      criticalAnomalies.push(`- **⚠️ Event Count Drop for ${club}:** Scheduled upcoming events dropped by ${baseClubEvents.length - newClubEvents.length} (was ${baseClubEvents.length} in last healthy baseline, now ${newClubEvents.length}). Check if events were cancelled, removed, or parser missed them.`);
     }
   }
 
-  // 3. Overall drastic drop
-  if (oldEvents.length > 0) {
-    const totalUpcomingOld = oldEvents.filter(e => new Date(e.endDate || e.startDate) >= TODAY).length;
-    const totalNew = newEvents.length;
+  // 3. Overall drastic drop against baseline
+  let totalUpcomingBase = 0;
+  for (const club in healthBaseline) {
+    totalUpcomingBase += (healthBaseline[club] || []).filter(e => new Date(e.endDate || e.startDate) >= TODAY).length;
+  }
+  const totalNew = newEvents.length;
 
-    if (totalUpcomingOld >= 10 && totalNew < Math.floor(totalUpcomingOld / 2)) {
-      criticalAnomalies.push(`- **🚨 Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingOld} to ${totalNew} overnight!`);
-    }
+  if (totalUpcomingBase >= 10 && totalNew < Math.floor(totalUpcomingBase / 2)) {
+    criticalAnomalies.push(`- **🚨 Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingBase} in healthy baseline to ${totalNew} today!`);
   }
 
   // 4. Data Quality & Date Validity Checks
@@ -168,18 +177,30 @@ function detectAnomalies() {
     }
   }
 
+  // 6. Update Health Baseline ONLY for clubs with NO anomalies
+  // If a club has an anomaly, its baseline is FROZEN at the pre-error healthy state!
+  // This prevents an erroneous day from becoming the "new normal" on day 2.
+  for (const club in linkConfig) {
+    if (!clubsWithAnomalies.has(club) && newByClub[club] && newByClub[club].length > 0) {
+      healthBaseline[club] = newByClub[club];
+    }
+  }
+  fs.writeFileSync(BASELINE_FILE, JSON.stringify(healthBaseline, null, 2), 'utf-8');
+
   // Summary Table Generation
   const clubSummaryRows = Object.keys(linkConfig).map(club => {
     const evList = newByClub[club] || [];
     const count = evList.length;
     const earliest = evList.length > 0 ? evList[0].startDate : '-';
     const latest = evList.length > 0 ? evList[evList.length - 1].startDate : '-';
-    return `| ${club} | ${count} | ${earliest} | ${latest} |`;
+    const baseCount = (healthBaseline[club] || []).filter(e => new Date(e.endDate || e.startDate) >= TODAY).length;
+    const statusIcon = clubsWithAnomalies.has(club) ? '⚠️ Alert' : '✅ Healthy';
+    return `| ${club} | ${count} | ${baseCount} | ${statusIcon} | ${earliest} | ${latest} |`;
   });
 
   const summaryTable = [
-    `| Club | Active Events | Next Event | Furthest Event |`,
-    `| :--- | :---: | :---: | :---: |`,
+    `| Club | Active Events | Healthy Baseline | Status | Next Event | Furthest Event |`,
+    `| :--- | :---: | :---: | :---: | :---: | :---: |`,
     ...clubSummaryRows
   ].join('\n');
 
