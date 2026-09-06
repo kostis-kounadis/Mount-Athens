@@ -1,4 +1,4 @@
-Debug run at 2026-09-05T02:41:26.595Z
+Debug run at 2026-09-06T02:38:59.345Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 167452 chars
@@ -33,10 +33,10 @@ File does not exist: /home/runner/work/Mount-Athens/Mount-Athens/_input/eosh_gr_
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
 Headers:
-  connection: keep-alive
+  connection: close
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Sat, 05 Sep 2026 02:41:28 GMT
+  date: Sun, 06 Sep 2026 02:39:01 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -62,17 +62,17 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a361e00eb941f432-DFW
+  cf-ray: a36a19d71e5d5314-ORD
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Sat, 05 Sep 2026 02:41:29 GMT
+  date: Sun, 06 Sep 2026 02:39:03 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  set-cookie: __emg_vid=7ef4a1e2-c9a4-48d5-a5c0-dddc66d156e7; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
-  set-cookie: __emg_sid=0d2758b1-e558-4ed4-9819-ce872a572bfb; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_vid=36f1f0ac-a939-4ec1-aea9-11d9ef9b35ed; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_sid=60200821-fb49-4bbf-b80e-95a1498e819e; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
