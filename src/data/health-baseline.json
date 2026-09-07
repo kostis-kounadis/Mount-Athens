@@ -1,15 +1,6 @@
 {
   "ΑΟΣ": [
     {
-      "startDate": "2026-09-06",
-      "endDate": "2026-09-06",
-      "displayDate": "6/9",
-      "title": "Λίμνη Δόξας – Πλανητέρο",
-      "club": "ΑΟΣ",
-      "url": "https://aos.gr/06-09-26-limni-doxas-planitero/",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-09-13",
       "endDate": "2026-09-13",
       "displayDate": "13/9",
@@ -228,24 +219,6 @@
   ],
   "ΕΟΣ Αθηνών": [
     {
-      "startDate": "2026-08-31",
-      "endDate": "2026-09-06",
-      "displayDate": "31/8 - 6/9",
-      "title": "ΙΤΑΛΙΑ – ΔΟΛΟΜΙΤΕΣ – TREKKING & VIA FERRATA",
-      "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/wp-content/uploads/2026/02/Αναλυτικό-Πρόγραμμα-Δολομίτες-31-Αυγούστου-6-Σεπτεμβρίου-2026.pdf",
-      "difficulty": ""
-    },
-    {
-      "startDate": "2026-09-06",
-      "endDate": "2026-09-06",
-      "displayDate": "6/9",
-      "title": "ΜΥΣΤΡΑΣ – ΤΑΫΓΕΤΗ",
-      "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#09-26:~:text=%CE%9C%CE%A5%CE%A3%CE%A4%CE%A1%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%91%CE%AB%CE%93%CE%95%CE%A4%CE%97",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-09-13",
       "endDate": "2026-09-13",
       "displayDate": "13/9",
@@ -365,15 +338,6 @@
   ],
   "ΕΟΣ Αχαρνών": [
     {
-      "startDate": "2026-09-13",
-      "endDate": "2026-09-13",
-      "displayDate": "13/9",
-      "title": "Τραχύ όρος 1808μ",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmn060p6h007zo901ur8l14au",
-      "difficulty": "Β"
-    },
-    {
       "startDate": "2026-09-18",
       "endDate": "2026-09-20",
       "displayDate": "18-20/9",
@@ -417,6 +381,15 @@
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo7a971g0041oh01utpzqciu",
       "difficulty": "Α"
+    },
+    {
+      "startDate": "2026-10-11",
+      "endDate": "2026-10-11",
+      "displayDate": "11/10",
+      "title": "Τραχύ όρος 1808μ",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmn060p6h007zo901ur8l14au",
+      "difficulty": "Β"
     },
     {
       "startDate": "2026-10-18",
@@ -474,15 +447,6 @@
     }
   ],
   "ΕΟΣ Ηλιούπολης": [
-    {
-      "startDate": "2026-09-06",
-      "endDate": "2026-09-06",
-      "displayDate": "6/9",
-      "title": "Τζιά (Κορησσία- Ιουλίδα- Οτζιάς)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/06-sept-2026-tzia-island",
-      "difficulty": "1"
-    },
     {
       "startDate": "2026-09-12",
       "endDate": "2026-10-22",
@@ -738,15 +702,6 @@
   ],
   "ΕΠΟΣ Φυλής": [
     {
-      "startDate": "2026-09-06",
-      "endDate": "2026-09-06",
-      "displayDate": "6/9",
-      "title": "Αχαΐα: Φαράγγι Βουραϊκού , Μέγα Σπήλαιο-Διακοπτό (κατάβαση).",
-      "club": "ΕΠΟΣ Φυλής",
-      "url": "https://eposfilis.gr/event/6-9-%ce%b1%cf%87%ce%b1%ce%90%ce%b1-%cf%86%ce%b1%cf%81%ce%ac%ce%b3%ce%b3%ce%b9-%ce%b2%ce%bf%cf%85%cf%81%ce%b1%cf%8a%ce%ba%ce%bf%cf%8d-%ce%bc%ce%ad%ce%b3%ce%b1-%cf%83%cf%80%ce%ae%ce%bb%ce%b1/",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-09-12",
       "endDate": "2026-09-12",
       "displayDate": "12/9",
@@ -937,15 +892,6 @@
     }
   ],
   "ΠΟΑ": [
-    {
-      "startDate": "2026-09-05",
-      "endDate": "2026-09-06",
-      "displayDate": "5-6/9",
-      "title": "Συντήρηση και εφοδιασμός καταφυγίων",
-      "club": "ΠΟΑ",
-      "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%85%CE%BD%CF%84%CE%AE%CF%81%CE%B7%CF%83%CE%B7%20%CE%BA%CE%B1%CE%B9%20%CE%B5%CF%86%CE%BF%CE%B4%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%BA%CE%B1%CF%84%CE%B1%CF%86%CF%85%CE%B3%CE%AF%CF%89%CE%BD",
-      "difficulty": ""
-    },
     {
       "startDate": "2026-09-13",
       "endDate": "2026-09-13",
