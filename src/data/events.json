@@ -739,6 +739,15 @@
   },
   {
     "startDate": "2026-11-07",
+    "endDate": "2026-11-08",
+    "displayDate": "7-8/11",
+    "title": "Άγραφα (Λιβάδια Πετρίλου-Βουτσικάκι-Τέμπλα-κτφ Αγράφων)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/agrafa-livadia-petrilou-voutsikaki-templa-agrafa-refuge",
+    "difficulty": "2"
+  },
+  {
+    "startDate": "2026-11-07",
     "endDate": "2026-11-07",
     "displayDate": "7/11",
     "title": "ΠΑΡΝΑΣΣΟΣ (Πολύδροσο – Άνω Πολύδροσο)",
@@ -759,15 +768,6 @@
     "startDate": "2026-11-08",
     "endDate": "2026-11-08",
     "displayDate": "8/11",
-    "title": "Μαίναλο (Σιλίμνα-Χρυσοβίτσι)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/mainalo-silimna-chrysovitsi",
-    "difficulty": "1"
-  },
-  {
-    "startDate": "2026-11-08",
-    "endDate": "2026-11-08",
-    "displayDate": "8/11",
     "title": "Πάρνηθα, Λάκα Ζηρέλι (κυκλική)",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/event/8-11-%cf%80%ce%ac%cf%81%ce%bd%ce%b7%ce%b8%ce%b1-%ce%bb%ce%ac%ce%ba%ce%b1-%ce%b6%ce%b7%cf%81%ce%ad%ce%bb%ce%b9-%ce%ba%cf%85%ce%ba%ce%bb%ce%b9%ce%ba%ce%ae/",
@@ -781,15 +781,6 @@
     "club": "ΑΟΣ",
     "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CF%89%CE%BD%CE%B1%CF%82%20%E2%80%93%20%CE%9A%CE%BF%CF%83%CE%BC%CE%AC%CF%82%20(%CE%9A%CF%85%CE%BD%CE%AE%CE%B3%CE%B9%20%CE%BC%CE%B1%CE%BD%CE%B9%CF%84%CE%B1%CF%81%CE%B9%CF%8E%CE%BD)",
     "difficulty": ""
-  },
-  {
-    "startDate": "2026-11-14",
-    "endDate": "2026-11-15",
-    "displayDate": "14-15/11",
-    "title": "Άγραφα (Λιβάδια Πετρίλου-Βουτσικάκι-Τέμπλα-κτφ Αγράφων)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/agrafa-livadia-petrilou-voutsikaki-templa-agrafa-refuge",
-    "difficulty": "2"
   },
   {
     "startDate": "2026-11-14",
@@ -817,6 +808,15 @@
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%9C%CE%9F%CE%9D%CE%97%20%CE%99%CE%95%CE%A1%CE%9F%CE%A5%CE%A3%CE%91%CE%9B%CE%97%CE%9C%20%E2%80%93%20%CE%9C%CE%91%CE%A5%CE%A1%CE%91%20%CE%9B%CE%99%CE%98%CE%91%CE%A1%CE%99%CE%91",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-11-15",
+    "endDate": "2026-11-15",
+    "displayDate": "15/11",
+    "title": "Μαίναλο (Σιλίμνα-Χρυσοβίτσι)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/mainalo-silimna-chrysovitsi",
+    "difficulty": "1"
   },
   {
     "startDate": "2026-11-15",

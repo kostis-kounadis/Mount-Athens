@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-08T02:49:20.415Z",
+  "lastUpdated": "2026-09-09T02:49:12.635Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 268737
+          "size": 268738
         }
       ]
     },
@@ -60,7 +60,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 175159
+          "size": 175160
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
@@ -81,35 +81,35 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 360554
+          "size": 362752
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "success",
-      "details": "Parsed 12 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 4 healthy events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 78510
+          "success": false,
+          "status": "HTTP error! status: 500",
+          "code": 500,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 23 events",
+      "details": "Parsed 21 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 261636
+          "size": 252027
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150871
+          "size": 150873
         }
       ]
     }

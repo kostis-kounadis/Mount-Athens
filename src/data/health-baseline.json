@@ -619,22 +619,22 @@
       "difficulty": "2+"
     },
     {
-      "startDate": "2026-11-08",
+      "startDate": "2026-11-07",
       "endDate": "2026-11-08",
-      "displayDate": "8/11",
-      "title": "Μαίναλο (Σιλίμνα-Χρυσοβίτσι)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/mainalo-silimna-chrysovitsi",
-      "difficulty": "1"
-    },
-    {
-      "startDate": "2026-11-14",
-      "endDate": "2026-11-15",
-      "displayDate": "14-15/11",
+      "displayDate": "7-8/11",
       "title": "Άγραφα (Λιβάδια Πετρίλου-Βουτσικάκι-Τέμπλα-κτφ Αγράφων)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/agrafa-livadia-petrilou-voutsikaki-templa-agrafa-refuge",
       "difficulty": "2"
+    },
+    {
+      "startDate": "2026-11-15",
+      "endDate": "2026-11-15",
+      "displayDate": "15/11",
+      "title": "Μαίναλο (Σιλίμνα-Χρυσοβίτσι)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/mainalo-silimna-chrysovitsi",
+      "difficulty": "1"
     },
     {
       "startDate": "2026-11-22",
