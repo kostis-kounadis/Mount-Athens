@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-09T02:49:12.635Z",
+  "lastUpdated": "2026-09-10T02:50:28.374Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -18,21 +18,21 @@
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 57 events",
+      "details": "Parsed 58 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 86774
+          "size": 89758
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 99388
+          "size": 100269
         }
       ]
     },
@@ -74,28 +74,28 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 28 events",
+      "details": "Parsed 27 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 362752
+          "size": 353288
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 4 healthy events",
+      "status": "success",
+      "details": "Parsed 12 events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
-          "success": false,
-          "status": "HTTP error! status: 500",
-          "code": 500,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 78510
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150873
+          "size": 150868
         }
       ]
     }
