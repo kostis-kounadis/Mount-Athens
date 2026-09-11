@@ -63,15 +63,6 @@
     "difficulty": "1"
   },
   {
-    "startDate": "2026-09-13",
-    "endDate": "2026-09-13",
-    "displayDate": "13/9",
-    "title": "Αργοσαρωνικός: ΑΙΓΙΝΑ. Ελλάνιο Όρος – Αρχαίος Ελαιώνας",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/13-9-%ce%b1%cf%81%ce%b3%ce%bf%cf%83%ce%b1%cf%81%cf%89%ce%bd%ce%b9%ce%ba%cf%8c%cf%82-%ce%b1%ce%b9%ce%b3%ce%b9%ce%bd%ce%b1-%ce%b5%ce%bb%ce%bb%ce%ac%ce%bd%ce%b9%ce%bf-%cf%8c%cf%81%ce%bf%cf%82/",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-09-18",
     "endDate": "2026-09-20",
     "displayDate": "18-20/9",
@@ -113,7 +104,7 @@
     "displayDate": "19/9 - 20/9",
     "title": "Παναχαϊκό",
     "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%B1%CE%BD%CE%B1%CF%87%CE%B1%CF%8A%CE%BA%CF%8C",
+    "url": "https://aos.gr/19-20-09-2026-panachaiko-oros-1-926m/",
     "difficulty": ""
   },
   {
@@ -880,6 +871,15 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/28-29-noe-2026-voreios-taygetos-kastori-faraggi-mylon",
     "difficulty": "2"
+  },
+  {
+    "startDate": "2026-11-28",
+    "endDate": "2026-11-29",
+    "displayDate": "28/11 - 29/11",
+    "title": "Μαίναλο: Γιορτή του Χειμώνα. Βυτίνα – Αλωνίσταινα (διάσχιση), Οστρακίνα (1981μ.)",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/28-29-11-%ce%bc%ce%b1%ce%af%ce%bd%ce%b1%ce%bb%ce%bf-%ce%b3%ce%b9%ce%bf%cf%81%cf%84%ce%ae-%cf%84%ce%bf%cf%85-%cf%87%ce%b5%ce%b9%ce%bc%cf%8e%ce%bd%ce%b1-%ce%b2%cf%85%cf%84%ce%af%ce%bd%ce%b1/",
+    "difficulty": ""
   },
   {
     "startDate": "2026-11-28",
