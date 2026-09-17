@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-16T03:04:40.113Z",
+  "lastUpdated": "2026-09-17T03:09:58.092Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 272290
+          "size": 272298
         }
       ]
     },
@@ -25,7 +25,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 90051
+          "size": 88965
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
@@ -38,36 +38,36 @@
     },
     {
       "club": "ΠΟΑ",
-      "status": "success",
-      "details": "Parsed 31 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 28 healthy events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 167452
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "success",
-      "details": "Parsed 43 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 12 healthy events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 175161
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 219818
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
@@ -81,21 +81,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 353349
+          "size": 353526
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "success",
-      "details": "Parsed 12 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 3 healthy events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 78510
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
@@ -109,7 +109,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 244449
+          "size": 244961
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 149466
+          "size": 149465
         }
       ]
     }
