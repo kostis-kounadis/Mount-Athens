@@ -1,78 +1,78 @@
-Debug run at 2026-09-17T03:09:58.138Z
+Debug run at 2026-09-18T02:56:06.589Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
-File does not exist: /home/runner/work/Mount-Athens/Mount-Athens/_input/poa_gr_index_php-programma.html
+Size: 167452 chars
+Snippet (first 1000 chars):
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
+	 <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Πρόγραμμα - POA</title>
+	<link rel="canonical" href="https://poa.gr/index.php/programma/" />
+	<meta property="og:locale" content="el_GR" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Πρόγραμμα - POA" />
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Σεπτέμβριος 2026 5-6/9 Συντήρηση και εφοδιασμός καταφυγίων Ένα Σαββατοκύριακο αφιερωμένο στην εθελοντική προσφορά των μελώ
+Snippet (last 1000 chars):
+orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":905,"title":"%CE%A0%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1%20-%20POA","excerpt":"","featuredImage":false}};
+</script>
+<script src="https://poa.gr/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.27.7" id="elementor-frontend-js"></script>
+			<script>
+			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+			</script>
+				</body>
+</html>
+
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
 File does not exist: /home/runner/work/Mount-Athens/Mount-Athens/_input/eosh_gr_wp-product-category-greek-mountains-climbs.html
 === Testing Fresh Fetch: https://poa.gr/index.php/programma/ ===
 Status: 200 OK
 Headers:
-  cache-control: private, no-cache, no-store, must-revalidate, max-age=0
-  cf-edge-cache: no-cache
   connection: keep-alive
-  content-length: 12178
-  content-type: text/html
-  date: Thu, 17 Sep 2026 03:09:58 GMT
-  server: openresty/1.31.1.1
-Length: 12118 chars
+  content-encoding: gzip
+  content-type: text/html; charset=UTF-8
+  date: Fri, 18 Sep 2026 02:56:07 GMT
+  link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
+  server: nginx
+  transfer-encoding: chunked
+  vary: Accept-Encoding
+Length: 167452 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
-  <meta charset="utf8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <script>
-      (function(){
-          setTimeout(function(){
-              window.location.reload();
-          }, 5000);
-      }())
-  </script>
-  <link rel="icon" href="data:,">
-  <title>Περιμένε μια στιγμή…</title>
-  <style>
-.spinner {
-    -webkit-animation: spin 1s ease-out;
-    animation: spin 1s ease-out;
-}
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-#outer-container {
-    text-align: center;
-}
-#container {
-        display: inline-block;
-        height: 100px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="profile" href="https://gmpg.org/xfn/11"> 
+	 <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Πρόγραμμα - POA</title>
+	<link rel="canonical" href="https://poa.gr/index.php/programma/" />
+	<meta property="og:locale" content="el_GR" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Πρόγραμμα - POA" />
+	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Σεπτέμβριος 2026 5-6/9 Συντήρηση και εφοδιασμός καταφυγίων Ένα Σαββατοκύριακο αφιερωμένο στην εθελοντική προσφορά των μελώ
 === Testing Fresh Fetch: https://eosh.gr/wp/product-category/greek-mountains-climbs/ ===
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a3c4ea4bf9015d0d-IAD
+  cf-ray: a3cd13645d3efc36-ORD
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Thu, 17 Sep 2026 03:09:59 GMT
+  date: Fri, 18 Sep 2026 02:56:08 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  set-cookie: __emg_vid=6cef0eeb-8f68-4e42-ab9a-be524d4fc11b; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
-  set-cookie: __emg_sid=39c4a38d-0e1c-4ecc-b67b-9fcf2322cd89; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_vid=9dac624c-5cc6-41fe-9f5c-3e5ebda9bb77; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_sid=ea553062-0974-45b1-bff6-c5d599293519; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
