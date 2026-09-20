@@ -10,15 +10,6 @@
   },
   {
     "startDate": "2026-09-18",
-    "endDate": "2026-09-20",
-    "displayDate": "18-20/9",
-    "title": "Ορειβατική Διάσχιση με διανυκτέρευση στον Σμόλικα",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmqzdj2dy00kepf01386gzfqw",
-    "difficulty": "Γ, Β"
-  },
-  {
-    "startDate": "2026-09-18",
     "endDate": "2026-09-23",
     "displayDate": "18/9 - 23/9",
     "title": "Φολέγανδρος",
@@ -88,33 +79,6 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/d-rock-climbing-school-beginners-2026-autumn",
     "difficulty": "Beginners"
-  },
-  {
-    "startDate": "2026-09-19",
-    "endDate": "2026-09-19",
-    "displayDate": "19/9",
-    "title": "Εθελοντικός καθαρισμός και σήμανση μονοπατιών στην Πάρνηθα",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/19-9-%cf%83%ce%ac%ce%b2%ce%b2%ce%b1%cf%84%ce%bf-%ce%b5%ce%b8%ce%b5%ce%bb%ce%bf%ce%bd%cf%84%ce%b9%ce%ba%cf%8c%cf%82-%ce%ba%ce%b1%ce%b8%ce%b1%cf%81%ce%b9%cf%83%ce%bc%cf%8c%cf%82-%ce%ba%ce%b1%ce%b9/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-09-19",
-    "endDate": "2026-09-19",
-    "displayDate": "19/9",
-    "title": "ΕΚΤΑΚΤΗ Γ.Σ. και ΑΡΧΑΙΡΕΣΙΕΣ 19/09/2026",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/%ce%b5%ce%ba%cf%84%ce%b1%ce%ba%cf%84%ce%b7-%ce%b3%ce%b5%ce%bd%ce%b9%ce%ba%ce%b7-%cf%83%cf%85%ce%bd%ce%b5%ce%bb%ce%b5%cf%85%cf%83%ce%b7-19-09-2026/",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-09-20",
-    "endDate": "2026-09-20",
-    "displayDate": "20/9",
-    "title": "ΕΞΟΡΜΗΣΗ ΣΤΗΝ ΑΙΓΙΝΑ",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo8rx0780073oh01d7znrodh",
-    "difficulty": "Β"
   },
   {
     "startDate": "2026-09-20",
@@ -1222,6 +1186,15 @@
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%94%CE%99%CE%A1%CE%A6%CE%A5%CE%A3",
     "difficulty": "ΒΔ 2"
+  },
+  {
+    "startDate": "2027-02-26",
+    "endDate": "2027-03-15",
+    "displayDate": "26/2 - 15/3",
+    "title": "CAMINO DE COSTA RICA | Μια πεζοπορία από την Καραϊβική στον Ειρηνικό",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmt5gkc66008rk80150njqo3u",
+    "difficulty": "Β, Β+"
   },
   {
     "startDate": "2027-02-27",
