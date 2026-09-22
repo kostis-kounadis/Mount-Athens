@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-09-21T03:03:14.883Z",
+  "lastUpdated": "2026-09-22T03:03:39.802Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
       "status": "success",
-      "details": "Parsed 11 events",
+      "details": "Parsed 10 events",
       "fetch": [
         {
           "url": "https://eosacharnon.xmiddleware.com/el",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 258016
+          "size": 238172
         }
       ]
     },
@@ -25,49 +25,49 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 87808
+          "size": 88676
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 100342
+          "size": 100717
         }
       ]
     },
     {
       "club": "ΠΟΑ",
-      "status": "success",
-      "details": "Parsed 31 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 26 healthy events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 167452
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "success",
-      "details": "Parsed 43 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 11 healthy events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 175188
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 219791
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
@@ -81,35 +81,35 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 322609
+          "size": 322677
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "success",
-      "details": "Parsed 12 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 3 healthy events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/category/ekdromes/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 78511
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 16 events",
+      "details": "Parsed 17 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 227930
+          "size": 231685
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 149485
+          "size": 149476
         }
       ]
     }

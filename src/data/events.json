@@ -63,6 +63,15 @@
     "difficulty": ""
   },
   {
+    "startDate": "2026-09-26",
+    "endDate": "2026-09-26",
+    "displayDate": "26/9",
+    "title": "Εθελοντικός καθαρισμός και σήμανση μονοπατιών στην Πάρνηθα",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/26-09-%cf%83%ce%ac%ce%b2%ce%b2%ce%b1%cf%84%ce%bf-%ce%b5%ce%b8%ce%b5%ce%bb%ce%bf%ce%bd%cf%84%ce%b9%ce%ba%cf%8c%cf%82-%ce%ba%ce%b1%ce%b8%ce%b1%cf%81%ce%b9%cf%83%ce%bc%cf%8c%cf%82-%ce%ba%ce%b1%ce%b9/",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-09-27",
     "endDate": "2026-09-27",
     "displayDate": "27/9",
@@ -142,15 +151,6 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/olympus-barbalala-ridge-mytikas-stefani-prionia",
     "difficulty": "4+"
-  },
-  {
-    "startDate": "2026-10-03",
-    "endDate": "2026-10-04",
-    "displayDate": "3-4/10",
-    "title": "VIA FERRATA ΓΑΒΡΟΣ",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cms683f8z009ipf01p4mmumt1",
-    "difficulty": "Α, Δ"
   },
   {
     "startDate": "2026-10-03",
@@ -255,9 +255,9 @@
     "startDate": "2026-10-11",
     "endDate": "2026-10-11",
     "displayDate": "11/10",
-    "title": "Βάργιανη – Νεραϊδοσπηλιά – Γερόλακας",
+    "title": "Βάργιανη – Νεραϊδοσπηλιά",
     "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%92%CE%AC%CF%81%CE%B3%CE%B9%CE%B1%CE%BD%CE%B7%20%E2%80%93%20%CE%9D%CE%B5%CF%81%CE%B1%CF%8A%CE%B4%CE%BF%CF%83%CF%80%CE%B7%CE%BB%CE%B9%CE%AC%20%E2%80%93%20%CE%93%CE%B5%CF%81%CF%8C%CE%BB%CE%B1%CE%BA%CE%B1%CF%82-%20%CE%92%CE%AC%CF%81%CE%B3%CE%B9%CE%B1%CE%BD%CE%B7",
+    "url": "https://aos.gr/11-10-vargiani-neraidospilia-katarraktes-vargiani-kykliki-poreia/?preview_id=34160&amp;preview_nonce=218b10b0f6&amp;_thumbnail_id=34163&amp;preview=true",
     "difficulty": ""
   },
   {
@@ -284,7 +284,7 @@
     "displayDate": "17/10 - 18/10",
     "title": "Ταΰγετος – Φαράγγι Ριντόμου",
     "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A4%CE%B1%CE%B0%CE%B3%CE%B5%CF%84%CE%BF%CF%82%20%E2%80%93%20%CE%A6%CE%B1%CF%81%CE%AC%CE%B3%CE%B3%CE%B9%20%CE%A1%CE%B9%CE%BD%CF%84%CF%8C%CE%BC%CE%BF%CF%85",
+    "url": "https://aos.gr/17-18-10-2026-kalnterimi-biliovou-farangi-rintomou-taygetos/",
     "difficulty": ""
   },
   {
