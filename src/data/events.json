@@ -9,15 +9,6 @@
     "difficulty": "Beginners"
   },
   {
-    "startDate": "2026-09-18",
-    "endDate": "2026-09-23",
-    "displayDate": "18/9 - 23/9",
-    "title": "Φολέγανδρος",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A6%CE%BF%CE%BB%CE%AD%CE%B3%CE%B1%CE%BD%CE%B4%CF%81%CE%BF%CF%82",
-    "difficulty": ""
-  },
-  {
     "startDate": "2026-09-19",
     "endDate": "2026-10-21",
     "displayDate": "19/9 - 21/10",
@@ -279,6 +270,15 @@
     "difficulty": "1"
   },
   {
+    "startDate": "2026-10-14",
+    "endDate": "2026-10-14",
+    "displayDate": "14/10",
+    "title": "Προβολή: Σουηδία- Kungsleden trail",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/projection-sweden-kungsleden-trail",
+    "difficulty": ""
+  },
+  {
     "startDate": "2026-10-17",
     "endDate": "2026-10-18",
     "displayDate": "17/10 - 18/10",
@@ -379,21 +379,21 @@
   },
   {
     "startDate": "2026-10-24",
-    "endDate": "2026-11-01",
-    "displayDate": "24/10 - 1/11",
-    "title": "Ιορδανία (Petra-Wadi Rum)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/jordan-petra-wadi-rum",
-    "difficulty": "2"
-  },
-  {
-    "startDate": "2026-10-24",
     "endDate": "2026-10-24",
     "displayDate": "24/10",
     "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-4",
     "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-24",
+    "endDate": "2026-11-01",
+    "displayDate": "24/10 - 1/11",
+    "title": "Ιορδανία (Petra-Wadi Rum)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/jordan-petra-wadi-rum",
+    "difficulty": "2"
   },
   {
     "startDate": "2026-10-24",
@@ -1221,6 +1221,15 @@
     "title": "Σαιτάς",
     "club": "ΑΟΣ",
     "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A3%CE%B1%CE%B9%CF%84%CE%AC%CF%82",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2027-04-20",
+    "endDate": "2027-05-07",
+    "displayDate": "20/4 - 7/5",
+    "title": "Κορυφή ISLAND PEAK. Διάσχιση ΕVEREST BASE CAMP",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/%ce%bd%ce%b5%cf%80%ce%b1%ce%bb-%cf%80%ce%b1%cf%83%cf%87%ce%b1-2027-20-%ce%b1%cf%80%cf%81%ce%b9%ce%bb%ce%af%ce%bf%cf%85-7-%ce%bc%ce%b1%cf%8a%ce%bf%cf%85-2027/",
     "difficulty": ""
   },
   {
