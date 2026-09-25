@@ -476,12 +476,12 @@
     },
     {
       "startDate": "2026-10-24",
-      "endDate": "2026-10-24",
-      "displayDate": "24/10",
-      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+      "endDate": "2026-11-26",
+      "displayDate": "24/10 - 26/11",
+      "title": "ΣΤ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-4",
-      "difficulty": ""
+      "url": "https://eosh.gr/expeditions/f-rock-climbing-course-beginners-2026-autumn",
+      "difficulty": "Beginners"
     },
     {
       "startDate": "2026-10-24",
@@ -494,12 +494,12 @@
     },
     {
       "startDate": "2026-10-24",
-      "endDate": "2026-11-26",
-      "displayDate": "24/10 - 26/11",
-      "title": "ΣΤ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
+      "endDate": "2026-10-24",
+      "displayDate": "24/10",
+      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/f-rock-climbing-course-beginners-2026-autumn",
-      "difficulty": "Beginners"
+      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-4",
+      "difficulty": ""
     },
     {
       "startDate": "2026-10-25",
@@ -527,6 +527,15 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/agrafa-livadia-petrilou-voutsikaki-templa-agrafa-refuge",
       "difficulty": "2"
+    },
+    {
+      "startDate": "2026-11-11",
+      "endDate": "2026-11-11",
+      "displayDate": "11/11",
+      "title": "Προβολή: Κορσική GR20-βόρειο τμήμα",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/photovideo-night-corsica-gr20-northern-section",
+      "difficulty": ""
     },
     {
       "startDate": "2026-11-15",
@@ -559,7 +568,7 @@
       "startDate": "2026-12-06",
       "endDate": "2026-12-06",
       "displayDate": "6/12",
-      "title": "Ελικώνας (Αγία Άννα-Κορυφή Παλιοβούνα)",
+      "title": "Ελικώνας: Αγία Άννα - Δύο Τσούμπες - Παλιοβούνα",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/6-dek-2026-elikonas-kyriaki-megali-loytsa",
       "difficulty": "2"
