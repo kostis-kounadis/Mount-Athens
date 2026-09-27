@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-26T03:14:51.832Z",
+  "lastUpdated": "2026-09-27T03:23:41.298Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,28 +11,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 238747
+          "size": 238752
         }
       ]
     },
     {
       "club": "ΑΟΣ",
-      "status": "success",
-      "details": "Parsed 58 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 21 healthy events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 87688
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 100618
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -67,21 +67,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 219601
+          "size": 219574
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 25 events",
+      "details": "Parsed 24 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 346410
+          "size": 339073
         }
       ]
     },
@@ -95,7 +95,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 78110
+          "size": 78356
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 149489
+          "size": 149492
         }
       ]
     }

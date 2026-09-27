@@ -403,15 +403,6 @@
       "difficulty": "Beginners"
     },
     {
-      "startDate": "2026-09-26",
-      "endDate": "2026-09-26",
-      "displayDate": "26/9",
-      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-2",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-09-27",
       "endDate": "2026-09-27",
       "displayDate": "27/9",
@@ -611,24 +602,6 @@
     }
   ],
   "ΕΠΟΣ Φυλής": [
-    {
-      "startDate": "2026-09-26",
-      "endDate": "2026-09-26",
-      "displayDate": "26/9",
-      "title": "Ταΰγετος, Προφήτης Ηλίας (2.407μ.). Διήμερη διάσχιση : Δάσος Βασιλικής – Προφ.Ηλίας – Ε4 – Αναβρυτή. Διασχίσεις: Αναβρυτή – Ε4 – πηγές Μαγγανιάρη και Μυστράς – Αναβρυτή.",
-      "club": "ΕΠΟΣ Φυλής",
-      "url": "https://eposfilis.gr/event/%cf%84%ce%b1%ce%b0%ce%b3%ce%b5%cf%84%ce%bf%cf%82-%cf%80%cf%81%ce%bf%cf%86%ce%ae%cf%84%ce%b7%cf%82-%ce%b7%ce%bb%ce%af%ce%b1%cf%82-2-407%ce%bc-%ce%b4%ce%b9%ce%ae%ce%bc%ce%b5%cf%81%ce%b7-%ce%b4/",
-      "difficulty": ""
-    },
-    {
-      "startDate": "2026-09-26",
-      "endDate": "2026-09-26",
-      "displayDate": "26/9",
-      "title": "Εθελοντικός καθαρισμός και σήμανση μονοπατιών στην Πάρνηθα",
-      "club": "ΕΠΟΣ Φυλής",
-      "url": "https://eposfilis.gr/event/26-09-%cf%83%ce%ac%ce%b2%ce%b2%ce%b1%cf%84%ce%bf-%ce%b5%ce%b8%ce%b5%ce%bb%ce%bf%ce%bd%cf%84%ce%b9%ce%ba%cf%8c%cf%82-%ce%ba%ce%b1%ce%b8%ce%b1%cf%81%ce%b9%cf%83%ce%bc%cf%8c%cf%82-%ce%ba%ce%b1%ce%b9/",
-      "difficulty": ""
-    },
     {
       "startDate": "2026-10-03",
       "endDate": "2026-10-03",
@@ -1036,6 +1009,33 @@
       "title": "Αγώνας Ορεινού Τρεξίματος – Δονούσα",
       "club": "ΦΟΝΙ",
       "url": "https://www.foni.org.gr/08-11-oktovriou-2026-pezoporiki-agonas-oreinou-treximatos-donousa/",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2026-10-25",
+      "endDate": "2026-10-25",
+      "displayDate": "25 Οκτω",
+      "title": "Μαίναλο",
+      "club": "ΦΟΝΙ",
+      "url": "https://www.foni.org.gr/25-oktovriou-2026-pezoporiki-mainalo/",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2026-11-07",
+      "endDate": "2026-11-08",
+      "displayDate": "7-8 Νοεμ",
+      "title": "Κίσσαβος",
+      "club": "ΦΟΝΙ",
+      "url": "https://www.foni.org.gr/07-08-noemvriou-2026-pezoporiki-kissavos/",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2026-12-06",
+      "endDate": "2026-12-06",
+      "displayDate": "6 Δεκε",
+      "title": "Καμάρι – Παναγία η Κορφιώτισσα",
+      "club": "ΦΟΝΙ",
+      "url": "https://www.foni.org.gr/06-dekemvriou-2026-kamari-panagia-i-korfiotissa/",
       "difficulty": ""
     }
   ],
