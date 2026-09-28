@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-27T03:23:41.298Z",
+  "lastUpdated": "2026-09-28T03:19:34.143Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -17,22 +17,22 @@
     },
     {
       "club": "ΑΟΣ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 21 healthy events",
+      "status": "success",
+      "details": "Parsed 58 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
-          "success": false,
-          "status": "fetch failed",
-          "code": 0,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 87688
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
-          "success": false,
-          "status": "fetch failed",
-          "code": 0,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 100618
         }
       ]
     },
@@ -74,14 +74,14 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 24 events",
+      "details": "Parsed 22 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 339073
+          "size": 318507
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 149492
+          "size": 149488
         }
       ]
     }
