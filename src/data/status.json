@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-02T03:48:53.183Z",
+  "lastUpdated": "2026-10-03T03:33:29.044Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -25,14 +25,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 86530
+          "size": 86821
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 100618
+          "size": 100918
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 318656
+          "size": 318764
         }
       ]
     },
@@ -102,14 +102,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 16 events",
+      "details": "Parsed 17 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 228639
+          "size": 232071
         }
       ]
     },
