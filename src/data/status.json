@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-04T04:02:19.014Z",
+  "lastUpdated": "2026-10-05T03:47:26.620Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 222673
+          "size": 222671
         }
       ]
     },
@@ -74,14 +74,14 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 22 events",
+      "details": "Parsed 21 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 318882
+          "size": 300207
         }
       ]
     },
@@ -116,14 +116,14 @@
     {
       "club": "ΦΟΠ",
       "status": "success",
-      "details": "Parsed 34 events",
+      "details": "Parsed 35 events",
       "fetch": [
         {
           "url": "https://fop.gr/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 149490
+          "size": 150728
         }
       ]
     }
