@@ -422,15 +422,6 @@
     },
     {
       "startDate": "2026-10-24",
-      "endDate": "2026-11-01",
-      "displayDate": "24/10 - 1/11",
-      "title": "Ιορδανία (Petra-Wadi Rum)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/jordan-petra-wadi-rum",
-      "difficulty": "2"
-    },
-    {
-      "startDate": "2026-10-24",
       "endDate": "2026-10-24",
       "displayDate": "24/10",
       "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
@@ -555,6 +546,15 @@
       "title": "Όλυμπος: Στεφάνι (2.911μ.). Πεζοπορίες Ρέμα Ορλιά. Γκορτσιά – Σπηλιά Ιθακήσιου Πριόνια",
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/9-11-10-%cf%8c%ce%bb%cf%85%ce%bc%cf%80%ce%bf%cf%82-%cf%83%cf%84%ce%b5%cf%86%ce%ac%ce%bd%ce%b9-2-911%ce%bc-%cf%80%ce%b5%ce%b6%ce%bf%cf%80%ce%bf%cf%81%ce%af%ce%b5%cf%82-%cf%81%ce%ad%ce%bc%ce%b1/",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2026-10-10",
+      "endDate": "2026-10-10",
+      "displayDate": "10/10",
+      "title": "Εθελοντικός καθαρισμός και σήμανση μονοπατιών στην Πάρνηθα",
+      "club": "ΕΠΟΣ Φυλής",
+      "url": "https://eposfilis.gr/event/10-10-%cf%83%ce%ac%ce%b2%ce%b2%ce%b1%cf%84%ce%bf-%ce%b5%ce%b8%ce%b5%ce%bb%ce%bf%ce%bd%cf%84%ce%b9%ce%ba%cf%8c%cf%82-%ce%ba%ce%b1%ce%b8%ce%b1%cf%81%ce%b9%cf%83%ce%bc%cf%8c%cf%82-%ce%ba%ce%b1%ce%b9/",
       "difficulty": ""
     },
     {

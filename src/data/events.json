@@ -66,6 +66,15 @@
     "startDate": "2026-10-10",
     "endDate": "2026-10-10",
     "displayDate": "10/10",
+    "title": "Εθελοντικός καθαρισμός και σήμανση μονοπατιών στην Πάρνηθα",
+    "club": "ΕΠΟΣ Φυλής",
+    "url": "https://eposfilis.gr/event/10-10-%cf%83%ce%ac%ce%b2%ce%b2%ce%b1%cf%84%ce%bf-%ce%b5%ce%b8%ce%b5%ce%bb%ce%bf%ce%bd%cf%84%ce%b9%ce%ba%cf%8c%cf%82-%ce%ba%ce%b1%ce%b8%ce%b1%cf%81%ce%b9%cf%83%ce%bc%cf%8c%cf%82-%ce%ba%ce%b1%ce%b9/",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-10",
+    "endDate": "2026-10-10",
+    "displayDate": "10/10",
     "title": "ΜΑΙΝΑΛΟ - Καρδαρας – Κορυφη Μουρτζια(1794)",
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%9C%CE%91%CE%99%CE%9D%CE%91%CE%9B%CE%9F%20-%20%CE%9A%CE%B1%CF%81%CE%B4%CE%B1%CF%81%CE%B1%CF%82%20%E2%80%93%20%CE%9A%CE%BF%CF%81%CF%85%CF%86%CE%B7%20%CE%9C%CE%BF%CF%85%CF%81%CF%84%CE%B6%CE%B9%CE%B1(1794)",
@@ -232,15 +241,6 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/f-rock-climbing-course-beginners-2026-autumn",
     "difficulty": "Beginners"
-  },
-  {
-    "startDate": "2026-10-24",
-    "endDate": "2026-11-01",
-    "displayDate": "24/10 - 1/11",
-    "title": "Ιορδανία (Petra-Wadi Rum)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/jordan-petra-wadi-rum",
-    "difficulty": "2"
   },
   {
     "startDate": "2026-10-24",
