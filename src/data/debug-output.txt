@@ -1,4 +1,4 @@
-Debug run at 2026-10-07T04:01:00.382Z
+Debug run at 2026-10-08T04:13:57.103Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 167673 chars
@@ -36,7 +36,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Wed, 07 Oct 2026 04:01:01 GMT
+  date: Thu, 08 Oct 2026 04:13:57 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -62,20 +62,20 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a46a00940af3312c-LAX
+  cf-ray: a47250e8ac4ac176-ORD
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Wed, 07 Oct 2026 04:01:02 GMT
+  date: Thu, 08 Oct 2026 04:13:59 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  set-cookie: __emg_vid=45caeee9-0213-4199-ba3e-81d0b4d780a6; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
-  set-cookie: __emg_sid=7332ef2a-cfcf-4bc8-8754-c3eed8c40cb5; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_vid=1e5a4bc5-8dd5-4da1-a1f0-49ff5cafe5de; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_sid=a17e8093-2743-4e9c-9ba5-857c939d6db2; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
-Length: 5229 chars
+Length: 5322 chars
 Snippet (first 1000 chars):
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:locale" content="el_GR"/><meta property="og:locale:alternate" content="en_GB"/><meta name="twitter:
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#1e3a8a"/><meta name="google-site-verification" content="AMw3c0Sf-CCFxEUgyMwqqSii5fHK_yLCL-XFteK1TdQ"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/><link rel="manifest" href="/manifest.json"/><meta name="description" content="Ε.Ο.Σ. Ηλιούπολης — αναβάσεις στον Υμηττό και σε όλη την Ελλάδα, σχολές αναρρίχησης, αθλητικά πρωταθλήματα. Greek climbing club est. since 1991."/><meta name="keywords" content="ΕΟΣ Ηλιούπολης, Ελληνικός Ορειβατικός Σύλλογος, αναβάσεις, ορειβασία, αναρρίχηση, EOSH, Υμηττός, climbing club Athens"/><meta property="og:site_name" content="Ε.Ο.Σ. Ηλιούπολης"/><meta property="og:locale
