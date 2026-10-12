@@ -1,15 +1,6 @@
 {
   "ΑΟΣ": [
     {
-      "startDate": "2026-10-11",
-      "endDate": "2026-10-11",
-      "displayDate": "11/10",
-      "title": "Βάργιανη – Νεραϊδοσπηλιά",
-      "club": "ΑΟΣ",
-      "url": "https://aos.gr/11-10-vargiani-neraidospilia-katarraktes-vargiani-kykliki-poreia/",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-10-17",
       "endDate": "2026-10-18",
       "displayDate": "17/10 - 18/10",
@@ -174,15 +165,6 @@
   ],
   "ΕΟΣ Αθηνών": [
     {
-      "startDate": "2026-10-11",
-      "endDate": "2026-10-11",
-      "displayDate": "11/10",
-      "title": "ΠΑΡΝΑΣΣΟΣ – ΛΙΑΚΟΥΡΑ",
-      "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#10-26:~:text=%CE%A0%CE%91%CE%A1%CE%9D%CE%91%CE%A3%CE%A3%CE%9F%CE%A3%20%E2%80%93%20%CE%9B%CE%99%CE%91%CE%9A%CE%9F%CE%A5%CE%A1%CE%91",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-10-18",
       "endDate": "2026-10-18",
       "displayDate": "18/10",
@@ -275,15 +257,6 @@
   ],
   "ΕΟΣ Αχαρνών": [
     {
-      "startDate": "2026-10-06",
-      "endDate": "2026-10-14",
-      "displayDate": "6-14/10",
-      "title": "ΑΝΔΑΛΟΥΣΙΑ",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmo7a971g0041oh01utpzqciu",
-      "difficulty": "Α"
-    },
-    {
       "startDate": "2026-10-18",
       "endDate": "2026-10-18",
       "displayDate": "18/10",
@@ -329,6 +302,15 @@
       "difficulty": "Α+, Α"
     },
     {
+      "startDate": "2026-11-21",
+      "endDate": "2026-11-22",
+      "displayDate": "21-22/11",
+      "title": "Παναιτωλικό Όρος-Διήμερη Ορειβατική Διάσχιση",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmv3wbcan00blk801hgdcus4b",
+      "difficulty": "Α, Β+"
+    },
+    {
       "startDate": "2027-01-04",
       "endDate": "2027-01-14",
       "displayDate": "4-14/1",
@@ -365,15 +347,6 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/d-rock-climbing-school-beginners-2026-autumn",
       "difficulty": "Beginners"
-    },
-    {
-      "startDate": "2026-10-11",
-      "endDate": "2026-10-11",
-      "displayDate": "11/10",
-      "title": "Λακωνία - Μονοπάτι Καστανιάς",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/laconia-monopati-kastanias",
-      "difficulty": "1"
     },
     {
       "startDate": "2026-10-14",
@@ -522,15 +495,6 @@
   ],
   "ΕΠΟΣ Φυλής": [
     {
-      "startDate": "2026-10-09",
-      "endDate": "2026-10-11",
-      "displayDate": "9/10 - 11/10",
-      "title": "Όλυμπος: Στεφάνι (2.911μ.). Πεζοπορίες Ρέμα Ορλιά. Γκορτσιά – Σπηλιά Ιθακήσιου Πριόνια",
-      "club": "ΕΠΟΣ Φυλής",
-      "url": "https://eposfilis.gr/event/9-11-10-%cf%8c%ce%bb%cf%85%ce%bc%cf%80%ce%bf%cf%82-%cf%83%cf%84%ce%b5%cf%86%ce%ac%ce%bd%ce%b9-2-911%ce%bc-%cf%80%ce%b5%ce%b6%ce%bf%cf%80%ce%bf%cf%81%ce%af%ce%b5%cf%82-%cf%81%ce%ad%ce%bc%ce%b1/",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-10-17",
       "endDate": "2026-10-17",
       "displayDate": "17/10",
@@ -658,15 +622,6 @@
     }
   ],
   "ΠΟΑ": [
-    {
-      "startDate": "2026-10-10",
-      "endDate": "2026-10-11",
-      "displayDate": "10-11/10",
-      "title": "Γουλινάς (1459μ.) – Οξυά (1923μ.) – Κοκκάλια (1741μ.)",
-      "club": "ΠΟΑ",
-      "url": "https://poa.gr/index.php/programma/#:~:text=%CE%93%CE%BF%CF%85%CE%BB%CE%B9%CE%BD%CE%AC%CF%82%20(1459%CE%BC.)%20%E2%80%93%20%CE%9F%CE%BE%CF%85%CE%AC%20(1923%CE%BC.)%20%E2%80%93%20%CE%9A%CE%BF%CE%BA%CE%BA%CE%AC%CE%BB%CE%B9%CE%B1%20(1741%CE%BC.)",
-      "difficulty": "ΒΔ 1"
-    },
     {
       "startDate": "2026-10-18",
       "endDate": "2026-10-18",
@@ -867,15 +822,6 @@
     }
   ],
   "ΦΟΝΙ": [
-    {
-      "startDate": "2026-10-08",
-      "endDate": "2026-10-11",
-      "displayDate": "8-11 Οκτω",
-      "title": "Αγώνας Ορεινού Τρεξίματος – Δονούσα",
-      "club": "ΦΟΝΙ",
-      "url": "https://www.foni.org.gr/08-11-oktovriou-2026-pezoporiki-agonas-oreinou-treximatos-donousa/",
-      "difficulty": ""
-    },
     {
       "startDate": "2026-10-25",
       "endDate": "2026-10-25",

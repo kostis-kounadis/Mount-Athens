@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-11T03:39:55.475Z",
+  "lastUpdated": "2026-10-12T04:03:41.884Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 211209
+          "size": 190276
         }
       ]
     },
@@ -67,21 +67,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 222771
+          "size": 222744
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 19 events",
+      "details": "Parsed 18 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 299396
+          "size": 288156
         }
       ]
     },
@@ -102,14 +102,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 16 events",
+      "details": "Parsed 14 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 228637
+          "size": 182287
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150745
+          "size": 150720
         }
       ]
     }
