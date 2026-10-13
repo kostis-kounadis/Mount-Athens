@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-12T04:03:41.884Z",
+  "lastUpdated": "2026-10-13T05:12:58.293Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,21 +11,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 190276
+          "size": 190271
         }
       ]
     },
     {
       "club": "ΑΟΣ",
       "status": "success",
-      "details": "Parsed 58 events",
+      "details": "Parsed 57 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 85701
+          "size": 84423
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
@@ -60,14 +60,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 174784
+          "size": 174759
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 222744
+          "size": 222746
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 288156
+          "size": 288158
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150720
+          "size": 150745
         }
       ]
     }
