@@ -199,6 +199,24 @@
   },
   {
     "startDate": "2026-10-30",
+    "endDate": "2026-10-31",
+    "displayDate": "30/10 - 31/10",
+    "title": "& 1/11/26 Δυτικά Βαρδούσια (Αρτοτίνα)",
+    "club": "ΑΟΣ",
+    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%26%201%2F11%2F26%20%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-30",
+    "endDate": "2026-11-01",
+    "displayDate": "30/10 - 1/11",
+    "title": "Δυτικά Βαρδούσια (Αρτοτίνα)",
+    "club": "ΑΟΣ",
+    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-10-30",
     "endDate": "2026-11-01",
     "displayDate": "30/10 - 1/11",
     "title": "Χατζή (2038μ.)",
@@ -246,15 +264,6 @@
     "startDate": "2026-11-01",
     "endDate": "2026-11-01",
     "displayDate": "1/11",
-    "title": "Παρνασός",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%8C%CF%82",
-    "difficulty": ""
-  },
-  {
-    "startDate": "2026-11-01",
-    "endDate": "2026-11-01",
-    "displayDate": "1/11",
     "title": "ΚΑΡΥΕΣ ΛΑΚΩΝΙΑΣ – Το μονοπάτι της Καστανιάς",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%9A%CE%91%CE%A1%CE%A5%CE%95%CE%A3%20%CE%9B%CE%91%CE%9A%CE%A9%CE%9D%CE%99%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%BF%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CF%84%CE%B7%CF%82%20%CE%9A%CE%B1%CF%83%CF%84%CE%B1%CE%BD%CE%B9%CE%AC%CF%82",
@@ -277,15 +286,6 @@
     "club": "ΕΟΣ Αχαρνών",
     "url": "https://eosacharnon.xmiddleware.com/el/booking/cmr0rt4o700lgpf01j3imhawd",
     "difficulty": "Α+, Α"
-  },
-  {
-    "startDate": "2026-11-06",
-    "endDate": "2026-11-08",
-    "displayDate": "6/11 - 8/11",
-    "title": "Δυτικά Βαρδούσια (Αρτοτίνα)",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
-    "difficulty": ""
   },
   {
     "startDate": "2026-11-07",
@@ -313,6 +313,15 @@
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%A0%CE%91%CE%A1%CE%9D%CE%91%CE%A3%CE%A3%CE%9F%CE%A3%20(%CE%A0%CE%BF%CE%BB%CF%8D%CE%B4%CF%81%CE%BF%CF%83%CE%BF%20%E2%80%93%20%CE%86%CE%BD%CF%89%20%CE%A0%CE%BF%CE%BB%CF%8D%CE%B4%CF%81%CE%BF%CF%83%CE%BF)",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-11-08",
+    "endDate": "2026-11-08",
+    "displayDate": "8/11",
+    "title": "Παρνασός",
+    "club": "ΑΟΣ",
+    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%8C%CF%82",
+    "difficulty": ""
   },
   {
     "startDate": "2026-11-08",
@@ -741,6 +750,15 @@
     "startDate": "2027-01-10",
     "endDate": "2027-01-10",
     "displayDate": "10/1",
+    "title": "MIKΡH ZHΡEIA",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=MIK%CE%A1H%20ZH%CE%A1EIA",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2027-01-10",
+    "endDate": "2027-01-10",
+    "displayDate": "10/1",
     "title": "ΑΡΜΕΝΙΑΣ (ΑΡΤΕΜΗΣΙΟ - ΛΕΣΟΒΙΤΙ)",
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%91%CE%A1%CE%9C%CE%95%CE%9D%CE%99%CE%91%CE%A3%20(%CE%91%CE%A1%CE%A4%CE%95%CE%9C%CE%97%CE%A3%CE%99%CE%9F%20-%20%CE%9B%CE%95%CE%A3%CE%9F%CE%92%CE%99%CE%A4%CE%99)",
@@ -768,6 +786,15 @@
     "startDate": "2027-01-17",
     "endDate": "2027-01-17",
     "displayDate": "17/1",
+    "title": "ΚΕΛΑΡΙΑ – ΓΕΡΟΝΤΟΒΡΑΧΟΣ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9A%CE%95%CE%9B%CE%91%CE%A1%CE%99%CE%91%20%E2%80%93%20%CE%93%CE%95%CE%A1%CE%9F%CE%9D%CE%A4%CE%9F%CE%92%CE%A1%CE%91%CE%A7%CE%9F%CE%A3",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2027-01-17",
+    "endDate": "2027-01-17",
+    "displayDate": "17/1",
     "title": "Παναχαϊκό Όρος: Άνω Καστρίτσι –λίμνη Πασχαλιάνων",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/event/%cf%80%ce%b1%ce%bd%ce%b1%cf%87%ce%b1%cf%8a%ce%ba%cf%8c-%cf%8c%cf%81%ce%bf%cf%82-%ce%ac%ce%bd%cf%89-%ce%ba%ce%b1%cf%83%cf%84%cf%81%ce%af%cf%84%cf%83%ce%b9-%ce%bb%ce%af%ce%bc%ce%bd%ce%b7-2/",
@@ -780,6 +807,15 @@
     "title": "Δυτική Πεντέλη",
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AE%20%CE%A0%CE%B5%CE%BD%CF%84%CE%AD%CE%BB%CE%B7",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2027-01-24",
+    "endDate": "2027-01-24",
+    "displayDate": "24/1",
+    "title": "ΜΑΙΝΑΛΟ – Βλαχέρνα – Καρδαράς",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9C%CE%91%CE%99%CE%9D%CE%91%CE%9B%CE%9F%20%E2%80%93%20%CE%92%CE%BB%CE%B1%CF%87%CE%AD%CF%81%CE%BD%CE%B1%20%E2%80%93%20%CE%9A%CE%B1%CF%81%CE%B4%CE%B1%CF%81%CE%AC%CF%82",
     "difficulty": ""
   },
   {
@@ -817,6 +853,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%84%CF%81%CF%8E%CE%BC%CE%B7%20%E2%80%93%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CE%95%CE%B8%CE%BD%CE%B9%CE%BA%CE%AE%CF%82%20%CE%91%CE%BD%CF%84%CE%AF%CF%83%CF%84%CE%B1%CF%83%CE%B7%CF%82%20%E2%80%93%20%CF%83%CF%80%CE%B7%CE%BB%CE%B9%CE%AC%20%CE%9C%CE%AC%CE%B3%CE%B5%CF%81",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2027-01-31",
+    "endDate": "2027-01-31",
+    "displayDate": "31/1",
+    "title": "ΟΡΟΣ ΚΑΛΛΙΔΡΟΜΟ",
+    "club": "ΕΟΣ Αθηνών",
+    "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9F%CE%A1%CE%9F%CE%A3%20%CE%9A%CE%91%CE%9B%CE%9B%CE%99%CE%94%CE%A1%CE%9F%CE%9C%CE%9F",
+    "difficulty": ""
   },
   {
     "startDate": "2027-02-04",

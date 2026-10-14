@@ -19,21 +19,30 @@
       "difficulty": ""
     },
     {
-      "startDate": "2026-11-01",
-      "endDate": "2026-11-01",
-      "displayDate": "1/11",
-      "title": "Παρνασός",
+      "startDate": "2026-10-30",
+      "endDate": "2026-10-31",
+      "displayDate": "30/10 - 31/10",
+      "title": "& 1/11/26 Δυτικά Βαρδούσια (Αρτοτίνα)",
       "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%8C%CF%82",
+      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%26%201%2F11%2F26%20%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
       "difficulty": ""
     },
     {
-      "startDate": "2026-11-06",
-      "endDate": "2026-11-08",
-      "displayDate": "6/11 - 8/11",
+      "startDate": "2026-10-30",
+      "endDate": "2026-11-01",
+      "displayDate": "30/10 - 1/11",
       "title": "Δυτικά Βαρδούσια (Αρτοτίνα)",
       "club": "ΑΟΣ",
       "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2026-11-08",
+      "endDate": "2026-11-08",
+      "displayDate": "8/11",
+      "title": "Παρνασός",
+      "club": "ΑΟΣ",
+      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%8C%CF%82",
       "difficulty": ""
     },
     {
@@ -252,6 +261,42 @@
       "title": "ΣΤΕΜΝΙΤΣΑ – ΚΟΡΥΦΗ ΚΛΙΝΙΤΣΑ (1546 μ.)",
       "club": "ΕΟΣ Αθηνών",
       "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%A1%CE%A5%CE%A6%CE%97%20%CE%9A%CE%9B%CE%99%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20(1546%20%CE%BC.)",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2027-01-10",
+      "endDate": "2027-01-10",
+      "displayDate": "10/1",
+      "title": "MIKΡH ZHΡEIA",
+      "club": "ΕΟΣ Αθηνών",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=MIK%CE%A1H%20ZH%CE%A1EIA",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2027-01-17",
+      "endDate": "2027-01-17",
+      "displayDate": "17/1",
+      "title": "ΚΕΛΑΡΙΑ – ΓΕΡΟΝΤΟΒΡΑΧΟΣ",
+      "club": "ΕΟΣ Αθηνών",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9A%CE%95%CE%9B%CE%91%CE%A1%CE%99%CE%91%20%E2%80%93%20%CE%93%CE%95%CE%A1%CE%9F%CE%9D%CE%A4%CE%9F%CE%92%CE%A1%CE%91%CE%A7%CE%9F%CE%A3",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2027-01-24",
+      "endDate": "2027-01-24",
+      "displayDate": "24/1",
+      "title": "ΜΑΙΝΑΛΟ – Βλαχέρνα – Καρδαράς",
+      "club": "ΕΟΣ Αθηνών",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9C%CE%91%CE%99%CE%9D%CE%91%CE%9B%CE%9F%20%E2%80%93%20%CE%92%CE%BB%CE%B1%CF%87%CE%AD%CF%81%CE%BD%CE%B1%20%E2%80%93%20%CE%9A%CE%B1%CF%81%CE%B4%CE%B1%CF%81%CE%AC%CF%82",
+      "difficulty": ""
+    },
+    {
+      "startDate": "2027-01-31",
+      "endDate": "2027-01-31",
+      "displayDate": "31/1",
+      "title": "ΟΡΟΣ ΚΑΛΛΙΔΡΟΜΟ",
+      "club": "ΕΟΣ Αθηνών",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9F%CE%A1%CE%9F%CE%A3%20%CE%9A%CE%91%CE%9B%CE%9B%CE%99%CE%94%CE%A1%CE%9F%CE%9C%CE%9F",
       "difficulty": ""
     }
   ],
