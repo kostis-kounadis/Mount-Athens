@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-14T03:18:58.131Z",
+  "lastUpdated": "2026-10-15T02:59:02.840Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,28 +11,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 190270
+          "size": 190275
         }
       ]
     },
     {
       "club": "ΑΟΣ",
-      "status": "success",
-      "details": "Parsed 58 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 19 healthy events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 89655
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 100931
+          "success": false,
+          "status": "fetch failed",
+          "code": 0,
+          "size": 0
         }
       ]
     },
@@ -60,14 +60,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 171552
+          "size": 171525
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 222746
+          "size": 222773
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 288158
+          "size": 288410
         }
       ]
     },
@@ -95,7 +95,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 78384
+          "size": 78354
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150741
+          "size": 150745
         }
       ]
     }
