@@ -1,10 +1,12 @@
 {
-  "https://www.eosathinon.gr/anavaseis/programma/": "46e7ab4650163d76720af3462a39cd7cc4e65a5bb5d1ba72b46d4de656827626",
-  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "45477db6cf5f752d05de03f785a29020d2e83c56128e27e0c57bb35f73550366",
-  "https://eosacharnon.xmiddleware.com/el": "a27698b354692413a540f00885eafa4b7fd24f28db6dced3d7b7294b32706b1a",
-  "https://eosh.gr/api/trips": "5f86d698d956be45792ce14e4c8248ad54f3b1cc5c3d3bad47f8b6ffe043a74c",
-  "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/": "f8d5793b5dd64c1e15ef6caa6e927db75a3ab47d3a27268f69b878da4ee73b95",
-  "https://poa.gr/index.php/programma/": "566feb084f9ab7d825f33a4985944298b4247c26ecea537d7f8e736294bb1a56",
+  "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "56e2aa4a93361aa0daab87e729cd022e5f4e31ca187522212306876c33640762",
+  "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "9cf78b16f68ab82a0a6d7c95921b9d241e422391becf028e75989e6dcdc5091a",
+  "https://www.eosathinon.gr/anavaseis/programma/": "e8c6427ed997722dfaaf228f75617a423ecff779e42fc5a515f67030b3f0d0e6",
+  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "0a2d8ef4801204f5b6ed2562b69b76d7d4ee601e9993f77d8cf670d8413bd675",
+  "https://eosacharnon.xmiddleware.com/el": "3651731314327ea7e92936de15e913497d2b6e47f64d376df996a43d502d7844",
+  "https://eosh.gr/api/trips": "7f59233d2bbb4236c4fe2493739ccd0ca6c29258dcbab7386ee92a5dd37e04de",
+  "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/": "8a0fa5dd5795591a4760a007984cda3a3b7e0080c5531da904e30f4c358d02ca",
+  "https://poa.gr/index.php/programma/": "f7eb2dbc6b5c468c0535181d1c8090094c1a13155593968b51119679c2ccfba5",
   "https://www.foni.org.gr/category/ekdromes/": "26afa1e165dd369960eef247e3d55f8d26a5c7464a1e8cdfd41f201443733d92",
-  "https://fop.gr/": "94755a1de3706244454786c24ae08b69c2678f79f8dcb7c2b55f4b768b5da943"
+  "https://fop.gr/": "2bbe027dcd07d79cf4ec063bfd6b0063f7ccb386a67493ca311035d8038c491c"
 }

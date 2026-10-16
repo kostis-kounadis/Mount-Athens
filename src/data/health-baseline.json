@@ -24,7 +24,7 @@
       "displayDate": "30/10 - 31/10",
       "title": "& 1/11/26 Δυτικά Βαρδούσια (Αρτοτίνα)",
       "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%26%201%2F11%2F26%20%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
+      "url": "https://aos.gr/dytika-vardousia-artotina-pindus-trail/",
       "difficulty": ""
     },
     {
@@ -33,16 +33,16 @@
       "displayDate": "30/10 - 1/11",
       "title": "Δυτικά Βαρδούσια (Αρτοτίνα)",
       "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AC%20%CE%92%CE%B1%CF%81%CE%B4%CE%BF%CF%8D%CF%83%CE%B9%CE%B1%20(%CE%91%CF%81%CF%84%CE%BF%CF%84%CE%AF%CE%BD%CE%B1)",
+      "url": "https://aos.gr/dytika-vardousia-artotina-pindus-trail/",
       "difficulty": ""
     },
     {
       "startDate": "2026-11-08",
       "endDate": "2026-11-08",
       "displayDate": "8/11",
-      "title": "Παρνασός",
+      "title": "Παρνασός Αμφίκλεια (Περδικόβρυση) – Άνω Πολύδροσο",
       "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%B1%CF%81%CE%BD%CE%B1%CF%83%CF%8C%CF%82",
+      "url": "https://aos.gr/8-11-parnassos-amfikleia-perdikovrysi-ano-polydroso/",
       "difficulty": ""
     },
     {
@@ -87,7 +87,7 @@
       "displayDate": "13/12",
       "title": "Μικρή Ζήρια – Φλαμπουρίτσα",
       "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%9C%CE%B9%CE%BA%CF%81%CE%AE%20%CE%96%CE%AE%CF%81%CE%B9%CE%B1%20%E2%80%93%20%CE%A6%CE%BB%CE%B1%CE%BC%CF%80%CE%BF%CF%85%CF%81%CE%AF%CF%84%CF%83%CE%B1",
+      "url": "https://aos.gr/13-12-pezoporia-sti-charadra-tis-flabouritsas-zireia/",
       "difficulty": ""
     },
     {
@@ -526,6 +526,24 @@
       "title": "Β Σχολή Ορειβασίας Αρχαρίων_2027 (τετραήμερα)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/v-beginners-mountaineering-course-2027-four-days-sessions",
+      "difficulty": "Beginners"
+    },
+    {
+      "startDate": "2027-04-17",
+      "endDate": "2027-05-26",
+      "displayDate": "17/4 - 26/5",
+      "title": "Α Σχολή Αναρρίχησης Βράχου Αρχαρίων_2027",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/a-rock-climbing-course-beginners-2027",
+      "difficulty": "Beginners"
+    },
+    {
+      "startDate": "2027-05-29",
+      "endDate": "2027-07-01",
+      "displayDate": "29/5 - 1/7",
+      "title": "Β Σχολή Αναρρίχησης Βράχου Αρχαρίων_2027",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/v-rock-climbing-course-beginners-2027",
       "difficulty": "Beginners"
     }
   ],

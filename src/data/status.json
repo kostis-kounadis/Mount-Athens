@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-15T02:59:02.840Z",
+  "lastUpdated": "2026-10-16T02:55:14.063Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -17,22 +17,22 @@
     },
     {
       "club": "ΑΟΣ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 19 healthy events",
+      "status": "success",
+      "details": "Parsed 58 events",
       "fetch": [
         {
           "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/",
-          "success": false,
-          "status": "fetch failed",
-          "code": 0,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 91369
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
-          "success": false,
-          "status": "fetch failed",
-          "code": 0,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 101352
         }
       ]
     },
@@ -60,7 +60,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 171525
+          "size": 171569
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
@@ -74,14 +74,14 @@
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 18 events",
+      "details": "Parsed 19 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 288410
+          "size": 326654
         }
       ]
     },
@@ -109,7 +109,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 182990
+          "size": 186009
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150745
+          "size": 150943
         }
       ]
     }
