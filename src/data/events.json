@@ -164,6 +164,15 @@
   {
     "startDate": "2026-10-25",
     "endDate": "2026-10-25",
+    "displayDate": "25/10",
+    "title": "Υμηττός (ΠΦ Ηλιούπολης- Γιδοσπηλιά- Αρχαίων- κτφ ΕΟΣΗ)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-goats-cavern-ancient-path-eosh-refuge",
+    "difficulty": "1+"
+  },
+  {
+    "startDate": "2026-10-25",
+    "endDate": "2026-10-25",
     "displayDate": "25 Οκτω",
     "title": "Μαίναλο",
     "club": "ΦΟΝΙ",
@@ -264,6 +273,15 @@
     "startDate": "2026-11-01",
     "endDate": "2026-11-01",
     "displayDate": "1/11",
+    "title": "Υμηττός- καρόδρομοι του Τρελού (Ηλιούπολη-Καρέας- Στάνη-κτφ ΕΟΣΗ)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-trelos-cart-trails-ilioupoli-kareas-stani-eosh-refuge",
+    "difficulty": "1"
+  },
+  {
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-01",
+    "displayDate": "1/11",
     "title": "Αρτεμίσιο (Καρυά-Μαλεβός-Νεστάνη, κλασσική & χτένια)",
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/artemisio-karya-malevos-nestani-classic-ridge",
@@ -327,6 +345,15 @@
     "startDate": "2026-11-08",
     "endDate": "2026-11-08",
     "displayDate": "8/11",
+    "title": "Υμηττός (Καισαριανή- Πύργος Ανθούσας- Μον Αστερίου- Καλοπούλα- Φραγκομονάστηρο)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-kaisariani-anthousa-tower-asteriou-kalopoula-fragomonastiro",
+    "difficulty": "1"
+  },
+  {
+    "startDate": "2026-11-08",
+    "endDate": "2026-11-08",
+    "displayDate": "8/11",
     "title": "Κεντρική Πάρνηθα: Μπάφι – Μόλα – Πηγάδι Λοιμικού – πηγή Πλατάνα – πηγή Σκίπιζα (κυκλική)",
     "club": "ΕΠΟΣ Φυλής",
     "url": "https://eposfilis.gr/event/8-11-%cf%80%ce%ac%cf%81%ce%bd%ce%b7%ce%b8%ce%b1-%ce%bb%ce%ac%ce%ba%ce%b1-%ce%b6%ce%b7%cf%81%ce%ad%ce%bb%ce%b9-%ce%ba%cf%85%ce%ba%ce%bb%ce%b9%ce%ba%ce%ae/",
@@ -347,7 +374,7 @@
     "displayDate": "14/11 - 15/11",
     "title": "Πάρνωνας – Κοσμάς (Κυνήγι μανιταριών)",
     "club": "ΑΟΣ",
-    "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CF%89%CE%BD%CE%B1%CF%82%20%E2%80%93%20%CE%9A%CE%BF%CF%83%CE%BC%CE%AC%CF%82%20(%CE%9A%CF%85%CE%BD%CE%AE%CE%B3%CE%B9%20%CE%BC%CE%B1%CE%BD%CE%B9%CF%84%CE%B1%CF%81%CE%B9%CF%8E%CE%BD)",
+    "url": "https://aos.gr/22-11-kyriaki-ethelontikos-katharismos-anarrichitikou-pediou-filopappou/",
     "difficulty": ""
   },
   {
@@ -390,6 +417,15 @@
     "startDate": "2026-11-15",
     "endDate": "2026-11-15",
     "displayDate": "15/11",
+    "title": "Υμηττός (Ηλιούπολη-Πυλώνες-Μιχαηλίδης-Αρχαίων-κτφ ΕΟΣΗ)",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-pilars-ridge-michaelides-ancient-path-eosh-refuge",
+    "difficulty": "1+"
+  },
+  {
+    "startDate": "2026-11-15",
+    "endDate": "2026-11-15",
+    "displayDate": "15/11",
     "title": "ΜΑΙΝΑΛΟ (ΝΥΜΦΑΣΙΑ-ΜΟΝΗ ΚΕΡΝΙΤΣΑΣ-ΜΑΓΟΥΛΙΑΝΑ)",
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%9C%CE%91%CE%99%CE%9D%CE%91%CE%9B%CE%9F%20(%CE%9D%CE%A5%CE%9C%CE%A6%CE%91%CE%A3%CE%99%CE%91-%CE%9C%CE%9F%CE%9D%CE%97%20%CE%9A%CE%95%CE%A1%CE%9D%CE%99%CE%A4%CE%A3%CE%91%CE%A3-%CE%9C%CE%91%CE%93%CE%9F%CE%A5%CE%9B%CE%99%CE%91%CE%9D%CE%91)",
@@ -420,6 +456,15 @@
     "title": "Αναμενεται",
     "club": "ΑΟΣ",
     "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%91%CE%BD%CE%B1%CE%BC%CE%B5%CE%BD%CE%B5%CF%84%CE%B1%CE%B9",
+    "difficulty": ""
+  },
+  {
+    "startDate": "2026-11-22",
+    "endDate": "2026-11-22",
+    "displayDate": "22/11",
+    "title": "Εθελοντικός καθαρισμός αναρριχητικού πεδίου Φιλοπάππου",
+    "club": "ΑΟΣ",
+    "url": "https://aos.gr/22-11-kyriaki-ethelontikos-katharismos-anarrichitikou-pediou-filopappou/",
     "difficulty": ""
   },
   {
@@ -700,6 +745,15 @@
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A7%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%8D%CE%B3%CE%B5%CE%BD%CE%BD%CE%B1%3A%20%CE%A6%CE%BB%CF%8E%CF%81%CE%B9%CE%BD%CE%B1%20%E2%80%93%20%CE%A0%CF%81%CE%AD%CF%83%CF%80%CE%B5%CF%82%20%E2%80%93%20%CE%9B%CE%BF%CF%8D%CF%84%CE%B6%CE%B5%CF%81%20(1977%CE%BC.)%20%E2%80%93%20%CE%9D%CF%85%CE%BC%CF%86%CE%B1%CE%AF%CE%BF",
     "difficulty": "ΒΔ 1"
+  },
+  {
+    "startDate": "2026-12-24",
+    "endDate": "2026-12-27",
+    "displayDate": "24-27/12",
+    "title": "Χριστούγεννα στο βουνό: Πιέρια Όρη & Όρος Πάικο",
+    "club": "ΕΟΣ Ηλιούπολης",
+    "url": "https://eosh.gr/expeditions/24-28-dek-2026-oreivatika-christoygenna-sti-voreia-ellada",
+    "difficulty": "2"
   },
   {
     "startDate": "2026-12-26",
