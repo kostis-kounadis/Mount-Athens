@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-18T02:48:22.852Z",
+  "lastUpdated": "2026-10-19T03:01:01.291Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -60,14 +60,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 171569
+          "size": 171542
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 222746
+          "size": 222773
         }
       ]
     },
@@ -81,7 +81,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 374613
+          "size": 374383
         }
       ]
     },
@@ -102,14 +102,14 @@
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 13 events",
+      "details": "Parsed 11 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 181673
+          "size": 173180
         }
       ]
     },
@@ -123,7 +123,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150953
+          "size": 150949
         }
       ]
     }
