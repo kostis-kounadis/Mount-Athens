@@ -222,9 +222,9 @@
       "startDate": "2026-12-13",
       "endDate": "2026-12-13",
       "displayDate": "13/12",
-      "title": "ΣΥΚΙΑ – ΚΟΝΙΑΚΟΣ",
+      "title": "ΣΤΕΜΝΙΤΣΑ – ΚΟΡΥΦΗ ΚΛΙΝΙΤΣΑ (1546 μ.)",
       "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A5%CE%9A%CE%99%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%9D%CE%99%CE%91%CE%9A%CE%9F%CE%A3",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%A1%CE%A5%CE%A6%CE%97%20%CE%9A%CE%9B%CE%99%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20(1546%20%CE%BC.)",
       "difficulty": ""
     },
     {
@@ -249,9 +249,9 @@
       "startDate": "2026-12-20",
       "endDate": "2026-12-20",
       "displayDate": "20/12",
-      "title": "ΣΤΕΜΝΙΤΣΑ – ΚΟΡΥΦΗ ΚΛΙΝΙΤΣΑ (1546 μ.)",
+      "title": "ΣΥΚΙΑ – ΚΟΝΙΑΚΟΣ",
       "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%A1%CE%A5%CE%A6%CE%97%20%CE%9A%CE%9B%CE%99%CE%9D%CE%99%CE%A4%CE%A3%CE%91%20(1546%20%CE%BC.)",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A5%CE%9A%CE%99%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%9D%CE%99%CE%91%CE%9A%CE%9F%CE%A3",
       "difficulty": ""
     },
     {
@@ -338,12 +338,57 @@
       "difficulty": "Α, Β+"
     },
     {
+      "startDate": "2026-12-05",
+      "endDate": "2026-12-05",
+      "displayDate": "5/12",
+      "title": "Εύβοια - Φαράγγι Αγάλης",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvi7vp44003tk801ixf0y5l6",
+      "difficulty": "Α"
+    },
+    {
+      "startDate": "2026-12-19",
+      "endDate": "2026-12-19",
+      "displayDate": "19/12",
+      "title": "Πεζοπορία στην μεταλλευτική ιστορία του Λαυρίου",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvi81h42003xk801wiad3yw5",
+      "difficulty": "Α"
+    },
+    {
       "startDate": "2027-01-04",
       "endDate": "2027-01-14",
       "displayDate": "4-14/1",
       "title": "Kilimanjaro – Lemosho Route",
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmrc8goy2000upf01jjqdhzjc",
+      "difficulty": "Β, Γ"
+    },
+    {
+      "startDate": "2027-01-16",
+      "endDate": "2027-01-16",
+      "displayDate": "16/1",
+      "title": "Λίμνη Δόξα – Διάσελο Κυνηγού – Ντουρντουβάνα",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvi8a2ew0041k801tpyhkn9n",
+      "difficulty": "Β, Δ"
+    },
+    {
+      "startDate": "2027-01-31",
+      "endDate": "2027-01-31",
+      "displayDate": "31/1",
+      "title": "Παρνασσός - Λιάκουρα",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
+      "difficulty": "Δ"
+    },
+    {
+      "startDate": "2027-02-13",
+      "endDate": "2027-02-14",
+      "displayDate": "13-14/2",
+      "title": "Χειμερινός Κίσσαβος 1.978μ",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvi8mdd2004bk801ng72g9an",
       "difficulty": "Β, Γ"
     },
     {
@@ -364,15 +409,6 @@
       "title": "Ε Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/e-rock-climbing-course-beginners-2026-autumn",
-      "difficulty": "Beginners"
-    },
-    {
-      "startDate": "2026-09-19",
-      "endDate": "2026-10-21",
-      "displayDate": "19/9 - 21/10",
-      "title": "Δ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/d-rock-climbing-school-beginners-2026-autumn",
       "difficulty": "Beginners"
     },
     {
