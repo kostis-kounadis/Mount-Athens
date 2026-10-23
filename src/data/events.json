@@ -1,14 +1,5 @@
 [
   {
-    "startDate": "2026-09-12",
-    "endDate": "2026-10-22",
-    "displayDate": "12/9 - 22/10",
-    "title": "Ε Σχολή Αναρρίχησης Βράχου Αρχαρίων_2026",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/e-rock-climbing-course-beginners-2026-autumn",
-    "difficulty": "Beginners"
-  },
-  {
     "startDate": "2026-10-23",
     "endDate": "2026-10-25",
     "displayDate": "23-25/10",
@@ -927,6 +918,15 @@
     "difficulty": "Beginners"
   },
   {
+    "startDate": "2027-02-20",
+    "endDate": "2027-02-21",
+    "displayDate": "20-21/2",
+    "title": "Χειμερινή ανάβαση στην Νεμέρτσικα (Δούσκος), με ΦΟΣ Πωγωνίου",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvjngosk0018t401ohujhhgo",
+    "difficulty": "D_PLUS"
+  },
+  {
     "startDate": "2027-02-21",
     "endDate": "2027-02-23",
     "displayDate": "21/2 - 23/2",
@@ -961,15 +961,6 @@
     "club": "ΦΟΠ",
     "url": "https://fop.gr/#:~:text=%CE%94%CE%99%CE%A1%CE%A6%CE%A5%CE%A3",
     "difficulty": "ΒΔ 2"
-  },
-  {
-    "startDate": "2027-02-26",
-    "endDate": "2027-03-15",
-    "displayDate": "26/2 - 15/3",
-    "title": "CAMINO DE COSTA RICA | Μια πεζοπορία από την Καραϊβική στον Ειρηνικό",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmt5gkc66008rk80150njqo3u",
-    "difficulty": "Β, Β+"
   },
   {
     "startDate": "2027-02-27",
