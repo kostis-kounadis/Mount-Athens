@@ -1,15 +1,6 @@
 {
   "ΑΟΣ": [
     {
-      "startDate": "2026-10-25",
-      "endDate": "2026-10-25",
-      "displayDate": "25/10",
-      "title": "Δίρφυς – Ίταμος",
-      "club": "ΑΟΣ",
-      "url": "https://aos.gr/kyriaki-25-10-dirfys-rachi-itamou/",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-10-30",
       "endDate": "2026-10-31",
       "displayDate": "30/10 - 31/10",
@@ -42,7 +33,7 @@
       "displayDate": "14/11 - 15/11",
       "title": "Πάρνωνας – Κοσμάς (Κυνήγι μανιταριών)",
       "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%A0%CE%AC%CF%81%CE%BD%CF%89%CE%BD%CE%B1%CF%82%20%E2%80%93%20%CE%9A%CE%BF%CF%83%CE%BC%CE%AC%CF%82%20(%CE%9A%CF%85%CE%BD%CE%AE%CE%B3%CE%B9%20%CE%BC%CE%B1%CE%BD%CE%B9%CF%84%CE%B1%CF%81%CE%B9%CF%8E%CE%BD)",
+      "url": "https://aos.gr/14-15-noemvriou-2026-kosmas-arkadias-kynigi-manitarion/",
       "difficulty": ""
     },
     {
@@ -173,15 +164,6 @@
     }
   ],
   "ΕΟΣ Αθηνών": [
-    {
-      "startDate": "2026-10-24",
-      "endDate": "2026-10-25",
-      "displayDate": "24-25/10",
-      "title": "ΠΡΟΦΗΤΗΣ ΗΛΙΑΣ & ΧΑΛΑΣΜΕΝΟ ΒΟΥΝΟ",
-      "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#10-26:~:text=%CE%A0%CE%A1%CE%9F%CE%A6%CE%97%CE%A4%CE%97%CE%A3%20%CE%97%CE%9B%CE%99%CE%91%CE%A3%20%26%20%CE%A7%CE%91%CE%9B%CE%91%CE%A3%CE%9C%CE%95%CE%9D%CE%9F%20%CE%92%CE%9F%CE%A5%CE%9D%CE%9F",
-      "difficulty": ""
-    },
     {
       "startDate": "2026-11-01",
       "endDate": "2026-11-01",
@@ -374,6 +356,15 @@
       "difficulty": "Δ"
     },
     {
+      "startDate": "2027-02-07",
+      "endDate": "2027-02-07",
+      "displayDate": "7/2",
+      "title": "Παρνασσός, Αμφίκλεια (Περδικόβρυση) - Αγία Ιερουσαλήμ",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvo0dlzl00itt401isbmfpe0",
+      "difficulty": "Α+"
+    },
+    {
       "startDate": "2027-02-13",
       "endDate": "2027-02-14",
       "displayDate": "13-14/2",
@@ -390,15 +381,6 @@
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvjngosk0018t401ohujhhgo",
       "difficulty": "D_PLUS"
-    },
-    {
-      "startDate": "2027-02-26",
-      "endDate": "2027-03-15",
-      "displayDate": "26/2 - 15/3",
-      "title": "CAMINO DE COSTA RICA | Μια πεζοπορία από την Καραϊβική στον Ειρηνικό",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmt5gkc66008rk80150njqo3u",
-      "difficulty": "Β, Β+"
     }
   ],
   "ΕΟΣ Ηλιούπολης": [
@@ -410,24 +392,6 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/f-rock-climbing-course-beginners-2026-autumn",
       "difficulty": "Beginners"
-    },
-    {
-      "startDate": "2026-10-25",
-      "endDate": "2026-10-25",
-      "displayDate": "25/10",
-      "title": "Μεγάλη Ζήρεια (μονοπάτι Φαρμακίλας)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/megali-zireia-farmakila-trail",
-      "difficulty": "2"
-    },
-    {
-      "startDate": "2026-10-25",
-      "endDate": "2026-10-25",
-      "displayDate": "25/10",
-      "title": "Υμηττός (ΠΦ Ηλιούπολης- Γιδοσπηλιά- Αρχαίων- κτφ ΕΟΣΗ)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-goats-cavern-ancient-path-eosh-refuge",
-      "difficulty": "1+"
     },
     {
       "startDate": "2026-11-01",
@@ -574,25 +538,34 @@
       "difficulty": "Beginners"
     },
     {
+      "startDate": "2027-05-08",
+      "endDate": "2027-06-09",
+      "displayDate": "8/5 - 9/6",
+      "title": "Β Σχολή Αναρρίχησης Βράχου Αρχαρίων_2027",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/b-rock-climbing-course-beginners-2027",
+      "difficulty": "Beginners"
+    },
+    {
       "startDate": "2027-05-29",
       "endDate": "2027-07-01",
       "displayDate": "29/5 - 1/7",
-      "title": "Β Σχολή Αναρρίχησης Βράχου Αρχαρίων_2027",
+      "title": "Γ Σχολή Αναρρίχησης Βράχου Αρχαρίων_2027",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/v-rock-climbing-course-beginners-2027",
+      "url": "https://eosh.gr/expeditions/c-rock-climbing-course-beginners-2027",
+      "difficulty": "Beginners"
+    },
+    {
+      "startDate": "2027-09-18",
+      "endDate": "2027-10-18",
+      "displayDate": "18/9 - 18/10",
+      "title": "Ε Σχολή Αναρρίχησης Βράχου Αρχαρίων_2027",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/e-rock-climbing-course-beginners-2027",
       "difficulty": "Beginners"
     }
   ],
   "ΕΠΟΣ Φυλής": [
-    {
-      "startDate": "2026-10-25",
-      "endDate": "2026-10-25",
-      "displayDate": "25/10",
-      "title": "18ο ΑΡΜΑ ΠΑΡΝΗΘΑΣ (21χλμ. ημιμαραθώνιος και 11χλμ.)",
-      "club": "ΕΠΟΣ Φυλής",
-      "url": "https://eposfilis.gr/event/18%ce%bf-%ce%b1%cf%81%ce%bc%ce%b1-%cf%80%ce%b1%cf%81%ce%bd%ce%b7%ce%b8%ce%b1%cf%82-21%cf%87%ce%bb%ce%bc-%ce%b7%ce%bc%ce%b9%ce%bc%ce%b1%cf%81%ce%b1%ce%b8%cf%8e%ce%bd%ce%b9%ce%bf%cf%82-%ce%ba/",
-      "difficulty": ""
-    },
     {
       "startDate": "2026-10-30",
       "endDate": "2026-11-01",
@@ -703,15 +676,6 @@
     }
   ],
   "ΠΟΑ": [
-    {
-      "startDate": "2026-10-24",
-      "endDate": "2026-10-25",
-      "displayDate": "24-25/10",
-      "title": "Στα μονοπάτια της Ρούμελης",
-      "club": "ΠΟΑ",
-      "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A3%CF%84%CE%B1%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%CE%B1%20%CF%84%CE%B7%CF%82%20%CE%A1%CE%BF%CF%8D%CE%BC%CE%B5%CE%BB%CE%B7%CF%82",
-      "difficulty": "ΒΔ 1"
-    },
     {
       "startDate": "2026-10-30",
       "endDate": "2026-11-01",
@@ -895,15 +859,6 @@
   ],
   "ΦΟΝΙ": [
     {
-      "startDate": "2026-10-25",
-      "endDate": "2026-10-25",
-      "displayDate": "25 Οκτω",
-      "title": "Μαίναλο",
-      "club": "ΦΟΝΙ",
-      "url": "https://www.foni.org.gr/25-oktovriou-2026-pezoporiki-mainalo/",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-11-07",
       "endDate": "2026-11-08",
       "displayDate": "7-8 Νοεμ",
@@ -923,15 +878,6 @@
     }
   ],
   "ΦΟΠ": [
-    {
-      "startDate": "2026-10-25",
-      "endDate": "2026-10-25",
-      "displayDate": "25/10",
-      "title": "ΧΕΛΜΟΣ (Λίμνη Δόξα - Νησί)",
-      "club": "ΦΟΠ",
-      "url": "https://fop.gr/#:~:text=%CE%A7%CE%95%CE%9B%CE%9C%CE%9F%CE%A3%20(%CE%9B%CE%AF%CE%BC%CE%BD%CE%B7%20%CE%94%CF%8C%CE%BE%CE%B1%20-%20%CE%9D%CE%B7%CF%83%CE%AF)",
-      "difficulty": "ΒΔ 3"
-    },
     {
       "startDate": "2026-10-31",
       "endDate": "2026-11-01",
