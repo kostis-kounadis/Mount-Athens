@@ -59,12 +59,15 @@ function detectAnomalies() {
   // Map club status from status.json
   const clubStatusMap = {};
   for (const log of (statusData.logs || [])) {
-    const parsedMatch = (log.details || '').match(/Parsed (\d+) events/);
-    const parsedCount = parsedMatch ? parseInt(parsedMatch[1], 10) : 0;
+    const details = log.details || '';
+    const parsedMatch = details.match(/Parsed (\d+) events/i) || details.match(/(\d+) parsed/i);
+    const preservedMatch = details.match(/preserved (\d+) healthy events/i);
+    const parsedCount = (parsedMatch ? parseInt(parsedMatch[1], 10) : 0) + (preservedMatch ? parseInt(preservedMatch[1], 10) : 0);
     clubStatusMap[log.club] = {
       status: log.status,
       parsedCount,
-      details: log.details
+      preservedCount: preservedMatch ? parseInt(preservedMatch[1], 10) : 0,
+      details
     };
   }
 
@@ -79,7 +82,7 @@ function detectAnomalies() {
 
   // 1. Check all HTML updates & zero-event failures
   for (const club in linkConfig) {
-    const clubInfo = clubStatusMap[club] || { parsedCount: 0, status: 'unknown' };
+    const clubInfo = clubStatusMap[club] || { parsedCount: 0, preservedCount: 0, status: 'unknown' };
     const clubUrls = linkConfig[club] || [];
     
     let contentChangedUrls = [];
@@ -89,7 +92,10 @@ function detectAnomalies() {
       }
     }
 
-    if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
+    if (clubInfo.status === 'warning' && clubInfo.preservedCount > 0) {
+      clubsWithAnomalies.add(club);
+      warnings.push(`- **🛡️ Resilience Fallback Active for ${club}:** ${clubInfo.details}`);
+    } else if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
       clubsWithAnomalies.add(club);
       if (contentChangedUrls.length > 0) {
         criticalAnomalies.push(`- **🚨 CRITICAL: Website Updated But Parser Returned 0 Events for ${club}:** The club updated its website content overnight (${contentChangedUrls.join(', ')}), but the parser returned 0 events! Possible HTML selector or layout change.`);

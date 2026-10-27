@@ -88,6 +88,10 @@ function getSlug(url) {
     if (pathname) {
       name = `${name}_${pathname}`;
     }
+    if (parsed.search) {
+      const searchClean = parsed.search.replace(/^\?/, '').replace(/[&=]/g, '-');
+      name = `${name}_${searchClean}`;
+    }
     // Limit name length and remove non-alphanumeric chars for filename safety
     return name.replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 100);
   } catch (e) {
@@ -178,7 +182,7 @@ async function main() {
           const $ = cheerio.load(result.html);
           $('a').each((i, el) => {
             const href = $(el).attr('href');
-            if (href && href.startsWith('https://aos.gr/programma-exormiseon-') && !href.includes('/tag/') && !href.includes('/category/')) {
+            if (href && href.startsWith('https://aos.gr/programma-') && !href.includes('/tag/') && !href.includes('/category/') && !href.includes('/wp-content/')) {
               const cleanHref = href.split('#')[0].replace(/\/$/, '') + '/';
               if (!urls.includes(cleanHref)) {
                 console.log(`✨ Dynamically discovered new AOS seasonal program URL: ${cleanHref}`);
@@ -191,6 +195,53 @@ async function main() {
           });
         } catch (e) {
           console.error('Error discovering AOS dynamic links:', e.message);
+        }
+      }
+
+      // Dynamic pagination discovery for EPOS Filis Tribe Events list view
+      if (url.includes('eposfilis.gr/events/category/')) {
+        try {
+          const $ = cheerio.load(result.html);
+          const nextHref = $('a.tribe-events-c-nav__next').attr('href');
+          if (nextHref && nextHref.startsWith('https://eposfilis.gr/')) {
+            const cleanNext = nextHref.split('#')[0].trim();
+            // Cap pagination depth at 5 pages as a safety guard
+            const pageMatch = cleanNext.match(/\/page\/(\d+)/);
+            const pageNum = pageMatch ? parseInt(pageMatch[1], 10) : 2;
+            if (pageNum <= 5 && !urls.includes(cleanNext)) {
+              console.log(`✨ Dynamically discovered EPOS Filis pagination URL: ${cleanNext}`);
+              urls.push(cleanNext);
+              if (linkConfig['ΕΠΟΣ Φυλής'] && !linkConfig['ΕΠΟΣ Φυλής'].includes(cleanNext)) {
+                linkConfig['ΕΠΟΣ Φυλής'].push(cleanNext);
+              }
+            }
+          }
+        } catch (e) {
+          console.error('Error discovering EPOS Filis pagination:', e.message);
+        }
+      }
+
+      // Dynamic pagination discovery if EOS Acharnon HTML page is used
+      if (url.includes('eosacharnon.xmiddleware.com/el') && !url.includes('page=')) {
+        try {
+          const $ = cheerio.load(result.html);
+          const pageText = $('span:contains("Σελίδα")').text().trim();
+          const m = pageText.match(/Σελίδα\s+1\s+από\s+(\d+)/i);
+          if (m) {
+            const totalPages = Math.min(parseInt(m[1], 10), 10);
+            for (let p = 2; p <= totalPages; p++) {
+              const nextUrl = `https://eosacharnon.xmiddleware.com/el?page=${p}`;
+              if (!urls.includes(nextUrl)) {
+                console.log(`✨ Dynamically discovered EOS Acharnon pagination URL: ${nextUrl}`);
+                urls.push(nextUrl);
+                if (linkConfig['ΕΟΣ Αχαρνών'] && !linkConfig['ΕΟΣ Αχαρνών'].includes(nextUrl)) {
+                  linkConfig['ΕΟΣ Αχαρνών'].push(nextUrl);
+                }
+              }
+            }
+          }
+        } catch (e) {
+          console.error('Error discovering EOS Acharnon pagination:', e.message);
         }
       }
     }

@@ -7,7 +7,7 @@
 - https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/
 
 # ΕΟΣ Αχαρνών
-- https://eosacharnon.xmiddleware.com/el
+- https://eosacharnon.xmiddleware.com/api/events
 
 # ΕΟΣ Ηλιούπολης
 - https://eosh.gr/api/trips

@@ -146,6 +146,30 @@ function getSignificantWords(text) {
     .filter(w => w.length > 2 && !['και', 'του', 'της', 'στο', 'στα', 'εως', 'απο', 'για', 'από', 'αρα', 'εχει', 'μας', 'στον', 'στην', 'στη'].includes(w));
 }
 
+function isSchoolTitle(title) {
+  if (!title) return false;
+  const clean = stripGreekAccents(title).toLowerCase();
+  if (clean.includes('αποφοιτ')) return false;
+  return /(?:^|[^a-zα-ω0-9])σχολ(?:η|ες|ης|ων)(?:$|[^a-zα-ω0-9])/i.test(clean);
+}
+
+function normalizeDifficulty(raw) {
+  if (!raw) return '';
+  let clean = String(raw)
+    .replace(/^(?:Β\.?\s*Δ\.?|Βαθμ[οό]ς\s+Δυσκολ[ιί]ας)\s*[:=]?\s*/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!clean || /^beginners$/i.test(clean)) return '';
+  clean = clean
+    .replace(/^X(\d)/i, 'Χ$1')
+    .replace(/\s*\+\s*/g, '+')
+    .replace(/\s*[-–—]\s*/g, '-')
+    .replace(/\s*&\s*/g, ' & ')
+    .replace(/[.,;:]+$/, '')
+    .trim();
+  return clean;
+}
+
 function matchTitleToUrl(parsedTitle, urlMap, defaultUrl) {
   const parsedWords = getSignificantWords(parsedTitle);
   const fallbackUrl = defaultUrl.includes('#') ? defaultUrl : defaultUrl + '#:~:text=' + encodeURIComponent(parsedTitle.replace(/\s+/g, ' ').trim());
@@ -181,8 +205,8 @@ function parseDateRange(dateText, contextYear = null) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  // Format: "18.09.- 20.09.2026" or "18.09 - 20.09.2026" or "31.10.- 01.11.2026"
-  const dotCrossMonthMatch = cleanText.match(/(\d{1,2})[\.\/](\d{1,2})\.?\s*[-–—]\s*(\d{1,2})[\.\/](\d{1,2})(?:[\.\/](\d{2,4}))?/);
+  // Format: "18.09.- 20.09.2026" or "18.09 - 20.09.2026" or "31.10.- 01.11.2026" or "30-31/10 & 1/11/26"
+  const dotCrossMonthMatch = cleanText.match(/(\d{1,2})(?:\s*[-–—]\s*\d{1,2})*\s*[\.\/]\s*(\d{1,2})\.?\s*(?:[-–—&]|και)\s*(?:\d{1,2}\s*[-–—]\s*)*(\d{1,2})\s*[\.\/]\s*(\d{1,2})(?:\s*[\.\/]\s*(\d{2,4}))?/i);
   if (dotCrossMonthMatch) {
     const startDay = dotCrossMonthMatch[1].padStart(2, '0');
     const startMonth = dotCrossMonthMatch[2].padStart(2, '0');
@@ -190,10 +214,17 @@ function parseDateRange(dateText, contextYear = null) {
     const endMonth = dotCrossMonthMatch[4].padStart(2, '0');
     const explicitYear = dotCrossMonthMatch[5] || null;
 
-    const startYear = resolveEventYear(startMonth, explicitYear, contextYear);
-    let endYear = resolveEventYear(endMonth, explicitYear, contextYear);
-    if (parseInt(endMonth) < parseInt(startMonth)) {
-      endYear = String(parseInt(startYear) + 1);
+    const sMonthNum = parseInt(startMonth, 10);
+    const eMonthNum = parseInt(endMonth, 10);
+    const currentAthensMonth = TODAY.getMonth() + 1;
+
+    let startYear = resolveEventYear(startMonth, explicitYear, contextYear);
+    if (!explicitYear && !contextYear && sMonthNum < currentAthensMonth && eMonthNum >= currentAthensMonth && eMonthNum > sMonthNum) {
+      startYear = String(TODAY.getFullYear());
+    }
+    let endYear = startYear;
+    if (eMonthNum < sMonthNum) {
+      endYear = String(parseInt(startYear, 10) + 1);
     }
 
     return {
@@ -203,8 +234,8 @@ function parseDateRange(dateText, contextYear = null) {
     };
   }
 
-  // Format: "27-28.09.2026" or "27-28.9.2026"
-  const dotSameMonthMatch = cleanText.match(/(\d{1,2})\s*[-–—]\s*(\d{1,2})[\.\/](\d{1,2})(?:[\.\/](\d{2,4}))?/);
+  // Format: "27-28.09.2026" or "27-28.9.2026" or "7 – 8 /11" or "21-22-23/02"
+  const dotSameMonthMatch = cleanText.match(/(\d{1,2})(?:\s*[-–—]\s*\d{1,2})*\s*[-–—]\s*(\d{1,2})\s*[\.\/]\s*(\d{1,2})(?:\s*[\.\/]\s*(\d{2,4}))?/);
   if (dotSameMonthMatch) {
     const startDay = dotSameMonthMatch[1].padStart(2, '0');
     const endDay = dotSameMonthMatch[2].padStart(2, '0');
@@ -219,8 +250,8 @@ function parseDateRange(dateText, contextYear = null) {
     };
   }
 
-  // Format: "27/09/2026" or "27.09.2026" or "27/09"
-  const dotSingleMatch = cleanText.match(/(\d{1,2})[\.\/](\d{1,2})(?:[\.\/](\d{2,4}))?/);
+  // Format: "27/09/2026" or "27.09.2026" or "27/09" or "6 /12"
+  const dotSingleMatch = cleanText.match(/(\d{1,2})\s*[\.\/]\s*(\d{1,2})(?:\s*[\.\/]\s*(\d{2,4}))?/);
   if (dotSingleMatch) {
     const day = dotSingleMatch[1].padStart(2, '0');
     const month = dotSingleMatch[2].padStart(2, '0');
@@ -253,7 +284,7 @@ function parseDateRange(dateText, contextYear = null) {
   }
 
   // Format: "29 Μαΐου – 01 Ιουνίου 2026" or "21 Αυγούστου έως 30 Αυγούστου 2026"
-  const rangeTwoMonthsMatch = cleanText.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*(?:[-–—]|έως|εως)\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i);
+  const rangeTwoMonthsMatch = cleanText.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*(?:[-–—&]|έως|εως|και)\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i);
   if (rangeTwoMonthsMatch) {
     const startDay = rangeTwoMonthsMatch[1].padStart(2, '0');
     const startMonthStr = rangeTwoMonthsMatch[2];
@@ -263,10 +294,17 @@ function parseDateRange(dateText, contextYear = null) {
 
     const startMonth = parseGreekMonth(startMonthStr) || '06';
     const endMonth = parseGreekMonth(endMonthStr) || '06';
-    const startYear = resolveEventYear(startMonth, explicitYear, contextYear);
-    let endYear = resolveEventYear(endMonth, explicitYear, contextYear);
-    if (parseInt(endMonth) < parseInt(startMonth)) {
-      endYear = String(parseInt(startYear) + 1);
+    const sMonthNum = parseInt(startMonth, 10);
+    const eMonthNum = parseInt(endMonth, 10);
+    const currentAthensMonth = TODAY.getMonth() + 1;
+
+    let startYear = resolveEventYear(startMonth, explicitYear, contextYear);
+    if (!explicitYear && !contextYear && sMonthNum < currentAthensMonth && eMonthNum >= currentAthensMonth && eMonthNum > sMonthNum) {
+      startYear = String(TODAY.getFullYear());
+    }
+    let endYear = startYear;
+    if (eMonthNum < sMonthNum) {
+      endYear = String(parseInt(startYear, 10) + 1);
     }
 
     return {
@@ -276,8 +314,8 @@ function parseDateRange(dateText, contextYear = null) {
     };
   }
 
-  // Format: "12-14 Ιουνίου 2026" or "27-28 Ιουν"
-  const rangeMatch = cleanText.match(/^(\d+)\s*[-–—]\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i);
+  // Format: "12-14 Ιουνίου 2026" or "27-28 Ιουν" or "Σάββατο 14 Κυριακή 15 Νοεμβρίου 2026" (cleaned to "14 15 Νοεμβρίου 2026")
+  const rangeMatch = cleanText.match(/^(\d+)(?:\s*[-–—]\s*\d+)*(?:\s*[-–—&,]\s*|\s+)(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i);
   if (rangeMatch) {
     const startDay = rangeMatch[1].padStart(2, '0');
     const endDay = rangeMatch[2].padStart(2, '0');
@@ -309,106 +347,50 @@ function parseDateRange(dateText, contextYear = null) {
     };
   }
 
-  // Fail-safe default
-  const defaultYear = resolveEventYear('06', null, contextYear);
-  return {
-    startDate: `${defaultYear}-06-09`,
-    endDate: `${defaultYear}-06-09`,
-    displayDate: dateText
-  };
+  return null;
 }
 
 // ----------------------------------------------------
-// PARSER: EOS Acharnon (Next.js Hydration Cheerio)
+// PARSER: EOS Acharnon (JSON API + Next.js Hydration Fallback)
 // ----------------------------------------------------
 function parseEosAcharnon() {
-  const htmlPath = path.join(INPUT_DIR, 'eosacharnon_xmiddleware_com_el.html');
-  if (!fs.existsSync(htmlPath)) return [];
-  
-  const html = fs.readFileSync(htmlPath, 'utf-8');
-  const $ = cheerio.load(html);
   const events = [];
+  const DIFFICULTY_MAP = {
+    'A': 'Α',
+    'A_PLUS': 'Α+',
+    'B': 'Β',
+    'B_PLUS': 'Β+',
+    'C': 'Γ',
+    'C_PLUS': 'Γ+',
+    'D': 'Δ',
+    'D_PLUS': 'Δ+'
+  };
 
-  let nextDataRaw = '';
-  $('script').each((i, el) => {
-    const text = $(el).text();
-    if (text.includes('self.__next_f.push')) {
-      const match = text.match(/self\.__next_f\.push\(\[\d+,\s*"(.*)"\]\)/s);
-      if (match) {
-        let content = match[1]
-          .replace(/\\"/g, '"')
-          .replace(/\\n/g, '\n')
-          .replace(/\\r/g, '\r')
-          .replace(/\\t/g, '\t')
-          .replace(/\\\\/g, '\\');
-        nextDataRaw += content;
-      } else {
-        const match2 = text.match(/self\.__next_f\.push\(\[\d+,\s*'(.*)'\]\)/s);
-        if (match2) {
-          let content = match2[1]
-            .replace(/\\'/g, "'")
-            .replace(/\\n/g, '\n')
-            .replace(/\\r/g, '\r')
-            .replace(/\\t/g, '\t')
-            .replace(/\\\\/g, '\\');
-          nextDataRaw += content;
-        }
-      }
-    }
-  });
-
-  const eventsIndex = nextDataRaw.indexOf('"events":[');
-  if (eventsIndex === -1) return [];
-
-  let bracketCount = 1;
-  let i = eventsIndex + 10;
-  let start = i - 1;
-  
-  while (i < nextDataRaw.length && bracketCount > 0) {
-    if (nextDataRaw[i] === '[') bracketCount++;
-    else if (nextDataRaw[i] === ']') bracketCount--;
-    i++;
-  }
-  
-  const eventsJsonStr = nextDataRaw.substring(start, i);
-  const cleanJsonStr = eventsJsonStr
-    .replace(/"\$D(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)"/g, '"$1"');
-    
-  try {
-    const rawEvents = JSON.parse(cleanJsonStr);
-    
-    const DIFFICULTY_MAP = {
-      'A': 'Α',
-      'A_PLUS': 'Α+',
-      'B': 'Β',
-      'B_PLUS': 'Β+',
-      'C': 'Γ',
-      'C_PLUS': 'Γ+',
-      'D': 'Δ'
-    };
-
+  const processRawEvents = (rawEvents) => {
+    if (!Array.isArray(rawEvents)) return;
     rawEvents.forEach(ev => {
+      if (ev.isActive === false) return;
+
       const adjustDate = (dateStr) => {
         if (!dateStr) return '';
         const utcDate = new Date(dateStr);
         if (isNaN(utcDate.getTime())) return '';
-        // Shift by +3 hours to align database UTC date with local Athens calendar date
-        const localDate = new Date(utcDate.getTime() + 3 * 60 * 60 * 1000);
-        return localDate.toISOString().split('T')[0];
+        return athensFormatter.format(utcDate);
       };
-      
+
       const startDate = adjustDate(ev.startDate);
-      const endDate = adjustDate(ev.endDate);
-      
+      const endDate = adjustDate(ev.endDate) || startDate;
+      if (!startDate) return;
+
       let displayDate = '';
       if (startDate && endDate) {
         const startParts = startDate.split('-');
         const endParts = endDate.split('-');
-        const startDay = parseInt(startParts[2]);
-        const startMonth = parseInt(startParts[1]);
-        const endDay = parseInt(endParts[2]);
-        const endMonth = parseInt(endParts[1]);
-        
+        const startDay = parseInt(startParts[2], 10);
+        const startMonth = parseInt(startParts[1], 10);
+        const endDay = parseInt(endParts[2], 10);
+        const endMonth = parseInt(endParts[1], 10);
+
         if (startDate === endDate) {
           displayDate = `${startDay}/${startMonth}`;
         } else if (startMonth === endMonth) {
@@ -417,16 +399,23 @@ function parseEosAcharnon() {
           displayDate = `${startDay}/${startMonth} - ${endDay}/${endMonth}`;
         }
       }
-      
+
       const relativeHref = ev.id ? `/el/booking/${ev.id}` : '';
-      const url = relativeHref 
-        ? `https://eosacharnon.xmiddleware.com${relativeHref}` 
+      const url = relativeHref
+        ? `https://eosacharnon.xmiddleware.com${relativeHref}`
         : 'https://eosacharnon.xmiddleware.com/el/booking';
-      
-      const difficulty = ev.difficulties && ev.difficulties.length > 0 
-        ? ev.difficulties.map(d => DIFFICULTY_MAP[d] || d).join(', ') 
-        : '';
-      
+
+      const GRADE_ORDER = ['Α', 'Α+', 'Β', 'Β+', 'Γ', 'Γ+', 'Δ', 'Δ+'];
+      const mappedDiffs = ev.difficulties && ev.difficulties.length > 0
+        ? [...new Set(ev.difficulties.map(d => DIFFICULTY_MAP[d] || d))]
+            .sort((a, b) => {
+              const ia = GRADE_ORDER.indexOf(a);
+              const ib = GRADE_ORDER.indexOf(b);
+              return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+            })
+        : [];
+      const difficulty = mappedDiffs.join(', ');
+
       events.push({
         startDate,
         endDate,
@@ -437,11 +426,91 @@ function parseEosAcharnon() {
         difficulty
       });
     });
-  } catch (err) {
-    console.error('Failed to parse Acharnon Next.js hydration payload:', err.message);
+  };
+
+  // Strategy 1: Direct unpaginated JSON API
+  const apiPath = path.join(INPUT_DIR, 'eosacharnon_xmiddleware_com_api-events.html');
+  if (fs.existsSync(apiPath)) {
+    try {
+      const rawJson = fs.readFileSync(apiPath, 'utf-8').trim();
+      if (rawJson.startsWith('[')) {
+        const parsed = JSON.parse(rawJson);
+        processRawEvents(parsed);
+      }
+    } catch (err) {
+      console.error('Failed to parse Acharnon JSON API payload:', err.message);
+    }
   }
 
-  return events;
+  // Strategy 2: Next.js HTML Hydration fallback across any fetched /el pages
+  if (events.length === 0) {
+    const htmlFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('eosacharnon_xmiddleware_com_el') && f.endsWith('.html'));
+    for (const file of htmlFiles) {
+      const htmlPath = path.join(INPUT_DIR, file);
+      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const $ = cheerio.load(html);
+
+      let nextDataRaw = '';
+      $('script').each((i, el) => {
+        const text = $(el).text();
+        if (text.includes('self.__next_f.push')) {
+          const match = text.match(/self\.__next_f\.push\(\[\d+,\s*"(.*)"\]\)/s);
+          if (match) {
+            let content = match[1]
+              .replace(/\\"/g, '"')
+              .replace(/\\n/g, '\n')
+              .replace(/\\r/g, '\r')
+              .replace(/\\t/g, '\t')
+              .replace(/\\\\/g, '\\');
+            nextDataRaw += content;
+          } else {
+            const match2 = text.match(/self\.__next_f\.push\(\[\d+,\s*'(.*)'\]\)/s);
+            if (match2) {
+              let content = match2[1]
+                .replace(/\\'/g, "'")
+                .replace(/\\n/g, '\n')
+                .replace(/\\r/g, '\r')
+                .replace(/\\t/g, '\t')
+                .replace(/\\\\/g, '\\');
+              nextDataRaw += content;
+            }
+          }
+        }
+      });
+
+      const eventsIndex = nextDataRaw.indexOf('"events":[');
+      if (eventsIndex === -1) continue;
+
+      let bracketCount = 1;
+      let i = eventsIndex + 10;
+      let start = i - 1;
+
+      while (i < nextDataRaw.length && bracketCount > 0) {
+        if (nextDataRaw[i] === '[') bracketCount++;
+        else if (nextDataRaw[i] === ']') bracketCount--;
+        i++;
+      }
+
+      const eventsJsonStr = nextDataRaw.substring(start, i);
+      const cleanJsonStr = eventsJsonStr
+        .replace(/"\$D(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)"/g, '"$1"');
+
+      try {
+        const rawEvents = JSON.parse(cleanJsonStr);
+        processRawEvents(rawEvents);
+      } catch (err) {
+        console.error(`Failed to parse Acharnon Next.js hydration payload in ${file}:`, err.message);
+      }
+    }
+  }
+
+  const seen = new Set();
+  return events.filter(e => {
+    const key = `${e.startDate}_${e.title}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 // ----------------------------------------------------
@@ -449,51 +518,108 @@ function parseEosAcharnon() {
 // ----------------------------------------------------
 function parseAos() {
   const urlMap = {};
+  const dateUrlMap = {};
+  const events = [];
+  const defaultUrl = 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/';
   const aosHtmlFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('aos_gr_') && f.endsWith('.html'));
+
+  const isPlaceholderTitle = (t) => /^αναμ[εέ]ν(εται|ονται)/i.test(stripGreekAccents(t).trim());
+  const isMetadataLine = (t) => /^(αρχηγοι|ομαδα|ω\.?π|ωρα|διαθεσιμοτητα|συμμετοχες|κοστος|αναχωρηση|σημειωση|λεπτομερειες|για λεπτομερειες|ετικετες|τρεχουσες και επερχομενες)/i.test(stripGreekAccents(t).trim());
 
   for (const file of aosHtmlFiles) {
     const filePath = path.join(INPUT_DIR, file);
-    if (fs.existsSync(filePath)) {
-      const html = fs.readFileSync(filePath, 'utf-8');
-      const $ = cheerio.load(html);
-      let lastSeenTitle = '';
-      $('*').each((i, el) => {
-        const tagName = el.tagName.toLowerCase();
-        const text = $(el).text().trim();
-        
-        if (tagName === 'h2' || tagName === 'h3' || (tagName === 'p' && $(el).find('strong').length > 0)) {
-          if (text.length > 5 && text.length < 150) {
-            lastSeenTitle = text;
-          }
+    if (!fs.existsSync(filePath)) continue;
+
+    const html = fs.readFileSync(filePath, 'utf-8');
+    const $ = cheerio.load(html);
+
+    // 1. Parse structured .hgrid.entry-content event cards (used on trechouses page)
+    $('div.hgrid.entry-content').each((i, el) => {
+      const $card = $(el);
+      const dateText = $card.find('.hgrid-span-3 h4, h4').first().text().replace(/\s+/g, ' ').trim();
+      const h2Text = $card.find('.hgrid-span-3 h2, h2').first().text().replace(/\s+/g, ' ').trim();
+      const pRaw = $card.find('.hgrid-span-5 p, p').first().html() || '';
+      const pFirstLine = cheerio.load(pRaw.split(/<br\s*\/?>/i)[0] || '').text().replace(/\s+/g, ' ').trim();
+      const pClean = pFirstLine.replace(/Αναμένονται\s+λεπτομέρειες\.?/gi, '').trim();
+
+      let href = '';
+      $card.find('a').each((j, aEl) => {
+        const h = $(aEl).attr('href') || '';
+        if (h.startsWith('https://aos.gr/') && !h.includes('/category/') && !h.includes('/tag/') && !h.includes('/wp-content/') && !h.includes('trechouses') && !h.includes('programma-') && h.length > 25) {
+          href = h;
         }
-        
-        if (tagName === 'a') {
-          const href = $(el).attr('href');
-          if (href && href.startsWith('https://aos.gr/') && !href.includes('/category/') && !href.includes('/feed/') && !href.includes('/wp-content/') && href.length > 25) {
-            const cleanText = stripGreekAccents(text);
-            if (cleanText.includes('λεπτομερειες') || cleanText.includes('δηλωση') || cleanText.includes('πατηστε') || cleanText.includes('details')) {
-              if (lastSeenTitle) {
-                urlMap[lastSeenTitle] = href;
-              }
+      });
+
+      const parsedDate = parseDateRange(dateText);
+      if (!parsedDate) return;
+
+      let title = h2Text;
+      if (!title && pClean) {
+        title = pClean.replace(/\.$/, '').trim();
+      } else if (title && !title.includes(' ') && pClean && /^επετειακ/i.test(stripGreekAccents(pClean))) {
+        title = `${title}: ${pClean.replace(/\.$/, '').trim()}`;
+      }
+
+      if (!title || title.length < 3 || isPlaceholderTitle(title)) return;
+
+      if (href) {
+        urlMap[title] = href;
+        if (h2Text) urlMap[h2Text] = href;
+        dateUrlMap[parsedDate.startDate] = dateUrlMap[parsedDate.startDate] || href;
+      }
+
+      events.push({
+        startDate: parsedDate.startDate,
+        endDate: parsedDate.endDate,
+        displayDate: parsedDate.displayDate,
+        title,
+        club: 'ΑΟΣ',
+        url: href || matchTitleToUrl(title, urlMap, defaultUrl),
+        difficulty: ''
+      });
+    });
+
+    // 2. Build urlMap across headings/strong paragraphs for annual program tables
+    let lastSeenTitle = '';
+    $('*').each((i, el) => {
+      const tagName = el.tagName.toLowerCase();
+      const text = $(el).text().replace(/\s+/g, ' ').trim();
+
+      if (tagName === 'h2' || tagName === 'h3' || (tagName === 'p' && $(el).find('strong').length > 0)) {
+        if (text.length > 4 && text.length < 150 && !isMetadataLine(text)) {
+          lastSeenTitle = text;
+        }
+      }
+
+      if (tagName === 'a') {
+        const href = $(el).attr('href');
+        if (href && href.startsWith('https://aos.gr/') && !href.includes('/category/') && !href.includes('/tag/') && !href.includes('/feed/') && !href.includes('/wp-content/') && !href.includes('trechouses') && !href.includes('programma-') && href.length > 25) {
+          const cleanText = stripGreekAccents(text);
+          if (cleanText.includes('λεπτομερειες') || cleanText.includes('δηλωση') || cleanText.includes('πατηστε') || cleanText.includes('details')) {
+            if (lastSeenTitle) {
+              urlMap[lastSeenTitle] = href;
             }
           }
         }
-      });
-    }
+      }
+    });
   }
 
   const aosTxtFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('aos_gr_') && f.endsWith('.txt'));
-  const events = [];
 
   for (const txtFile of aosTxtFiles) {
     const txtPath = path.join(INPUT_DIR, txtFile);
     if (!fs.existsSync(txtPath)) continue;
 
-    const defaultUrl = 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/';
     const content = fs.readFileSync(txtPath, 'utf-8');
     const lines = content.split('\n');
 
-    let currentSectionYear = null;
+    // Seed section year from filename if available (e.g. "...2026...2026.txt" or "...2026...2027.txt")
+    const fileYears = [...txtFile.matchAll(/(20\d{2})/g)].map(m => m[1]);
+    const programStartYear = fileYears[0] || null;
+    const programEndYear = fileYears[fileYears.length - 1] || programStartYear;
+
+    let currentSectionYear = programStartYear;
     let lastSeenMonth = 0;
 
     for (let i = 0; i < lines.length; i++) {
@@ -511,29 +637,42 @@ function parseAos() {
         continue;
       }
 
-      // Check for semester header like "Πρόγραμμα Σεπτέμβριος 2026 – Μάιος 2027"
-      const semesterMatch = line.match(/(\d{4})\s*[-–—]\s*(\d{4})/);
-      if (semesterMatch && line.length < 80) {
+      // Check for semester/annual header like "Πρόγραμμα εξορμήσεων Ιανουάριος 2026 – Δεκέμβριος 2026"
+      const semesterMatch = line.match(/(\d{4})\s*[-–—]\s*(?:[Α-Ωα-ωίϊΐόάέύώήώ]+\s+)?(\d{4})/i);
+      if (semesterMatch && line.length < 100) {
         currentSectionYear = semesterMatch[1];
       }
 
+      // Standalone Greek month header like "Ιανουάριος" or "Φεβρουάριος"
+      const standaloneMonth = parseGreekMonth(line);
+      if (standaloneMonth && line.split(/\s+/).length === 1) {
+        const mNum = parseInt(standaloneMonth, 10);
+        if (lastSeenMonth === 12 && mNum === 1 && programStartYear) {
+          currentSectionYear = programStartYear;
+        }
+        lastSeenMonth = mNum;
+        continue;
+      }
+
       // Numeric formats:
-      // 1: 31/01 - 01/02/26 or 21/08/26 - 1/9/2026
-      const numCrossMonth = /^(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]\s*(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]?\s*(.+)/.exec(line);
+      // 1: 31/01 - 01/02/26 or 21/08/26 - 1/9/2026 or 30-31/05-01/06 or 30-31/10 & 1/11/26
+      const numCrossMonth = /^(\d+)(?:-\d+)*\/(\d+)(?:\/(\d{2,4}))?\s*(?:[-–—&]|και)\s*(?:\d+-)*(\d+)\/(\d+)(?:\/(\d{2,4}))?\s*[-–—:]?\s*(.+)/i.exec(line);
       // 2: 03-05/01/26 or 14-15/02 or 21-22-23/02
-      const numRangeMonth = /^(\d+)(?:-\d+)*-(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]?\s*(.+)/.exec(line);
+      const numRangeMonth = /^(\d+)(?:-\d+)*-(\d+)\/(\d+)(?:\/(\d{2,4}))?\s*[-–—:]?\s*(.+)/.exec(line);
       // 3: 11/01/26 or 19/4
-      const numSingleMonth = /^(\d+)\/(\d+)(?:\/(\d+))?\s*[-–—]?\s*(.+)/.exec(line);
+      const numSingleMonth = /^(\d+)\/(\d+)(?:\/(\d{2,4}))?\s*[-–—:]?\s*(.+)/.exec(line);
 
       let pStartDay, pEndDay, pStartMonth, pEndMonth, pYear, pTitle;
 
       if (numCrossMonth) {
         pStartDay = numCrossMonth[1];
         pStartMonth = numCrossMonth[2];
-        pEndDay = numCrossMonth[3];
-        pEndMonth = numCrossMonth[4];
-        pYear = numCrossMonth[5];
-        pTitle = numCrossMonth[6];
+        const pStartYear = numCrossMonth[3];
+        pEndDay = numCrossMonth[4];
+        pEndMonth = numCrossMonth[5];
+        const pEndYear = numCrossMonth[6];
+        pYear = pStartYear || pEndYear;
+        pTitle = numCrossMonth[7];
       } else if (numRangeMonth) {
         pStartDay = numRangeMonth[1];
         pEndDay = numRangeMonth[2];
@@ -557,53 +696,90 @@ function parseAos() {
         const eDayStr = String(pEndDay || pStartDay).padStart(2, '0');
 
         const sMonthNum = parseInt(sMonthStr, 10);
-        
-        // Month wrap detection: if sequence went from Dec (12) to Jan (1), increment section year
-        if (lastSeenMonth === 12 && sMonthNum === 1 && currentSectionYear) {
-          currentSectionYear = String(parseInt(currentSectionYear, 10) + 1);
+        if (sMonthNum < 1 || sMonthNum > 12 || parseInt(sDayStr, 10) > 31) continue;
+
+        if (!pYear && lastSeenMonth === 12 && sMonthNum === 1 && currentSectionYear) {
+          const nextY = String(parseInt(currentSectionYear, 10) + 1);
+          currentSectionYear = (programEndYear && parseInt(nextY, 10) > parseInt(programEndYear, 10))
+            ? programStartYear
+            : nextY;
         }
         lastSeenMonth = sMonthNum;
 
         const sYear = resolveEventYear(sMonthStr, pYear, currentSectionYear);
-        let eYear = resolveEventYear(eMonthStr, pYear, currentSectionYear);
-        if (parseInt(eMonthStr) < parseInt(sMonthStr)) {
-          eYear = String(parseInt(sYear) + 1);
+        if (pYear) {
+          currentSectionYear = sYear;
+        }
+
+        let eYear = sYear;
+        if (parseInt(eMonthStr, 10) < parseInt(sMonthStr, 10)) {
+          eYear = String(parseInt(sYear, 10) + 1);
         }
 
         const sDate = `${sYear}-${sMonthStr}-${sDayStr}`;
         const eDate = `${eYear}-${eMonthStr}-${eDayStr}`;
-        const dDate = sDayStr !== eDayStr ? `${parseInt(sDayStr)}/${parseInt(sMonthStr)} - ${parseInt(eDayStr)}/${parseInt(eMonthStr)}` : `${parseInt(sDayStr)}/${parseInt(sMonthStr)}`;
+        let dDate = `${parseInt(sDayStr, 10)}/${parseInt(sMonthStr, 10)}`;
+        if (sDate !== eDate) {
+          dDate = sMonthStr === eMonthStr
+            ? `${parseInt(sDayStr, 10)}-${parseInt(eDayStr, 10)}/${parseInt(sMonthStr, 10)}`
+            : `${parseInt(sDayStr, 10)}/${parseInt(sMonthStr, 10)} - ${parseInt(eDayStr, 10)}/${parseInt(eMonthStr, 10)}`;
+        }
 
         let cleanTitle = (pTitle || '').split('Λεπτομέρειες')[0].trim();
         cleanTitle = cleanTitle.split('Αρχηγοί')[0].trim();
         cleanTitle = cleanTitle.replace(/^[–\-:\s]+|[–\-:\s]+$/g, '').trim();
 
-        if (cleanTitle && cleanTitle.length >= 3) {
-           events.push({
-             startDate: sDate,
-             endDate: eDate,
-             displayDate: dDate,
-             title: cleanTitle,
-             club: 'ΑΟΣ',
-             url: matchTitleToUrl(cleanTitle, urlMap, defaultUrl),
-             difficulty: ''
-           });
+        let difficulty = '';
+        for (let k = i; k <= Math.min(i + 12, lines.length - 1); k++) {
+          if (k > i) {
+            const nextL = lines[k].trim();
+            if (/^\d+[\/\-]/.test(nextL) || parseGreekMonth(nextL)) break;
+          }
+          const bdMatch = lines[k].match(/(?:Β\.?\s*Δ\.?|Βαθμ[οό]ς\s+Δυσκολ[ιί]ας)\s*[:=]?\s*([0-9]+(?:\s*[+–\-]\s*[0-9+]*)?)/i);
+          if (bdMatch) {
+            difficulty = normalizeDifficulty(bdMatch[1]);
+            break;
+          }
+        }
+
+        if (cleanTitle && cleanTitle.length >= 3 && !isPlaceholderTitle(cleanTitle) && !/^\d+η\s+ημ[εέ]ρα/i.test(cleanTitle)) {
+          const matchedUrl = matchTitleToUrl(cleanTitle, urlMap, defaultUrl);
+          events.push({
+            startDate: sDate,
+            endDate: eDate,
+            displayDate: dDate,
+            title: cleanTitle,
+            club: 'ΑΟΣ',
+            url: matchedUrl,
+            difficulty
+          });
         }
         continue;
       }
 
-      // Existing String formats (e.g. "12-14 Ιουνίου 2026")
-      const isRange = /^(\d+)-(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i.test(line);
-      const isSingle = /^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i.test(line);
-      const isMultiMonth = /^(?:Παρασκευή|Σάββατο)?\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+έως\s+(?:Κυριακή|Δευτέρα|Τρίτη)?\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i.test(line);
+      // Word-month date lines (e.g. "12-14 Ιουνίου 2026", "Κυριακή 22 Νοεμβρίου 2026", "Σάββατο 14 Κυριακή 15 Νοεμβρίου 2026")
+      const lineNoDays = line
+        .replace(/(Δευτέρα|Τρίτη|Τετάρτη|Πέμπτη|Παρασκευή|Σάββατο|Κυριακή|δευτερα|τριτη|τεταρτη|πεμπτη|παρασκευη|σαββατο|κυριακη)/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const isRange = /^(\d+)(?:\s*[-–—]\s*\d+)*(?:\s*[-–—&,]\s*|\s+)(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?$/i.test(lineNoDays);
+      const isSingle = /^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?$/i.test(lineNoDays);
+      const isMultiMonth = /^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s+(?:έως|εως|[-–—&]|και)\s+(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?$/i.test(lineNoDays);
 
       if (isRange || isSingle || isMultiMonth) {
         const dateStr = line;
         let title = '';
-        if (lines[i+1]) title = lines[i+1].trim();
-        
-        let parsed = parseDateRange(dateStr, currentSectionYear);
-        if (parsed && title.length >= 3) {
+        for (let k = i + 1; k <= Math.min(i + 4, lines.length - 1); k++) {
+          const candidate = lines[k].trim();
+          if (candidate) {
+            title = candidate.replace(/\.$/, '').trim();
+            break;
+          }
+        }
+
+        const parsed = parseDateRange(dateStr, currentSectionYear);
+        if (parsed && title.length >= 3 && !isPlaceholderTitle(title) && !isMetadataLine(title)) {
           events.push({
             startDate: parsed.startDate,
             endDate: parsed.endDate,
@@ -618,14 +794,19 @@ function parseAos() {
     }
   }
 
-  // Deduplicate events by title & startDate
-  const seen = new Set();
-  return events.filter(e => {
+  // Deduplicate events by title & startDate while preserving difficulty and dedicated URLs
+  const seenMap = new Map();
+  for (const e of events) {
     const key = `${e.startDate}_${e.title}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+    if (!seenMap.has(key)) {
+      seenMap.set(key, e);
+    } else {
+      const existing = seenMap.get(key);
+      if (!existing.difficulty && e.difficulty) existing.difficulty = e.difficulty;
+      if (existing.url.includes('#:~:text=') && !e.url.includes('#:~:text=')) existing.url = e.url;
+    }
+  }
+  return Array.from(seenMap.values());
 }
 
 // ----------------------------------------------------
@@ -647,11 +828,11 @@ function parsePoa() {
     'ιουλιος': '07', 'αυγουστος': '08', 'σεπτεμβριος': '09', 'οκτωβριος': '10', 'νοεμβριος': '11', 'δεκεμβριος': '12'
   };
 
-  $('h3.elementor-heading-title, .elementor-toggle-item, .elementor-accordion-item').each((i, el) => {
+  $('h2.elementor-heading-title, h3.elementor-heading-title, h4.elementor-heading-title, .elementor-toggle-item, .elementor-accordion-item').each((i, el) => {
     const $el = $(el);
     const tagName = el.tagName.toLowerCase();
 
-    if (tagName === 'h3') {
+    if (tagName === 'h2' || tagName === 'h3' || tagName === 'h4') {
       const text = $el.text().trim().replace(/\s+/g, ' ');
       // Match month name and 4 digit year
       const match = text.match(/^([a-zA-ZΑ-Ωα-ωίϊΐόάέύώήώ\s]+)\s+(\d{4})$/i);
@@ -667,9 +848,15 @@ function parsePoa() {
 
       const titleEl = $el.find('.elementor-toggle-title, .elementor-accordion-title');
       const fullTitleText = titleEl.text().trim().replace(/\s+/g, ' ');
+      const bodyText = $el.find('.elementor-tab-content').text().replace(/\s+/g, ' ').trim();
+      const extractPoaBodyBd = () => {
+        const m = bodyText.match(/Β\.?\s*Δ\.?\s*[:=]?\s*([ΧX]?\d+\+?(?:\s*(?:[-–—&]|ή)\s*[ΧX]?\d+\+?)*)/i);
+        return m ? normalizeDifficulty(m[1]) : '';
+      };
+      const poaTitleBdRegex = /^(.+?)\s+(Β\.?Δ\.?\s*(?:[ΧX]?\d+\+?(?:\s*(?:[-–—&]|ή)\s*[ΧX]?\d+\+?)*))$/i;
 
       // Format 1: Cross-month range "30-31/12 – 1/1 Title"
-      const crossMonthMatch = fullTitleText.match(/^(\d+(?:-\d+)?)\s*\/\s*(\d+)\s*[-–—]\s*(\d+(?:-\d+)?)\s*\/\s*(\d+)\s*(.+)$/);
+      const crossMonthMatch = fullTitleText.match(/^(\d+(?:-\d+)*)\s*\/\s*(\d+)\s*[-–—]\s*(\d+(?:-\d+)*)\s*\/\s*(\d+)\s*(.+)$/);
       if (crossMonthMatch) {
         const startDayPart = crossMonthMatch[1];
         const startMonth = crossMonthMatch[2].padStart(2, '0');
@@ -687,10 +874,12 @@ function parsePoa() {
 
         let title = rest;
         let difficulty = '';
-        const bdMatch = rest.match(/(.+?)\s+(ΒΔ\s*[\d\w+]+|ΒΔ\s*X\d+|ΒΔ\s*Χ\d+)/i);
+        const bdMatch = rest.match(poaTitleBdRegex);
         if (bdMatch) {
           title = bdMatch[1].trim();
-          difficulty = bdMatch[2].trim();
+          difficulty = normalizeDifficulty(bdMatch[2]);
+        } else {
+          difficulty = extractPoaBodyBd();
         }
 
         let endYear = currentYear;
@@ -710,8 +899,8 @@ function parsePoa() {
         return;
       }
 
-      // Format 2: Single-month range or single date: "23 – 30/6 Title" or "10/1 Title"
-      const singleMonthMatch = fullTitleText.match(/^(\d+(?:\s*[-–—]\s*\d+)?)\s*\/\s*(\d+)\s+(.+)$/);
+      // Format 2: Single-month range or single date: "23 – 30/6 Title" or "12-13-14/6 Title" or "10/1 Title"
+      const singleMonthMatch = fullTitleText.match(/^(\d+(?:\s*[-–—]\s*\d+)*)\s*\/\s*(\d+)\s+(.+)$/);
       if (singleMonthMatch) {
         const dayPart = singleMonthMatch[1];
         const monthNum = singleMonthMatch[2].padStart(2, '0');
@@ -724,10 +913,12 @@ function parsePoa() {
 
         let title = rest;
         let difficulty = '';
-        const bdMatch = rest.match(/(.+?)\s+(ΒΔ\s*[\d\w+]+|ΒΔ\s*X\d+|ΒΔ\s*Χ\d+)/i);
+        const bdMatch = rest.match(poaTitleBdRegex);
         if (bdMatch) {
           title = bdMatch[1].trim();
-          difficulty = bdMatch[2].trim();
+          difficulty = normalizeDifficulty(bdMatch[2]);
+        } else {
+          difficulty = extractPoaBodyBd();
         }
 
         const dayPartClean = dayPart.replace(/\s*[-–—]\s*/g, '-').trim();
@@ -736,7 +927,9 @@ function parsePoa() {
         let displayDate = '';
 
         if (dayPartClean.includes('-')) {
-          const [startDay, endDay] = dayPartClean.split('-');
+          const dayParts = dayPartClean.split('-');
+          const startDay = dayParts[0];
+          const endDay = dayParts[dayParts.length - 1];
           startDate = `${currentYear}-${monthNum}-${startDay.padStart(2, '0')}`;
           endDate = `${currentYear}-${monthNum}-${endDay.padStart(2, '0')}`;
           displayDate = `${startDay}-${endDay}/${parseInt(monthNum)}`;
@@ -802,7 +995,7 @@ function parseEosAthinonExoterikoy() {
     if (firstPText.length < 5) return;
 
     const fullText = $el.text().replace(/\s+/g, ' ');
-    const yearMatch = fullText.match(/(202[5-9])/);
+    const yearMatch = fullText.match(/(20\d{2})/);
     const year = yearMatch ? yearMatch[1] : String(TODAY.getFullYear());
 
     let startDate = '';
@@ -921,9 +1114,9 @@ function parseEosAthinon() {
         let cleanLine = line.replace('📅', '').trim();
         
         let datePart = '';
-        const rangeTwoMonths = cleanLine.match(/(\d+\/\d+\s*[-–—]\s*\d+\/\d+)/);
-        const rangeOneMonth = cleanLine.match(/(\d+(?:\s*[-–—]\s*\d+)?\s*\/\s*\d+(?:\/\d{4})?)/);
-        const singleDate = cleanLine.match(/(\d+\/\d+(?:\/\d{4})?)/);
+        const rangeTwoMonths = cleanLine.match(/(\d+(?:\s*[-–—]\s*\d+)*\s*\/\s*\d+\s*[-–—]\s*\d+(?:\s*[-–—]\s*\d+)*\s*\/\s*\d+(?:\s*\/\s*\d{2,4})?)/);
+        const rangeOneMonth = cleanLine.match(/(\d+(?:\s*[-–—]\s*\d+)*\s*\/\s*\d+(?:\s*\/\s*\d{2,4})?)/);
+        const singleDate = cleanLine.match(/(\d+\s*\/\s*\d+(?:\s*\/\s*\d{2,4})?)/);
 
         if (rangeTwoMonths) {
           datePart = rangeTwoMonths[0];
@@ -951,6 +1144,16 @@ function parseEosAthinon() {
           const monthStr = parsed.startDate.split('-')[1];
           const yearStr = parsed.startDate.split('-')[0].slice(-2);
           const accId = `${monthStr}-${yearStr}`;
+
+          let difficulty = '';
+          for (let k = i; k <= Math.min(i + 12, lines.length - 1); k++) {
+            if (k > i && lines[k].trim().startsWith('📅')) break;
+            const bdMatch = lines[k].match(/Β\.?\s*Δ\.?\s*[:=]\s*([0-9]+(?:\s*[+–\-]\s*[0-9+]*)?)/i);
+            if (bdMatch) {
+              difficulty = normalizeDifficulty(bdMatch[1]);
+              break;
+            }
+          }
           
           events.push({
             startDate: parsed.startDate,
@@ -959,7 +1162,7 @@ function parseEosAthinon() {
             title: titlePart,
             club: 'ΕΟΣ Αθηνών',
             url: titlePart ? `https://www.eosathinon.gr/anavaseis/programma/#${accId}:~:text=${encodeURIComponent(titlePart)}` : 'https://www.eosathinon.gr/anavaseis/programma/',
-            difficulty: ''
+            difficulty
           });
         }
       }
@@ -1005,7 +1208,8 @@ function parseEosHalioupolis() {
     for (const trip of json.trips) {
       if (trip.cancelled || trip.archived || trip.published === false) continue;
       const title = (trip.title_gr || trip.title || '').trim();
-      if (!title) continue;
+      if (!title || isSchoolTitle(title)) continue;
+      if (trip.slug && trip.slug.includes('-course-')) continue;
 
       let startDate = '';
       let endDate = '';
@@ -1013,7 +1217,7 @@ function parseEosHalioupolis() {
 
       if (trip.start_date && /^\d{4}-\d{2}-\d{2}$/.test(trip.start_date)) {
         startDate = trip.start_date;
-        if (trip.end_date && /^\d{4}-\d{2}-\d{2}$/.test(trip.end_date)) {
+        if (trip.end_date && /^\d{4}-\d{2}-\d{2}$/.test(trip.end_date) && trip.end_date > startDate) {
           endDate = trip.end_date;
         } else if (trip.duration_days && Number(trip.duration_days) > 1) {
           const [y, m, d] = startDate.split('-').map(Number);
@@ -1023,6 +1227,8 @@ function parseEosHalioupolis() {
           const em = String(dt.getMonth() + 1).padStart(2, '0');
           const ed = String(dt.getDate()).padStart(2, '0');
           endDate = `${ey}-${em}-${ed}`;
+        } else if (trip.end_date && /^\d{4}-\d{2}-\d{2}$/.test(trip.end_date)) {
+          endDate = trip.end_date;
         } else {
           endDate = startDate;
         }
@@ -1044,7 +1250,7 @@ function parseEosHalioupolis() {
           title,
           club: 'ΕΟΣ Ηλιούπολης',
           url: trip.slug ? `https://eosh.gr/expeditions/${trip.slug}` : defaultUrl,
-          difficulty: trip.difficulty ? String(trip.difficulty).trim() : ''
+          difficulty: trip.difficulty ? normalizeDifficulty(trip.difficulty) : ''
         });
         continue;
       }
@@ -1084,7 +1290,7 @@ function parseFoni() {
           urlMap[rawTitle] = href;
 
           // Check if article title has dates: e.g. "12-13 Σεπτεμβρίου 2026 / Πεζοπορική – Εύβοια..."
-          const match = rawTitle.match(/^([^/]+)\s*\/\s*(?:Πεζοπορική|Καλοκαιρινή|Περιηγητική|Εκδρομές)?\s*[:–-]?\s*(.+)$/i);
+          const match = rawTitle.match(/^(.+?)\s+\/\s+(?:[Α-Ωα-ωίϊΐόάέύώήώ\s,&]+\s*[:–-]\s*)?(.+)$/i);
           if (match) {
             const dateText = match[1].trim();
             const eventTitle = match[2].trim();
@@ -1117,7 +1323,7 @@ function parseFoni() {
       const line = lines[i].trim();
       if (!line) continue;
 
-      const match = line.match(/^([^/]+)\s*\/\s*(?:Πεζοπορική|Καλοκαιρινή|Περιηγητική|Εκδρομές)\s*[:–-]\s*(.+)$/i);
+      const match = line.match(/^(.+?)\s+\/\s+(?:[Α-Ωα-ωίϊΐόάέύώήώ\s,&]+\s*[:–-]\s*)?(.+)$/i);
       if (match) {
         const dateText = match[1].trim();
         const title = match[2].trim();
@@ -1150,13 +1356,13 @@ function parseFoni() {
 // PARSER: EPOS Filis (Tribe Events Cheerio DOM)
 // ----------------------------------------------------
 function parseEposFilis() {
-  const htmlPath = path.join(INPUT_DIR, 'eposfilis_gr_events-category-_ce_b7_ce_bc_ce_b5_cf_81_ce_bf_ce_bb_cf_8c_ce_b3_ce_b9_ce_bf.html');
-  const txtPath = path.join(INPUT_DIR, 'eposfilis_gr_events-category-_ce_b7_ce_bc_ce_b5_cf_81_ce_bf_ce_bb_cf_8c_ce_b3_ce_b9_ce_bf.txt');
+  const htmlFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('eposfilis_gr_') && f.endsWith('.html'));
+  const txtFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('eposfilis_gr_') && f.endsWith('.txt'));
   const defaultUrl = 'https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/';
   const events = [];
 
   const parseMonthName = (mStr) => {
-    const clean = (mStr || '').toLowerCase().trim();
+    const clean = stripGreekAccents((mStr || '').toLowerCase().trim());
     const map = {
       'january': '01', 'february': '02', 'march': '03', 'april': '04',
       'may': '05', 'june': '06', 'july': '07', 'august': '08',
@@ -1165,11 +1371,13 @@ function parseEposFilis() {
       'μαιος': '05', 'ιουνιος': '06', 'ιουλιος': '07', 'αυγουστος': '08',
       'σεπτεμβριος': '09', 'οκτωβριος': '10', 'νοεμβριος': '11', 'δεκεμβριος': '12'
     };
-    return map[clean] || null;
+    return map[clean] || parseGreekMonth(clean) || parseEnglishMonth(clean) || null;
   };
 
-  // Strategy 1: Cheerio HTML DOM parsing on Tribe Events markup (Primary)
-  if (fs.existsSync(htmlPath)) {
+  // Strategy 1: Cheerio HTML DOM parsing on Tribe Events markup across all fetched pages (Primary)
+  for (const file of htmlFiles) {
+    const htmlPath = path.join(INPUT_DIR, file);
+    if (!fs.existsSync(htmlPath)) continue;
     try {
       const html = fs.readFileSync(htmlPath, 'utf-8');
       const $ = cheerio.load(html);
@@ -1191,8 +1399,8 @@ function parseEposFilis() {
         let endDate = startDate;
         let displayDate = '';
 
-        const multiMonthMatch = dateText.match(/([a-zA-Z]+)\s+(\d+)(?:,\s*(\d{4}))?\s*@.+?-\s*([a-zA-Z]+)\s+(\d+)(?:,\s*(\d{4}))?/i);
-        const sameMonthMultiDayMatch = dateText.match(/([a-zA-Z]+)\s+(\d+)(?:,\s*(\d{4}))?\s*@.+?-\s*(?:[a-zA-Z]+\s+)?(\d+)(?:,\s*(\d{4}))?\s*@/i);
+        const multiMonthMatch = dateText.match(/([a-zA-ZΑ-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d+)(?:,\s*(\d{4}))?\s*@.+?-\s*([a-zA-ZΑ-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d+)(?:,\s*(\d{4}))?/i);
+        const sameMonthMultiDayMatch = dateText.match(/([a-zA-ZΑ-Ωα-ωίϊΐόάέύώήώ]+)\s+(\d+)(?:,\s*(\d{4}))?\s*@.+?-\s*(?:[a-zA-ZΑ-Ωα-ωίϊΐόάέύώήώ]+\s+)?(\d+)(?:,\s*(\d{4}))?\s*@/i);
         
         if (multiMonthMatch) {
           const sMonth = parseMonthName(multiMonthMatch[1]);
@@ -1200,11 +1408,13 @@ function parseEposFilis() {
           const sYear = multiMonthMatch[3] || (startDate ? startDate.split('-')[0] : resolveEventYear(sMonth));
           const eMonth = parseMonthName(multiMonthMatch[4]);
           const eDay = multiMonthMatch[5].padStart(2, '0');
-          const eYear = multiMonthMatch[6] || (parseInt(eMonth) < parseInt(sMonth) ? String(parseInt(sYear) + 1) : sYear);
+          const eYear = multiMonthMatch[6] || (parseInt(eMonth, 10) < parseInt(sMonth, 10) ? String(parseInt(sYear, 10) + 1) : sYear);
 
           startDate = `${sYear}-${sMonth}-${sDay}`;
           endDate = `${eYear}-${eMonth}-${eDay}`;
-          displayDate = `${parseInt(sDay)}/${parseInt(sMonth)} - ${parseInt(eDay)}/${parseInt(eMonth)}`;
+          displayDate = sMonth === eMonth
+            ? `${parseInt(sDay, 10)}-${parseInt(eDay, 10)}/${parseInt(sMonth, 10)}`
+            : `${parseInt(sDay, 10)}/${parseInt(sMonth, 10)} - ${parseInt(eDay, 10)}/${parseInt(eMonth, 10)}`;
         } else if (sameMonthMultiDayMatch) {
           const sMonth = parseMonthName(sameMonthMultiDayMatch[1]);
           const sDay = sameMonthMultiDayMatch[2].padStart(2, '0');
@@ -1214,10 +1424,10 @@ function parseEposFilis() {
 
           startDate = `${sYear}-${sMonth}-${sDay}`;
           endDate = `${eYear}-${sMonth}-${eDay}`;
-          displayDate = `${parseInt(sDay)}-${parseInt(eDay)}/${parseInt(sMonth)}`;
+          displayDate = `${parseInt(sDay, 10)}-${parseInt(eDay, 10)}/${parseInt(sMonth, 10)}`;
         } else if (startDate) {
           const [y, m, d] = startDate.split('-');
-          displayDate = `${parseInt(d)}/${parseInt(m)}`;
+          displayDate = `${parseInt(d, 10)}/${parseInt(m, 10)}`;
         }
 
         // Clean title: remove leading date fragments if they exist in title
@@ -1243,63 +1453,67 @@ function parseEposFilis() {
         }
       });
     } catch (e) {
-      console.error('Failed to parse EPOS Filis HTML DOM:', e.message);
+      console.error(`Failed to parse EPOS Filis HTML DOM in ${file}:`, e.message);
     }
   }
 
   // Strategy 2: Text regex parsing fallback if Strategy 1 yields 0 events
-  if (events.length === 0 && fs.existsSync(txtPath)) {
-    const content = fs.readFileSync(txtPath, 'utf-8');
-    const lines = content.split('\n');
-    let currentSectionYear = null;
+  if (events.length === 0 && txtFiles.length > 0) {
+    for (const file of txtFiles) {
+      const txtPath = path.join(INPUT_DIR, file);
+      if (!fs.existsSync(txtPath)) continue;
+      const content = fs.readFileSync(txtPath, 'utf-8');
+      const lines = content.split('\n');
+      let currentSectionYear = null;
 
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
 
-      const headerMatch = line.match(/^([a-zA-ZΑ-Ωα-ω]+)\s+(\d{4})$/i);
-      if (headerMatch) {
-        currentSectionYear = headerMatch[2];
-        continue;
-      }
-
-      // Pattern 1: Starts with date e.g. "13-14/6" or "17 /1"
-      const pattern1 = line.match(/^(\d+(?:\s*[-–—]\s*\d+)?)\s*\/\s*(\d+)(?:\/(\d{2,4}))?\s+(.+)$/);
-      if (pattern1) {
-        const dateStr = pattern1[1].replace(/\s+/g, '');
-        const monthNum = pattern1[2].padStart(2, '0');
-        const explicitYear = pattern1[3] || null;
-        const rest = pattern1[4];
-        
-        let title = rest.split(/Πεζοπορίες|Αναχώρηση|Ενεργοποίηση/i)[0].trim();
-        title = title.replace(/[:–-]$/, '').trim();
-
-        const year = resolveEventYear(monthNum, explicitYear, currentSectionYear);
-        let startDate = '';
-        let endDate = '';
-        let displayDate = '';
-
-        if (dateStr.includes('-')) {
-          const [sDay, eDay] = dateStr.split('-');
-          startDate = `${year}-${monthNum}-${sDay.padStart(2, '0')}`;
-          endDate = `${year}-${monthNum}-${eDay.padStart(2, '0')}`;
-          displayDate = `${parseInt(sDay)}-${parseInt(eDay)}/${parseInt(monthNum)}`;
-        } else {
-          startDate = `${year}-${monthNum}-${dateStr.padStart(2, '0')}`;
-          endDate = `${year}-${monthNum}-${dateStr.padStart(2, '0')}`;
-          displayDate = `${parseInt(dateStr)}/${parseInt(monthNum)}`;
+        const headerMatch = line.match(/^([a-zA-ZΑ-Ωα-ω]+)\s+(\d{4})$/i);
+        if (headerMatch) {
+          currentSectionYear = headerMatch[2];
+          continue;
         }
 
-        if (title.length >= 3) {
-          events.push({
-            startDate,
-            endDate,
-            displayDate,
-            title,
-            club: 'ΕΠΟΣ Φυλής',
-            url: defaultUrl,
-            difficulty: ''
-          });
+        // Pattern 1: Starts with date e.g. "13-14/6" or "17 /1"
+        const pattern1 = line.match(/^(\d+(?:\s*[-–—]\s*\d+)?)\s*\/\s*(\d+)(?:\/(\d{2,4}))?\s+(.+)$/);
+        if (pattern1) {
+          const dateStr = pattern1[1].replace(/\s+/g, '');
+          const monthNum = pattern1[2].padStart(2, '0');
+          const explicitYear = pattern1[3] || null;
+          const rest = pattern1[4];
+          
+          let title = rest.split(/Πεζοπορίες|Αναχώρηση|Ενεργοποίηση/i)[0].trim();
+          title = title.replace(/[:–-]$/, '').trim();
+
+          const year = resolveEventYear(monthNum, explicitYear, currentSectionYear);
+          let startDate = '';
+          let endDate = '';
+          let displayDate = '';
+
+          if (dateStr.includes('-')) {
+            const [sDay, eDay] = dateStr.split('-');
+            startDate = `${year}-${monthNum}-${sDay.padStart(2, '0')}`;
+            endDate = `${year}-${monthNum}-${eDay.padStart(2, '0')}`;
+            displayDate = `${parseInt(sDay, 10)}-${parseInt(eDay, 10)}/${parseInt(monthNum, 10)}`;
+          } else {
+            startDate = `${year}-${monthNum}-${dateStr.padStart(2, '0')}`;
+            endDate = `${year}-${monthNum}-${dateStr.padStart(2, '0')}`;
+            displayDate = `${parseInt(dateStr, 10)}/${parseInt(monthNum, 10)}`;
+          }
+
+          if (title.length >= 3) {
+            events.push({
+              startDate,
+              endDate,
+              displayDate,
+              title,
+              club: 'ΕΠΟΣ Φυλής',
+              url: defaultUrl,
+              difficulty: ''
+            });
+          }
         }
       }
     }
@@ -1325,6 +1539,8 @@ function parseFop() {
   if (fs.existsSync(htmlPath)) {
     const html = fs.readFileSync(htmlPath, 'utf-8');
     const $ = cheerio.load(html);
+    let contextYear = null;
+    let lastSeenMonth = 0;
 
     $('.gdlr-core-accordion-item-tab').each((i, el) => {
       const dateHead = $(el).find('.gdlr-core-head').text().trim();
@@ -1338,12 +1554,33 @@ function parseFop() {
       if (!dateHead && !rawTitle) return;
 
       const fullDateStr = dateHead || rawTitle;
-      const parsedDate = parseDateRange(fullDateStr);
+      const explicit4DigitYear = fullDateStr.match(/(20\d{2})/);
+      if (explicit4DigitYear) {
+        contextYear = explicit4DigitYear[1];
+      }
+
+      const parsedDate = parseDateRange(fullDateStr, contextYear);
+      if (parsedDate && parsedDate.startDate) {
+        const sMonthNum = parseInt(parsedDate.startDate.split('-')[1], 10);
+        if (!explicit4DigitYear && lastSeenMonth === 12 && sMonthNum === 1 && contextYear) {
+          contextYear = String(parseInt(contextYear, 10) + 1);
+          const reparsed = parseDateRange(fullDateStr, contextYear);
+          if (reparsed) {
+            parsedDate.startDate = reparsed.startDate;
+            parsedDate.endDate = reparsed.endDate;
+            parsedDate.displayDate = reparsed.displayDate;
+          }
+        }
+        lastSeenMonth = sMonthNum;
+        if (!contextYear) {
+          contextYear = parsedDate.startDate.split('-')[0];
+        }
+      }
 
       let difficulty = '';
-      const bdMatch = contentText.match(/ΒΔ:\s*([\d\w+]+)/i);
+      const bdMatch = contentText.match(/Β\.?\s*Δ\.?\s*:\s*([0-9+]+(?:\s*(?:[-–—&]|ή)\s*[0-9+]+)*)/i);
       if (bdMatch) {
-        difficulty = 'ΒΔ ' + bdMatch[1].trim();
+        difficulty = normalizeDifficulty(bdMatch[1]);
       }
 
       let cleanTitle = rawTitle.replace(/\s+/g, ' ').trim();
@@ -1375,6 +1612,7 @@ function parseFop() {
   if (events.length === 0 && fs.existsSync(txtPath)) {
     const content = fs.readFileSync(txtPath, 'utf-8');
     const lines = content.split('\n');
+    let contextYear = null;
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -1384,15 +1622,19 @@ function parseFop() {
       if (match) {
         const dateStr = match[1];
         const restTitle = match[2];
-        const parsedDate = parseDateRange(dateStr);
+        const explicit4DigitYear = dateStr.match(/(20\d{2})/);
+        if (explicit4DigitYear) {
+          contextYear = explicit4DigitYear[1];
+        }
+        const parsedDate = parseDateRange(dateStr, contextYear);
 
         let difficulty = '';
         for (let j = 1; j <= 3; j++) {
           if (i + j < lines.length) {
             const nextLine = lines[i + j].trim();
-            const bdMatch = nextLine.match(/ΒΔ:\s*([\d\w+]+)/i);
+            const bdMatch = nextLine.match(/Β\.?\s*Δ\.?\s*:\s*([0-9+]+(?:\s*(?:[-–—&]|ή)\s*[0-9+]+)*)/i);
             if (bdMatch) {
-              difficulty = 'ΒΔ ' + bdMatch[1].trim();
+              difficulty = normalizeDifficulty(bdMatch[1]);
               break;
             }
           }
@@ -1479,9 +1721,32 @@ function main() {
   }
 
   const addClubEvents = (club, parsedList) => {
+    const clubUrls = CLUB_URLS[club] || [];
+    const anyUrlFailed = fetchReport && clubUrls.some(u => {
+      const r = fetchReport[u];
+      return !r || (!r.success && !r.ok);
+    });
+
     if (parsedList && parsedList.length > 0) {
-      allEvents = allEvents.concat(parsedList);
-      addLog(club, 'success', parsedList.length);
+      let mergedList = [...parsedList];
+      if (anyUrlFailed && baselineData[club] && baselineData[club].length > 0) {
+        const activeBase = baselineData[club].filter(e => {
+          const evEndDate = new Date(e.endDate || e.startDate);
+          const evStartDate = new Date(e.startDate);
+          return evEndDate >= TODAY || evStartDate >= TODAY;
+        });
+        const existingKeys = new Set(mergedList.map(e => `${e.startDate}_${e.title}`));
+        const recovered = activeBase.filter(e => !existingKeys.has(`${e.startDate}_${e.title}`));
+        if (recovered.length > 0) {
+          console.warn(`⚠️ [PARTIAL RESILIENCE FALLBACK] ${club} had a partial URL fetch failure. Merged ${recovered.length} active baseline events with ${parsedList.length} parsed events.`);
+          mergedList = mergedList.concat(recovered);
+          allEvents = allEvents.concat(mergedList);
+          addLog(club, 'warning', `${parsedList.length} parsed (partial fetch error) - preserved ${recovered.length} healthy events`);
+          return;
+        }
+      }
+      allEvents = allEvents.concat(mergedList);
+      addLog(club, 'success', mergedList.length);
     } else if (baselineData[club] && baselineData[club].length > 0) {
       const activeBase = baselineData[club].filter(e => {
         const evEndDate = new Date(e.endDate || e.startDate);
@@ -1572,9 +1837,10 @@ function main() {
     addClubEvents('ΦΟΠ', []);
   }
 
-  // Filter out invalid dates, and keep only upcoming / current events (endDate >= TODAY or startDate >= TODAY)
+  // Filter out invalid dates, training schools (Σχολές), and keep only upcoming / current events (endDate >= TODAY or startDate >= TODAY)
   allEvents = allEvents.filter(e => {
     if (!e.startDate || e.startDate === 'NaN-NaN-NaN' || !/^\d{4}-\d{2}-\d{2}$/.test(e.startDate)) return false;
+    if (isSchoolTitle(e.title)) return false;
     const evEndDate = new Date(e.endDate || e.startDate);
     const evStartDate = new Date(e.startDate);
     return evEndDate >= TODAY || evStartDate >= TODAY;
@@ -1583,38 +1849,62 @@ function main() {
   // Global Smarter Deduplication
   const dedupedEvents = [];
   for (const ev of allEvents) {
-    const duplicate = dedupedEvents.find(u => 
-      u.club === ev.club && 
-      u.startDate === ev.startDate && 
-      u.endDate === ev.endDate
-    );
+    const t1 = stripGreekAccents(ev.title).toLowerCase().trim();
+    const words1 = getSignificantWords(ev.title);
+    const evHasFrag = ev.url.includes('#:~:text=');
+
+    const duplicate = dedupedEvents.find(u => {
+      if (u.club !== ev.club || u.startDate !== ev.startDate) return false;
+
+      const t2 = stripGreekAccents(u.title).toLowerCase().trim();
+      const words2 = getSignificantWords(u.title);
+      const overlap = words1.filter(w => words2.includes(w)).length;
+
+      const uHasFrag = u.url.includes('#:~:text=');
+      const isSameDedicatedUrl = !evHasFrag && !uHasFrag && ev.url === u.url && !ev.url.endsWith('/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/');
+      const isSubset = t1.includes(t2) || t2.includes(t1);
+      const minWords = Math.min(words1.length, words2.length);
+      const isWordMatch = minWords > 0 && overlap >= 1 && (overlap / minWords) >= 0.4;
+
+      if (u.endDate === ev.endDate) {
+        return isSameDedicatedUrl || isSubset || isWordMatch;
+      }
+      // Also deduplicate if endDate differs slightly (e.g. single-day summary vs multi-day detail) when URL or title clearly matches
+      return isSameDedicatedUrl || isSubset || (minWords >= 2 && (overlap / minWords) >= 0.6);
+    });
 
     if (duplicate) {
-      const t1 = stripGreekAccents(ev.title).toLowerCase().trim();
       const t2 = stripGreekAccents(duplicate.title).toLowerCase().trim();
-      
-      const words1 = getSignificantWords(ev.title);
       const words2 = getSignificantWords(duplicate.title);
-      const overlap = words1.filter(w => words2.includes(w)).length;
-      
       const isSubset = t1.includes(t2) || t2.includes(t1);
-      const isWordMatch = overlap >= 1 && (overlap / Math.min(words1.length, words2.length)) >= 0.4;
 
-      if (isSubset || isWordMatch) {
-        if (isSubset) {
-          if (ev.title.length < duplicate.title.length) duplicate.title = ev.title;
-        } else {
-          if (ev.title.length > duplicate.title.length) duplicate.title = ev.title;
+      if (isSubset) {
+        // Keep shorter clean title ONLY if it has at least 2 significant words; never overwrite a descriptive title with a 1-word generic mountain name
+        if (ev.title.length < duplicate.title.length && words1.length >= 2) {
+          duplicate.title = ev.title;
+        } else if (duplicate.title.length < ev.title.length && words2.length < 2 && words1.length >= 2) {
+          duplicate.title = ev.title;
         }
-        const evHasFrag = ev.url.includes('#:~:text=');
-        const dupHasFrag = duplicate.url.includes('#:~:text=');
-        if (!evHasFrag && dupHasFrag) {
-          duplicate.url = ev.url;
-        } else if (evHasFrag && dupHasFrag && ev.url.length > duplicate.url.length) {
-          duplicate.url = ev.url;
-        }
-        continue;
+      } else if (ev.title.length > duplicate.title.length) {
+        duplicate.title = ev.title;
       }
+
+      if (ev.endDate > duplicate.endDate) {
+        duplicate.endDate = ev.endDate;
+        duplicate.displayDate = ev.displayDate;
+      }
+
+      if (!duplicate.difficulty && ev.difficulty) {
+        duplicate.difficulty = ev.difficulty;
+      }
+
+      const dupHasFrag = duplicate.url.includes('#:~:text=');
+      if (!evHasFrag && dupHasFrag) {
+        duplicate.url = ev.url;
+      } else if (evHasFrag && dupHasFrag && ev.url.length > duplicate.url.length) {
+        duplicate.url = ev.url;
+      }
+      continue;
     }
     dedupedEvents.push(ev);
   }

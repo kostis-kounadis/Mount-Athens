@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-27
+
+### Added
+- Added official club difficulty ratings (`Β.Δ.`) inline after excursion titles (`{event.title} | Β.Δ.: {event.difficulty}`) in `src/pages/index.astro` when available.
+- Added a 4-tier sidebar difficulty filter (`ΔΥΣΚΟΛΙΑ`: `Όλες`, `Εύκολη`, `Μέτρια`, `Απαιτητική`, `Άγνωστη`) in `src/pages/index.astro`, with multi-tier matching for multi-group excursions (e.g., `Α, Β+`, `1-2`, `2 ή 5`, `1 & 2 ή Χ1`).
+- Expanded difficulty extraction in `scripts/parse-events.js` across ΕΟΣ Αχαρνών (`D_PLUS` -> `Δ+`, sorted multi-grade arrays), ΑΟΣ (`Β.Δ.` / `Βαθμός Δυσκολίας` in annual programs), ΠΟΑ (anchored title `ΒΔ` extraction + accordion body fallback), ΕΟΣ Αθηνών (`Β.Δ.` line scanning), ΕΟΣ Ηλιούπολης, and ΦΟΠ (`normalizeDifficulty`).
+- Added an explanatory section on difficulty scales (`Β.Δ.`) and filter tiers in `src/pages/info.astro`.
+
+### Changed
+- Excluded mountaineering training courses (`Σχολή` / `Σχολές` in the event title or `-course-` slug) via `isSchoolTitle` in `scripts/parse-events.js`, while preserving regular excursions aimed at school graduates (`Απόφοιτοι Σχολών`).
+
+## [1.4.0] - 2026-10-27
+
+### Added
+- Switched ΕΟΣ Αχαρνών data source to the unpaginated JSON API (`https://eosacharnon.xmiddleware.com/api/events`) with automatic fallback to multi-page Next.js HTML hydration parsing.
+- Added dynamic pagination discovery in `scripts/fetch-raw.js` for ΕΠΟΣ Φυλής (`.tribe-events-c-nav__next`), ΕΟΣ Αχαρνών (`?page=N`), and broader ΑΟΣ seasonal program slugs (`https://aos.gr/programma-*`).
+- Added structured `.hgrid.entry-content` card parsing in `parseAos` and partial-fetch baseline resilience in `addClubEvents`.
+- Added fallback composite Star ID matching (`club_startDate`) and UTC date getters in `src/pages/index.astro`.
+
+### Fixed
+- Fixed ΑΟΣ cross-month regex capture group offset, annual header year anchoring, `&` cross-month separators, weekday-prefixed date lines, and `"Αναμένεται"` placeholder filtering.
+- Fixed ΕΟΣ Αθηνών date parsing when spaces appear around slashes (`7 – 8 /11`, `6 /12`) and broadened `parseEosAthinonExoterikoy` year detection (`20\d{2}`) to prevent archived historical trips from defaulting to the current year.
+- Fixed ΦΟΠ rolling `contextYear` tracking across chronological accordion items to handle 3-digit year typos (`202`) and cross-month year resolution in `parseDateRange`.
+- Removed the `"06-09"` fallback date in `parseDateRange`, fixed global deduplication predicate and 1-word title preservation in `scripts/parse-events.js`, and aligned `scripts/detect-anomalies.js` with resilience fallback logs.
+
 ## [1.3.0] - 2026-07-28
 
 ### Added

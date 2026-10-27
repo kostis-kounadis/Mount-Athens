@@ -76,8 +76,8 @@ const defaultTheme = {
 // Group events by month & year first
 const groupedEvents = eventsData.reduce((acc: Record<string, typeof eventsData>, event) => {
   const date = new Date(event.startDate);
-  const monthName = GREEK_MONTHS[date.getMonth()];
-  const year = date.getFullYear();
+  const monthName = GREEK_MONTHS[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
   const groupKey = `${monthName} ${year}`;
   
   if (!acc[groupKey]) {
@@ -104,6 +104,22 @@ const groupedByMonthAndDate = Object.entries(groupedEvents).reduce((acc: Record<
 
 const totalEvents = eventsData.length;
 const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
+
+function getDifficultyTiers(diff?: string): string {
+  if (!diff || !diff.trim()) return 'unknown';
+  const tokens = diff.split(/[,/&]|ή|(?<!^)\s*[-–—]\s*/).map(t => t.trim()).filter(Boolean);
+  const tiers = new Set<string>();
+  for (const token of tokens) {
+    if (/^(1|1\+|Α|Α\+|A|A\+)$/i.test(token)) {
+      tiers.add('easy');
+    } else if (/^(2|2\+|Β|Β\+|B|B\+)$/i.test(token)) {
+      tiers.add('medium');
+    } else if (/^([3-9]\+?|[ΧX]\d+\+?|Γ\+?|Δ\+?|[CD]\+?)$/i.test(token)) {
+      tiers.add('hard');
+    }
+  }
+  return tiers.size > 0 ? Array.from(tiers).join(' ') : 'unknown';
+}
 ---
 
 <Layout mainClass="px-6 md:px-12" footerClass="px-6 md:px-12">
@@ -204,7 +220,48 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
             </div>
           </div>
 
-          <!-- Row 4: Favorites / Starred Filter pills -->
+          <!-- Row 4: Difficulty Filter pills -->
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΔΥΣΚΟΛΙΑ:</span>
+            <div class="flex flex-wrap gap-1.5" id="difficulty-filters-container">
+              <button 
+                data-difficulty-filter="all" 
+                class="px-2.5 py-1 rounded border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-difficulty-btn"
+              >
+                Όλες
+              </button>
+              <button 
+                data-difficulty-filter="easy" 
+                title="Β.Δ.: 1, 1+, Α, Α+"
+                class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+              >
+                Εύκολη
+              </button>
+              <button 
+                data-difficulty-filter="medium" 
+                title="Β.Δ.: 2, 2+, Β, Β+"
+                class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+              >
+                Μέτρια
+              </button>
+              <button 
+                data-difficulty-filter="hard" 
+                title="Β.Δ.: 3+, Χ1–Χ3, Γ, Δ"
+                class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+              >
+                Απαιτητική
+              </button>
+              <button 
+                data-difficulty-filter="unknown" 
+                title="Χωρίς ένδειξη Β.Δ."
+                class="px-2.5 py-1 rounded border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+              >
+                Άγνωστη
+              </button>
+            </div>
+          </div>
+
+          <!-- Row 5: Favorites / Starred Filter pills -->
           <div>
             <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΑΓΑΠΗΜΕΝΑ:</span>
             <div class="flex flex-wrap gap-1.5" id="star-filters-container">
@@ -245,9 +302,9 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
             {Object.keys(dateGroups).map(dateStr => {
               const events = dateGroups[dateStr];
               const d = new Date(dateStr);
-              const dayNum = d.getDate();
-              const dayOfWeek = GREEK_DAYS_FULL[d.getDay()];
-              const monthFull = GREEK_MONTHS_FULL[d.getMonth()];
+              const dayNum = d.getUTCDate();
+              const dayOfWeek = GREEK_DAYS_FULL[d.getUTCDay()];
+              const monthFull = GREEK_MONTHS_FULL[d.getUTCMonth()];
               
               return (
                 <div class="date-group flex flex-col md:flex-row items-stretch" data-date={dateStr}>
@@ -269,16 +326,20 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                       const theme = CLUB_THEMES[event.club] || defaultTheme;
                       const isMultiDay = event.startDate !== event.endDate;
                       const eventId = event.url || `${event.club}_${event.startDate}_${event.title}`;
+                      const fallbackId = `${event.club}_${event.startDate}`;
+                      const difficultyTiers = getDifficultyTiers(event.difficulty);
                       
-                      const searchText = `${event.title} ${event.club} ${monthYear} ${isMultiDay ? 'πολυήμερο' : 'μονοήμερο'}`;
+                      const searchText = `${event.title} ${event.club} ${monthYear} ${isMultiDay ? 'πολυήμερο' : 'μονοήμερο'} ${event.difficulty ? `Β.Δ. ${event.difficulty}` : ''}`;
                       
                       return (
                         <div 
                           class="event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3.5"
                           data-club={event.club}
                           data-duration={isMultiDay ? 'multi' : 'single'}
+                          data-difficulty={difficultyTiers}
                           data-search-text={searchText}
                           data-event-id={eventId}
+                          data-event-fallback-id={fallbackId}
                         >
                           <!-- Title & Meta Tags + Star Button -->
                           <div class="flex items-center gap-2.5 flex-grow min-w-0 pr-0 sm:pr-4">
@@ -287,6 +348,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                               type="button"
                               class="star-toggle-btn group p-1 -ml-1 text-slate-300 hover:text-orange-500 focus:outline-none transition-colors duration-150 flex-shrink-0 cursor-pointer"
                               data-event-id={eventId}
+                              data-event-fallback-id={fallbackId}
                               aria-label="Προσθήκη στα αγαπημένα"
                               title="Προσθήκη στα αγαπημένα"
                             >
@@ -304,7 +366,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
                                   rel="noopener noreferrer" 
                                   class="hover:text-slate-500 transition-colors duration-150"
                                 >
-                                  {event.title}
+                                  {event.title}{event.difficulty ? ` | Β.Δ.: ${event.difficulty}` : ''}
                                 </a>
                               </h3>
 
@@ -461,6 +523,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
     const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
     const clubFiltersContainer = document.getElementById('club-filters-container');
     const durationFiltersContainer = document.getElementById('duration-filters-container');
+    const difficultyFiltersContainer = document.getElementById('difficulty-filters-container');
     const starFiltersContainer = document.getElementById('star-filters-container');
     
     const eventRows = document.querySelectorAll('.event-row');
@@ -473,6 +536,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
     let activeClub = 'all';
     let activeDuration = 'all';
+    let activeDifficulty = 'all';
     let activeStarFilter = 'all';
     let searchQuery = '';
 
@@ -498,14 +562,23 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
     let starredEvents = getStarredEvents();
 
+    function isEventStarred(eventId: string | null, fallbackId: string | null): boolean {
+      if (eventId && starredEvents.has(eventId)) return true;
+      if (fallbackId && starredEvents.has(fallbackId)) return true;
+      return false;
+    }
+
     function updateStarUI() {
       const allStarBtns = document.querySelectorAll('.star-toggle-btn');
+      let activeStarredRows = 0;
       allStarBtns.forEach(btn => {
         const b = btn as HTMLButtonElement;
         const eventId = b.getAttribute('data-event-id');
+        const fallbackId = b.getAttribute('data-event-fallback-id');
         const svg = b.querySelector('.star-icon');
         
-        if (eventId && starredEvents.has(eventId)) {
+        if (isEventStarred(eventId, fallbackId)) {
+          activeStarredRows++;
           b.classList.remove('text-slate-300');
           b.classList.add('text-orange-500', 'is-starred');
           b.setAttribute('title', 'Αφαίρεση από τα αγαπημένα');
@@ -525,7 +598,7 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       });
 
       if (statStarredCount) {
-        statStarredCount.textContent = starredEvents.size.toString();
+        statStarredCount.textContent = activeStarredRows.toString();
       }
     }
 
@@ -542,12 +615,15 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       e.stopPropagation();
 
       const eventId = starBtn.getAttribute('data-event-id');
+      const fallbackId = starBtn.getAttribute('data-event-fallback-id');
       if (!eventId) return;
 
-      if (starredEvents.has(eventId)) {
+      if (isEventStarred(eventId, fallbackId)) {
         starredEvents.delete(eventId);
+        if (fallbackId) starredEvents.delete(fallbackId);
       } else {
         starredEvents.add(eventId);
+        if (fallbackId) starredEvents.add(fallbackId);
       }
 
       saveStarredEvents(starredEvents);
@@ -579,18 +655,21 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
         const rowElement = row as HTMLElement;
         const clubVal = rowElement.getAttribute('data-club') || '';
         const durationVal = rowElement.getAttribute('data-duration') || '';
+        const difficultyVal = rowElement.getAttribute('data-difficulty') || 'unknown';
         const eventId = rowElement.getAttribute('data-event-id') || '';
+        const fallbackId = rowElement.getAttribute('data-event-fallback-id') || '';
         const searchRaw = rowElement.getAttribute('data-search-text') || '';
         const cleanSearchText = cleanString(searchRaw);
 
-        const isStarred = starredEvents.has(eventId);
+        const isStarred = isEventStarred(eventId, fallbackId);
 
         const clubMatches = (activeClub === 'all' || clubVal === activeClub);
         const durationMatches = (activeDuration === 'all' || durationVal === activeDuration);
+        const difficultyMatches = (activeDifficulty === 'all' || difficultyVal.split(' ').includes(activeDifficulty));
         const starMatches = (activeStarFilter === 'all' || isStarred);
         const searchMatches = (cleanQuery === '' || cleanSearchText.includes(cleanQuery));
 
-        if (clubMatches && durationMatches && starMatches && searchMatches) {
+        if (clubMatches && durationMatches && difficultyMatches && starMatches && searchMatches) {
           rowElement.classList.remove('hidden');
           visibleCount++;
         } else {
@@ -722,6 +801,33 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
       });
     }
 
+    // Difficulty selection filters
+    if (difficultyFiltersContainer) {
+      difficultyFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-difficulty-filter]') as HTMLButtonElement;
+        if (!button) return;
+
+        const selectedDifficulty = button.getAttribute('data-difficulty-filter') || 'all';
+        activeDifficulty = selectedDifficulty;
+
+        const allButtons = difficultyFiltersContainer.querySelectorAll('[data-difficulty-filter]');
+        allButtons.forEach(btn => {
+          const b = btn as HTMLButtonElement;
+          const difficultyAttr = b.getAttribute('data-difficulty-filter');
+
+          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
+          if (activeDifficulty === difficultyAttr) {
+            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-difficulty-btn');
+          } else {
+            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+          }
+        });
+
+        applyFilters();
+      });
+    }
+
     // Star selection filters
     if (starFiltersContainer) {
       starFiltersContainer.addEventListener('click', (e) => {
@@ -760,6 +866,9 @@ const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
 
       const allDurationBtn = document.querySelector('[data-duration-filter="all"]') as HTMLButtonElement;
       if (allDurationBtn) allDurationBtn.click();
+
+      const allDifficultyBtn = document.querySelector('[data-difficulty-filter="all"]') as HTMLButtonElement;
+      if (allDifficultyBtn) allDifficultyBtn.click();
 
       const allStarBtn = document.querySelector('[data-star-filter="all"]') as HTMLButtonElement;
       if (allStarBtn) allStarBtn.click();
