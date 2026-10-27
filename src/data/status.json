@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-10-27T10:36:38.959Z",
+  "lastUpdated": "2026-10-27T10:38:50.839Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -8,8 +8,10 @@
       "fetch": [
         {
           "url": "https://eosacharnon.xmiddleware.com/api/events",
-          "ok": true,
-          "status": 200
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 54801
         }
       ]
     },
@@ -37,7 +39,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 987523
+          "size": 987526
         }
       ]
     },
@@ -65,14 +67,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 171367
+          "size": 171734
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 222700
+          "size": 223067
         }
       ]
     },
@@ -86,14 +88,14 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 303611
+          "size": 303615
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "success",
-      "details": "Parsed 21 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 2 healthy events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25",
@@ -128,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150940
+          "size": 150956
         }
       ]
     }
