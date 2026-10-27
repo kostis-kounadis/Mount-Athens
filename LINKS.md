@@ -1,6 +1,7 @@
 # ΑΟΣ
 - https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/
 - https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/
+- https://aos.gr/wp-json/wp/v2/posts?per_page=25
 
 # ΕΟΣ Αθηνών
 - https://www.eosathinon.gr/anavaseis/programma/

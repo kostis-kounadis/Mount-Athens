@@ -519,14 +519,49 @@ function parseEosAcharnon() {
 function parseAos() {
   const urlMap = {};
   const dateUrlMap = {};
+  const urlDifficultyMap = {};
   const events = [];
   const defaultUrl = 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/';
   const aosHtmlFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('aos_gr_') && f.endsWith('.html'));
 
+  const extractAosDifficulty = (textOrHtml, isHtml = false) => {
+    if (!textOrHtml) return '';
+    const text = isHtml ? cheerio.load(textOrHtml).text().replace(/\s+/g, ' ') : textOrHtml;
+    const matches = [...text.matchAll(/(?:Β\.?\s*Δ\.?|Βαθμ[οό]ς\s+Δυσκολ[ιί]ας)\s*[:=.]?\s*([1-6]\+?(?:\s*(?:\/|ή|&|-)\s*[1-6]\+?)*)/gi)];
+    if (matches.length === 0) return '';
+    const order = ['1', '1+', '2', '2+', '3', '3+', '4', '4+', '5', '5+', '6', '6+'];
+    const grades = new Set();
+    for (const m of matches) {
+      const tokens = m[1].split(/\/|ή|&|-/).map(t => t.trim()).filter(Boolean);
+      tokens.forEach(t => grades.add(t));
+    }
+    return Array.from(grades).sort((a, b) => order.indexOf(a) - order.indexOf(b)).join(', ');
+  };
+
+  // Pre-load sub-link difficulties from AOS WordPress REST API posts if available
+  for (const htmlFile of aosHtmlFiles.filter(f => f.includes('wp-json-wp-v2-posts'))) {
+    const filePath = path.join(INPUT_DIR, htmlFile);
+    if (!fs.existsSync(filePath)) continue;
+    try {
+      const rawContent = fs.readFileSync(filePath, 'utf-8').trim();
+      if (!rawContent.startsWith('[')) continue;
+      const posts = JSON.parse(rawContent);
+      for (const post of posts) {
+        const link = (post.link || '').replace(/\/$/, '');
+        const diff = extractAosDifficulty(post.content?.rendered || '', true);
+        if (link && diff) {
+          urlDifficultyMap[link] = diff;
+        }
+      }
+    } catch (e) {
+      console.error(`Failed to parse AOS WP REST API in ${htmlFile}:`, e.message);
+    }
+  }
+
   const isPlaceholderTitle = (t) => /^αναμ[εέ]ν(εται|ονται)/i.test(stripGreekAccents(t).trim());
   const isMetadataLine = (t) => /^(αρχηγοι|ομαδα|ω\.?π|ωρα|διαθεσιμοτητα|συμμετοχες|κοστος|αναχωρηση|σημειωση|λεπτομερειες|για λεπτομερειες|ετικετες|τρεχουσες και επερχομενες)/i.test(stripGreekAccents(t).trim());
 
-  for (const file of aosHtmlFiles) {
+  for (const file of aosHtmlFiles.filter(f => !f.includes('wp-json-wp-v2-posts'))) {
     const filePath = path.join(INPUT_DIR, file);
     if (!fs.existsSync(filePath)) continue;
 
@@ -729,21 +764,20 @@ function parseAos() {
         cleanTitle = cleanTitle.split('Αρχηγοί')[0].trim();
         cleanTitle = cleanTitle.replace(/^[–\-:\s]+|[–\-:\s]+$/g, '').trim();
 
-        let difficulty = '';
-        for (let k = i; k <= Math.min(i + 12, lines.length - 1); k++) {
-          if (k > i) {
-            const nextL = lines[k].trim();
-            if (/^\d+[\/\-]/.test(nextL) || parseGreekMonth(nextL)) break;
-          }
-          const bdMatch = lines[k].match(/(?:Β\.?\s*Δ\.?|Βαθμ[οό]ς\s+Δυσκολ[ιί]ας)\s*[:=]?\s*([0-9]+(?:\s*[+–\-]\s*[0-9+]*)?)/i);
-          if (bdMatch) {
-            difficulty = normalizeDifficulty(bdMatch[1]);
-            break;
-          }
+        const blockLines = [lines[i]];
+        for (let k = i + 1; k <= Math.min(i + 35, lines.length - 1); k++) {
+          const nextL = lines[k].trim();
+          if (/^\d+[\/\-]/.test(nextL) || parseGreekMonth(nextL)) break;
+          blockLines.push(nextL);
         }
+        let difficulty = extractAosDifficulty(blockLines.join(' '), false);
 
         if (cleanTitle && cleanTitle.length >= 3 && !isPlaceholderTitle(cleanTitle) && !/^\d+η\s+ημ[εέ]ρα/i.test(cleanTitle)) {
           const matchedUrl = matchTitleToUrl(cleanTitle, urlMap, defaultUrl);
+          const cleanHref = (matchedUrl || '').replace(/\/$/, '');
+          if (!difficulty && urlDifficultyMap[cleanHref]) {
+            difficulty = urlDifficultyMap[cleanHref];
+          }
           events.push({
             startDate: sDate,
             endDate: eDate,
@@ -780,14 +814,16 @@ function parseAos() {
 
         const parsed = parseDateRange(dateStr, currentSectionYear);
         if (parsed && title.length >= 3 && !isPlaceholderTitle(title) && !isMetadataLine(title)) {
+          const matchedUrl = matchTitleToUrl(title, urlMap, defaultUrl);
+          const cleanHref = (matchedUrl || '').replace(/\/$/, '');
           events.push({
             startDate: parsed.startDate,
             endDate: parsed.endDate,
             displayDate: parsed.displayDate,
             title,
             club: 'ΑΟΣ',
-            url: matchTitleToUrl(title, urlMap, defaultUrl),
-            difficulty: ''
+            url: matchedUrl,
+            difficulty: urlDifficultyMap[cleanHref] || ''
           });
         }
       }
@@ -797,6 +833,10 @@ function parseAos() {
   // Deduplicate events by title & startDate while preserving difficulty and dedicated URLs
   const seenMap = new Map();
   for (const e of events) {
+    const cleanHref = (e.url || '').replace(/\/$/, '');
+    if (!e.difficulty && urlDifficultyMap[cleanHref]) {
+      e.difficulty = urlDifficultyMap[cleanHref];
+    }
     const key = `${e.startDate}_${e.title}`;
     if (!seenMap.has(key)) {
       seenMap.set(key, e);
