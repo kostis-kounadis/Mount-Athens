@@ -7,14 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-10-27
+
+### Added
+- Added a list of parsed mountaineering clubs and their source schedule links in `src/pages/info.astro`.
+- Added difficulty (`Β.Δ.`) extraction for ΕΠΟΣ Φυλής via its Tribe Events REST API (`wp-json/tribe/events/v1/events`) with dynamic `next_rest_url` pagination support.
+- Added numeric and verbal difficulty (`Εύκολη`, `Μέτρια`, `Δύσκολη`) extraction for ΦΟΝΙ via its WordPress REST API (`wp-json/wp/v2/posts?categories=59`) and mapped verbal tokens in `src/pages/index.astro`.
+- Added sub-link difficulty extraction (`wp-json/wp/v2/posts`) and multi-team annual block scanning (`Ομάδα Α` + `Ομάδα Β`) for ΑΟΣ in `scripts/parse-events.js`.
+
+### Fixed
+- Excluded pure sightseeing/museum trips (`Περιηγητική`) and first-aid seminars (`Σεμινάριο`) in `parseFoni` only when zero hiking/trail indicators exist in both title and body, and preserved full place names before dashes (e.g., `Καμάρι – Παναγία η Κορφιώτισσα`).
+- Fixed hyphenated start-day matching (`30-31 Αυγούστου & 01 Σεπτεμβρίου 2025`) in `parseDateRange` cross-month regex.
+
 ## [1.5.0] - 2026-10-27
 
 ### Added
 - Added official club difficulty ratings (`Β.Δ.`) inline after excursion titles (`{event.title} | Β.Δ.: {event.difficulty}`) in `src/pages/index.astro` when available.
 - Added a 4-tier sidebar difficulty filter (`ΔΥΣΚΟΛΙΑ`: `Όλες`, `Εύκολη`, `Μέτρια`, `Απαιτητική`, `Άγνωστη`) in `src/pages/index.astro`, with multi-tier matching for multi-group excursions (e.g., `Α, Β+`, `1-2`, `2 ή 5`, `1 & 2 ή Χ1`).
-- Expanded difficulty extraction in `scripts/parse-events.js` across ΕΟΣ Αχαρνών (`D_PLUS` -> `Δ+`, sorted multi-grade arrays), ΑΟΣ (`Β.Δ.` / `Βαθμός Δυσκολίας` in annual programs and sub-link posts via `wp-json/wp/v2/posts`), ΠΟΑ (anchored title `ΒΔ` extraction + accordion body fallback), ΕΟΣ Αθηνών (`Β.Δ.` line scanning), ΕΟΣ Ηλιούπολης, ΕΠΟΣ Φυλής (via Tribe Events REST API `wp-json/tribe/events/v1/events`), ΦΟΝΙ (via WordPress REST API `wp-json/wp/v2/posts?categories=59`, supporting both numeric and verbal ratings `Εύκολη`/`Μέτρια`/`Δύσκολη` and excluding pure sightseeing/seminar posts), and ΦΟΠ (`normalizeDifficulty`).
+- Expanded difficulty extraction in `scripts/parse-events.js` across ΕΟΣ Αχαρνών (`D_PLUS` -> `Δ+`, sorted multi-grade arrays), ΑΟΣ (`Β.Δ.` / `Βαθμός Δυσκολίας` in annual programs), ΠΟΑ (anchored title `ΒΔ` extraction + accordion body fallback), ΕΟΣ Αθηνών (`Β.Δ.` line scanning), ΕΟΣ Ηλιούπολης, and ΦΟΠ (`normalizeDifficulty`).
 - Added an explanatory section on difficulty scales (`Β.Δ.`) and filter tiers in `src/pages/info.astro`.
-- Added a list of parsed mountaineering clubs and their source schedule links in `src/pages/info.astro`.
 
 ### Changed
 - Excluded mountaineering training courses (`Σχολή` / `Σχολές` in the event title or `-course-` slug) via `isSchoolTitle` in `scripts/parse-events.js`, while preserving regular excursions aimed at school graduates (`Απόφοιτοι Σχολών`).
