@@ -198,6 +198,27 @@ async function main() {
         }
       }
 
+      // Dynamic pagination discovery for EPOS Filis Tribe Events REST API
+      if (url.includes('eposfilis.gr/wp-json/tribe/events/v1/events')) {
+        try {
+          const parsed = JSON.parse(result.html);
+          if (parsed && parsed.next_rest_url && parsed.next_rest_url.startsWith('https://eposfilis.gr/')) {
+            const nextApiUrl = parsed.next_rest_url.trim();
+            const pageMatch = nextApiUrl.match(/[?&]page=(\d+)/);
+            const pageNum = pageMatch ? parseInt(pageMatch[1], 10) : 2;
+            if (pageNum <= 5 && !urls.includes(nextApiUrl)) {
+              console.log(`✨ Dynamically discovered EPOS Filis API pagination URL: ${nextApiUrl}`);
+              urls.push(nextApiUrl);
+              if (linkConfig['ΕΠΟΣ Φυλής'] && !linkConfig['ΕΠΟΣ Φυλής'].includes(nextApiUrl)) {
+                linkConfig['ΕΠΟΣ Φυλής'].push(nextApiUrl);
+              }
+            }
+          }
+        } catch (e) {
+          console.error('Error discovering EPOS Filis API pagination:', e.message);
+        }
+      }
+
       // Dynamic pagination discovery for EPOS Filis Tribe Events list view
       if (url.includes('eposfilis.gr/events/category/')) {
         try {

@@ -13,7 +13,7 @@
 - https://eosh.gr/api/trips
 
 # ΕΠΟΣ Φυλής
-- https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/
+- https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50
 
 # ΠΟΑ
 - https://poa.gr/index.php/programma/

@@ -1353,13 +1353,83 @@ function parseFoni() {
 }
 
 // ----------------------------------------------------
-// PARSER: EPOS Filis (Tribe Events Cheerio DOM)
+// PARSER: EPOS Filis (Tribe Events REST API + Cheerio DOM Fallback)
 // ----------------------------------------------------
 function parseEposFilis() {
   const htmlFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('eposfilis_gr_') && f.endsWith('.html'));
   const txtFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('eposfilis_gr_') && f.endsWith('.txt'));
   const defaultUrl = 'https://eposfilis.gr/events/category/%ce%b7%ce%bc%ce%b5%cf%81%ce%bf%ce%bb%cf%8c%ce%b3%ce%b9%ce%bf/';
   const events = [];
+
+  const extractEposDifficulty = (descHtml) => {
+    if (!descHtml) return '';
+    const plainDesc = cheerio.load(descHtml).text().replace(/\s+/g, ' ');
+    const matches = [...plainDesc.matchAll(/Β\.?\s*Δ\.?\s*[:=]?\s*([1-6]\+?(?:\s*(?:\/|ή|&|-)\s*[1-6]\+?)*)/gi)];
+    if (matches.length === 0) return '';
+    const order = ['1', '1+', '2', '2+', '3', '3+', '4', '4+', '5', '5+', '6'];
+    const grades = new Set();
+    for (const m of matches) {
+      const tokens = m[1].split(/\/|ή|&|-/).map(t => t.trim()).filter(Boolean);
+      tokens.forEach(t => grades.add(t));
+    }
+    const sorted = Array.from(grades).sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    return sorted.join(', ');
+  };
+
+  const cleanEposTitle = (rawTitle) => {
+    const clean = rawTitle
+      .replace(/^\d+(?:\s*[-–—]\s*\d+)?\s*\/\s*\d+(?:\/\d{2,4})?\s*(?:[-–—]\s*\d+(?:\s*[-–—]\s*\d+)?\s*\/\s*\d+(?:\/\d{2,4})?)?\s*/, '')
+      .replace(/^(?:Δευτέρα|Τρίτη|Τετάρτη|Πέμπτη|Παρασκευή|Σάββατο|Κυριακή)\s*/i, '')
+      .replace(/^[-–—:\s]+|[-–—:\s]+$/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return clean || rawTitle;
+  };
+
+  // Strategy 1: Tribe Events REST API JSON files (Primary - includes full description & Β.Δ.)
+  const apiFiles = htmlFiles.filter(f => f.includes('wp-json-tribe-events'));
+  for (const file of apiFiles) {
+    const filePath = path.join(INPUT_DIR, file);
+    if (!fs.existsSync(filePath)) continue;
+    try {
+      const rawContent = fs.readFileSync(filePath, 'utf-8').trim();
+      if (!rawContent.startsWith('{')) continue;
+      const data = JSON.parse(rawContent);
+      const apiEvents = Array.isArray(data.events) ? data.events : [];
+      for (const ev of apiEvents) {
+        const startDate = (ev.start_date || '').slice(0, 10);
+        const endDate = (ev.end_date || ev.start_date || '').slice(0, 10);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(startDate)) continue;
+
+        const [, sMonth, sDay] = startDate.split('-');
+        const [, eMonth, eDay] = endDate.split('-');
+        let displayDate = '';
+        if (startDate === endDate) {
+          displayDate = `${parseInt(sDay, 10)}/${parseInt(sMonth, 10)}`;
+        } else if (sMonth === eMonth) {
+          displayDate = `${parseInt(sDay, 10)}-${parseInt(eDay, 10)}/${parseInt(sMonth, 10)}`;
+        } else {
+          displayDate = `${parseInt(sDay, 10)}/${parseInt(sMonth, 10)} - ${parseInt(eDay, 10)}/${parseInt(eMonth, 10)}`;
+        }
+
+        const decodedTitle = cheerio.load(ev.title || '').text().trim();
+        const cleanTitle = cleanEposTitle(decodedTitle);
+        if (cleanTitle.length < 3 || isSchoolTitle(cleanTitle)) continue;
+
+        events.push({
+          startDate,
+          endDate,
+          displayDate,
+          title: cleanTitle,
+          club: 'ΕΠΟΣ Φυλής',
+          url: ev.url || defaultUrl,
+          difficulty: extractEposDifficulty(ev.description || '')
+        });
+      }
+    } catch (e) {
+      console.error(`Failed to parse EPOS Filis JSON API in ${file}:`, e.message);
+    }
+  }
 
   const parseMonthName = (mStr) => {
     const clean = stripGreekAccents((mStr || '').toLowerCase().trim());
@@ -1374,8 +1444,9 @@ function parseEposFilis() {
     return map[clean] || parseGreekMonth(clean) || parseEnglishMonth(clean) || null;
   };
 
-  // Strategy 1: Cheerio HTML DOM parsing on Tribe Events markup across all fetched pages (Primary)
-  for (const file of htmlFiles) {
+  // Strategy 2: Cheerio HTML DOM parsing on Tribe Events markup across fetched HTML pages (Fallback)
+  if (events.length === 0) {
+    for (const file of htmlFiles.filter(f => !f.includes('wp-json-tribe-events'))) {
     const htmlPath = path.join(INPUT_DIR, file);
     if (!fs.existsSync(htmlPath)) continue;
     try {
@@ -1455,9 +1526,10 @@ function parseEposFilis() {
     } catch (e) {
       console.error(`Failed to parse EPOS Filis HTML DOM in ${file}:`, e.message);
     }
+    }
   }
 
-  // Strategy 2: Text regex parsing fallback if Strategy 1 yields 0 events
+  // Strategy 3: Text regex parsing fallback if Strategies 1 & 2 yield 0 events
   if (events.length === 0 && txtFiles.length > 0) {
     for (const file of txtFiles) {
       const txtPath = path.join(INPUT_DIR, file);
