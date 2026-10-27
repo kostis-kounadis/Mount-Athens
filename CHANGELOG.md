@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a 4-tier sidebar difficulty filter (`ΔΥΣΚΟΛΙΑ`: `Όλες`, `Εύκολη`, `Μέτρια`, `Απαιτητική`, `Άγνωστη`) in `src/pages/index.astro`, with multi-tier matching for multi-group excursions (e.g., `Α, Β+`, `1-2`, `2 ή 5`, `1 & 2 ή Χ1`).
 - Expanded difficulty extraction in `scripts/parse-events.js` across ΕΟΣ Αχαρνών (`D_PLUS` -> `Δ+`, sorted multi-grade arrays), ΑΟΣ (`Β.Δ.` / `Βαθμός Δυσκολίας` in annual programs), ΠΟΑ (anchored title `ΒΔ` extraction + accordion body fallback), ΕΟΣ Αθηνών (`Β.Δ.` line scanning), ΕΟΣ Ηλιούπολης, and ΦΟΠ (`normalizeDifficulty`).
 - Added an explanatory section on difficulty scales (`Β.Δ.`) and filter tiers in `src/pages/info.astro`.
+- Added a list of parsed mountaineering clubs and their source schedule links in `src/pages/info.astro`.
 
 ### Changed
 - Excluded mountaineering training courses (`Σχολή` / `Σχολές` in the event title or `-course-` slug) via `isSchoolTitle` in `scripts/parse-events.js`, while preserving regular excursions aimed at school graduates (`Απόφοιτοι Σχολών`).
