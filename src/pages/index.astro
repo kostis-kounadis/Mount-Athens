@@ -110,11 +110,11 @@ function getDifficultyTiers(diff?: string): string {
   const tokens = diff.split(/[,/&]|ή|(?<!^)\s*[-–—]\s*/).map(t => t.trim()).filter(Boolean);
   const tiers = new Set<string>();
   for (const token of tokens) {
-    if (/^(1|1\+|Α|Α\+|A|A\+)$/i.test(token)) {
+    if (/^(1|1\+|Α|Α\+|A|A\+|ε[υύ]κολ[ηοος]*)$/i.test(token)) {
       tiers.add('easy');
-    } else if (/^(2|2\+|Β|Β\+|B|B\+)$/i.test(token)) {
+    } else if (/^(2|2\+|Β|Β\+|B|B\+|μ[εέ]τρι[αοος]*)$/i.test(token)) {
       tiers.add('medium');
-    } else if (/^([3-9]\+?|[ΧX]\d+\+?|Γ\+?|Δ\+?|[CD]\+?)$/i.test(token)) {
+    } else if (/^([3-9]\+?|[ΧX]\d+\+?|Γ\+?|Δ\+?|[CD]\+?|δ[υύ]σκολ[ηοος]*|απαιτητικ[ήηοος]*)$/i.test(token)) {
       tiers.add('hard');
     }
   }

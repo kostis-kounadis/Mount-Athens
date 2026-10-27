@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added official club difficulty ratings (`Β.Δ.`) inline after excursion titles (`{event.title} | Β.Δ.: {event.difficulty}`) in `src/pages/index.astro` when available.
 - Added a 4-tier sidebar difficulty filter (`ΔΥΣΚΟΛΙΑ`: `Όλες`, `Εύκολη`, `Μέτρια`, `Απαιτητική`, `Άγνωστη`) in `src/pages/index.astro`, with multi-tier matching for multi-group excursions (e.g., `Α, Β+`, `1-2`, `2 ή 5`, `1 & 2 ή Χ1`).
-- Expanded difficulty extraction in `scripts/parse-events.js` across ΕΟΣ Αχαρνών (`D_PLUS` -> `Δ+`, sorted multi-grade arrays), ΑΟΣ (`Β.Δ.` / `Βαθμός Δυσκολίας` in annual programs), ΠΟΑ (anchored title `ΒΔ` extraction + accordion body fallback), ΕΟΣ Αθηνών (`Β.Δ.` line scanning), ΕΟΣ Ηλιούπολης, ΕΠΟΣ Φυλής (via Tribe Events REST API `wp-json/tribe/events/v1/events`), and ΦΟΠ (`normalizeDifficulty`).
+- Expanded difficulty extraction in `scripts/parse-events.js` across ΕΟΣ Αχαρνών (`D_PLUS` -> `Δ+`, sorted multi-grade arrays), ΑΟΣ (`Β.Δ.` / `Βαθμός Δυσκολίας` in annual programs), ΠΟΑ (anchored title `ΒΔ` extraction + accordion body fallback), ΕΟΣ Αθηνών (`Β.Δ.` line scanning), ΕΟΣ Ηλιούπολης, ΕΠΟΣ Φυλής (via Tribe Events REST API `wp-json/tribe/events/v1/events`), ΦΟΝΙ (via WordPress REST API `wp-json/wp/v2/posts?categories=59`, supporting both numeric and verbal ratings `Εύκολη`/`Μέτρια`/`Δύσκολη` and excluding pure sightseeing/seminar posts), and ΦΟΠ (`normalizeDifficulty`).
 - Added an explanatory section on difficulty scales (`Β.Δ.`) and filter tiers in `src/pages/info.astro`.
 - Added a list of parsed mountaineering clubs and their source schedule links in `src/pages/info.astro`.
 

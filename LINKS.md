@@ -19,7 +19,7 @@
 - https://poa.gr/index.php/programma/
 
 # ΦΟΝΙ
-- https://www.foni.org.gr/category/ekdromes/
+- https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25
 
 # ΦΟΠ
 - https://fop.gr/

@@ -283,8 +283,8 @@ function parseDateRange(dateText, contextYear = null) {
     };
   }
 
-  // Format: "29 Μαΐου – 01 Ιουνίου 2026" or "21 Αυγούστου έως 30 Αυγούστου 2026"
-  const rangeTwoMonthsMatch = cleanText.match(/^(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*(?:[-–—&]|έως|εως|και)\s*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i);
+  // Format: "29 Μαΐου – 01 Ιουνίου 2026" or "21 Αυγούστου έως 30 Αυγούστου 2026" or "30-31 Αυγούστου & 01 Σεπτεμβρίου 2025"
+  const rangeTwoMonthsMatch = cleanText.match(/^(\d+)(?:\s*[-–—]\s*\d+)*\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)\s*(?:[-–—&]|έως|εως|και)\s*(?:\d+\s*[-–—]\s*)*(\d+)\s+([Α-Ωα-ωίϊΐόάέύώήώ]+)(?:\s+(\d{4}))?/i);
   if (rangeTwoMonthsMatch) {
     const startDay = rangeTwoMonthsMatch[1].padStart(2, '0');
     const startMonthStr = rangeTwoMonthsMatch[2];
@@ -1269,18 +1269,95 @@ function parseEosHalioupolis() {
 }
 
 // ----------------------------------------------------
-// PARSER: FONI (Cheerio Article & Text)
+// PARSER: FONI (WordPress REST API + Cheerio Article & Text Fallback)
 // ----------------------------------------------------
 function parseFoni() {
+  const apiFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('www_foni_org_gr_wp-json') && f.endsWith('.html'));
   const htmlPath = path.join(INPUT_DIR, 'foni_org_gr_category-ekdromes.html');
+  const altHtmlPath = path.join(INPUT_DIR, 'www_foni_org_gr_category-ekdromes.html');
   const txtPath = path.join(INPUT_DIR, 'foni_org_gr_category-ekdromes.txt');
   const defaultUrl = 'https://www.foni.org.gr/category/ekdromes/';
   const urlMap = {};
   const events = [];
 
-  if (fs.existsSync(htmlPath)) {
+  const extractFoniDifficulty = (descHtml) => {
+    if (!descHtml) return '';
+    const text = cheerio.load(descHtml).text().replace(/\s+/g, ' ');
+    const matches = [...text.matchAll(/(?:βαθμ[οό]ς\s+δυσκολ[ιί]ας|Β\.?\s*Δ\.?|δυσκολ[ιί]α)\s*[:=]\s*([^\n.;,()]+)/gi)];
+    if (matches.length === 0) return '';
+    const order = ['1', '1+', 'Εύκολη', '2', '2+', 'Μέτρια', '3', '3+', '4', '5', '6', 'Δύσκολη', 'Απαιτητική'];
+    const grades = new Set();
+    for (const m of matches) {
+      const raw = m[1].trim();
+      const numMatch = raw.match(/^([1-6])\s*(\+)?/);
+      if (numMatch) {
+        grades.add(numMatch[1] + (numMatch[2] || ''));
+        continue;
+      }
+      if (/^ε[υύ]κολ/i.test(raw)) grades.add('Εύκολη');
+      else if (/^μ[εέ]τρι/i.test(raw)) grades.add('Μέτρια');
+      else if (/^(?:δ[υύ]σκολ|απαιτητικ)/i.test(raw)) grades.add('Δύσκολη');
+    }
+    return Array.from(grades).sort((a, b) => order.indexOf(a) - order.indexOf(b)).join(', ');
+  };
+
+  const cleanFoniActivityPrefix = (afterSlash) => {
+    return afterSlash
+      .replace(/^(?:(?:καλοκαιριν[ήη]\s+)?πεζοπορικ[ήη](?:\s*(?:&|και|[-–—])\s*(?:αποκριατικ[ήη]|via\s+cordat+a|αγ[ώω]νας\s+ορεινο[ύυ]\s+τρεξ[ίι]ματος))?)\s*[:–-]\s*/i, '')
+      .trim();
+  };
+
+  // Strategy 1: WordPress REST API (Primary - includes full post content & difficulty)
+  for (const file of apiFiles) {
+    const filePath = path.join(INPUT_DIR, file);
+    if (!fs.existsSync(filePath)) continue;
     try {
-      const html = fs.readFileSync(htmlPath, 'utf-8');
+      const rawContent = fs.readFileSync(filePath, 'utf-8').trim();
+      if (!rawContent.startsWith('[')) continue;
+      const posts = JSON.parse(rawContent);
+      for (const post of posts) {
+        const rawTitle = cheerio.load(post.title?.rendered || '').text().trim();
+        const bodyHtml = post.content?.rendered || '';
+        const bodyText = cheerio.load(bodyHtml).text().replace(/\s+/g, ' ');
+        const href = post.link || defaultUrl;
+
+        const match = rawTitle.match(/^(.+?)\s+\/\s+(.+)$/i);
+        if (!match) continue;
+
+        const dateText = match[1].trim();
+        const rawAfterSlash = match[2].trim();
+
+        // Zero-false-positive non-hiking filter:
+        // Only exclude when explicitly labeled a seminar or sightseeing trip AND devoid of any hiking/trail indicators
+        const hasAnyHikeSignal = /πεζοπορ|ανάβαση|αναβαση|μονοπάτι|μονοπατι|υψομετρικ|μήκος διαδρομής|βαθμός δυσκολίας|δυσκολία\s*:|ώρες πορείας/i.test(rawTitle + ' ' + bodyText);
+        const isSeminar = /^σεμιν[άα]ριο\b/i.test(rawAfterSlash);
+        const isPureSightseeing = (/^(?:καλοκαιριν[ήη]\s+)?περιηγητικ[ήη](?:\s*[:–-])|περιηγητικ[ήη]\s+εκδρομ[ήη]/i.test(rawAfterSlash + ' ' + bodyText)) && !hasAnyHikeSignal;
+        if (isSeminar || isPureSightseeing) continue;
+
+        const eventTitle = cleanFoniActivityPrefix(rawAfterSlash);
+        const parsed = parseDateRange(dateText);
+        if (parsed && eventTitle.length >= 3 && !isSchoolTitle(eventTitle)) {
+          events.push({
+            startDate: parsed.startDate,
+            endDate: parsed.endDate,
+            displayDate: parsed.displayDate,
+            title: eventTitle,
+            club: 'ΦΟΝΙ',
+            url: href,
+            difficulty: extractFoniDifficulty(bodyHtml)
+          });
+        }
+      }
+    } catch (e) {
+      console.error(`Failed to parse FONI JSON API in ${file}:`, e.message);
+    }
+  }
+
+  // Strategy 2: HTML DOM fallback
+  const activeHtmlPath = fs.existsSync(htmlPath) ? htmlPath : (fs.existsSync(altHtmlPath) ? altHtmlPath : null);
+  if (events.length === 0 && activeHtmlPath) {
+    try {
+      const html = fs.readFileSync(activeHtmlPath, 'utf-8');
       const $ = cheerio.load(html);
       $('article').each((i, el) => {
         const titleLink = $(el).find('.elementor-post__title a');
@@ -1289,11 +1366,12 @@ function parseFoni() {
         if (rawTitle && href) {
           urlMap[rawTitle] = href;
 
-          // Check if article title has dates: e.g. "12-13 Σεπτεμβρίου 2026 / Πεζοπορική – Εύβοια..."
-          const match = rawTitle.match(/^(.+?)\s+\/\s+(?:[Α-Ωα-ωίϊΐόάέύώήώ\s,&]+\s*[:–-]\s*)?(.+)$/i);
+          const match = rawTitle.match(/^(.+?)\s+\/\s+(.+)$/i);
           if (match) {
             const dateText = match[1].trim();
-            const eventTitle = match[2].trim();
+            const rawAfterSlash = match[2].trim();
+            if (/^(?:σεμιν[άα]ριο|(?:καλοκαιριν[ήη]\s+)?περιηγητικ[ήη]\s*[:–-])/i.test(rawAfterSlash)) return;
+            const eventTitle = cleanFoniActivityPrefix(rawAfterSlash);
             const parsed = parseDateRange(dateText);
             if (parsed && eventTitle.length >= 3) {
               events.push({
