@@ -451,6 +451,15 @@
       "startDate": "2027-01-31",
       "endDate": "2027-01-31",
       "displayDate": "31/1",
+      "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
+      "difficulty": "Δ"
+    },
+    {
+      "startDate": "2027-01-31",
+      "endDate": "2027-01-31",
+      "displayDate": "31/1",
       "title": "Παρνασσός - Λιάκουρα",
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
@@ -958,6 +967,15 @@
       "difficulty": ""
     },
     {
+      "startDate": "2026-11-14",
+      "endDate": "2026-11-14",
+      "displayDate": "14/11",
+      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-5",
+      "difficulty": ""
+    },
+    {
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
       "displayDate": "15/11",
@@ -976,6 +994,15 @@
       "difficulty": "1+"
     },
     {
+      "startDate": "2026-11-21",
+      "endDate": "2026-11-21",
+      "displayDate": "21/11",
+      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-6",
+      "difficulty": ""
+    },
+    {
       "startDate": "2026-11-22",
       "endDate": "2026-11-22",
       "displayDate": "22/11",
@@ -992,6 +1019,15 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/28-29-noe-2026-voreios-taygetos-kastori-faraggi-mylon",
       "difficulty": "2"
+    },
+    {
+      "startDate": "2026-12-05",
+      "endDate": "2026-12-05",
+      "displayDate": "5/12",
+      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-7",
+      "difficulty": ""
     },
     {
       "startDate": "2026-12-06",
