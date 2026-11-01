@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2026-10-31T03:51:42.609Z",
+  "lastUpdated": "2026-11-01T04:00:52.911Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
       "status": "success",
-      "details": "Parsed 17 events",
+      "details": "Parsed 16 events",
       "fetch": [
         {
           "url": "https://eosacharnon.xmiddleware.com/api/events",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 54034
+          "size": 52731
         }
       ]
     },
@@ -39,7 +39,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 1088195
+          "size": 1088194
         }
       ]
     },
@@ -88,7 +88,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 329871
+          "size": 329899
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150953
+          "size": 150947
         }
       ]
     }

@@ -30,15 +30,6 @@
     "startDate": "2026-11-01",
     "endDate": "2026-11-01",
     "displayDate": "1/11",
-    "title": "Χελμός: Διάσχιση κορυφογραμμών",
-    "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmngc1ugx00hkqa01jhgwshk8",
-    "difficulty": "Β"
-  },
-  {
-    "startDate": "2026-11-01",
-    "endDate": "2026-11-01",
-    "displayDate": "1/11",
     "title": "ΚΑΡΥΕΣ ΛΑΚΩΝΙΑΣ – Το μονοπάτι της Καστανιάς",
     "club": "ΕΟΣ Αθηνών",
     "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%9A%CE%91%CE%A1%CE%A5%CE%95%CE%A3%20%CE%9B%CE%91%CE%9A%CE%A9%CE%9D%CE%99%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%BF%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CF%84%CE%B7%CF%82%20%CE%9A%CE%B1%CF%83%CF%84%CE%B1%CE%BD%CE%B9%CE%AC%CF%82",
@@ -732,18 +723,18 @@
     "startDate": "2027-01-31",
     "endDate": "2027-01-31",
     "displayDate": "31/1",
-    "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
+    "title": "Παρνασσός - Λιάκουρα",
     "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
     "difficulty": "Δ"
   },
   {
     "startDate": "2027-01-31",
     "endDate": "2027-01-31",
     "displayDate": "31/1",
-    "title": "Παρνασσός - Λιάκουρα",
+    "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
     "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
     "difficulty": "Δ"
   },
   {
