@@ -1,59 +1,5 @@
 [
   {
-    "startDate": "2026-10-30",
-    "endDate": "2026-11-01",
-    "displayDate": "30/10 - 1/11",
-    "title": "Δυτικά Βαρδούσια (Αρτοτίνα)",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/dytika-vardousia-artotina-pindus-trail/",
-    "difficulty": "1, 2"
-  },
-  {
-    "startDate": "2026-10-30",
-    "endDate": "2026-11-01",
-    "displayDate": "30/10 - 1/11",
-    "title": "Χατζή (2038μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%A7%CE%B1%CF%84%CE%B6%CE%AE%20(2038%CE%BC.)",
-    "difficulty": "1 & 3"
-  },
-  {
-    "startDate": "2026-10-31",
-    "endDate": "2026-11-01",
-    "displayDate": "31/10 - 1/11",
-    "title": "ΓΡΑΜΜΕΝΗ ΟΞΥΑ",
-    "club": "ΦΟΠ",
-    "url": "https://fop.gr/#:~:text=%CE%93%CE%A1%CE%91%CE%9C%CE%9C%CE%95%CE%9D%CE%97%20%CE%9F%CE%9E%CE%A5%CE%91",
-    "difficulty": "1"
-  },
-  {
-    "startDate": "2026-11-01",
-    "endDate": "2026-11-01",
-    "displayDate": "1/11",
-    "title": "ΚΑΡΥΕΣ ΛΑΚΩΝΙΑΣ – Το μονοπάτι της Καστανιάς",
-    "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%9A%CE%91%CE%A1%CE%A5%CE%95%CE%A3%20%CE%9B%CE%91%CE%9A%CE%A9%CE%9D%CE%99%CE%91%CE%A3%20%E2%80%93%20%CE%A4%CE%BF%20%CE%BC%CE%BF%CE%BD%CE%BF%CF%80%CE%AC%CF%84%CE%B9%20%CF%84%CE%B7%CF%82%20%CE%9A%CE%B1%CF%83%CF%84%CE%B1%CE%BD%CE%B9%CE%AC%CF%82",
-    "difficulty": "1"
-  },
-  {
-    "startDate": "2026-11-01",
-    "endDate": "2026-11-01",
-    "displayDate": "1/11",
-    "title": "Αρτεμίσιο (Καρυά-Μαλεβός-Νεστάνη, κλασσική & χτένια)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/artemisio-karya-malevos-nestani-classic-ridge",
-    "difficulty": "2+"
-  },
-  {
-    "startDate": "2026-11-01",
-    "endDate": "2026-11-01",
-    "displayDate": "1/11",
-    "title": "Υμηττός- καρόδρομοι του Τρελού (Ηλιούπολη-Καρέας-Τυριά-κτφ ΕΟΣΗ)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/hymettus-trelos-cart-trails-ilioupoli-kareas-stani-eosh-refuge",
-    "difficulty": "1"
-  },
-  {
     "startDate": "2026-11-06",
     "endDate": "2026-11-08",
     "displayDate": "6-8/11",
@@ -678,6 +624,15 @@
     "startDate": "2027-01-24",
     "endDate": "2027-01-24",
     "displayDate": "24/1",
+    "title": "Φαρμακάς, διάσχιση κορυφογραμμής",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvxm1pdo00wxt401kk4itrsv",
+    "difficulty": "Β"
+  },
+  {
+    "startDate": "2027-01-24",
+    "endDate": "2027-01-24",
+    "displayDate": "24/1",
     "title": "Δυτική Πεντέλη",
     "club": "ΠΟΑ",
     "url": "https://poa.gr/index.php/programma/#:~:text=%CE%94%CF%85%CF%84%CE%B9%CE%BA%CE%AE%20%CE%A0%CE%B5%CE%BD%CF%84%CE%AD%CE%BB%CE%B7",
@@ -862,6 +817,15 @@
     "club": "ΕΟΣ Αχαρνών",
     "url": "https://eosacharnon.xmiddleware.com/el/booking/cmt5gkc66008rk80150njqo3u",
     "difficulty": "Β, Β+"
+  },
+  {
+    "startDate": "2027-02-26",
+    "endDate": "2027-02-28",
+    "displayDate": "26-28/2",
+    "title": "Ορειβατικό Σκι Τζουμέρκα Θεοδώριανα Καταφίδι και Πινακούλι",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvxm88ip00x1t401e6cse8zs",
+    "difficulty": "Γ+"
   },
   {
     "startDate": "2027-02-27",
