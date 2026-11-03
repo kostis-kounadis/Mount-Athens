@@ -376,6 +376,15 @@
       "difficulty": "Α, Α+"
     },
     {
+      "startDate": "2026-11-08",
+      "endDate": "2026-11-08",
+      "displayDate": "8/11",
+      "title": "Χελμός: Διάσχιση κορυφογραμμών",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmngc1ugx00hkqa01jhgwshk8",
+      "difficulty": "Β"
+    },
+    {
       "startDate": "2026-11-21",
       "endDate": "2026-11-22",
       "displayDate": "21-22/11",
@@ -527,6 +536,24 @@
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvphueln00lnt401remm2wuc",
       "difficulty": "Β"
+    },
+    {
+      "startDate": "2027-05-15",
+      "endDate": "2027-05-15",
+      "displayDate": "15/5",
+      "title": "Καλλίδρομο: Ι.Μ.Δαμάστας - Πυροφυλάκιο (1279 μ.) - Λ.Νευρόπολη - κτφ. Καλλίδρομου - Ελευθεροχώρι - Μονή (κυκλική)",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvzdwfkc00yht4013qo2nkwx",
+      "difficulty": "Β"
+    },
+    {
+      "startDate": "2027-07-03",
+      "endDate": "2027-07-04",
+      "displayDate": "3-4/7",
+      "title": "Νότια Πίνδος : Ανάβαση στην όρος Χατζή από την Βόρεια κόψη",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvze8afl00ykt401fx6tc1nw",
+      "difficulty": "Β+"
     }
   ],
   "ΦΟΠ": [
@@ -815,10 +842,10 @@
       "startDate": "2026-11-29",
       "endDate": "2026-11-29",
       "displayDate": "29/11",
-      "title": "ΕΛΑΤΗ – ΣΤΕΜΝΙΤΣΑ",
+      "title": "ΠΑΡΝΑΣΣΟΣ – Μαντάμια",
       "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%95%CE%9B%CE%91%CE%A4%CE%97%20%E2%80%93%20%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91",
-      "difficulty": "2"
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%A0%CE%91%CE%A1%CE%9D%CE%91%CE%A3%CE%A3%CE%9F%CE%A3%20%E2%80%93%20%CE%9C%CE%B1%CE%BD%CF%84%CE%AC%CE%BC%CE%B9%CE%B1",
+      "difficulty": "1"
     },
     {
       "startDate": "2026-12-06",
@@ -851,10 +878,10 @@
       "startDate": "2026-12-20",
       "endDate": "2026-12-20",
       "displayDate": "20/12",
-      "title": "ΣΥΚΙΑ – ΚΟΝΙΑΚΟΣ",
+      "title": "ΕΛΑΤΗ – ΣΤΕΜΝΙΤΣΑ",
       "club": "ΕΟΣ Αθηνών",
-      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A3%CE%A5%CE%9A%CE%99%CE%91%20%E2%80%93%20%CE%9A%CE%9F%CE%9D%CE%99%CE%91%CE%9A%CE%9F%CE%A3",
-      "difficulty": "1"
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%95%CE%9B%CE%91%CE%A4%CE%97%20%E2%80%93%20%CE%A3%CE%A4%CE%95%CE%9C%CE%9D%CE%99%CE%A4%CE%A3%CE%91",
+      "difficulty": "2"
     },
     {
       "startDate": "2027-01-10",
@@ -890,7 +917,7 @@
       "title": "ΟΡΟΣ ΚΑΛΛΙΔΡΟΜΟ",
       "club": "ΕΟΣ Αθηνών",
       "url": "https://www.eosathinon.gr/anavaseis/programma/#01-27:~:text=%CE%9F%CE%A1%CE%9F%CE%A3%20%CE%9A%CE%91%CE%9B%CE%9B%CE%99%CE%94%CE%A1%CE%9F%CE%9C%CE%9F",
-      "difficulty": "2"
+      "difficulty": ""
     }
   ],
   "ΕΟΣ Ηλιούπολης": [
@@ -1006,7 +1033,7 @@
       "startDate": "2026-12-20",
       "endDate": "2026-12-20",
       "displayDate": "20/12",
-      "title": "Υμηττός-Πορεία Π Αλεκιζόγλου (διάσχιση 10: Αγ Ιωάννης Κυνηγός-Βάρη)",
+      "title": "Υμηττός- Πορεία Π Αλεκιζόγλου (διάσχιση 10: Αγ Ιωάννης Κυνηγός-Βάρη)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/20-dec-2026-hymettus-crossing-10-ag-ioannis-kynigos-vari-p-alekizoglou-hike",
       "difficulty": "3"
