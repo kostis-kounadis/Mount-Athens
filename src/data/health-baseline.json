@@ -311,6 +311,15 @@
       "difficulty": "4"
     },
     {
+      "startDate": "2026-12-19",
+      "endDate": "2026-12-19",
+      "displayDate": "19/12",
+      "title": "Πολιτιστικές διαδρομές: Πεζοπορία στους λόφους της Αθήνας Νυμφών, Μουσών (Φιλοπάππου) και Πνύκας.",
+      "club": "ΕΠΟΣ Φυλής",
+      "url": "https://eposfilis.gr/event/%cf%80%ce%bf%ce%bb%ce%b9%cf%84%ce%b9%cf%83%cf%84%ce%b9%ce%ba%ce%ad%cf%82-%ce%b4%ce%b9%ce%b1%ce%b4%cf%81%ce%bf%ce%bc%ce%ad%cf%82-%cf%80%ce%b5%ce%b6%ce%bf%cf%80%ce%bf%cf%81%ce%af%ce%b1-%cf%83%cf%84/",
+      "difficulty": ""
+    },
+    {
       "startDate": "2026-12-24",
       "endDate": "2026-12-27",
       "displayDate": "24-27/12",
@@ -363,6 +372,15 @@
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/%ce%bd%ce%b5%cf%80%ce%b1%ce%bb-%cf%80%ce%b1%cf%83%cf%87%ce%b1-2027-20-%ce%b1%cf%80%cf%81%ce%b9%ce%bb%ce%af%ce%bf%cf%85-7-%ce%bc%ce%b1%cf%8a%ce%bf%cf%85-2027/",
       "difficulty": ""
+    },
+    {
+      "startDate": "2027-09-24",
+      "endDate": "2027-09-26",
+      "displayDate": "24-26/9",
+      "title": "Όλυμπος: Στεφάνι (2.911μ.). Πεζοπορίες Ρέμα Ορλιά. Γκορτσιά – Σπηλιά Ιθακήσιου Πριόνια",
+      "club": "ΕΠΟΣ Φυλής",
+      "url": "https://eposfilis.gr/event/%cf%8c%ce%bb%cf%85%ce%bc%cf%80%ce%bf%cf%82-%cf%83%cf%84%ce%b5%cf%86%ce%ac%ce%bd%ce%b9-2-911%ce%bc-%cf%80%ce%b5%ce%b6%ce%bf%cf%80%ce%bf%cf%81%ce%af%ce%b5%cf%82-%cf%81%ce%ad%ce%bc%ce%b1-%ce%bf/",
+      "difficulty": "1+, 2, 3"
     },
     {
       "startDate": "2027-10-22",
@@ -494,21 +512,21 @@
     },
     {
       "startDate": "2027-02-26",
-      "endDate": "2027-03-15",
-      "displayDate": "26/2 - 15/3",
-      "title": "CAMINO DE COSTA RICA | Μια πεζοπορία από την Καραϊβική στον Ειρηνικό",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmt5gkc66008rk80150njqo3u",
-      "difficulty": "Β, Β+"
-    },
-    {
-      "startDate": "2027-02-26",
       "endDate": "2027-02-28",
       "displayDate": "26-28/2",
       "title": "Ορειβατικό Σκι Τζουμέρκα Θεοδώριανα Καταφίδι και Πινακούλι",
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvxm88ip00x1t401e6cse8zs",
       "difficulty": "Γ+"
+    },
+    {
+      "startDate": "2027-02-26",
+      "endDate": "2027-03-15",
+      "displayDate": "26/2 - 15/3",
+      "title": "CAMINO DE COSTA RICA | Μια πεζοπορία από την Καραϊβική στον Ειρηνικό",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmt5gkc66008rk80150njqo3u",
+      "difficulty": "Β, Β+"
     },
     {
       "startDate": "2027-03-06",
@@ -559,7 +577,7 @@
       "startDate": "2027-07-03",
       "endDate": "2027-07-04",
       "displayDate": "3-4/7",
-      "title": "Νότια Πίνδος : Ανάβαση στην όρος Χατζή από την Βόρεια κόψη",
+      "title": "Νότια Πίνδος : Ανάβαση στο όρος Χατζή από την Βόρεια κόψη",
       "club": "ΕΟΣ Αχαρνών",
       "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvze8afl00ykt401fx6tc1nw",
       "difficulty": "Β+"
@@ -938,15 +956,6 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/4th-rock-climbing-cup-2nd-race-fyli-attica",
       "difficulty": ""
-    },
-    {
-      "startDate": "2026-11-07",
-      "endDate": "2026-11-08",
-      "displayDate": "7-8/11",
-      "title": "Άγραφα (Λιβάδια Πετρίλου-Βουτσικάκι-Τέμπλα-κτφ Αγράφων)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/agrafa-livadia-petrilou-voutsikaki-templa-agrafa-refuge",
-      "difficulty": "2"
     },
     {
       "startDate": "2026-11-08",
