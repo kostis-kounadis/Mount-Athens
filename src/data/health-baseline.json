@@ -394,15 +394,6 @@
   ],
   "ΕΟΣ Αχαρνών": [
     {
-      "startDate": "2026-11-06",
-      "endDate": "2026-11-08",
-      "displayDate": "6-8/11",
-      "title": "Φθιώτιδα -Κοιλάδα Σπερχειού",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmr0rt4o700lgpf01j3imhawd",
-      "difficulty": "Α, Α+"
-    },
-    {
       "startDate": "2026-11-08",
       "endDate": "2026-11-08",
       "displayDate": "8/11",
@@ -988,19 +979,19 @@
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
       "displayDate": "15/11",
-      "title": "Μαίναλο (Ελάτη- Βυτίνα- Νυμφασία)",
+      "title": "Υμηττός (Ηλιούπολη-Πυλώνες-Μιχαηλίδης-Αρχαίων-κτφ ΕΟΣΗ)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/mainalo-elati-vytina-nymfasia",
-      "difficulty": "1"
+      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-pilars-ridge-michaelides-ancient-path-eosh-refuge",
+      "difficulty": "1+"
     },
     {
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
       "displayDate": "15/11",
-      "title": "Υμηττός (Ηλιούπολη-Πυλώνες-Μιχαηλίδης-Αρχαίων-κτφ ΕΟΣΗ)",
+      "title": "Μαίναλο (Ελάτη- Βυτίνα- Νυμφασία)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-pilars-ridge-michaelides-ancient-path-eosh-refuge",
-      "difficulty": "1+"
+      "url": "https://eosh.gr/expeditions/mainalo-elati-vytina-nymfasia",
+      "difficulty": "1"
     },
     {
       "startDate": "2026-11-21",

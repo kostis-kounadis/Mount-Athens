@@ -1,13 +1,13 @@
 {
-  "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "2b0e0c385899c8a448d5439a86ea5179e031ac41b52c5e5888540b2b44481d35",
-  "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "4b4569d5c23756ed8e0fbdedef08deb8b0a501afc68fd2cde4f7e62585eb1cc3",
-  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "f16cdfd6323c74d4a0f2d6291153e9b5dc3b6be3c813377367a051f62fcc4214",
-  "https://www.eosathinon.gr/anavaseis/programma/": "15aa08f09f6b04cf4c568ee22d58718df5dfd97184b77db1d83b68a2a8a8c4e6",
-  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "db9eb5a4725f87ccf39c2352049c1490b97c6a57f1dd66e4ffb7306920b1f7d5",
-  "https://eosacharnon.xmiddleware.com/api/events": "804ebf411db2de8b45d1d7490b6d74a9c0803b40f666d827454544a070f98481",
-  "https://eosh.gr/api/trips": "1e80c0c7c6d5286969bc5cd586d6ea0a6f4e8a4cc51d945c58227700e0ff653e",
+  "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "9afdb81a7a22f35eb175fb81047d5af9ec1f61b6892de1320fea942abf6ddcc7",
+  "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "4b69885586fe2c276fe9d8434a129f6808f0a997f312ed0e4f6c5c409ee44069",
+  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "8b12a0cd1fdc18f4e2e6e62caff66cb470f9b7fb893657d72fa17a7ced1b70ce",
+  "https://www.eosathinon.gr/anavaseis/programma/": "c681611066dc5e81844299df0c1ec64e6c8515ea6c141f2d4f59e11b9d6f71ec",
+  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "116ab92876967d637b28fc3bbc0e314cbb87081be480c753eb1d248666ac35c4",
+  "https://eosacharnon.xmiddleware.com/api/events": "6cd83ef7a1ab062fd3b9d7816f8b37161a9c859a01a674f6c752e8d25694afa3",
+  "https://eosh.gr/api/trips": "3ccc310225497a95ed6b6346e53cfca27b9b30857e207884139f3e22c7f1d097",
   "https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50": "c00ecfbd2238f39eff9fce7f4393835d57bfdd8672d9e7ffea55f0068bdf6aa9",
-  "https://poa.gr/index.php/programma/": "d29b23c3bf18ce7088ebcfeaff23c3e447a54c43372acbff6dad9dc5beffb90a",
+  "https://poa.gr/index.php/programma/": "7e0711829d47404c11408c821f8316d95624bc2635e1e54b8f2bf53a3d87a84e",
   "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25": "f25a6fa240a882a786ff96b78e5cc919774b11bb64801c0b9c9d1302c57827b8",
-  "https://fop.gr/": "a412b7eada3755f0c3c24a8f5e18d476fe2fec724a937054c005bda6446016f8"
+  "https://fop.gr/": "f5e5cee249558d54c2746158fff1fa2c92f2429feb350e0b0d840f930eb7bad6"
 }
