@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import eventsData from '../data/events.json';
 import statusData from '../data/status.json';
+import { getAthensFormattedDate } from '../utils/date';
+
+const formattedDate = getAthensFormattedDate();
 
 const GREEK_MONTHS = [
   "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος",
@@ -138,10 +141,15 @@ function getDifficultyTiers(diff?: string): string {
   <div class="flex flex-col lg:flex-row-reverse gap-8 xl:gap-10 items-start">
     <!-- Right Sidebar: Filters Panel -->
     <aside class="w-full lg:w-[22%] xl:w-[20%] lg:sticky lg:top-28 flex-shrink-0 z-10">
-      <!-- Sidebar Title for perfect top-alignment with calendar -->
-      <h2 class="text-mono text-xs font-bold tracking-widest text-slate-600 mb-5 uppercase select-none">
-        ΦΙΛΤΡΑ
-      </h2>
+      <!-- Sidebar Title & Mobile Timestamp -->
+      <div class="flex items-baseline justify-between mb-5 select-none">
+        <h2 class="text-mono text-xs font-bold tracking-widest text-slate-600 uppercase">
+          ΦΙΛΤΡΑ
+        </h2>
+        <div class="md:hidden text-mono text-[10px] font-medium tracking-wider text-slate-600 current-date-display">
+          {formattedDate}
+        </div>
+      </div>
       <!-- Minimal Compact Filters Dashboard -->
       <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
         <div class="flex flex-col gap-5">
