@@ -1,6 +1,5 @@
 ---
 import SEO from '../components/SEO.astro';
-import InstallPrompt from '../components/InstallPrompt.astro';
 import pkg from '../../package.json';
 
 interface Props {
@@ -175,7 +174,16 @@ try {
       </div>
     </footer>
 
-    <!-- Mobile-only App Install Prompt -->
-    <InstallPrompt />
+    <!-- Service Worker Registration for PWA Support -->
+    <script is:inline define:vars={{ baseUrl: import.meta.env.BASE_URL }}>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          const swUrl = baseUrl.endsWith('/') ? baseUrl + 'sw.js' : baseUrl + '/sw.js';
+          navigator.serviceWorker.register(swUrl).catch((err) => {
+            console.debug('ServiceWorker registration error:', err);
+          });
+        });
+      }
+    </script>
   </body>
 </html>
