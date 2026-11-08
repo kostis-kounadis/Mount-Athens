@@ -1,4 +1,4 @@
-Debug run at 2026-11-08T22:11:24.433Z
+Debug run at 2026-11-08T22:16:46.461Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
 Size: 167727 chars
@@ -36,7 +36,7 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Sun, 08 Nov 2026 22:11:25 GMT
+  date: Sun, 08 Nov 2026 22:16:47 GMT
   link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
@@ -62,17 +62,17 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a577e9dc5be84ca0-MSP
+  cf-ray: a577f1b5bf8d9617-SEA
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Sun, 08 Nov 2026 22:11:27 GMT
+  date: Sun, 08 Nov 2026 22:16:48 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  set-cookie: __emg_vid=21c3bd9c-66b3-48c4-837d-3f114b20c206; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
-  set-cookie: __emg_sid=22f853f5-bffd-46ee-b4b0-9e9b25a51ed8; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_vid=cd6d7812-b143-4107-b1d9-5b6eb73051c0; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_sid=0aa05a81-d274-4431-86e5-2641d2dbc003; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
