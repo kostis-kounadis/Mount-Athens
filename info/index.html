@@ -81,9 +81,6 @@
 Εντάξει, κατάλαβα
 </button> </div> </div>  <script>
   (function () {
-    const STORAGE_KEY = 'mount_athens_install_prompt_dismissed_at';
-    const DISMISS_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
-
     let deferredPrompt = null;
     const banner = document.getElementById('pwa-install-banner');
     const installBtn = document.getElementById('pwa-install-btn');
@@ -95,12 +92,11 @@
     const stepsIos = document.getElementById('pwa-steps-ios');
     const stepsGeneric = document.getElementById('pwa-steps-generic');
 
-    // Check if running in standalone mode (already installed as PWA)
+    // Check if running in standalone mode (already running inside installed PWA)
     function isRunningStandalone() {
       return (
         window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true ||
-        document.referrer.includes('android-app://')
+        window.navigator.standalone === true
       );
     }
 
@@ -111,26 +107,6 @@
       const isNarrowScreen = window.innerWidth < 768;
       const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
       return (isMobileUA || (isNarrowScreen && isTouch));
-    }
-
-    // Check if user dismissed prompt recently
-    function isDismissed() {
-      try {
-        const lastDismissed = localStorage.getItem(STORAGE_KEY);
-        if (!lastDismissed) return false;
-        const timeElapsed = Date.now() - parseInt(lastDismissed, 10);
-        return timeElapsed < DISMISS_COOLDOWN_MS;
-      } catch (e) {
-        return false;
-      }
-    }
-
-    // Dismiss prompt
-    function dismissPrompt() {
-      try {
-        localStorage.setItem(STORAGE_KEY, Date.now().toString());
-      } catch (e) {}
-      hideBanner();
     }
 
     function showBanner() {
@@ -163,36 +139,27 @@
       if (!modal) return;
       modal.classList.add('hidden');
       document.body.style.overflow = '';
-      dismissPrompt();
+      hideBanner();
     }
 
-    // If running in standalone mode, not mobile, or dismissed recently, do nothing
-    if (isRunningStandalone() || !isMobileDevice() || isDismissed()) {
+    // Only skip if currently inside the standalone installed app window itself
+    if (isRunningStandalone() || !isMobileDevice()) {
       return;
     }
 
-    // Capture beforeinstallprompt for Chromium browsers
+    // Capture beforeinstallprompt if available
     window.addEventListener('beforeinstallprompt', function (e) {
-      // Prevent browser default mini-infobar so we can trigger the prompt from our clean button
       e.preventDefault();
       deferredPrompt = e;
-      // Show prompt after a short delay
-      setTimeout(showBanner, 1500);
     });
 
-    // For iOS Safari or browsers where beforeinstallprompt doesn't fire
-    window.addEventListener('DOMContentLoaded', function () {
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      if (isIOS && !isRunningStandalone() && !isDismissed()) {
-        setTimeout(showBanner, 2000);
-      }
-    });
+    // Show prompt on mobile every time after 1s (cooldown temporarily disabled for testing)
+    setTimeout(showBanner, 1000);
 
     // Install button click handler
     if (installBtn) {
       installBtn.addEventListener('click', async function () {
         if (deferredPrompt) {
-          // Native Chromium install prompt
           deferredPrompt.prompt();
           const choiceResult = await deferredPrompt.userChoice;
           if (choiceResult && choiceResult.outcome === 'accepted') {
@@ -200,15 +167,15 @@
           }
           deferredPrompt = null;
         } else {
-          // iOS Safari or browser without deferred prompt - open instructions
+          // If deferredPrompt is not available (e.g. app already installed or browser without beforeinstallprompt), open instructions
           openModal();
         }
       });
     }
 
     // Dismiss buttons click handlers
-    if (dismissBtn) dismissBtn.addEventListener('click', dismissPrompt);
-    if (laterBtn) laterBtn.addEventListener('click', dismissPrompt);
+    if (dismissBtn) dismissBtn.addEventListener('click', hideBanner);
+    if (laterBtn) laterBtn.addEventListener('click', hideBanner);
 
     // Modal close handlers
     if (modalClose) modalClose.addEventListener('click', closeModal);
@@ -219,13 +186,9 @@
       });
     }
 
-    // When app is successfully installed, hide banner permanently
     window.addEventListener('appinstalled', function () {
       deferredPrompt = null;
       hideBanner();
-      try {
-        localStorage.setItem(STORAGE_KEY, (Date.now() + 365 * 24 * 60 * 60 * 1000).toString());
-      } catch (e) {}
     });
   })();
 </script> </body></html>
