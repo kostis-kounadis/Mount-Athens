@@ -1,59 +1,5 @@
 [
   {
-    "startDate": "2026-11-07",
-    "endDate": "2026-11-08",
-    "displayDate": "7-8/11",
-    "title": "ΑΓΡΑΦΑ – ΒΟΥΤΣΙΚΑΚΙ",
-    "club": "ΕΟΣ Αθηνών",
-    "url": "https://www.eosathinon.gr/anavaseis/programma/#11-26:~:text=%CE%91%CE%93%CE%A1%CE%91%CE%A6%CE%91%20%E2%80%93%20%CE%92%CE%9F%CE%A5%CE%A4%CE%A3%CE%99%CE%9A%CE%91%CE%9A%CE%99",
-    "difficulty": "1"
-  },
-  {
-    "startDate": "2026-11-07",
-    "endDate": "2026-11-08",
-    "displayDate": "7-8 Νοεμ",
-    "title": "Κίσσαβος",
-    "club": "ΦΟΝΙ",
-    "url": "https://www.foni.org.gr/07-08-noemvriou-2026-pezoporiki-kissavos/",
-    "difficulty": "Μέτρια"
-  },
-  {
-    "startDate": "2026-11-08",
-    "endDate": "2026-11-08",
-    "displayDate": "8 Νοεμ",
-    "title": "Παρνασός Αμφίκλεια (Περδικόβρυση) – Άνω Πολύδροσο",
-    "club": "ΑΟΣ",
-    "url": "https://aos.gr/8-11-parnassos-amfikleia-perdikovrysi-ano-polydroso/",
-    "difficulty": "1"
-  },
-  {
-    "startDate": "2026-11-08",
-    "endDate": "2026-11-08",
-    "displayDate": "8/11",
-    "title": "Καλλίδρομο – Γκιόζα (1419μ.)",
-    "club": "ΠΟΑ",
-    "url": "https://poa.gr/index.php/programma/#:~:text=%CE%9A%CE%B1%CE%BB%CE%BB%CE%AF%CE%B4%CF%81%CE%BF%CE%BC%CE%BF%20%E2%80%93%20%CE%93%CE%BA%CE%B9%CF%8C%CE%B6%CE%B1%20(1419%CE%BC.)",
-    "difficulty": "1 ή 2"
-  },
-  {
-    "startDate": "2026-11-08",
-    "endDate": "2026-11-08",
-    "displayDate": "8/11",
-    "title": "Υμηττός (Καισαριανή- Πύργος Ανθούσας- Μον Αστερίου- Καλοπούλα- Φραγκομονάστηρο)",
-    "club": "ΕΟΣ Ηλιούπολης",
-    "url": "https://eosh.gr/expeditions/hymettus-kaisariani-anthousa-tower-asteriou-kalopoula-fragomonastiro",
-    "difficulty": "1"
-  },
-  {
-    "startDate": "2026-11-08",
-    "endDate": "2026-11-08",
-    "displayDate": "8/11",
-    "title": "Κεντρική Πάρνηθα: Μπάφι – Μόλα – Πηγάδι Λοιμικού – πηγή Πλατάνα – πηγή Σκίπιζα (κυκλική)",
-    "club": "ΕΠΟΣ Φυλής",
-    "url": "https://eposfilis.gr/event/8-11-%cf%80%ce%ac%cf%81%ce%bd%ce%b7%ce%b8%ce%b1-%ce%bb%ce%ac%ce%ba%ce%b1-%ce%b6%ce%b7%cf%81%ce%ad%ce%bb%ce%b9-%ce%ba%cf%85%ce%ba%ce%bb%ce%b9%ce%ba%ce%ae/",
-    "difficulty": "1+"
-  },
-  {
     "startDate": "2026-11-11",
     "endDate": "2026-11-11",
     "displayDate": "11/11",
