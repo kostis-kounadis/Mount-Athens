@@ -1,5 +1,6 @@
 ---
 import SEO from '../components/SEO.astro';
+import InstallPrompt from '../components/InstallPrompt.astro';
 import pkg from '../../package.json';
 
 interface Props {
@@ -185,5 +186,8 @@ try {
         });
       }
     </script>
+
+    <!-- Mobile-only App Install Prompt -->
+    <InstallPrompt />
   </body>
 </html>
