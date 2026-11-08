@@ -394,15 +394,6 @@
   ],
   "ΕΟΣ Αχαρνών": [
     {
-      "startDate": "2026-11-08",
-      "endDate": "2026-11-08",
-      "displayDate": "8/11",
-      "title": "Χελμός: Διάσχιση κορυφογραμμών",
-      "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmngc1ugx00hkqa01jhgwshk8",
-      "difficulty": "Β"
-    },
-    {
       "startDate": "2026-11-21",
       "endDate": "2026-11-22",
       "displayDate": "21-22/11",
@@ -460,18 +451,18 @@
       "startDate": "2027-01-31",
       "endDate": "2027-01-31",
       "displayDate": "31/1",
-      "title": "Παρνασσός - Λιάκουρα",
+      "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
       "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
       "difficulty": "Δ"
     },
     {
       "startDate": "2027-01-31",
       "endDate": "2027-01-31",
       "displayDate": "31/1",
-      "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
+      "title": "Παρνασσός - Λιάκουρα",
       "club": "ΕΟΣ Αχαρνών",
-      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
       "difficulty": "Δ"
     },
     {
@@ -575,15 +566,6 @@
     }
   ],
   "ΦΟΠ": [
-    {
-      "startDate": "2026-11-07",
-      "endDate": "2026-11-07",
-      "displayDate": "7/11",
-      "title": "ΠΑΡΝΑΣΣΟΣ (Πολύδροσο – Άνω Πολύδροσο)",
-      "club": "ΦΟΠ",
-      "url": "https://fop.gr/#:~:text=%CE%A0%CE%91%CE%A1%CE%9D%CE%91%CE%A3%CE%A3%CE%9F%CE%A3%20(%CE%A0%CE%BF%CE%BB%CF%8D%CE%B4%CF%81%CE%BF%CF%83%CE%BF%20%E2%80%93%20%CE%86%CE%BD%CF%89%20%CE%A0%CE%BF%CE%BB%CF%8D%CE%B4%CF%81%CE%BF%CF%83%CE%BF)",
-      "difficulty": "1"
-    },
     {
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
@@ -940,15 +922,6 @@
   ],
   "ΕΟΣ Ηλιούπολης": [
     {
-      "startDate": "2026-11-07",
-      "endDate": "2026-11-07",
-      "displayDate": "7/11",
-      "title": "4ο Κύπελλο Αναρρίχησης Βράχου_Β' αγώνας, Φυλή Αττικής",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/4th-rock-climbing-cup-2nd-race-fyli-attica",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-11-08",
       "endDate": "2026-11-08",
       "displayDate": "8/11",
@@ -979,19 +952,19 @@
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
       "displayDate": "15/11",
-      "title": "Υμηττός (Ηλιούπολη-Πυλώνες-Μιχαηλίδης-Αρχαίων-κτφ ΕΟΣΗ)",
+      "title": "Μαίναλο (Ελάτη- Βυτίνα- Νυμφασία)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-pilars-ridge-michaelides-ancient-path-eosh-refuge",
-      "difficulty": "1+"
+      "url": "https://eosh.gr/expeditions/mainalo-elati-vytina-nymfasia",
+      "difficulty": "1"
     },
     {
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
       "displayDate": "15/11",
-      "title": "Μαίναλο (Ελάτη- Βυτίνα- Νυμφασία)",
+      "title": "Υμηττός (Ηλιούπολη-Πυλώνες-Μιχαηλίδης-Αρχαίων-κτφ ΕΟΣΗ)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/mainalo-elati-vytina-nymfasia",
-      "difficulty": "1"
+      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-pilars-ridge-michaelides-ancient-path-eosh-refuge",
+      "difficulty": "1+"
     },
     {
       "startDate": "2026-11-21",
