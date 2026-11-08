@@ -46,7 +46,7 @@ const baseUrl = import.meta.env.BASE_URL;
 
     <!-- Description (wrapped, never truncated) -->
     <p class="text-xs text-slate-600 leading-relaxed">
-      Εγκαταστήστε την εφαρμογή στην αρχική οθόνη του κινητού σας για άμεση πρόσβαση στο πρόγραμμα εξορμήσεων.
+      Προσθέστε την εφαρμογή στην αρχική οθόνη για άμεση πρόσβαση στις εξορμήσεις των συλλόγων.
     </p>
 
     <!-- Action Buttons -->
@@ -90,7 +90,7 @@ const baseUrl = import.meta.env.BASE_URL;
           </svg>
         </div>
         <div>
-          <h3 id="pwa-modal-title" class="text-sm font-bold text-slate-900">Προσθήκη στην Αρχική Οθόνη</h3>
+          <h3 id="pwa-modal-title" class="text-sm font-bold text-slate-900">Προσθήκη στην αρχική οθόνη</h3>
           <p class="text-xs text-slate-500">Οδηγίες εγκατάστασης</p>
         </div>
       </div>
@@ -111,7 +111,7 @@ const baseUrl = import.meta.env.BASE_URL;
       <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">1</span>
         <div class="pt-0.5">
-          Πατήστε το κουμπί <strong>Κοινοποίηση (Share)</strong>
+          Πατήστε το εικονίδιο <strong>Κοινοποίησης</strong>
           <span class="inline-flex items-center align-middle mx-1 p-1 bg-white border border-slate-200 rounded shadow-xs">
             <svg class="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
@@ -119,14 +119,14 @@ const baseUrl = import.meta.env.BASE_URL;
               <line x1="12" y1="2" x2="12" y2="15"></line>
             </svg>
           </span>
-          στη γραμμή εργαλείων του Safari.
+          στο κάτω μέρος του Safari.
         </div>
       </div>
 
       <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">2</span>
         <div class="pt-0.5">
-          Κυλήστε προς τα κάτω και επιλέξτε <strong>«Προσθήκη στην οθόνη αφετηρίας»</strong>
+          Στις επιλογές, πατήστε <strong>«Προσθήκη στην οθόνη αφετηρίας»</strong>
           <span class="inline-flex items-center align-middle mx-1 p-1 bg-white border border-slate-200 rounded shadow-xs">
             <svg class="w-3.5 h-3.5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="18" height="18" x="3" y="3" rx="2"></rect>
@@ -140,7 +140,7 @@ const baseUrl = import.meta.env.BASE_URL;
       <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">3</span>
         <div class="pt-0.5">
-          Πατήστε <strong>«Προσθήκη»</strong> πάνω δεξιά. Το εικονίδιο του <strong>Mount Athens</strong> θα εμφανιστεί στην οθόνη σας!
+          Πατήστε <strong>«Προσθήκη»</strong> πάνω δεξιά για ολοκλήρωση.
         </div>
       </div>
     </div>
@@ -150,7 +150,7 @@ const baseUrl = import.meta.env.BASE_URL;
       <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
         <span class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">1</span>
         <div class="pt-0.5">
-          Πατήστε το μενού επιλογών του περιηγητή σας (συνήθως <strong>τρεις τελείες ⋮</strong>).
+          Πατήστε τις επιλογές του περιηγητή (<strong>τρεις τελείες ⋮</strong>).
         </div>
       </div>
       <div class="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
@@ -167,7 +167,7 @@ const baseUrl = import.meta.env.BASE_URL;
       type="button"
       class="w-full py-2.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-all focus:outline-none"
     >
-      Εντάξει, κατάλαβα
+      Κατάλαβα
     </button>
   </div>
 </div>
@@ -198,6 +198,9 @@ const baseUrl = import.meta.env.BASE_URL;
 
 <script is:inline>
   (function () {
+    const STORAGE_KEY = 'mount_athens_install_prompt_dismissed_at';
+    const DISMISS_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+
     let deferredPrompt = null;
     const banner = document.getElementById('pwa-install-banner');
     const installBtn = document.getElementById('pwa-install-btn');
@@ -224,6 +227,25 @@ const baseUrl = import.meta.env.BASE_URL;
       const isNarrowScreen = window.innerWidth < 768;
       const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
       return (isMobileUA || (isNarrowScreen && isTouch));
+    }
+
+    // Check if user dismissed prompt recently
+    function isDismissed() {
+      try {
+        const lastDismissed = localStorage.getItem(STORAGE_KEY);
+        if (!lastDismissed) return false;
+        const timeElapsed = Date.now() - parseInt(lastDismissed, 10);
+        return timeElapsed < DISMISS_COOLDOWN_MS;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function dismissPrompt() {
+      try {
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+      } catch (e) {}
+      hideBanner();
     }
 
     function showBanner() {
@@ -256,11 +278,11 @@ const baseUrl = import.meta.env.BASE_URL;
       if (!modal) return;
       modal.classList.add('hidden');
       document.body.style.overflow = '';
-      hideBanner();
+      dismissPrompt();
     }
 
-    // Only skip if currently inside the standalone installed app window itself
-    if (isRunningStandalone() || !isMobileDevice()) {
+    // Only skip if currently inside the standalone installed app, not on mobile, or dismissed recently
+    if (isRunningStandalone() || !isMobileDevice() || isDismissed()) {
       return;
     }
 
@@ -270,8 +292,8 @@ const baseUrl = import.meta.env.BASE_URL;
       deferredPrompt = e;
     });
 
-    // Show prompt on mobile every time after 1s (cooldown temporarily disabled for testing)
-    setTimeout(showBanner, 1000);
+    // Show prompt on mobile after 1.5s
+    setTimeout(showBanner, 1500);
 
     // Install button click handler
     if (installBtn) {
@@ -284,15 +306,15 @@ const baseUrl = import.meta.env.BASE_URL;
           }
           deferredPrompt = null;
         } else {
-          // If deferredPrompt is not available (e.g. app already installed or browser without beforeinstallprompt), open instructions
+          // If deferredPrompt is not available, open instructions modal
           openModal();
         }
       });
     }
 
     // Dismiss buttons click handlers
-    if (dismissBtn) dismissBtn.addEventListener('click', hideBanner);
-    if (laterBtn) laterBtn.addEventListener('click', hideBanner);
+    if (dismissBtn) dismissBtn.addEventListener('click', dismissPrompt);
+    if (laterBtn) laterBtn.addEventListener('click', dismissPrompt);
 
     // Modal close handlers
     if (modalClose) modalClose.addEventListener('click', closeModal);
@@ -306,6 +328,9 @@ const baseUrl = import.meta.env.BASE_URL;
     window.addEventListener('appinstalled', function () {
       deferredPrompt = null;
       hideBanner();
+      try {
+        localStorage.setItem(STORAGE_KEY, (Date.now() + 365 * 24 * 60 * 60 * 1000).toString());
+      } catch (e) {}
     });
   })();
 </script>
