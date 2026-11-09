@@ -7,6 +7,12 @@ on:
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
+    inputs:
+      test_alert:
+        description: 'Simulate an anomaly alert to verify issue creation and agent triage pipeline'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -37,7 +43,11 @@ jobs:
           node scripts/extract-text.js
           node scripts/parse-events.js
           node scripts/debug-fetch.js
-          node scripts/detect-anomalies.js
+          if [ "${{ inputs.test_alert }}" = "true" ]; then
+            node scripts/detect-anomalies.js --test-alert
+          else
+            node scripts/detect-anomalies.js
+          fi
 
       - name: Report Anomalies via GitHub Issues
         if: always()
@@ -63,6 +73,20 @@ jobs:
               gh issue comment "$OPEN_ISSUE_NUM" --body "ℹ️ **Daily Scrape Update:** The latest daily scrape ran successfully with 0 anomalies across all clubs relative to baseline. If all events look correct, you can close this issue."
             fi
           fi
+
+      - name: Upload Scraper Diagnostic Artifacts
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-diagnostics
+          path: |
+            src/data/anomaly_report.md
+            src/data/status.json
+            src/data/debug-output.txt
+            src/data/health-baseline.json
+            _input/fetch-status.json
+          retention-days: 7
 
       - name: Commit Updated Events
         run: |

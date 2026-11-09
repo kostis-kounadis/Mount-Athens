@@ -214,7 +214,41 @@ function detectAnomalies() {
   const hasAlerts = criticalAnomalies.length > 0;
 
   if (hasAlerts) {
-    const reportBody = `### ⚠️ Data Parsing Anomaly Detected\n\nAttention: @kostis-kounadis\n\nThe automated daily scraper encountered unexpected anomalies during the latest run.\n\n### 🚨 Critical Alerts\n${criticalAnomalies.join('\n')}\n\n${notifications.length > 0 ? `### 📢 Website Updates Detected\n${notifications.join('\n')}\n\n` : ''}${warnings.length > 0 ? `### ℹ️ Warnings\n${warnings.join('\n')}\n\n` : ''}### 📊 Club Overview\n${summaryTable}\n\n*Action required: Review anomalies, check calendar, and close this issue.*`;
+    const failingClubs = Array.from(clubsWithAnomalies);
+    const affectedClubUrls = failingClubs.map(c => {
+      const urls = linkConfig[c] || [];
+      return `- **${c}:** ${urls.join(', ') || 'N/A'}`;
+    }).join('\n');
+
+    const agentPrompt = `Fix scraping anomaly for ${failingClubs.join(', ')}.
+1. Read src/data/anomaly_report.md and inspect latest payloads in _input/.
+2. Update scripts/parse-events.js according to .gemini/rules/anomaly-triage.md.
+3. Verify with \`npm run test:anomalies\` (must show 0 alerts) and ensure \`npm run build\` succeeds.
+4. Open a Pull Request referencing this issue with before/after event counts.`;
+
+    const reportBody = `### ⚠️ Data Parsing Anomaly Detected
+
+Attention: @kostis-kounadis
+
+The automated daily scraper encountered unexpected anomalies during the latest run.
+
+### 🚨 Critical Alerts
+${criticalAnomalies.join('\n')}
+
+${notifications.length > 0 ? `### 📢 Website Updates Detected\n${notifications.join('\n')}\n\n` : ''}${warnings.length > 0 ? `### ℹ️ Warnings\n${warnings.join('\n')}\n\n` : ''}### 📊 Club Overview
+${summaryTable}
+
+### 🔗 Affected Club Sources
+${affectedClubUrls || '- None specified'}
+
+### 🤖 Autonomous Repair with Antigravity Remote Agent
+To triage and fix this issue on the go (from your phone or browser), launch a Remote Agent session on \`kostis-kounadis/Mount-Athens\` at [antigravity.google](https://antigravity.google) with this prompt:
+
+\`\`\`text
+${agentPrompt}
+\`\`\`
+
+*Action required: Review anomalies, dispatch Remote Agent if needed, and close this issue.*`;
     
     fs.writeFileSync(REPORT_FILE, reportBody, 'utf-8');
     console.log(`\n🚨 Critical anomalies detected! Wrote alert report to ${REPORT_FILE}`);

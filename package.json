@@ -1,7 +1,7 @@
 {
   "name": "mount-athens",
   "type": "module",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -10,7 +10,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-raw": "node scripts/fetch-raw.js"
+    "fetch-raw": "node scripts/fetch-raw.js",
+    "scrape": "node scripts/fetch-raw.js && node scripts/extract-text.js && node scripts/parse-events.js && node scripts/detect-anomalies.js",
+    "scrape:parse": "node scripts/parse-events.js && node scripts/detect-anomalies.js",
+    "test:anomalies": "node scripts/detect-anomalies.js"
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
