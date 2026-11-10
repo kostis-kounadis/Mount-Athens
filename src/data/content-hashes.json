@@ -1,13 +1,13 @@
 {
   "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "16e9706425003346b9f1c9d6f3f7fd874e3bb775c54f9ddb6a93de853c2cf0d2",
   "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "56f4bc58a66bf2596e996061340dfe9e9ceb250c8d340118bb679551b22d1d24",
-  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "8acb6f961761d5d0c83cc4621ef2e2c58156fdeb3e480e75f7adada518226be7",
-  "https://www.eosathinon.gr/anavaseis/programma/": "bc8f2f2aeaa9a1d1d0476e95014165b8e1fd77350b24bd7647b7eafe6fa85764",
-  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "991e46bb579650c84215f8290af1efd5168bb1bb6a8fa6fae8fcd60576435d02",
-  "https://eosacharnon.xmiddleware.com/api/events": "b5f347a196cde78f0bb6c4852cc7f9480403576a59f7bcc19acbfa48bacefddb",
-  "https://eosh.gr/api/trips": "f2699abf48ef43481cee30c3f48a988acdf44a503bc372d00b765484fbd815d3",
+  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "e89567fdcf4f9bd0e0d5f876a173f955dc8922cd4aed5d5f5398ae25d59b4bb6",
+  "https://www.eosathinon.gr/anavaseis/programma/": "508e3e6f376fbfb285a7813be8670d0c3d78f44c9b0b386e7bf233cca48454c1",
+  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "4f9705318b4a24f1d5994b7bd9d93dac94dea1f46e260d1acf26f28ffb0bc4c9",
+  "https://eosacharnon.xmiddleware.com/api/events": "c363d19efd098a8bace5b2ceb31a3da0faea7aca9bf4e3cdeedb7b64064f1eb3",
+  "https://eosh.gr/api/trips": "622f731e797853cb0aed3e9b8761671dbd1771d778246e6e326e35421cff337e",
   "https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50": "2294f13fc713531aa5395e279349642e6c943cf263a5f142700c152e1a8df6e8",
   "https://poa.gr/index.php/programma/": "1fda5bd563fa4ed2435258ebd5787fe4edbeb9b7e5cb18f9033aec5085b1f4dd",
   "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25": "f25a6fa240a882a786ff96b78e5cc919774b11bb64801c0b9c9d1302c57827b8",
-  "https://fop.gr/": "d0933c2e5aff0d4754fa252257fd7b0398b71b8060de8ef30965f090fefa3861"
+  "https://fop.gr/": "ff59450248aef05fd14c62bd9932ec7c99e4152e56c68101ca49711a518b699f"
 }
