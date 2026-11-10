@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added scraper diagnostic artifacts archiving (`scraper-diagnostics`) and test alert trigger (`workflow_dispatch`) to `.github/workflows/deploy.yml`.
 - Added pipeline convenience shortcuts (`scrape`, `scrape:parse`, `test:anomalies`) in `package.json`.
 - Added clean, non-truncated mobile-only PWA install floating card and iOS bottom-sheet instructions modal that seamlessly triggers the native OS installation dialog.
-- Added Web App Manifest (`public/site.webmanifest` & `public/manifest.json`), Service Worker (`public/sw.js`), and high-resolution PWA icons (`public/icons/`).
+- Added Web App Manifest (`public/site.webmanifest`), Service Worker (`public/sw.js`), and high-resolution PWA icons (`public/icons/`).
 - Added PWA and mobile web app meta tags to `src/components/SEO.astro` (`apple-touch-icon`, `theme-color`, `apple-mobile-web-app-capable`, `mobile-web-app-capable`).
 
 ## [1.5.1] - 2026-10-27
