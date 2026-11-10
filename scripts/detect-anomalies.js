@@ -9,9 +9,40 @@ const NEW_FILE = path.join(__dirname, '../src/data/events.json');
 const BASELINE_FILE = path.join(__dirname, '../src/data/health-baseline.json');
 const STATUS_FILE = path.join(__dirname, '../src/data/status.json');
 const LINK_CONFIG_FILE = path.join(__dirname, '../_input/link-config.json');
+const LINKS_MD_FILE = path.join(__dirname, '../LINKS.md');
 const CURRENT_HASHES_FILE = path.join(__dirname, '../src/data/content-hashes.json');
 const OLD_HASHES_FILE = path.join(__dirname, '../src/data/content-hashes-old.json');
 const REPORT_FILE = path.join(__dirname, '../src/data/anomaly_report.md');
+
+function loadLinkConfig() {
+  if (fs.existsSync(LINK_CONFIG_FILE)) {
+    try {
+      return JSON.parse(fs.readFileSync(LINK_CONFIG_FILE, 'utf-8'));
+    } catch (e) {
+      // Fallback to LINKS.md below
+    }
+  }
+  const config = {};
+  if (fs.existsSync(LINKS_MD_FILE)) {
+    const lines = fs.readFileSync(LINKS_MD_FILE, 'utf-8').split('\n');
+    let currentClub = '';
+    const urlRegex = /https?:\/\/[^\s]+/i;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      if (trimmed.startsWith('#')) {
+        currentClub = trimmed.replace(/^#\s*/, '').trim();
+        config[currentClub] = [];
+      } else if (trimmed.startsWith('-') && currentClub) {
+        const match = trimmed.match(urlRegex);
+        if (match) {
+          config[currentClub].push(match[0].replace(/[,;()]$/, '').trim());
+        }
+      }
+    }
+  }
+  return config;
+}
 
 // Current Athens date
 const athensFormatter = new Intl.DateTimeFormat('en-CA', {
@@ -31,7 +62,7 @@ function detectAnomalies() {
   }
 
   const newEvents = JSON.parse(fs.readFileSync(NEW_FILE, 'utf-8'));
-  const linkConfig = fs.existsSync(LINK_CONFIG_FILE) ? JSON.parse(fs.readFileSync(LINK_CONFIG_FILE, 'utf-8')) : {};
+  const linkConfig = loadLinkConfig();
   const statusData = fs.existsSync(STATUS_FILE) ? JSON.parse(fs.readFileSync(STATUS_FILE, 'utf-8')) : { logs: [] };
   const currentHashes = fs.existsSync(CURRENT_HASHES_FILE) ? JSON.parse(fs.readFileSync(CURRENT_HASHES_FILE, 'utf-8')) : {};
   const oldHashes = fs.existsSync(OLD_HASHES_FILE) ? JSON.parse(fs.readFileSync(OLD_HASHES_FILE, 'utf-8')) : {};
@@ -50,8 +81,9 @@ function detectAnomalies() {
   const notifications = [];
   const warnings = [];
 
-  // Support intentional test alert via CLI arg or ENV
+  // Support intentional test alert or baseline acceptance via CLI arg or ENV
   const isTestMode = process.argv.includes('--test-alert') || process.env.TEST_ANOMALY === '1';
+  const acceptBaselineMode = process.argv.includes('--accept-baseline');
   if (isTestMode) {
     criticalAnomalies.push(`- **🧪 [TEST ALERT] Notification Pipeline Verification:** This is an intentional test alert to verify that GitHub Issues creation, Assignee mention (@kostis-kounadis), and GitHub Actions failure email notifications are working end-to-end.`);
   }
@@ -78,7 +110,8 @@ function detectAnomalies() {
     newByClub[ev.club].push(ev);
   }
 
-  const clubsWithAnomalies = new Set();
+  const criticalClubs = new Set();
+  const fallbackClubs = new Set();
 
   // 1. Check all HTML updates & zero-event failures
   for (const club in linkConfig) {
@@ -93,10 +126,10 @@ function detectAnomalies() {
     }
 
     if (clubInfo.status === 'warning' && clubInfo.preservedCount > 0) {
-      clubsWithAnomalies.add(club);
+      fallbackClubs.add(club);
       warnings.push(`- **🛡️ Resilience Fallback Active for ${club}:** ${clubInfo.details}`);
     } else if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
-      clubsWithAnomalies.add(club);
+      criticalClubs.add(club);
       if (contentChangedUrls.length > 0) {
         criticalAnomalies.push(`- **🚨 CRITICAL: Website Updated But Parser Returned 0 Events for ${club}:** The club updated its website content overnight (${contentChangedUrls.join(', ')}), but the parser returned 0 events! Possible HTML selector or layout change.`);
       } else {
@@ -110,18 +143,22 @@ function detectAnomalies() {
 
   // 2. Sensitive Drop Detection against Persistent Healthy Baseline
   for (const club in linkConfig) {
-    if (clubsWithAnomalies.has(club)) continue;
+    if (criticalClubs.has(club) || fallbackClubs.has(club)) continue;
 
     const baseClubEvents = (healthBaseline[club] || []).filter(e => new Date(e.endDate || e.startDate) >= TODAY);
     const newClubEvents = newByClub[club] || [];
 
     if (baseClubEvents.length > 0 && newClubEvents.length === 0) {
-      clubsWithAnomalies.add(club);
+      criticalClubs.add(club);
       criticalAnomalies.push(`- **🚨 Complete Data Loss for ${club}:** Had ${baseClubEvents.length} upcoming events in healthy baseline, but 0 today!`);
     } else if (baseClubEvents.length >= 2 && (baseClubEvents.length - newClubEvents.length) >= 2) {
-      // Even a drop of -2 events against baseline triggers an alert
-      clubsWithAnomalies.add(club);
-      criticalAnomalies.push(`- **⚠️ Event Count Drop for ${club}:** Scheduled upcoming events dropped by ${baseClubEvents.length - newClubEvents.length} (was ${baseClubEvents.length} in last healthy baseline, now ${newClubEvents.length}). Check if events were cancelled, removed, or parser missed them.`);
+      if (acceptBaselineMode && newClubEvents.length > 0) {
+        console.log(`ℹ️ [--accept-baseline] Accepting new event count for ${club} (${baseClubEvents.length} -> ${newClubEvents.length}).`);
+      } else {
+        // Even a drop of -2 events against baseline triggers an alert
+        criticalClubs.add(club);
+        criticalAnomalies.push(`- **⚠️ Event Count Drop for ${club}:** Scheduled upcoming events dropped by ${baseClubEvents.length - newClubEvents.length} (was ${baseClubEvents.length} in last healthy baseline, now ${newClubEvents.length}). Check if events were cancelled, removed, or parser missed them.`);
+      }
     }
   }
 
@@ -132,7 +169,7 @@ function detectAnomalies() {
   }
   const totalNew = newEvents.length;
 
-  if (totalUpcomingBase >= 10 && totalNew < Math.floor(totalUpcomingBase / 2)) {
+  if (!acceptBaselineMode && totalUpcomingBase >= 10 && totalNew < Math.floor(totalUpcomingBase / 2)) {
     criticalAnomalies.push(`- **🚨 Massive Overall Data Loss:** Total upcoming events dropped from ${totalUpcomingBase} in healthy baseline to ${totalNew} today!`);
   }
 
@@ -140,6 +177,7 @@ function detectAnomalies() {
   for (const ev of newEvents) {
     // Malformed date
     if (!ev.startDate || !/^\d{4}-\d{2}-\d{2}$/.test(ev.startDate) || isNaN(new Date(ev.startDate).getTime())) {
+      if (ev.club) criticalClubs.add(ev.club);
       criticalAnomalies.push(`- **Invalid Date Format:** Event "${ev.title}" for club ${ev.club} has invalid startDate "${ev.startDate}".`);
       break;
     }
@@ -183,11 +221,11 @@ function detectAnomalies() {
     }
   }
 
-  // 6. Update Health Baseline ONLY for clubs with NO anomalies
+  // 6. Update Health Baseline ONLY for clubs with NO anomalies or fallbacks
   // If a club has an anomaly, its baseline is FROZEN at the pre-error healthy state!
   // This prevents an erroneous day from becoming the "new normal" on day 2.
   for (const club in linkConfig) {
-    if (!clubsWithAnomalies.has(club) && newByClub[club] && newByClub[club].length > 0) {
+    if (!criticalClubs.has(club) && !fallbackClubs.has(club) && newByClub[club] && newByClub[club].length > 0) {
       healthBaseline[club] = newByClub[club];
     }
   }
@@ -200,7 +238,7 @@ function detectAnomalies() {
     const earliest = evList.length > 0 ? evList[0].startDate : '-';
     const latest = evList.length > 0 ? evList[evList.length - 1].startDate : '-';
     const baseCount = (healthBaseline[club] || []).filter(e => new Date(e.endDate || e.startDate) >= TODAY).length;
-    const statusIcon = clubsWithAnomalies.has(club) ? '⚠️ Alert' : '✅ Healthy';
+    const statusIcon = criticalClubs.has(club) ? '🚨 Alert' : (fallbackClubs.has(club) ? '🛡️ Fallback' : '✅ Healthy');
     return `| ${club} | ${count} | ${baseCount} | ${statusIcon} | ${earliest} | ${latest} |`;
   });
 
@@ -214,17 +252,31 @@ function detectAnomalies() {
   const hasAlerts = criticalAnomalies.length > 0;
 
   if (hasAlerts) {
-    const failingClubs = Array.from(clubsWithAnomalies);
+    const failingClubs = Array.from(criticalClubs);
+    const targetClubsLabel = failingClubs.length > 0 ? failingClubs.join(', ') : 'affected clubs';
     const affectedClubUrls = failingClubs.map(c => {
       const urls = linkConfig[c] || [];
       return `- **${c}:** ${urls.join(', ') || 'N/A'}`;
     }).join('\n');
 
-    const agentPrompt = `Fix scraping anomaly for ${failingClubs.join(', ')}.
-1. Read src/data/anomaly_report.md and inspect latest payloads in _input/.
-2. Update scripts/parse-events.js according to .gemini/rules/anomaly-triage.md.
-3. Verify with \`npm run test:anomalies\` (must show 0 alerts) and ensure \`npm run build\` succeeds.
-4. Open a Pull Request referencing this issue with before/after event counts.`;
+    const plainAlerts = criticalAnomalies.map(a => a.replace(/\*\*/g, '')).join('\n');
+
+    const agentPrompt = `Triage and resolve the Mount Athens scraping anomaly for: ${targetClubsLabel}.
+
+Reported Anomaly:
+${plainAlerts}
+
+Affected Sources:
+${affectedClubUrls ? affectedClubUrls.replace(/\*\*/g, '') : '- See LINKS.md'}
+
+Instructions (follow .gemini/rules/anomaly-triage.md):
+1. Bootstrap cloud sandbox and reproduce: run \`npm install && npm run scrape\`.
+2. Diagnose the root cause for ${targetClubsLabel}:
+   - Case A (DOM / regex / API schema changed): Update the club parser in \`scripts/parse-events.js\` and run \`npm run scrape:parse\`.
+   - Case B (New seasonal schedule URL published): Update \`LINKS.md\` and run \`npm run scrape\`.
+   - Case C (Legitimate schedule reduction — club cancelled or removed hikes on their website): Do not modify \`scripts/parse-events.js\`; run \`npm run baseline:accept\` to accept the new event count in \`src/data/health-baseline.json\`.
+3. Verify \`npm run test:anomalies\` reports 0 critical alerts and \`npm run build\` succeeds.
+4. Commit the updated files, log under [Unreleased] in CHANGELOG.md, and open a Pull Request.`;
 
     const reportBody = `### ⚠️ Data Parsing Anomaly Detected
 
@@ -241,14 +293,14 @@ ${summaryTable}
 ### 🔗 Affected Club Sources
 ${affectedClubUrls || '- None specified'}
 
-### 🤖 Autonomous Repair with Antigravity Remote Agent
-To triage and fix this issue on the go (from your phone or browser), launch a Remote Agent session on \`kostis-kounadis/Mount-Athens\` at [antigravity.google](https://antigravity.google) with this prompt:
+### 🤖 Self-Healing Repair with Antigravity Remote Agent
+To triage and fix this on the go (with your Mac closed), open your **Mount-Athens** Remote Project at [antigravity.google.com](https://antigravity.google.com) on your phone and paste this self-contained prompt:
 
 \`\`\`text
 ${agentPrompt}
 \`\`\`
 
-*Action required: Review anomalies, dispatch Remote Agent if needed, and close this issue.*`;
+*Action required: Dispatch Remote Agent (or review manually), merge the resulting PR, and close this issue.*`;
     
     fs.writeFileSync(REPORT_FILE, reportBody, 'utf-8');
     console.log(`\n🚨 Critical anomalies detected! Wrote alert report to ${REPORT_FILE}`);

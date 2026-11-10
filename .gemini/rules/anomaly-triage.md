@@ -1,78 +1,95 @@
 # Anomaly Triage & Self-Healing Scraper Guidelines for AI Agents
 
-Whenever working on or triaging scrapers in **Mount Athens**, AI agents (including Antigravity Remote Agents executing in cloud VMs or local agents via Remote Control) MUST follow this structured diagnostic and repair protocol.
+Whenever triaging or repairing scrapers in **Mount Athens (Ορειβατικό Ημερολόγιο)**, AI agents—especially **Antigravity Remote Agents** running in isolated Google Cloud VMs while the maintainer's Mac is closed—MUST follow this protocol.
 
 ---
 
-## 1. System Architecture & Pipeline Context
+## 1. Cloud Sandbox Environment & Pipeline Context
 
-The project is an Astro static site that aggregates upcoming excursions from Athenian alpine clubs without a database.
-The data pipeline runs sequentially:
-1. `_input/link-config.json`: Club URLs and source endpoints.
-2. `scripts/fetch-raw.js`: Crawls live web pages / APIs into `_input/*.html` and records SHA-256 hashes (`src/data/content-hashes.json`).
-3. `scripts/extract-text.js`: Converts HTML to plain text files in `_input/*.txt`.
-4. `scripts/parse-events.js`: High-precision regex, Cheerio DOM selectors, and WordPress REST API parsers producing `src/data/events.json`.
-5. `scripts/detect-anomalies.js`: Compares results against `src/data/health-baseline.json`. If a club drops drastically or yields 0 events after a content change, it creates `src/data/anomaly_report.md` which GitHub Actions posts as an issue.
-6. `src/data/health-baseline.json`: Persistent baseline of healthy events per club. When an anomaly occurs, that club's baseline is frozen at the last known healthy state so bad data does not become the new normal.
+Because Remote Agents boot from a fresh `git clone` of `main`:
+* `node_modules/` and `_input/` (gitignored) **do not exist initially** on the VM.
+* `src/data/anomaly_report.md` is generated in CI to open the GitHub Issue and **is not committed to Git**; the anomaly details are provided in the prompt or reproduced by running the scraper.
+
+The data pipeline runs sequentially via `npm run scrape`:
+1. `LINKS.md` $\to$ `scripts/fetch-raw.js`: Crawls club pages/APIs into `_input/*.html`, writes `_input/link-config.json` and `_input/fetch-status.json`, and updates `src/data/content-hashes.json`.
+2. `scripts/extract-text.js`: Converts `_input/*.html` to plain text `_input/*.txt`.
+3. `scripts/parse-events.js`: Parses HTML/JSON/text into `src/data/events.json` and writes `src/data/status.json`.
+4. `scripts/detect-anomalies.js`: Compares `src/data/events.json` against `src/data/health-baseline.json`.
 
 ---
 
-## 2. Step-by-Step Triage & Self-Healing Protocol
+## 2. Step-by-Step Self-Healing Protocol
 
-When invoked to fix a scraping anomaly:
-
-### Step 1: Diagnose Root Cause
-* Read `src/data/anomaly_report.md` (or the referenced GitHub Issue) to determine the affected club(s).
-* Check `src/data/status.json` and `_input/fetch-status.json` to verify HTTP fetch status:
-  - Did the club block requests (HTTP 403, Cloudflare bot challenge)?
-  - Did the URL change or redirect (HTTP 404, 301)?
-  - Did the page structure change (HTTP 200, but parser extracted 0 events)?
-* Check `_input/<club_slug>.html` or `_input/<club_slug>.txt` to observe recent layout changes.
-
-### Step 2: Re-fetch or Isolate Payloads
-* Run `npm run fetch-raw` (or inspect existing `_input/` files) to obtain the latest raw HTML/JSON.
-* Compare the new HTML structure with what the club's function in `scripts/parse-events.js` expects.
-
-### Step 3: Implement Targeted Fixes in `scripts/parse-events.js`
-* Locate the club's dedicated parser:
-  - **ΑΟΣ**: `parseAos()`
-  - **ΕΟΣ Αθηνών**: `parseEosAthinon()` & `parseEosAthinonExoterikoy()`
-  - **ΕΟΣ Αχαρνών**: `parseEosAcharnon()`
-  - **ΕΟΣ Ηλιούπολης**: `parseEosh()`
-  - **ΕΠΟΣ Φυλής**: `parseEposFilis()`
-  - **ΠΟΑ**: `parsePoa()`
-  - **ΦΟΝΙ**: `parseFoni()`
-  - **ΦΟΠ**: `parseFop()`
-* **Scraper Invariants (Do Not Break):**
-  - **Greek Accent Insensitivity**: Always use `normalizeGreek()` for matching titles, keywords, and months.
-  - **Difficulty Extraction (`Β.Δ.`)**: Extract and normalize difficulty when available using `normalizeDifficulty()`.
-  - **School Course Filtering**: Exclude training courses (`Σχολή` / `Σχολές` via `isSchoolTitle`) while preserving trips open to graduates (`Απόφοιτοι`).
-  - **Date Normalization**: Ensure start and end dates follow `YYYY-MM-DD` and correctly resolve cross-month, cross-year, or Greek holiday patterns.
-  - **Isolation**: Keep modifications localized to the failing club; never introduce brittle global regexes that risk regressing other clubs.
-
-### Step 4: Verification Gate (Mandatory)
-Before committing, you MUST run:
+### Step 1: Bootstrap the Cloud Sandbox & Reproduce
+Always start by installing dependencies and running the full pipeline to populate `_input/` and reproduce the live state:
 ```bash
-# 1. Re-parse and check anomalies
+npm install && npm run scrape
+```
+
+### Step 2: Classify the Root Cause (Crucial — Not Every Alert is a Code Bug!)
+Inspect `_input/fetch-status.json`, `src/data/status.json`, `_input/<club_slug>.html`, and `src/data/anomaly_report.md`. Classify the anomaly for the affected club into one of these 4 cases:
+
+#### Case A: DOM Structure, Date Format, or API Schema Changed (Parser Bug)
+* **Symptoms:** Fetch succeeded (`HTTP 200`), the club's live page in `_input/` has upcoming excursions, but `parse-events.js` extracted `0` events, missed events, or produced an invalid date.
+* **Action:**
+  1. Locate the club's parser in `scripts/parse-events.js` (`parseAos`, `parseEosAthinon`, `parseEosAthinonExoterikoy`, `parseEosAcharnon`, `parseEosh`, `parseEposFilis`, `parsePoa`, `parseFoni`, `parseFop`).
+  2. Update the selector, regex, or JSON mapping for **that club only**.
+  3. Re-run `npm run scrape:parse` to verify the events are extracted properly.
+
+#### Case B: New Seasonal Schedule URL Published
+* **Symptoms:** The club published a new seasonal page (e.g., a new semester/year URL slug) or moved their calendar URL.
+* **Action:**
+  1. Update the club's URL under its heading in `LINKS.md` (and any hardcoded URL reference in `scripts/fetch-raw.js` or `scripts/parse-events.js` if applicable).
+  2. Re-run `npm run scrape` to fetch the new page and parse events.
+
+#### Case C: Legitimate Schedule Reduction / Cancelled Excursions (No Code Bug!)
+* **Symptoms:** `detect-anomalies.js` reported an `Event Count Drop` (e.g., `was 14 in last healthy baseline, now 11`), AND inspecting `_input/<club_slug>.html` confirms the club genuinely only lists 11 upcoming hikes now (because excursions were cancelled, removed, or completed).
+* **Action:**
+  1. **Do NOT modify `scripts/parse-events.js`** when the parser is already extracting 100% of the hikes listed on the club's website.
+  2. Accept the new lower event count into `src/data/health-baseline.json` by running:
+     ```bash
+     npm run baseline:accept
+     ```
+
+#### Case D: Datacenter IP Bot-Block / Server Down (HTTP 403 / Cloudflare / 5xx)
+* **Symptoms:** `_input/fetch-status.json` shows `HTTP 403`, a Cloudflare challenge, or connection timeout from the cloud VM IP.
+* **Action:**
+  1. Do not break the parser in `scripts/parse-events.js`.
+  2. Verify that `parse-events.js` triggered `[RESILIENCE FALLBACK]` to preserve healthy events from `src/data/health-baseline.json`. If a public WordPress REST API endpoint (`/wp-json/wp/v2/...` or `/wp-json/tribe/events/v1/...`) is accessible without bot-blocking, consider using it; otherwise report the upstream outage/IP block clearly.
+
+---
+
+## 3. Scraper Invariants (Do Not Break)
+
+When editing `scripts/parse-events.js`:
+* **Greek Accent Insensitivity:** Always use `normalizeGreek()` when matching Greek keywords, titles, or month names.
+* **Difficulty Extraction (`Β.Δ.`):** Preserve and normalize difficulty grades via `normalizeDifficulty()`.
+* **Exclude Training Schools (`Σχολές`):** Keep `isSchoolTitle()` filtering active while preserving excursions for school graduates (`Απόφοιτοι`).
+* **Date Formatting:** Output `YYYY-MM-DD` for `startDate` and `endDate`, resolving cross-month and cross-year ranges accurately.
+* **Strict Isolation:** Never alter shared date helpers in a way that regresses the other 7 clubs.
+
+---
+
+## 4. Mandatory Verification Gate
+
+Before committing, run:
+```bash
+# 1. Extract text, parse events, and run anomaly check
 npm run scrape:parse
 
-# 2. Run standalone anomaly detector
+# 2. Verify zero critical anomalies remain
 npm run test:anomalies
-```
-Confirm:
-1. The target club's status returns to `✅ Healthy`.
-2. Total upcoming events align with or exceed `health-baseline.json`.
-3. `src/data/anomaly_report.md` is automatically removed by the script (indicating 0 critical alerts).
-4. No other club suffered an unintended regression.
 
-Then verify static site compilation:
-```bash
+# 3. Verify Astro static site builds cleanly
 npm run build
 ```
-The build MUST finish with 0 errors.
+All three commands MUST succeed with `0` critical alerts (so `src/data/anomaly_report.md` is automatically removed) and `0` build errors.
 
-### Step 5: Git & Pull Request Hygiene
-* Create a dedicated fix branch: `fix/scraper-<club-slug>` (e.g., `fix/scraper-aos`).
-* Update `CHANGELOG.md` under `[Unreleased]` -> `Fixed` detailing the fix (e.g. `Fixed ΑΟΣ calendar parser after website table layout redesign`).
-* Commit changes with a descriptive message following Conventional Commits (e.g., `fix(aos): update excursion card Cheerio selector`).
-* If working as a Remote Agent, open a GitHub Pull Request targeting `main` referencing the anomaly issue (e.g. `Resolves #42`). Include before/after event counts in the PR summary.
+---
+
+## 5. Git, Changelog & Pull Request Delivery
+
+1. Create a branch: `fix/scraper-<club-slug>` (or `chore/baseline-<club-slug>` for Case C).
+2. Log the change under `## [Unreleased]` in `CHANGELOG.md` (following `.gemini/rules/versioning.md`).
+3. Stage the modified code/data files (`scripts/parse-events.js`, `LINKS.md`, `src/data/events.json`, `src/data/health-baseline.json`, `src/data/status.json`, `CHANGELOG.md`). Never force-add `_input/` or `src/data/anomaly_report.md`.
+4. Commit and open a Pull Request targeting `main` with a concise summary of the root cause (Case A/B/C/D) and the before/after event counts.

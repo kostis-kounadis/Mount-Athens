@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-11-10
+
+### Added
+- Added `npm run baseline:accept` (`--accept-baseline` flag in `scripts/detect-anomalies.js`) to cleanly accept legitimate schedule reductions into `src/data/health-baseline.json` when a club cancels or removes hikes.
+- Added `LINKS.md` direct fallback parser in `scripts/detect-anomalies.js` when `_input/link-config.json` is absent in fresh cloud clones.
+
+### Fixed
+- Fixed `scripts/detect-anomalies.js` so resilience fallback clubs (`🛡️ Fallback`) are separated from critical alert clubs (`🚨 Alert`) and no longer misattributed in the Remote Agent prompt.
+- Embedded full anomaly context directly inside the generated Remote Agent prompt and updated `.gemini/rules/anomaly-triage.md` to bootstrap fresh cloud VMs (`npm install && npm run scrape`) and classify root causes into 4 distinct buckets.
+- Fixed `npm run scrape:parse` in `package.json` to always run `scripts/extract-text.js` before `scripts/parse-events.js`.
+
 ## [1.6.0] - 2026-11-09
 
 ### Added
