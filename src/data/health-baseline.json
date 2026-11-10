@@ -1,15 +1,6 @@
 {
   "ΑΟΣ": [
     {
-      "startDate": "2026-11-09",
-      "endDate": "2026-11-09",
-      "displayDate": "9 Νοεμ",
-      "title": "Ορειβασία Πεζοπορία",
-      "club": "ΑΟΣ",
-      "url": "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=%CE%9F%CF%81%CE%B5%CE%B9%CE%B2%CE%B1%CF%83%CE%AF%CE%B1%20%CE%A0%CE%B5%CE%B6%CE%BF%CF%80%CE%BF%CF%81%CE%AF%CE%B1",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-11-14",
       "endDate": "2026-11-15",
       "displayDate": "14-15 Νοεμ",
@@ -828,6 +819,15 @@
       "club": "ΕΟΣ Αθηνών",
       "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%9F%CE%99%CE%A4%CE%97%20%E2%80%93%20%CE%A0%CF%85%CF%81%CE%AC%20%CE%97%CF%81%CE%B1%CE%BA%CE%BB%CE%AD%CE%BF%CF%85%CF%82%20%E2%80%93%20%CE%9A%CE%B1%CF%84%CE%B1%CE%B2%CF%8C%CE%B8%CF%81%CE%B5%CF%82",
       "difficulty": "1-2"
+    },
+    {
+      "startDate": "2026-12-11",
+      "endDate": "2026-12-11",
+      "displayDate": "11/12",
+      "title": "ΠΡΟΒΟΛΗ ΓΙΑ ΤΑΞΙΔΙ ΚΑΝΑΔΑ",
+      "club": "ΕΟΣ Αθηνών",
+      "url": "https://www.eosathinon.gr/anavaseis/programma/#12-26:~:text=%CE%A0%CE%A1%CE%9F%CE%92%CE%9F%CE%9B%CE%97%20%CE%93%CE%99%CE%91%20%CE%A4%CE%91%CE%9E%CE%99%CE%94%CE%99%20%CE%9A%CE%91%CE%9D%CE%91%CE%94%CE%91",
+      "difficulty": ""
     },
     {
       "startDate": "2026-12-13",
