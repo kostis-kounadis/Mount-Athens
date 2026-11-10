@@ -2,9 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import eventsData from '../data/events.json';
 import statusData from '../data/status.json';
-import { getAthensFormattedDate } from '../utils/date';
-
-const formattedDate = getAthensFormattedDate();
 
 const GREEK_MONTHS = [
   "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος",
@@ -137,18 +134,54 @@ function getDifficultyTiers(diff?: string): string {
   <div class="fixed bottom-0 left-0 w-full h-[3px] z-50 pointer-events-none">
     <div id="scroll-progress-bar" class="h-full bg-orange-500 w-0"></div>
   </div>
+
+  <!-- Dismissible Notifications Callout Banner -->
+  <div 
+    id="notifications-callout-banner" 
+    class="hidden mb-6 bg-white border border-slate-200 rounded-xl px-4 py-3 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-sans"
+  >
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-8 h-8 rounded-lg bg-slate-900 text-orange-400 flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+        </svg>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-700 leading-snug">
+        Ενημερωθείτε αυτόματα όταν προστίθενται νέες εξορμήσεις από τους συλλόγους μέσω Telegram ή Email.
+      </p>
+    </div>
+    <div class="flex items-center justify-end gap-2 flex-shrink-0">
+      <a 
+        href={import.meta.env.BASE_URL + "notifications"} 
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors"
+      >
+        <span>Ενημερώσεις</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+      <button 
+        id="dismiss-notifications-banner-btn" 
+        type="button" 
+        aria-label="Κλείσιμο ενημέρωσης"
+        title="Κλείσιμο"
+        class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors focus:outline-none"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
   
   <div class="flex flex-col lg:flex-row-reverse gap-8 xl:gap-10 items-start">
     <!-- Right Sidebar: Filters Panel -->
     <aside class="w-full lg:w-[22%] xl:w-[20%] lg:sticky lg:top-28 flex-shrink-0 z-10">
-      <!-- Sidebar Title & Mobile Timestamp -->
+      <!-- Sidebar Title -->
       <div class="flex items-baseline justify-between mb-5 select-none">
         <h2 class="text-mono text-xs font-bold tracking-widest text-slate-600 uppercase">
           ΦΙΛΤΡΑ
         </h2>
-        <div class="md:hidden text-mono text-[10px] font-medium tracking-wider text-slate-600 current-date-display">
-          {formattedDate}
-        </div>
       </div>
       <!-- Minimal Compact Filters Dashboard -->
       <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
@@ -905,5 +938,31 @@ function getDifficultyTiers(diff?: string): string {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
+
+    // Dismissible Notifications Callout Banner
+    const NOTIF_BANNER_KEY = 'mount_athens_notifications_banner_dismissed';
+    const notifBanner = document.getElementById('notifications-callout-banner');
+    const dismissNotifBtn = document.getElementById('dismiss-notifications-banner-btn');
+
+    if (notifBanner) {
+      try {
+        if (localStorage.getItem(NOTIF_BANNER_KEY) !== '1') {
+          notifBanner.classList.remove('hidden');
+        }
+      } catch (e) {
+        notifBanner.classList.remove('hidden');
+      }
+    }
+
+    if (dismissNotifBtn && notifBanner) {
+      dismissNotifBtn.addEventListener('click', () => {
+        notifBanner.classList.add('hidden');
+        try {
+          localStorage.setItem(NOTIF_BANNER_KEY, '1');
+        } catch (e) {
+          // Safe fallback
+        }
+      });
+    }
   </script>
 </Layout>

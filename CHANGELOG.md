@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-10
+
+### Added
+- Added dedicated `/notifications` page (`src/pages/notifications.astro`) offering Telegram channel (`@oreivatiko_hmerologio`) and Buttondown email subscription options with privacy disclaimers.
+- Added dismissible homepage notifications callout banner (`#notifications-callout-banner`) with `localStorage` persistence in `src/pages/index.astro`.
+- Added automated notification script (`scripts/send-notifications.js`) and CI post-deploy step in `.github/workflows/deploy.yml` to send a concise teaser message when healthy clubs add brand-new excursions, isolated from the self-healing anomaly pipeline.
+
+### Changed
+- Updated browser tab title, meta tags (`src/components/SEO.astro`), PWA manifests (`public/site.webmanifest`, `public/manifest.json`), and install prompt (`src/components/InstallPrompt.astro`) to `Ορειβατικό Ημερολόγιο`.
+- Replaced the header date display in `src/layouts/Layout.astro` with a clean two-link sans-serif top navigation (`Πληροφορίες` and `Ενημερώσεις` with bell icon) and removed the `GITHUB` link from the footer.
+- Merged `Αναφορά Προβλήματος` into `src/pages/info.astro` (`#report` section), restructured the page with a consistent heading hierarchy (`h1` / `h2`) and a two-column club sources grid, and removed the standalone `src/pages/report.astro` page.
+
 ## [1.6.1] - 2026-11-10
 
 ### Added

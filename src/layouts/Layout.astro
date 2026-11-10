@@ -2,7 +2,6 @@
 import SEO from '../components/SEO.astro';
 import InstallPrompt from '../components/InstallPrompt.astro';
 import pkg from '../../package.json';
-import { getAthensFormattedDate } from '../utils/date';
 
 interface Props {
   title?: string;
@@ -13,9 +12,6 @@ interface Props {
 }
 
 const { title, description, image, mainClass = "max-w-5xl mx-auto px-4 sm:px-6 lg:px-8", footerClass = "max-w-5xl mx-auto px-4" } = Astro.props;
-
-// Format current date in Greek (Athens timezone)
-const formattedDate = getAthensFormattedDate();
 ---
 
 <!doctype html>
@@ -73,55 +69,31 @@ const formattedDate = getAthensFormattedDate();
   <body class="min-h-screen flex flex-col justify-between selection:bg-slate-200 selection:text-slate-800">
 
     <!-- Global Header -->
-    <header class="sticky top-0 z-50 bg-white border-b border-slate-200 py-3.5 sm:py-5 md:py-6 px-4 sm:px-6 md:px-12 flex items-center justify-between shadow-sm">
-      <a href={import.meta.env.BASE_URL} class="flex items-center gap-2.5 group focus:outline-none">
+    <header class="sticky top-0 z-50 bg-white border-b border-slate-200 py-3.5 sm:py-5 md:py-6 px-4 sm:px-6 md:px-12 flex items-center justify-between gap-3 shadow-sm">
+      <a href={import.meta.env.BASE_URL} class="flex items-center gap-2 sm:gap-2.5 group focus:outline-none min-w-0">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-slate-900 group-hover:scale-110 transition-transform duration-200 flex-shrink-0" viewBox="0 0 24 24">
           <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
         </svg>
-        <span class="font-bold tracking-tight text-base sm:text-lg text-slate-900 font-sans leading-tight flex items-center gap-2 whitespace-nowrap">
+        <span class="font-bold tracking-tight text-sm sm:text-lg text-slate-900 font-sans leading-tight flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
           Ορειβατικό Ημερολόγιο
-          <span class="text-[10px] font-light text-orange-500 uppercase tracking-widest px-1.5 py-0.5 border border-orange-200 rounded-md bg-orange-50/50 select-none">BETA</span>
+          <span class="hidden sm:inline-block text-[10px] font-light text-orange-500 uppercase tracking-widest px-1.5 py-0.5 border border-orange-200 rounded-md bg-orange-50/50 select-none">BETA</span>
         </span>
       </a>
       
-      <div id="current-date" class="current-date-display hidden md:block text-mono text-[10px] md:text-[11px] font-medium tracking-wider text-slate-600 select-none whitespace-nowrap ml-4">
-        {formattedDate}
-      </div>
-
-      <script is:inline>
-        try {
-          const parts = new Intl.DateTimeFormat('el-GR', {
-            timeZone: 'Europe/Athens',
-            weekday: 'long',
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric'
-          }).formatToParts(new Date());
-          
-          const day = parts.find(p => p.type === 'weekday').value.toUpperCase();
-          const date = parts.find(p => p.type === 'day').value;
-          const month = parts.find(p => p.type === 'month').value.toUpperCase();
-          const year = parts.find(p => p.type === 'year').value;
-          
-          const rawDate = `${day}, ${date} ${month} ${year}`;
-          const cleanDate = rawDate
-            .replace(/Ά/g, 'Α')
-            .replace(/Έ/g, 'Ε')
-            .replace(/Ή/g, 'Η')
-            .replace(/Ί/g, 'Ι')
-            .replace(/Ό/g, 'Ο')
-            .replace(/Ύ/g, 'Υ')
-            .replace(/Ώ/g, 'Ω')
-            .replace(/Ϋ/g, 'Υ')
-            .replace(/Ϊ/g, 'Ι');
-          
-          document.querySelectorAll('.current-date-display').forEach(function(el) {
-            el.textContent = cleanDate;
-          });
-        } catch (e) {
-          console.error('Error setting Athens local date:', e);
-        }
-      </script>
+      <nav aria-label="Κύρια πλοήγηση" class="flex items-center gap-6 sm:gap-8 font-sans text-xs sm:text-sm font-medium text-slate-600 flex-shrink-0">
+        <a href={import.meta.env.BASE_URL + "info"} class="hover:text-slate-900 transition-colors">
+          Πληροφορίες
+        </a>
+        <a 
+          href={import.meta.env.BASE_URL + "notifications"} 
+          class="inline-flex items-center gap-1.5 hover:text-slate-900 transition-colors"
+        >
+          <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+          </svg>
+          <span>Ενημερώσεις</span>
+        </a>
+      </nav>
     </header>
 
     <!-- Main Content Area -->
@@ -138,9 +110,9 @@ const formattedDate = getAthensFormattedDate();
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-5 font-mono">
           <a href={import.meta.env.BASE_URL + "info"} class="hover:underline transition-all hover:text-slate-900">ΠΛΗΡΟΦΟΡΙΕΣ</a>
           <span class="text-slate-300">/</span>
-          <a href={import.meta.env.BASE_URL + "report"} class="hover:underline transition-all hover:text-slate-900">ΑΝΑΦΟΡΑ ΠΡΟΒΛΗΜΑΤΟΣ</a>
+          <a href={import.meta.env.BASE_URL + "info#report"} class="hover:underline transition-all hover:text-slate-900">ΑΝΑΦΟΡΑ ΠΡΟΒΛΗΜΑΤΟΣ</a>
           <span class="text-slate-300">/</span>
-          <a href="https://github.com/kostis-kounadis/Mount-Athens" target="_blank" rel="noopener noreferrer" class="hover:underline transition-all hover:text-slate-900">GITHUB</a>
+          <a href={import.meta.env.BASE_URL + "notifications"} class="hover:underline transition-all hover:text-slate-900">ΕΝΗΜΕΡΩΣΕΙΣ</a>
           <span class="text-slate-300">/</span>
           <span class="font-bold text-slate-800">v{pkg.version}</span>
         </div>
