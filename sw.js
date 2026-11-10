@@ -48,8 +48,9 @@ self.addEventListener('fetch', (event) => {
           }
           // Fallback for HTML documents if offline
           if (event.request.headers.get('accept')?.includes('text/html')) {
-            return caches.match('./') || caches.match('/Mount-Athens/');
+            return caches.match('./').then((res) => res || caches.match('/Mount-Athens/'));
           }
+          return new Response('', { status: 503, statusText: 'Offline' });
         });
       })
   );
