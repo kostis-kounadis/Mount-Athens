@@ -1,13 +1,13 @@
 {
   "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "052919a5de3b455ac5d1d7793b6e8b1e3d3e691e251682609e792ee20ee44cba",
   "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "6edb65d93376d9501299cc7328fe04f0cf5bdbb485f564a314ad71b6a5ff02b8",
-  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "7b8c4ae31ae26352e9e32f093e6566775a063cae12f8d4a1cacf8833a67b5f3f",
-  "https://www.eosathinon.gr/anavaseis/programma/": "583730e2637916ab4b26fdd4780cbbce50986416dc48e3431d03ffc963856e73",
-  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "5b5e81e2c852fa8c1856a57c987133aeae4d108c3190527cc2b0ff684b2e7132",
-  "https://eosacharnon.xmiddleware.com/api/events": "03b1b375713f6b8d2acf826a9b3c50d31e248c2fa1be2d22766b2a654e436306",
-  "https://eosh.gr/api/trips": "f558ca2f0bd8788a8dd3d7525b0faddef2d5f2e9dbb96a7ce40dbe8beaa757d3",
+  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "0c77f9daacb9d5095c675caf3cd3fa6a4b8fbc1a2db27771b1aab64504a720b6",
+  "https://www.eosathinon.gr/anavaseis/programma/": "629db4d5b305fb7e0f85a6d9aae9fe92f9193ee9cdbe00acdaae955a90a54639",
+  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "d55abcec297cf35821fe1e665985e19e3845e988a41e1e744fd847f10c113db1",
+  "https://eosacharnon.xmiddleware.com/api/events": "3ae73fd5c6367009f93fd1b823b0d6c82b60eded67d3f400aab42ee27d80559b",
+  "https://eosh.gr/api/trips": "aaa9568030420252a3065e256550f0209c3cdfce1ed3947b4d7573da07ac9d8e",
   "https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50": "22b50c95b7e6645601047aa831c1eb14fc2afeaa5730930a7972a76932c789de",
   "https://poa.gr/index.php/programma/": "d61884b09e8ea847087f658ac8b0c3fc9651759143aa917dcf54446464bf703f",
   "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25": "f25a6fa240a882a786ff96b78e5cc919774b11bb64801c0b9c9d1302c57827b8",
-  "https://fop.gr/": "26de3b63f37c82830a2798e3409c0ebb8dcb26668107c3415e990c06b8e32718"
+  "https://fop.gr/": "589ab3f3feff92f62a399ff1b70af02ad021c3228bbb362edbcab3cb6132427a"
 }
