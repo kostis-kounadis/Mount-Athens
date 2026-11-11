@@ -192,13 +192,20 @@ function getDifficultyTiers(diff?: string): string {
   </div>
   
   <div class="flex flex-col lg:flex-row-reverse gap-8 xl:gap-10 items-start">
-    <!-- Right Sidebar: Filters Panel -->
-    <aside class="w-full lg:w-[22%] xl:w-[20%] lg:sticky lg:top-28 flex-shrink-0 z-10">
+    <!-- Right Sidebar: Filters Panel (Desktop) -->
+    <aside class="hidden lg:block lg:w-[22%] xl:w-[20%] lg:sticky lg:top-28 flex-shrink-0 z-10">
       <!-- Sidebar Title -->
       <div class="flex items-baseline justify-between mb-5 select-none">
         <h2 class="text-mono text-xs font-bold tracking-widest text-slate-600 uppercase">
           ΦΙΛΤΡΑ
         </h2>
+        <button 
+          id="desktop-reset-filters-btn" 
+          type="button" 
+          class="hidden text-[11px] font-mono font-medium text-orange-600 hover:text-orange-700 underline underline-offset-2 select-none"
+        >
+          Επαναφορά
+        </button>
       </div>
       <!-- Minimal Compact Filters Dashboard -->
       <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
@@ -343,6 +350,255 @@ function getDifficultyTiers(diff?: string): string {
         </div>
       </div>
     </aside>
+
+    <!-- Mobile Floating Filter Pill Trigger (Option A: Split Pill) -->
+    <div 
+      id="mobile-filter-pill-container" 
+      class="lg:hidden fixed left-1/2 -translate-x-1/2 z-40 flex items-center shadow-2xl rounded-full border border-slate-800 bg-slate-900/95 backdrop-blur-md text-white font-sans text-xs select-none transition-all duration-300"
+      style="bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));"
+    >
+      <!-- Main Trigger Button (opens bottom sheet) -->
+      <button 
+        id="mobile-filter-open-btn"
+        type="button"
+        class="px-4 py-2.5 flex items-center gap-2 hover:bg-slate-800 active:bg-slate-950 rounded-full transition-colors focus:outline-none"
+        aria-label="Άνοιγμα φίλτρων"
+      >
+        <svg class="w-4 h-4 text-orange-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+        </svg>
+        <span class="font-semibold tracking-wide">Φίλτρα</span>
+        <!-- Filter Active Badge -->
+        <span id="mobile-filter-badge" class="hidden bg-orange-500 text-white text-[10px] font-bold font-mono px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">0</span>
+      </button>
+
+      <!-- Instant Clear Button (Split option A: visible only when filters active) -->
+      <div id="mobile-filter-clear-split" class="hidden items-center">
+        <span class="h-4 w-px bg-slate-700"></span>
+        <button 
+          id="mobile-filter-clear-btn"
+          type="button"
+          class="px-3 py-2.5 hover:bg-slate-800 active:bg-slate-950 text-slate-300 hover:text-white rounded-r-full transition-colors focus:outline-none"
+          title="Καθαρισμός όλων των φίλτρων"
+          aria-label="Καθαρισμός όλων των φίλτρων"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Sheet Backdrop (lg:hidden) -->
+    <div 
+      id="mobile-filter-drawer-backdrop" 
+      class="lg:hidden fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 transition-opacity duration-300 opacity-0 pointer-events-none"
+    ></div>
+
+    <!-- Mobile Bottom Sheet Drawer (lg:hidden) -->
+    <div 
+      id="mobile-filter-drawer" 
+      class="lg:hidden fixed inset-x-0 bottom-0 z-50 max-h-[88vh] bg-white rounded-t-3xl shadow-2xl flex flex-col transition-transform duration-300 ease-out translate-y-full will-change-transform font-sans"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Φίλτρα εξορμήσεων"
+    >
+      <!-- Grab Handle / Touch Area -->
+      <div id="mobile-drawer-drag-area" class="w-full pt-3 pb-1.5 flex justify-center flex-shrink-0 cursor-grab active:cursor-grabbing select-none">
+        <div class="w-12 h-1.5 bg-slate-300 rounded-full"></div>
+      </div>
+
+      <!-- Drawer Header -->
+      <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between flex-shrink-0 select-none">
+        <div class="flex items-center gap-2">
+          <h2 class="text-mono text-xs font-bold tracking-widest text-slate-900 uppercase">
+            ΦΙΛΤΡΑ
+          </h2>
+          <span class="text-xs text-mono text-slate-400">
+            (<span id="mobile-drawer-total-count">{totalEvents}</span>)
+          </span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button 
+            id="mobile-drawer-reset-btn"
+            type="button"
+            class="text-xs font-mono font-medium text-orange-600 hover:text-orange-700 transition-colors opacity-40 pointer-events-none"
+          >
+            Επαναφορά
+          </button>
+          <button 
+            id="mobile-filter-close-btn"
+            type="button"
+            class="p-1.5 -mr-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors focus:outline-none"
+            aria-label="Κλείσιμο φίλτρων"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Drawer Scrollable Content -->
+      <div class="p-5 space-y-6 overflow-y-auto overscroll-contain flex-grow">
+        <!-- Search -->
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΑΝΑΖΗΤΗΣΗ:</span>
+          <div class="relative w-full">
+            <input 
+              type="text" 
+              id="mobile-search-input" 
+              placeholder="Αναζήτηση βουνού, προορισμού..." 
+              aria-label="Αναζήτηση βουνού, προορισμού"
+              class="w-full pl-3 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:bg-white transition-all font-sans"
+            />
+            <button 
+              id="mobile-clear-search-btn" 
+              type="button"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 hidden"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Duration Filter (Segmented control style) -->
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΔΙΑΡΚΕΙΑ:</span>
+          <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100 border border-slate-200 rounded-xl" id="mobile-duration-filters-container">
+            <button 
+              data-duration-filter="all" 
+              class="py-2 px-1 text-center rounded-lg text-xs font-semibold font-sans transition-all bg-slate-900 text-white shadow-xs active-duration-btn"
+            >
+              Όλες
+            </button>
+            <button 
+              data-duration-filter="single" 
+              class="py-2 px-1 text-center rounded-lg text-xs font-semibold font-sans text-slate-600 hover:text-slate-900 transition-all"
+            >
+              Μονοήμερη
+            </button>
+            <button 
+              data-duration-filter="multi" 
+              class="py-2 px-1 text-center rounded-lg text-xs font-semibold font-sans text-slate-600 hover:text-slate-900 transition-all"
+            >
+              Πολυήμερη
+            </button>
+          </div>
+        </div>
+
+        <!-- Difficulty Filter -->
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΔΥΣΚΟΛΙΑ:</span>
+          <div class="flex flex-wrap gap-1.5" id="mobile-difficulty-filters-container">
+            <button 
+              data-difficulty-filter="all" 
+              class="px-2.5 py-1.5 rounded-lg border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-difficulty-btn"
+            >
+              Όλες
+            </button>
+            <button 
+              data-difficulty-filter="easy" 
+              title="Β.Δ.: 1, 1+, Α, Α+"
+              class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+            >
+              Εύκολη
+            </button>
+            <button 
+              data-difficulty-filter="medium" 
+              title="Β.Δ.: 2, 2+, Β, Β+"
+              class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+            >
+              Μέτρια
+            </button>
+            <button 
+              data-difficulty-filter="hard" 
+              title="Β.Δ.: 3+, Χ1–Χ3, Γ, Δ"
+              class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+            >
+              Απαιτητική
+            </button>
+            <button 
+              data-difficulty-filter="unknown" 
+              title="Χωρίς ένδειξη Β.Δ."
+              class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200"
+            >
+              Άγνωστη
+            </button>
+          </div>
+        </div>
+
+        <!-- Clubs Filter (Multi-select) -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 select-none font-mono">ΣΥΛΛΟΓΟΙ (ΠΟΛΛΑΠΛΗ ΕΠΙΛΟΓΗ):</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5" id="mobile-club-filters-container">
+            <button 
+              data-club-filter="all" 
+              class="px-2.5 py-1.5 rounded-lg border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-club-btn"
+            >
+              Όλοι ({totalEvents})
+            </button>
+            {uniqueClubs.map(club => {
+              const count = eventsData.filter(e => e.club === club).length;
+              const theme = CLUB_THEMES[club] || defaultTheme;
+              return (
+                <button
+                  data-club-filter={club}
+                  data-active-class={theme.active}
+                  data-inactive-class={`${theme.badge} ${theme.border} text-slate-600 hover:bg-slate-100`}
+                  class={`px-2.5 py-1.5 rounded-lg border text-xs font-semibold font-sans ${theme.badge} ${theme.border} transition-all duration-200`}
+                >
+                  {club} ({count})
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <!-- Favorites Filter -->
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-2 select-none font-mono">ΑΓΑΠΗΜΕΝΑ:</span>
+          <div class="flex flex-wrap gap-1.5" id="mobile-star-filters-container">
+            <button 
+              data-star-filter="all" 
+              class="px-2.5 py-1.5 rounded-lg border border-slate-900 bg-slate-900 text-white text-xs font-semibold font-sans transition-all duration-200 active-star-btn"
+            >
+              Όλες
+            </button>
+            <button 
+              data-star-filter="starred" 
+              class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 text-xs font-semibold font-sans transition-all duration-200 flex items-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5 text-orange-500 fill-orange-500" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+              </svg>
+              <span>Αγαπημένα (<span id="mobile-stat-starred-count">0</span>)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drawer Sticky Bottom Bar with Dynamic CTA -->
+      <div 
+        class="p-4 border-t border-slate-100 bg-white/95 backdrop-blur-sm sticky bottom-0 select-none"
+        style="padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));"
+      >
+        <button 
+          id="mobile-filter-apply-btn"
+          type="button"
+          class="w-full py-3 bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 shadow-sm transition-all focus:outline-none"
+        >
+          <span>Προβολή</span>
+          <span id="mobile-filter-cta-count" class="font-mono text-orange-400 font-bold">{totalEvents}</span>
+          <span>εξορμήσεων</span>
+          <svg class="w-4 h-4 ml-0.5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </button>
+      </div>
+    </div>
 
     <!-- Left Column: Calendar Main Content -->
     <div class="w-full lg:w-[78%] xl:w-[80%] flex-grow space-y-10" id="calendar-container">
@@ -578,22 +834,47 @@ function getDifficultyTiers(diff?: string): string {
       updateProgress();
     }
 
-    const searchInput = document.getElementById('search-input') as HTMLInputElement;
-    const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement;
+    const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+    const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement | null;
+    const mobileSearchInput = document.getElementById('mobile-search-input') as HTMLInputElement | null;
+    const mobileClearSearchBtn = document.getElementById('mobile-clear-search-btn') as HTMLButtonElement | null;
+
     const clubFiltersContainer = document.getElementById('club-filters-container');
+    const mobileClubFiltersContainer = document.getElementById('mobile-club-filters-container');
     const durationFiltersContainer = document.getElementById('duration-filters-container');
+    const mobileDurationFiltersContainer = document.getElementById('mobile-duration-filters-container');
     const difficultyFiltersContainer = document.getElementById('difficulty-filters-container');
+    const mobileDifficultyFiltersContainer = document.getElementById('mobile-difficulty-filters-container');
     const starFiltersContainer = document.getElementById('star-filters-container');
+    const mobileStarFiltersContainer = document.getElementById('mobile-star-filters-container');
     
     const eventRows = document.querySelectorAll('.event-row');
     const dateGroups = document.querySelectorAll('.date-group');
     const monthGroups = document.querySelectorAll('.month-group');
     const emptyState = document.getElementById('empty-state');
     const resetFiltersBtn = document.getElementById('reset-filters-btn');
+    const desktopResetFiltersBtn = document.getElementById('desktop-reset-filters-btn');
+    const mobileDrawerResetBtn = document.getElementById('mobile-drawer-reset-btn');
+    
     const statTotalCount = document.getElementById('stat-total-count');
+    const mobileDrawerTotalCount = document.getElementById('mobile-drawer-total-count');
+    const mobileFilterCtaCount = document.getElementById('mobile-filter-cta-count');
     const statStarredCount = document.getElementById('stat-starred-count');
+    const mobileStatStarredCount = document.getElementById('mobile-stat-starred-count');
 
-    let activeClub = 'all';
+    // Mobile Bottom Sheet Elements
+    const mobileDrawer = document.getElementById('mobile-filter-drawer');
+    const mobileDrawerBackdrop = document.getElementById('mobile-filter-drawer-backdrop');
+    const mobileDrawerDragArea = document.getElementById('mobile-drawer-drag-area');
+    const mobileFilterOpenBtn = document.getElementById('mobile-filter-open-btn');
+    const mobileFilterCloseBtn = document.getElementById('mobile-filter-close-btn');
+    const mobileFilterApplyBtn = document.getElementById('mobile-filter-apply-btn');
+    const mobileFilterClearBtn = document.getElementById('mobile-filter-clear-btn');
+    const mobileFilterClearSplit = document.getElementById('mobile-filter-clear-split');
+    const mobileFilterBadge = document.getElementById('mobile-filter-badge');
+
+    // Filter State
+    let activeClubs = new Set<string>(); // Empty set means "all"
     let activeDuration = 'all';
     let activeDifficulty = 'all';
     let activeStarFilter = 'all';
@@ -659,6 +940,9 @@ function getDifficultyTiers(diff?: string): string {
       if (statStarredCount) {
         statStarredCount.textContent = activeStarredRows.toString();
       }
+      if (mobileStatStarredCount) {
+        mobileStatStarredCount.textContent = activeStarredRows.toString();
+      }
     }
 
     // Initialize Star UI states on load
@@ -705,6 +989,147 @@ function getDifficultyTiers(diff?: string): string {
         .replace(/[ώώ]/g, 'o');
     }
 
+    function getActiveFilterCount(): number {
+      let count = 0;
+      if (activeClubs.size > 0) count += activeClubs.size;
+      if (activeDuration !== 'all') count++;
+      if (activeDifficulty !== 'all') count++;
+      if (activeStarFilter !== 'all') count++;
+      if (searchQuery.trim() !== '') count++;
+      return count;
+    }
+
+    function updatePillAndResetState() {
+      const count = getActiveFilterCount();
+
+      if (count > 0) {
+        if (mobileFilterBadge) {
+          mobileFilterBadge.textContent = count.toString();
+          mobileFilterBadge.classList.remove('hidden');
+        }
+        if (mobileFilterClearSplit) {
+          mobileFilterClearSplit.classList.remove('hidden');
+          mobileFilterClearSplit.classList.add('flex');
+        }
+        if (mobileFilterOpenBtn) {
+          mobileFilterOpenBtn.classList.remove('rounded-full');
+          mobileFilterOpenBtn.classList.add('rounded-l-full');
+        }
+        if (desktopResetFiltersBtn) {
+          desktopResetFiltersBtn.classList.remove('hidden');
+        }
+        if (mobileDrawerResetBtn) {
+          mobileDrawerResetBtn.classList.remove('opacity-40', 'pointer-events-none');
+        }
+      } else {
+        if (mobileFilterBadge) {
+          mobileFilterBadge.classList.add('hidden');
+        }
+        if (mobileFilterClearSplit) {
+          mobileFilterClearSplit.classList.add('hidden');
+          mobileFilterClearSplit.classList.remove('flex');
+        }
+        if (mobileFilterOpenBtn) {
+          mobileFilterOpenBtn.classList.remove('rounded-l-full');
+          mobileFilterOpenBtn.classList.add('rounded-full');
+        }
+        if (desktopResetFiltersBtn) {
+          desktopResetFiltersBtn.classList.add('hidden');
+        }
+        if (mobileDrawerResetBtn) {
+          mobileDrawerResetBtn.classList.add('opacity-40', 'pointer-events-none');
+        }
+      }
+    }
+
+    function updateClubButtonsUI() {
+      const allClubButtons = document.querySelectorAll('[data-club-filter]');
+      allClubButtons.forEach(btn => {
+        const b = btn as HTMLButtonElement;
+        const clubAttr = b.getAttribute('data-club-filter');
+        const isAll = clubAttr === 'all';
+        const activeClass = b.getAttribute('data-active-class') || '';
+        const inactiveClass = b.getAttribute('data-inactive-class') || '';
+        const isMobile = b.closest('#mobile-club-filters-container') !== null;
+        const basePadding = isMobile ? 'px-2.5 py-1.5 rounded-lg' : 'px-2.5 py-1 rounded';
+
+        if (isAll) {
+          b.className = `${basePadding} border text-xs font-semibold font-sans transition-all duration-200`;
+          if (activeClubs.size === 0) {
+            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-club-btn');
+          } else {
+            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+          }
+        } else if (clubAttr) {
+          b.className = `${basePadding} border text-xs font-semibold font-sans transition-all duration-200`;
+          if (activeClubs.has(clubAttr)) {
+            activeClass.split(' ').forEach(c => { if (c) b.classList.add(c); });
+            b.classList.add('active-club-btn');
+          } else {
+            inactiveClass.split(' ').forEach(c => { if (c) b.classList.add(c); });
+          }
+        }
+      });
+    }
+
+    function updateDurationButtonsUI() {
+      const allButtons = document.querySelectorAll('[data-duration-filter]');
+      allButtons.forEach(btn => {
+        const b = btn as HTMLButtonElement;
+        const durationAttr = b.getAttribute('data-duration-filter');
+        const isMobileContainer = b.closest('#mobile-duration-filters-container') !== null;
+
+        if (isMobileContainer) {
+          if (activeDuration === durationAttr) {
+            b.className = 'py-2 px-1 text-center rounded-lg text-xs font-semibold font-sans transition-all bg-slate-900 text-white shadow-xs active-duration-btn';
+          } else {
+            b.className = 'py-2 px-1 text-center rounded-lg text-xs font-semibold font-sans text-slate-600 hover:text-slate-900 transition-all';
+          }
+        } else {
+          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
+          if (activeDuration === durationAttr) {
+            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-duration-btn');
+          } else {
+            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+          }
+        }
+      });
+    }
+
+    function updateDifficultyButtonsUI() {
+      const allButtons = document.querySelectorAll('[data-difficulty-filter]');
+      allButtons.forEach(btn => {
+        const b = btn as HTMLButtonElement;
+        const diffAttr = b.getAttribute('data-difficulty-filter');
+        const isMobileContainer = b.closest('#mobile-difficulty-filters-container') !== null;
+        const basePadding = isMobileContainer ? 'px-2.5 py-1.5 rounded-lg' : 'px-2.5 py-1 rounded';
+
+        b.className = `${basePadding} border text-xs font-semibold font-sans transition-all duration-200`;
+        if (activeDifficulty === diffAttr) {
+          b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-difficulty-btn');
+        } else {
+          b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+        }
+      });
+    }
+
+    function updateStarButtonsUI() {
+      const allButtons = document.querySelectorAll('[data-star-filter]');
+      allButtons.forEach(btn => {
+        const b = btn as HTMLButtonElement;
+        const filterAttr = b.getAttribute('data-star-filter');
+        const isMobileContainer = b.closest('#mobile-star-filters-container') !== null;
+        const basePadding = isMobileContainer ? 'px-2.5 py-1.5 rounded-lg' : 'px-2.5 py-1 rounded';
+
+        b.className = `${basePadding} border text-xs font-semibold font-sans transition-all duration-200 ${filterAttr === 'starred' ? 'flex items-center gap-1.5' : ''}`;
+        if (activeStarFilter === filterAttr) {
+          b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-star-btn');
+        } else {
+          b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
+        }
+      });
+    }
+
     function applyFilters() {
       let visibleCount = 0;
       const cleanQuery = cleanString(searchQuery);
@@ -722,7 +1147,8 @@ function getDifficultyTiers(diff?: string): string {
 
         const isStarred = isEventStarred(eventId, fallbackId);
 
-        const clubMatches = (activeClub === 'all' || clubVal === activeClub);
+        // Multi-select club match: matches if no clubs selected OR if selected set contains club
+        const clubMatches = (activeClubs.size === 0 || activeClubs.has(clubVal));
         const durationMatches = (activeDuration === 'all' || durationVal === activeDuration);
         const difficultyMatches = (activeDifficulty === 'all' || difficultyVal.split(' ').includes(activeDifficulty));
         const starMatches = (activeStarFilter === 'all' || isStarred);
@@ -760,8 +1186,13 @@ function getDifficultyTiers(diff?: string): string {
         }
       });
 
-      // Update counters
+      // Update counters across desktop, drawer header, and mobile CTA
       if (statTotalCount) statTotalCount.textContent = visibleCount.toString();
+      if (mobileDrawerTotalCount) mobileDrawerTotalCount.textContent = visibleCount.toString();
+      if (mobileFilterCtaCount) mobileFilterCtaCount.textContent = visibleCount.toString();
+
+      // Update Floating Pill & Reset Buttons
+      updatePillAndResetState();
 
       // Toggle Empty State
       if (visibleCount === 0) {
@@ -771,173 +1202,249 @@ function getDifficultyTiers(diff?: string): string {
       }
     }
 
-    // Search Input listeners
+    // Search Input listeners (Synchronized between desktop and mobile)
+    function handleSearchInput(value: string) {
+      searchQuery = value;
+      if (searchInput && searchInput.value !== value) searchInput.value = value;
+      if (mobileSearchInput && mobileSearchInput.value !== value) mobileSearchInput.value = value;
+
+      const hasText = value.trim() !== '';
+      if (clearSearchBtn) {
+        if (hasText) clearSearchBtn.classList.remove('hidden');
+        else clearSearchBtn.classList.add('hidden');
+      }
+      if (mobileClearSearchBtn) {
+        if (hasText) mobileClearSearchBtn.classList.remove('hidden');
+        else mobileClearSearchBtn.classList.add('hidden');
+      }
+
+      applyFilters();
+    }
+
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
-        searchQuery = (e.target as HTMLInputElement).value;
-        if (searchQuery.trim() !== '') {
-          if (clearSearchBtn) clearSearchBtn.classList.remove('hidden');
+        handleSearchInput((e.target as HTMLInputElement).value);
+      });
+    }
+
+    if (mobileSearchInput) {
+      mobileSearchInput.addEventListener('input', (e) => {
+        handleSearchInput((e.target as HTMLInputElement).value);
+      });
+    }
+
+    function clearSearch() {
+      handleSearchInput('');
+    }
+
+    if (clearSearchBtn) clearSearchBtn.addEventListener('click', clearSearch);
+    if (mobileClearSearchBtn) mobileClearSearchBtn.addEventListener('click', clearSearch);
+
+    // Multi-select Club Click Handlers
+    function handleClubClick(button: HTMLButtonElement) {
+      const selectedClub = button.getAttribute('data-club-filter') || 'all';
+
+      if (selectedClub === 'all') {
+        activeClubs.clear();
+      } else {
+        if (activeClubs.has(selectedClub)) {
+          activeClubs.delete(selectedClub);
         } else {
-          if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+          activeClubs.add(selectedClub);
         }
-        applyFilters();
-      });
+      }
+
+      updateClubButtonsUI();
+      applyFilters();
     }
 
-    if (clearSearchBtn) {
-      clearSearchBtn.addEventListener('click', () => {
-        if (searchInput) searchInput.value = '';
-        searchQuery = '';
-        clearSearchBtn.classList.add('hidden');
-        applyFilters();
-      });
-    }
-
-    // Club selection filters
     if (clubFiltersContainer) {
       clubFiltersContainer.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const button = target.closest('[data-club-filter]') as HTMLButtonElement;
-        if (!button) return;
-
-        const selectedClub = button.getAttribute('data-club-filter') || 'all';
-        activeClub = selectedClub;
-
-        const allButtons = clubFiltersContainer.querySelectorAll('[data-club-filter]');
-        allButtons.forEach(btn => {
-          const b = btn as HTMLButtonElement;
-          const clubAttr = b.getAttribute('data-club-filter');
-          const isAll = clubAttr === 'all';
-          const activeClass = b.getAttribute('data-active-class') || '';
-          const inactiveClass = b.getAttribute('data-inactive-class') || '';
-
-          if (isAll) {
-            b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
-            if (activeClub === 'all') {
-              b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-club-btn');
-            } else {
-              b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
-            }
-          } else {
-            b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
-            if (activeClub === clubAttr) {
-              activeClass.split(' ').forEach(c => { if (c) b.classList.add(c); });
-              b.classList.add('active-club-btn');
-            } else {
-              inactiveClass.split(' ').forEach(c => { if (c) b.classList.add(c); });
-            }
-          }
-        });
-
-        applyFilters();
+        if (button) handleClubClick(button);
       });
     }
 
-    // Duration selection filters
+    if (mobileClubFiltersContainer) {
+      mobileClubFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-club-filter]') as HTMLButtonElement;
+        if (button) handleClubClick(button);
+      });
+    }
+
+    // Duration selection filters (Sync desktop & mobile)
+    function handleDurationClick(button: HTMLButtonElement) {
+      activeDuration = button.getAttribute('data-duration-filter') || 'all';
+      updateDurationButtonsUI();
+      applyFilters();
+    }
+
     if (durationFiltersContainer) {
       durationFiltersContainer.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const button = target.closest('[data-duration-filter]') as HTMLButtonElement;
-        if (!button) return;
-
-        const selectedDuration = button.getAttribute('data-duration-filter') || 'all';
-        activeDuration = selectedDuration;
-
-        const allButtons = durationFiltersContainer.querySelectorAll('[data-duration-filter]');
-        allButtons.forEach(btn => {
-          const b = btn as HTMLButtonElement;
-          const durationAttr = b.getAttribute('data-duration-filter');
-
-          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
-          if (activeDuration === durationAttr) {
-            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-duration-btn');
-          } else {
-            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
-          }
-        });
-
-        applyFilters();
+        if (button) handleDurationClick(button);
       });
     }
 
-    // Difficulty selection filters
+    if (mobileDurationFiltersContainer) {
+      mobileDurationFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-duration-filter]') as HTMLButtonElement;
+        if (button) handleDurationClick(button);
+      });
+    }
+
+    // Difficulty selection filters (Sync desktop & mobile)
+    function handleDifficultyClick(button: HTMLButtonElement) {
+      activeDifficulty = button.getAttribute('data-difficulty-filter') || 'all';
+      updateDifficultyButtonsUI();
+      applyFilters();
+    }
+
     if (difficultyFiltersContainer) {
       difficultyFiltersContainer.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const button = target.closest('[data-difficulty-filter]') as HTMLButtonElement;
-        if (!button) return;
-
-        const selectedDifficulty = button.getAttribute('data-difficulty-filter') || 'all';
-        activeDifficulty = selectedDifficulty;
-
-        const allButtons = difficultyFiltersContainer.querySelectorAll('[data-difficulty-filter]');
-        allButtons.forEach(btn => {
-          const b = btn as HTMLButtonElement;
-          const difficultyAttr = b.getAttribute('data-difficulty-filter');
-
-          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
-          if (activeDifficulty === difficultyAttr) {
-            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-difficulty-btn');
-          } else {
-            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
-          }
-        });
-
-        applyFilters();
+        if (button) handleDifficultyClick(button);
       });
     }
 
-    // Star selection filters
+    if (mobileDifficultyFiltersContainer) {
+      mobileDifficultyFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-difficulty-filter]') as HTMLButtonElement;
+        if (button) handleDifficultyClick(button);
+      });
+    }
+
+    // Star selection filters (Sync desktop & mobile)
+    function handleStarClick(button: HTMLButtonElement) {
+      activeStarFilter = button.getAttribute('data-star-filter') || 'all';
+      updateStarButtonsUI();
+      applyFilters();
+    }
+
     if (starFiltersContainer) {
       starFiltersContainer.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const button = target.closest('[data-star-filter]') as HTMLButtonElement;
-        if (!button) return;
-
-        const selectedStarFilter = button.getAttribute('data-star-filter') || 'all';
-        activeStarFilter = selectedStarFilter;
-
-        const allButtons = starFiltersContainer.querySelectorAll('[data-star-filter]');
-        allButtons.forEach(btn => {
-          const b = btn as HTMLButtonElement;
-          const filterAttr = b.getAttribute('data-star-filter');
-
-          b.className = 'px-2.5 py-1 rounded border text-xs font-semibold font-sans transition-all duration-200';
-          if (activeStarFilter === filterAttr) {
-            b.classList.add('bg-slate-900', 'border-slate-900', 'text-white', 'active-star-btn');
-          } else {
-            b.classList.add('bg-white', 'border-slate-200', 'text-slate-600', 'hover:bg-slate-50');
-          }
-        });
-
-        applyFilters();
+        if (button) handleStarClick(button);
       });
     }
 
-    // Reset filters
+    if (mobileStarFiltersContainer) {
+      mobileStarFiltersContainer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const button = target.closest('[data-star-filter]') as HTMLButtonElement;
+        if (button) handleStarClick(button);
+      });
+    }
+
+    // Reset filters (Instant reset across all controls)
     function resetFilters() {
       searchQuery = '';
       if (searchInput) searchInput.value = '';
+      if (mobileSearchInput) mobileSearchInput.value = '';
       if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+      if (mobileClearSearchBtn) mobileClearSearchBtn.classList.add('hidden');
 
-      const allClubBtn = document.querySelector('[data-club-filter="all"]') as HTMLButtonElement;
-      if (allClubBtn) allClubBtn.click();
+      activeClubs.clear();
+      activeDuration = 'all';
+      activeDifficulty = 'all';
+      activeStarFilter = 'all';
 
-      const allDurationBtn = document.querySelector('[data-duration-filter="all"]') as HTMLButtonElement;
-      if (allDurationBtn) allDurationBtn.click();
+      updateClubButtonsUI();
+      updateDurationButtonsUI();
+      updateDifficultyButtonsUI();
+      updateStarButtonsUI();
 
-      const allDifficultyBtn = document.querySelector('[data-difficulty-filter="all"]') as HTMLButtonElement;
-      if (allDifficultyBtn) allDifficultyBtn.click();
-
-      const allStarBtn = document.querySelector('[data-star-filter="all"]') as HTMLButtonElement;
-      if (allStarBtn) allStarBtn.click();
+      applyFilters();
     }
 
-    if (resetFiltersBtn) {
-      resetFiltersBtn.addEventListener('click', resetFilters);
+    if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetFilters);
+    if (desktopResetFiltersBtn) desktopResetFiltersBtn.addEventListener('click', resetFilters);
+    if (mobileDrawerResetBtn) mobileDrawerResetBtn.addEventListener('click', resetFilters);
+
+    if (mobileFilterClearBtn) {
+      mobileFilterClearBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        resetFilters();
+      });
     }
 
-    // Inline club badge click filter
+    // Drawer Open / Close Logic
+    function openMobileDrawer() {
+      if (!mobileDrawer || !mobileDrawerBackdrop) return;
+      mobileDrawerBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+      mobileDrawerBackdrop.classList.add('opacity-100');
+      mobileDrawer.classList.remove('translate-y-full');
+      mobileDrawer.classList.add('translate-y-0');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeMobileDrawer() {
+      if (!mobileDrawer || !mobileDrawerBackdrop) return;
+      mobileDrawerBackdrop.classList.remove('opacity-100');
+      mobileDrawerBackdrop.classList.add('opacity-0', 'pointer-events-none');
+      mobileDrawer.classList.remove('translate-y-0');
+      mobileDrawer.classList.add('translate-y-full');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    if (mobileFilterOpenBtn) mobileFilterOpenBtn.addEventListener('click', openMobileDrawer);
+    if (mobileFilterCloseBtn) mobileFilterCloseBtn.addEventListener('click', closeMobileDrawer);
+    if (mobileFilterApplyBtn) mobileFilterApplyBtn.addEventListener('click', closeMobileDrawer);
+    if (mobileDrawerBackdrop) mobileDrawerBackdrop.addEventListener('click', closeMobileDrawer);
+
+    // Escape key closes drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileDrawer && !mobileDrawer.classList.contains('translate-y-full')) {
+        closeMobileDrawer();
+      }
+    });
+
+    // Touch drag-to-dismiss gesture on mobile drawer
+    if (mobileDrawer && mobileDrawerDragArea) {
+      let startY = 0;
+      let currentY = 0;
+      let isDragging = false;
+
+      mobileDrawerDragArea.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        currentY = startY;
+        isDragging = true;
+        mobileDrawer.style.transition = 'none';
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isDragging || !mobileDrawer) return;
+        currentY = e.touches[0].clientY;
+        const diffY = currentY - startY;
+        if (diffY > 0) {
+          mobileDrawer.style.transform = `translateY(${diffY}px)`;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        if (!isDragging || !mobileDrawer) return;
+        isDragging = false;
+        mobileDrawer.style.transition = 'transform 0.3s ease-out';
+        const diffY = currentY - startY;
+        if (diffY > 80) {
+          closeMobileDrawer();
+          setTimeout(() => {
+            if (mobileDrawer) mobileDrawer.style.transform = '';
+          }, 300);
+        } else {
+          mobileDrawer.style.transform = '';
+        }
+      });
+    }
+
+    // Inline club badge click filter (Single club select & scroll to top)
     document.addEventListener('click', (e) => {
       const target = e.target;
       if (!(target instanceof HTMLElement)) return;
@@ -948,13 +1455,13 @@ function getDifficultyTiers(diff?: string): string {
       const selectedClub = badge.getAttribute('data-filter-club');
       if (!selectedClub) return;
 
-      const filterButton = document.querySelector(`[data-club-filter="${selectedClub}"]`);
-      if (filterButton instanceof HTMLButtonElement) {
-        filterButton.click();
-        
-        // Scroll smoothly back to the top of the page
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      activeClubs.clear();
+      activeClubs.add(selectedClub);
+      updateClubButtonsUI();
+      applyFilters();
+      
+      // Scroll smoothly back to the top of the page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // Dismissible Notifications Callout Banner
