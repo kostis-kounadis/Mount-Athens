@@ -126,8 +126,9 @@ function detectAnomalies() {
     }
 
     if (clubInfo.status === 'warning' && clubInfo.preservedCount > 0) {
+      criticalClubs.add(club);
       fallbackClubs.add(club);
-      warnings.push(`- **🛡️ Resilience Fallback Active for ${club}:** ${clubInfo.details}`);
+      criticalAnomalies.push(`- **🚨 Resilience Fallback Active for ${club}:** ${clubInfo.details}. Live scraper returned 0 events; temporarily serving cached baseline.`);
     } else if (clubInfo.parsedCount === 0 || clubInfo.status === 'error') {
       criticalClubs.add(club);
       if (contentChangedUrls.length > 0) {
