@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-11T15:58:38.259Z",
+  "lastUpdated": "2026-11-11T16:40:49.113Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -39,42 +39,42 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 1026499
+          "size": 1026500
         }
       ]
     },
     {
       "club": "ΠΟΑ",
-      "status": "success",
-      "details": "Parsed 31 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 18 healthy events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 167727
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "success",
-      "details": "Parsed 45 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 13 healthy events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 173728
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 223072
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
@@ -99,10 +99,10 @@
       "fetch": [
         {
           "url": "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 669718
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150955
+          "size": 150947
         }
       ]
     }
