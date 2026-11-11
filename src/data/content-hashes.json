@@ -1,13 +1,13 @@
 {
   "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "42097fa5521f34967def4d693b789e5e1e6902d524602b5a356fe8f440220780",
   "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "32b5378bfd8c9ae196284184f30b022d4656bcaa8679288763e340c8917c7f35",
-  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "46a458adb98941df8a31edcecb1e85ac0d59fb44ccf0425752639b24aa9cd473",
-  "https://www.eosathinon.gr/anavaseis/programma/": "01fdd1cbfefe15e3419238e9b52a8ecc107dd4b41d6353abc8402beaca01fa69",
-  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "179e9ee61c796981c4b3a87b1d4182586704f6d3a9489b31a981b7cead1906dc",
+  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "c717b4fbc7fb30b55400761cb79d66a0ea76dc875171fa1f97134614f63e3949",
+  "https://www.eosathinon.gr/anavaseis/programma/": "f3bc8a63c9bc33fdc6c41d1687e044536fb2cdf10ae3299396c3991df4547377",
+  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "4372600fff08f4ec9a402075e018db9caf5d24f60d7d6862b377ce0655a65b91",
   "https://eosacharnon.xmiddleware.com/api/events": "d276fc7b99deb835a8faa18de2ccba44d5892de3fee14dfd76823203bdcd1b39",
-  "https://eosh.gr/api/trips": "9cb0cc50de6e5aeb579a4fb2fffcb0d6b78f5d8d97c7e25ebf255b6018523f18",
+  "https://eosh.gr/api/trips": "7af957db98f02056718220895d119392e74059c0ba722f90130d2523343c3101",
   "https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50": "22b50c95b7e6645601047aa831c1eb14fc2afeaa5730930a7972a76932c789de",
   "https://poa.gr/index.php/programma/": "e1d7a1bbf53746edc46f2c3247cf886ba7bb9906ab06203b6f8c37ac85e3dbc7",
   "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25": "f25a6fa240a882a786ff96b78e5cc919774b11bb64801c0b9c9d1302c57827b8",
-  "https://fop.gr/": "360a3f238645e6783ac752ae161d30d00a072d8778a9e197d04abd0f8a147290"
+  "https://fop.gr/": "ce6fca0ec64abab704e9d7fab793425475f37ac819194d85d45ea55ab0f04522"
 }
