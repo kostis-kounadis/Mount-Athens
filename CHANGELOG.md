@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.5] - 2026-11-11
+
+### Fixed
+- Fixed FONI scraper (`scripts/parse-events.js`) by supporting both `foni_org_gr_wp-json` and `www_foni_org_gr_wp-json` file prefixes, restoring live extraction of new upcoming hikes.
+- Promoted active resilience fallbacks in `scripts/detect-anomalies.js` from warnings to critical anomalies, ensuring `src/data/anomaly_report.md` and GitHub Issues with self-healing instructions are triggered whenever a live scraper returns 0 events.
+- Added instant Telegram Admin notifications in `scripts/send-notifications.js` when any club parser reports degraded (`warning` or `error`) status, even if 0 new events were added.
+
 ## [1.7.4] - 2026-11-11
 
 ### Changed

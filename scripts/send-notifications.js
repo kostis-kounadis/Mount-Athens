@@ -79,20 +79,21 @@ function formatEventDate(ev) {
  * Strictly ignores anomalies, recoveries, and minor title edits on existing dates.
  */
 function diffEvents() {
+  const statusData = loadJsonSafe(STATUS_FILE, { logs: [] });
+
   if (fs.existsSync(ANOMALY_REPORT_FILE)) {
-    console.log('[notifications] Active anomaly_report.md detected. Skipping notifications to avoid conflict with self-healing pipeline.');
-    return { clubs: [], addedEvents: [], removedEvents: [], healthyClubsCount: 0, statusLogs: [] };
+    console.log('[notifications] Active anomaly_report.md detected. Skipping public broadcast to avoid conflict with self-healing pipeline.');
+    return { clubs: [], addedEvents: [], removedEvents: [], healthyClubsCount: 0, statusLogs: statusData.logs || [] };
   }
 
   if (!fs.existsSync(NEW_EVENTS_FILE) || !fs.existsSync(OLD_EVENTS_FILE)) {
     console.log('[notifications] Missing events.json or events_old.json. Skipping notifications.');
-    return { clubs: [], addedEvents: [], removedEvents: [], healthyClubsCount: 0, statusLogs: [] };
+    return { clubs: [], addedEvents: [], removedEvents: [], healthyClubsCount: 0, statusLogs: statusData.logs || [] };
   }
 
   const newEvents = loadJsonSafe(NEW_EVENTS_FILE, []);
   const oldEvents = loadJsonSafe(OLD_EVENTS_FILE, []);
   const oldBaseline = loadJsonSafe(OLD_BASELINE_FILE, {});
-  const statusData = loadJsonSafe(STATUS_FILE, { logs: [] });
 
   const healthyClubs = new Set();
   for (const log of (statusData.logs || [])) {
@@ -436,6 +437,42 @@ async function main() {
   // Record Admin Step Summary regardless of whether notifications fire
   recordAdminChangeLog(addedEvents, removedEvents, healthyClubsCount, statusLogs);
 
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const adminChatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
+  const channelId = process.env.TELEGRAM_CHANNEL_ID;
+  const buttondownKey = process.env.BUTTONDOWN_API_KEY;
+
+  // Send Scraper Warning / Anomaly Alert directly to Admin Chat ID
+  const degradedClubs = statusLogs.filter(l => l.status === 'warning' || l.status === 'error');
+  const hasAnomalyReport = fs.existsSync(ANOMALY_REPORT_FILE);
+
+  if ((hasAnomalyReport || degradedClubs.length > 0) && botToken && adminChatId) {
+    let warningBullets = '';
+    if (hasAnomalyReport) {
+      try {
+        const reportContent = fs.readFileSync(ANOMALY_REPORT_FILE, 'utf-8');
+        const alertsSection = reportContent.split('### 🚨 Critical Alerts')[1]?.split('###')[0]?.trim();
+        warningBullets = alertsSection ? escapeHtml(alertsSection) : '';
+      } catch (e) {}
+    }
+    if (!warningBullets && degradedClubs.length > 0) {
+      warningBullets = degradedClubs.map(l => `• <b>${escapeHtml(l.club)}:</b> ${escapeHtml(l.details)}`).join('\n');
+    }
+
+    const adminAlertText = `⚠️ <b>[Mount Athens] Προειδοποίηση Scraper / Anomaly Alert</b>\n\n${warningBullets}\n\n<i>Δημιουργήθηκε σχετικό GitHub Issue στο αποθετήριο με οδηγίες αυτόματης επίλυσης.</i>`;
+    if (isDryRun) {
+      console.log('\n--- [DRY RUN] Admin Scraper Anomaly Alert ---');
+      console.log(adminAlertText);
+    } else {
+      try {
+        await sendTelegramMessage(botToken, adminChatId, adminAlertText);
+        console.log(`[notifications] Sent scraper anomaly/fallback alert to Admin (${adminChatId}).`);
+      } catch (err) {
+        console.error('[notifications] Failed to send scraper alert to Admin:', err.message);
+      }
+    }
+  }
+
   if (clubs.length === 0 || addedEvents.length === 0) {
     console.log('[notifications] No new upcoming events detected across healthy clubs. Nothing to send.');
     return;
@@ -460,11 +497,6 @@ async function main() {
     console.log(emailBody);
     return;
   }
-
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const adminChatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
-  const channelId = process.env.TELEGRAM_CHANNEL_ID;
-  const buttondownKey = process.env.BUTTONDOWN_API_KEY;
 
   // 1. Admin Telegram Notification (with 1-line admin metadata footer)
   if (botToken && adminChatId) {

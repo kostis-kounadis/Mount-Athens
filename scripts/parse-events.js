@@ -1312,7 +1312,7 @@ function parseEosHalioupolis() {
 // PARSER: FONI (WordPress REST API + Cheerio Article & Text Fallback)
 // ----------------------------------------------------
 function parseFoni() {
-  const apiFiles = fs.readdirSync(INPUT_DIR).filter(f => f.startsWith('www_foni_org_gr_wp-json') && f.endsWith('.html'));
+  const apiFiles = fs.readdirSync(INPUT_DIR).filter(f => (f.startsWith('foni_org_gr_wp-json') || f.startsWith('www_foni_org_gr_wp-json')) && f.endsWith('.html'));
   const htmlPath = path.join(INPUT_DIR, 'foni_org_gr_category-ekdromes.html');
   const altHtmlPath = path.join(INPUT_DIR, 'www_foni_org_gr_category-ekdromes.html');
   const txtPath = path.join(INPUT_DIR, 'foni_org_gr_category-ekdromes.txt');
