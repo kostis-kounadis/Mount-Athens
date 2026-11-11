@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.4] - 2026-11-11
+
+### Changed
+- Routed all event title links in Telegram and Buttondown email notifications directly to their respective internal anchor on the Mount Athens website (`https://kostis-kounadis.github.io/Mount-Athens/#ev-<date>-<hash>`) rather than linking externally to the club websites.
+- Added deterministic SHA-256 event ID anchors (`#ev-YYYY-MM-DD-hash`) on each `.event-row` element.
+- Added smooth centering and CSS `:target` visual highlight (warm orange background and 2px ring) when an excursion is accessed via its notification anchor.
+- Added automatic filter reset in client JavaScript if an event reached via anchor was hidden by active filters.
+
 ## [1.7.3] - 2026-11-11
 
 ### Added

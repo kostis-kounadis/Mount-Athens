@@ -2,6 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import eventsData from '../data/events.json';
 import statusData from '../data/status.json';
+import crypto from 'node:crypto';
+
+function getEventAnchor(ev: { club?: string; startDate?: string; title?: string }) {
+  const club = (ev.club || '').trim();
+  const startDate = (ev.startDate || '').trim();
+  const title = (ev.title || '').trim();
+  const hash = crypto.createHash('sha256').update(`${club}::${startDate}::${title}`).digest('hex').slice(0, 8);
+  return `ev-${startDate}-${hash}`;
+}
 
 const GREEK_MONTHS = [
   "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος",
@@ -127,6 +136,14 @@ function getDifficultyTiers(diff?: string): string {
     /* Dynamic border separation for visible event rows */
     .event-row:not(.hidden) ~ .event-row:not(.hidden) {
       border-top: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    /* Targeted event row highlight (when arrived via notification anchor) */
+    .event-row:target {
+      position: relative;
+      background-color: rgba(255, 247, 237, 0.75);
+      border-radius: 0.5rem;
+      box-shadow: inset 0 0 0 2px rgba(249, 115, 22, 0.85);
     }
   </style>
 
@@ -374,7 +391,8 @@ function getDifficultyTiers(diff?: string): string {
                       
                       return (
                         <div 
-                          class="event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3.5"
+                          id={getEventAnchor(event)}
+                          class="event-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3.5 px-2.5 -mx-2.5 rounded-lg transition-all duration-300 scroll-mt-28 target:ring-2 target:ring-orange-500/80 target:bg-orange-50/70"
                           data-club={event.club}
                           data-duration={isMultiDay ? 'multi' : 'single'}
                           data-difficulty={difficultyTiers}
@@ -964,5 +982,35 @@ function getDifficultyTiers(diff?: string): string {
         }
       });
     }
+
+    // Anchor target smooth centering & filter reset
+    function handleTargetAnchor() {
+      const hash = window.location.hash;
+      if (!hash || !hash.startsWith('#ev-')) return;
+      
+      try {
+        const targetEl = document.querySelector(hash) as HTMLElement;
+        if (!targetEl) return;
+
+        // If target row was filtered out, reset filters so the excursion is visible
+        if (targetEl.classList.contains('hidden') || targetEl.closest('.hidden')) {
+          resetFilters();
+        }
+
+        // Center smoothly in viewport
+        setTimeout(() => {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 120);
+      } catch (e) {
+        // Safe fallback
+      }
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      handleTargetAnchor();
+    } else {
+      window.addEventListener('DOMContentLoaded', handleTargetAnchor);
+    }
+    window.addEventListener('hashchange', handleTargetAnchor);
   </script>
 </Layout>

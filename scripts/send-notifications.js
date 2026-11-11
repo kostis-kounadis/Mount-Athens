@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +39,14 @@ function escapeHtml(str = '') {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function getEventAnchor(ev) {
+  const club = (ev.club || '').trim();
+  const startDate = (ev.startDate || '').trim();
+  const title = (ev.title || '').trim();
+  const hash = crypto.createHash('sha256').update(`${club}::${startDate}::${title}`).digest('hex').slice(0, 8);
+  return `ev-${startDate}-${hash}`;
 }
 
 function loadJsonSafe(filePath, fallback) {
@@ -205,7 +214,8 @@ function buildMessages(clubs, events) {
     const dateStr = formatEventDate(ev);
     const diffTag = ev.difficulty ? ` (Β.Δ. ${ev.difficulty})` : '';
     const clubTag = isSingle ? '' : `[${ev.club}] `;
-    const eventUrl = ev.url || SITE_URL;
+    const anchor = getEventAnchor(ev);
+    const eventUrl = `${SITE_URL}#${anchor}`;
 
     // Telegram HTML bullet
     const tgPrefix = isSingle ? `• <b>${escapeHtml(dateStr)}</b>: ` : `• <b>[${escapeHtml(ev.club)}] ${escapeHtml(dateStr)}</b>: `;
@@ -261,13 +271,14 @@ function recordAdminChangeLog(addedEvents, removedEvents, healthyClubsCount, sta
 
   if (addedEvents.length > 0) {
     lines.push(`#### ➕ Newly Added Excursions (${addedEvents.length})`);
-    lines.push(`| Date | Club | Title | Difficulty | Link |`);
-    lines.push(`| :--- | :--- | :--- | :---: | :--- |`);
+    lines.push(`| Date | Club | Title | Difficulty | Site Link | Club Booking |`);
+    lines.push(`| :--- | :--- | :--- | :---: | :--- | :--- |`);
     for (const ev of addedEvents) {
       const dateStr = formatEventDate(ev);
       const diff = ev.difficulty || '-';
-      const link = ev.url ? `[Booking/Info](${ev.url})` : '-';
-      lines.push(`| ${dateStr} | ${ev.club} | ${ev.title} | ${diff} | ${link} |`);
+      const siteLink = `[Site Anchor](${SITE_URL}#${getEventAnchor(ev)})`;
+      const clubLink = ev.url ? `[Club Booking](${ev.url})` : '-';
+      lines.push(`| ${dateStr} | ${ev.club} | ${ev.title} | ${diff} | ${siteLink} | ${clubLink} |`);
     }
     lines.push('');
   }
