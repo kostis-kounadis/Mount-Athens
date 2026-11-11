@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-11-11
+
+### Fixed
+- Fixed top bar header layout on mobile and PWA screens by introducing a responsive hamburger menu toggle (`src/layouts/Layout.astro`), preventing navigation links from wrapping below the site title on viewports under 640px.
+
 ## [1.7.0] - 2026-11-10
 
 ### Added
