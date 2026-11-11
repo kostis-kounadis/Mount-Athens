@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.3] - 2026-11-11
+
+### Added
+- Added detailed bullet lists of newly added excursions (with dates, smart year tags, hyperlinked titles, and difficulty grades) to Telegram and Buttondown email notifications.
+- Added multi-club grouping with `[Σύλλογος]` tags when multiple clubs publish events in the same daily run.
+- Added automated Admin Change Log generation rendering newly added and cancelled/removed excursions to `$GITHUB_STEP_SUMMARY` and personal Telegram admin alerts.
+
 ## [1.7.2] - 2026-11-11
 
 ### Changed

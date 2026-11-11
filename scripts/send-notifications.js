@@ -10,6 +10,7 @@ const OLD_EVENTS_FILE = path.join(__dirname, '../src/data/events_old.json');
 const OLD_BASELINE_FILE = path.join(__dirname, '../src/data/health-baseline-old.json');
 const STATUS_FILE = path.join(__dirname, '../src/data/status.json');
 const ANOMALY_REPORT_FILE = path.join(__dirname, '../src/data/anomaly_report.md');
+const LOCAL_SUMMARY_FILE = path.join(__dirname, '../_input/last_sync_summary.md');
 
 const SITE_URL = 'https://kostis-kounadis.github.io/Mount-Athens/';
 
@@ -21,6 +22,7 @@ const athensFormatter = new Intl.DateTimeFormat('en-CA', {
   day: '2-digit'
 });
 const TODAY_STR = athensFormatter.format(new Date());
+const CURRENT_YEAR = TODAY_STR.substring(0, 4);
 
 function normalizeTitle(title = '') {
   return title
@@ -31,7 +33,7 @@ function normalizeTitle(title = '') {
 }
 
 function escapeHtml(str = '') {
-  return str
+  return String(str || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -49,19 +51,33 @@ function loadJsonSafe(filePath, fallback) {
 }
 
 /**
- * Determines which healthy clubs have genuinely added new upcoming events.
- * Strictly ignores anomalies, cancellations, parser recoveries, and minor title edits.
+ * Format event date string clearly:
+ * If the event is in a future year (e.g. 2027), appends the year if not already present.
  */
-function findClubsWithNewEvents() {
-  // Never send public notifications if a critical anomaly report is active
+function formatEventDate(ev) {
+  const startYear = ev.startDate ? ev.startDate.substring(0, 4) : '';
+  const isFutureYear = startYear && startYear !== CURRENT_YEAR;
+
+  let dateStr = ev.displayDate || ev.startDate || '';
+  if (isFutureYear && !dateStr.includes(startYear) && !dateStr.includes(startYear.slice(2))) {
+    dateStr += `/${startYear}`;
+  }
+  return dateStr;
+}
+
+/**
+ * Compares current events against historical reference pool to find additions & removals.
+ * Strictly ignores anomalies, recoveries, and minor title edits on existing dates.
+ */
+function diffEvents() {
   if (fs.existsSync(ANOMALY_REPORT_FILE)) {
     console.log('[notifications] Active anomaly_report.md detected. Skipping notifications to avoid conflict with self-healing pipeline.');
-    return { clubs: [], newEvents: [] };
+    return { clubs: [], addedEvents: [], removedEvents: [], healthyClubsCount: 0, statusLogs: [] };
   }
 
   if (!fs.existsSync(NEW_EVENTS_FILE) || !fs.existsSync(OLD_EVENTS_FILE)) {
     console.log('[notifications] Missing events.json or events_old.json. Skipping notifications.');
-    return { clubs: [], newEvents: [] };
+    return { clubs: [], addedEvents: [], removedEvents: [], healthyClubsCount: 0, statusLogs: [] };
   }
 
   const newEvents = loadJsonSafe(NEW_EVENTS_FILE, []);
@@ -69,7 +85,6 @@ function findClubsWithNewEvents() {
   const oldBaseline = loadJsonSafe(OLD_BASELINE_FILE, {});
   const statusData = loadJsonSafe(STATUS_FILE, { logs: [] });
 
-  // Identify clubs whose latest scrape succeeded cleanly
   const healthyClubs = new Set();
   for (const log of (statusData.logs || [])) {
     if (log.status === 'success' && log.club) {
@@ -78,7 +93,6 @@ function findClubsWithNewEvents() {
   }
 
   // Combine oldEvents and oldBaseline into a single historical reference pool
-  // so recovering from a temporary outage never looks like "brand-new" events.
   const baselineEvents = Object.values(oldBaseline).flat();
   const historicalPool = [...oldEvents, ...baselineEvents];
 
@@ -86,7 +100,6 @@ function findClubsWithNewEvents() {
   const knownClubDateTitles = new Set();
   const oldCountByClubDate = new Map();
 
-  // Deduplicate historical events before counting per (club, startDate)
   const seenHistoricalKeys = new Set();
   for (const ev of historicalPool) {
     if (!ev || !ev.club || !ev.startDate) continue;
@@ -104,13 +117,20 @@ function findClubsWithNewEvents() {
     }
   }
 
-  // Group current events by (club, startDate) to protect against minor title edits
+  // Group current upcoming events by (club, startDate)
   const newEventsByClubDate = new Map();
+  const currentUpcomingUrls = new Set();
+  const currentUpcomingKeys = new Set();
+
   for (const ev of newEvents) {
     if (!ev || !ev.club || !ev.startDate) continue;
     const endOrStart = ev.endDate || ev.startDate;
-    if (endOrStart < TODAY_STR) continue; // Ignore past events
-    if (!healthyClubs.has(ev.club)) continue; // Ignore clubs with scrape warnings/errors
+    if (endOrStart < TODAY_STR) continue;
+
+    if (ev.url) currentUpcomingUrls.add(ev.url.trim());
+    currentUpcomingKeys.add(`${ev.club}::${ev.startDate}::${normalizeTitle(ev.title)}`);
+
+    if (!healthyClubs.has(ev.club)) continue;
 
     const dateKey = `${ev.club}::${ev.startDate}`;
     if (!newEventsByClubDate.has(dateKey)) {
@@ -124,15 +144,12 @@ function findClubsWithNewEvents() {
 
   for (const [dateKey, evList] of newEventsByClubDate.entries()) {
     const previousCount = oldCountByClubDate.get(dateKey) || 0;
-    // Find events on this date that did not match a known URL or normalized title
     const unmatchedOnDate = evList.filter(ev => {
       const urlKnown = ev.url && knownUrls.has(ev.url.trim());
       const titleKnown = knownClubDateTitles.has(`${ev.club}::${ev.startDate}::${normalizeTitle(ev.title)}`);
       return !urlKnown && !titleKnown;
     });
 
-    // Only count as genuinely new if the club actually has more events on this date than before
-    // (prevents a simple title typo fix on an existing date from firing a notification)
     if (unmatchedOnDate.length > 0 && evList.length > previousCount) {
       const addedCount = Math.min(unmatchedOnDate.length, evList.length - previousCount);
       for (let i = 0; i < addedCount; i++) {
@@ -142,29 +159,163 @@ function findClubsWithNewEvents() {
     }
   }
 
+  // Detect removed future events from healthy clubs
+  const detectedRemovedEvents = [];
+  for (const ev of oldEvents) {
+    if (!ev || !ev.club || !ev.startDate) continue;
+    const endOrStart = ev.endDate || ev.startDate;
+    if (endOrStart < TODAY_STR) continue;
+    if (!healthyClubs.has(ev.club)) continue;
+
+    const urlMatches = ev.url && currentUpcomingUrls.has(ev.url.trim());
+    const keyMatches = currentUpcomingKeys.has(`${ev.club}::${ev.startDate}::${normalizeTitle(ev.title)}`);
+    if (!urlMatches && !keyMatches) {
+      detectedRemovedEvents.push(ev);
+    }
+  }
+
   return {
     clubs: Array.from(clubsWithNew),
-    newEvents: detectedNewEvents
+    addedEvents: detectedNewEvents,
+    removedEvents: detectedRemovedEvents,
+    healthyClubsCount: healthyClubs.size,
+    statusLogs: statusData.logs || []
   };
 }
 
-function buildMessages(clubs) {
+/**
+ * Build rich, compact notification messages with bullet list of added events.
+ */
+function buildMessages(clubs, events) {
   const isSingle = clubs.length === 1;
   const clubsText = clubs.join(', ');
 
-  const telegramHtml = isSingle
-    ? `Προστέθηκαν νέες εξορμήσεις από τον σύλλογο <b>${escapeHtml(clubsText)}</b>.\n\nΔείτε το ανανεωμένο πρόγραμμα στο <a href="${SITE_URL}">Ορειβατικό Ημερολόγιο</a>.`
-    : `Προστέθηκαν νέες εξορμήσεις από τους συλλόγους <b>${escapeHtml(clubsText)}</b>.\n\nΔείτε το ανανεωμένο πρόγραμμα στο <a href="${SITE_URL}">Ορειβατικό Ημερολόγιο</a>.`;
+  const headerTg = isSingle
+    ? `Προστέθηκαν νέες εξορμήσεις από τον σύλλογο <b>${escapeHtml(clubsText)}</b>:`
+    : `Προστέθηκαν νέες εξορμήσεις από τους συλλόγους <b>${escapeHtml(clubsText)}</b>:`;
+
+  const headerEmail = isSingle
+    ? `Προστέθηκαν νέες εξορμήσεις από τον σύλλογο **${clubsText}**:`
+    : `Προστέθηκαν νέες εξορμήσεις από τους συλλόγους **${clubsText}**:`;
+
+  const bulletsTg = [];
+  const bulletsEmail = [];
+
+  for (const ev of events) {
+    const dateStr = formatEventDate(ev);
+    const diffTag = ev.difficulty ? ` (Β.Δ. ${ev.difficulty})` : '';
+    const clubTag = isSingle ? '' : `[${ev.club}] `;
+    const eventUrl = ev.url || SITE_URL;
+
+    // Telegram HTML bullet
+    const tgPrefix = isSingle ? `• <b>${escapeHtml(dateStr)}</b>: ` : `• <b>[${escapeHtml(ev.club)}] ${escapeHtml(dateStr)}</b>: `;
+    bulletsTg.push(`${tgPrefix}<a href="${escapeHtml(eventUrl)}">${escapeHtml(ev.title)}</a>${escapeHtml(diffTag)}`);
+
+    // Email Markdown bullet
+    const emPrefix = isSingle ? `* **${dateStr}**: ` : `* **[${ev.club}] ${dateStr}**: `;
+    bulletsEmail.push(`${emPrefix}[${ev.title}](${eventUrl})${diffTag}`);
+  }
+
+  const footerTg = `\nΔείτε το ανανεωμένο πρόγραμμα στο <a href="${SITE_URL}">Ορειβατικό Ημερολόγιο</a>.`;
+  const footerEmail = `\nΔείτε το ανανεωμένο πρόγραμμα στο [Ορειβατικό Ημερολόγιο](${SITE_URL}).`;
+
+  const fullTelegramHtml = `${headerTg}\n\n${bulletsTg.join('\n')}\n${footerTg}`;
+  const fullEmailBody = `${headerEmail}\n\n${bulletsEmail.join('\n')}\n${footerEmail}`;
 
   const emailSubject = isSingle
-    ? `Νέες εξορμήσεις (${clubsText}) — Ορειβατικό Ημερολόγιο`
-    : `Νέες εξορμήσεις (${clubsText}) — Ορειβατικό Ημερολόγιο`;
+    ? `Νέες εξορμήσεις: ${clubsText} — Ορειβατικό Ημερολόγιο`
+    : `Νέες εξορμήσεις: ${clubsText} — Ορειβατικό Ημερολόγιο`;
 
-  const emailBody = isSingle
-    ? `Προστέθηκαν νέες εξορμήσεις από τον σύλλογο **${clubsText}**.\n\nΔείτε το ανανεωμένο πρόγραμμα στο [Ορειβατικό Ημερολόγιο](${SITE_URL}).`
-    : `Προστέθηκαν νέες εξορμήσεις από τους συλλόγους **${clubsText}**.\n\nΔείτε το ανανεωμένο πρόγραμμα στο [Ορειβατικό Ημερολόγιο](${SITE_URL}).`;
+  // Telegram 4,096-character limit chunking safety
+  const telegramMessages = [];
+  if (fullTelegramHtml.length <= 4000) {
+    telegramMessages.push(fullTelegramHtml);
+  } else {
+    // Split bullets cleanly into 2 parts
+    const half = Math.ceil(bulletsTg.length / 2);
+    const part1Bullets = bulletsTg.slice(0, half).join('\n');
+    const part2Bullets = bulletsTg.slice(half).join('\n');
+    telegramMessages.push(`${headerTg} (Μέρος 1)\n\n${part1Bullets}`);
+    telegramMessages.push(`<b>Νέες εξορμήσεις (Μέρος 2):</b>\n\n${part2Bullets}\n${footerTg}`);
+  }
 
-  return { telegramHtml, emailSubject, emailBody };
+  return {
+    telegramHtml: fullTelegramHtml,
+    telegramMessages,
+    emailSubject,
+    emailBody: fullEmailBody
+  };
+}
+
+/**
+ * Generate rich GitHub Actions Step Summary and local changelog file
+ */
+function recordAdminChangeLog(addedEvents, removedEvents, healthyClubsCount, statusLogs) {
+  const lines = [];
+  lines.push(`### 🏔️ Mount Athens — Excursion Sync Summary`);
+  lines.push(`**Date:** ${TODAY_STR} | **Healthy Clubs:** ${healthyClubsCount}/8\n`);
+
+  if (addedEvents.length === 0 && removedEvents.length === 0) {
+    lines.push(`*No excursions were added or removed in this run.*\n`);
+  }
+
+  if (addedEvents.length > 0) {
+    lines.push(`#### ➕ Newly Added Excursions (${addedEvents.length})`);
+    lines.push(`| Date | Club | Title | Difficulty | Link |`);
+    lines.push(`| :--- | :--- | :--- | :---: | :--- |`);
+    for (const ev of addedEvents) {
+      const dateStr = formatEventDate(ev);
+      const diff = ev.difficulty || '-';
+      const link = ev.url ? `[Booking/Info](${ev.url})` : '-';
+      lines.push(`| ${dateStr} | ${ev.club} | ${ev.title} | ${diff} | ${link} |`);
+    }
+    lines.push('');
+  }
+
+  if (removedEvents.length > 0) {
+    lines.push(`#### ➖ Removed / Cancelled Excursions (${removedEvents.length})`);
+    lines.push(`| Date | Club | Title | Difficulty |`);
+    lines.push(`| :--- | :--- | :--- | :---: |`);
+    for (const ev of removedEvents) {
+      const dateStr = formatEventDate(ev);
+      const diff = ev.difficulty || '-';
+      lines.push(`| ${dateStr} | ${ev.club} | ${ev.title} | ${diff} |`);
+    }
+    lines.push('');
+  }
+
+  if (statusLogs.length > 0) {
+    lines.push(`#### 📊 Club Scraper Status`);
+    lines.push(`| Club | Status | Details |`);
+    lines.push(`| :--- | :---: | :--- |`);
+    for (const log of statusLogs) {
+      const statusIcon = log.status === 'success' ? '✅ OK' : '⚠️ Warning';
+      lines.push(`| ${log.club} | ${statusIcon} | ${log.details || '-'} |`);
+    }
+    lines.push('');
+  }
+
+  const markdownContent = lines.join('\n');
+
+  // 1. Write to GitHub Actions Step Summary if available
+  const summaryEnv = process.env.GITHUB_STEP_SUMMARY;
+  if (summaryEnv) {
+    try {
+      fs.appendFileSync(summaryEnv, markdownContent + '\n', 'utf-8');
+      console.log('[notifications] Appended change log to $GITHUB_STEP_SUMMARY.');
+    } catch (err) {
+      console.warn('[notifications] Failed to write to GITHUB_STEP_SUMMARY:', err.message);
+    }
+  }
+
+  // 2. Write to local summary file (archived by CI artifact step)
+  try {
+    const inputDir = path.dirname(LOCAL_SUMMARY_FILE);
+    if (!fs.existsSync(inputDir)) fs.mkdirSync(inputDir, { recursive: true });
+    fs.writeFileSync(LOCAL_SUMMARY_FILE, markdownContent, 'utf-8');
+  } catch (err) {
+    // Ignore non-critical local file write errors
+  }
 }
 
 async function sendTelegramMessage(botToken, chatId, htmlText) {
@@ -214,7 +365,10 @@ async function main() {
   const simArg = args.find(a => a.startsWith('--simulate='));
 
   let clubs = [];
-  let newEvents = [];
+  let addedEvents = [];
+  let removedEvents = [];
+  let healthyClubsCount = 8;
+  let statusLogs = [];
 
   if (simArg) {
     clubs = simArg
@@ -222,34 +376,74 @@ async function main() {
       .split(',')
       .map(s => s.trim())
       .filter(Boolean);
-    console.log(`[notifications] Simulated clubs with new events: ${clubs.join(', ')}`);
+
+    // Mock realistic sample events for simulation
+    addedEvents = clubs.flatMap((club, idx) => [
+      {
+        startDate: '2027-03-13',
+        endDate: '2027-03-15',
+        displayDate: '13-15/3',
+        title: idx === 0 ? 'Ορειβατικό σκι στον Γράμμο, Πληκάτι–Τσούκα Πετσίκ–Γκέσος' : `Ανάβαση σε κορυφή ${idx + 1}`,
+        club,
+        url: 'https://eosacharnon.xmiddleware.com/el/booking/cmwau20z2018ft401m13rtepb',
+        difficulty: 'Δ'
+      },
+      {
+        startDate: '2026-12-20',
+        endDate: '2026-12-21',
+        displayDate: '20-21/12',
+        title: `Χειμερινή διάσχιση Βαρδουσίων ${idx + 1}`,
+        club,
+        url: 'https://kostis-kounadis.github.io/Mount-Athens/',
+        difficulty: '2+'
+      }
+    ]);
+    console.log(`[notifications] Simulated ${addedEvents.length} events across clubs: ${clubs.join(', ')}`);
   } else if (isTestAdmin) {
-    clubs = ['ΕΟΣ Αθηνών'];
-    console.log('[notifications] Running --test-admin mode with sample club: ΕΟΣ Αθηνών');
+    clubs = ['ΕΟΣ Αχαρνών'];
+    addedEvents = [
+      {
+        startDate: '2027-03-13',
+        endDate: '2027-03-15',
+        displayDate: '13-15/3',
+        title: 'Ορειβατικό σκι στον Γράμμο, Πληκάτι–Τσούκα Πετσίκ–Γκέσος',
+        club: 'ΕΟΣ Αχαρνών',
+        url: 'https://eosacharnon.xmiddleware.com/el/booking/cmwau20z2018ft401m13rtepb',
+        difficulty: 'Δ'
+      }
+    ];
+    console.log('[notifications] Running --test-admin mode with sample event from ΕΟΣ Αχαρνών');
   } else {
-    const result = findClubsWithNewEvents();
-    clubs = result.clubs;
-    newEvents = result.newEvents;
+    const diff = diffEvents();
+    clubs = diff.clubs;
+    addedEvents = diff.addedEvents;
+    removedEvents = diff.removedEvents;
+    healthyClubsCount = diff.healthyClubsCount;
+    statusLogs = diff.statusLogs;
   }
 
-  if (clubs.length === 0) {
+  // Record Admin Step Summary regardless of whether notifications fire
+  recordAdminChangeLog(addedEvents, removedEvents, healthyClubsCount, statusLogs);
+
+  if (clubs.length === 0 || addedEvents.length === 0) {
     console.log('[notifications] No new upcoming events detected across healthy clubs. Nothing to send.');
     return;
   }
 
-  const { telegramHtml, emailSubject, emailBody } = buildMessages(clubs);
+  const { telegramHtml, telegramMessages, emailSubject, emailBody } = buildMessages(clubs, addedEvents);
 
   console.log(`\n[notifications] Clubs with new events (${clubs.length}): ${clubs.join(', ')}`);
-  if (newEvents.length > 0) {
-    console.log(`[notifications] New events count: ${newEvents.length}`);
-    for (const ev of newEvents) {
-      console.log(`  - [${ev.club}] ${ev.startDate}: ${ev.title}`);
-    }
+  console.log(`[notifications] New events count: ${addedEvents.length}`);
+  for (const ev of addedEvents) {
+    console.log(`  - [${ev.club}] ${formatEventDate(ev)}: ${ev.title}${ev.difficulty ? ` (${ev.difficulty})` : ''}`);
   }
 
   if (isDryRun) {
-    console.log('\n--- [DRY RUN] Telegram HTML Payload ---');
-    console.log(telegramHtml);
+    console.log('\n--- [DRY RUN] Telegram HTML Message(s) ---');
+    for (const msg of telegramMessages) {
+      console.log(msg);
+      console.log('-------------------------------------------');
+    }
     console.log('\n--- [DRY RUN] Buttondown Email Payload ---');
     console.log(`Subject: ${emailSubject}`);
     console.log(emailBody);
@@ -261,10 +455,12 @@ async function main() {
   const channelId = process.env.TELEGRAM_CHANNEL_ID;
   const buttondownKey = process.env.BUTTONDOWN_API_KEY;
 
-  // 1. Admin Telegram Notification
+  // 1. Admin Telegram Notification (with 1-line admin metadata footer)
   if (botToken && adminChatId) {
     try {
-      await sendTelegramMessage(botToken, adminChatId, telegramHtml);
+      const adminFooter = `\n\n<i>ℹ️ [Admin: +${addedEvents.length} added, -${removedEvents.length} removed | ${healthyClubsCount}/8 clubs healthy]</i>`;
+      const adminMessage = `${telegramHtml}${adminFooter}`;
+      await sendTelegramMessage(botToken, adminChatId, adminMessage);
       console.log(`[notifications] Sent Telegram notification to Admin (${adminChatId}).`);
     } catch (err) {
       console.error('[notifications] Failed to send Admin Telegram message:', err.message);
@@ -281,8 +477,10 @@ async function main() {
   // 2. Public Telegram Channel Broadcast
   if (botToken && channelId) {
     try {
-      await sendTelegramMessage(botToken, channelId, telegramHtml);
-      console.log(`[notifications] Broadcast Telegram notification to Channel (${channelId}).`);
+      for (const msg of telegramMessages) {
+        await sendTelegramMessage(botToken, channelId, msg);
+      }
+      console.log(`[notifications] Broadcast Telegram notification to Channel (${channelId}) in ${telegramMessages.length} message(s).`);
     } catch (err) {
       console.error('[notifications] Failed to broadcast to Telegram Channel:', err.message);
     }
