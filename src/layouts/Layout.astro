@@ -64,6 +64,18 @@ const { title, description, image, mainClass = "max-w-5xl mx-auto px-4 sm:px-6 l
       .text-mono {
         font-family: var(--font-mono);
       }
+
+      /* Respect prefers-reduced-motion globally */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
     </style>
   </head>
   <body class="min-h-screen flex flex-col justify-between selection:bg-slate-200 selection:text-slate-800">
@@ -153,11 +165,11 @@ const { title, description, image, mainClass = "max-w-5xl mx-auto px-4 sm:px-6 l
           ΟΡΕΙΒΑΤΙΚΟ ΗΜΕΡΟΛΟΓΙΟ
         </a>
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-5 font-mono">
-          <a href={import.meta.env.BASE_URL + "info"} class="hover:underline transition-all hover:text-slate-900">ΠΛΗΡΟΦΟΡΙΕΣ</a>
+          <a href={import.meta.env.BASE_URL + "info"} class="hover:underline transition-colors hover:text-slate-900">ΠΛΗΡΟΦΟΡΙΕΣ</a>
           <span class="text-slate-300">/</span>
-          <a href={import.meta.env.BASE_URL + "info#report"} class="hover:underline transition-all hover:text-slate-900">ΑΝΑΦΟΡΑ ΠΡΟΒΛΗΜΑΤΟΣ</a>
+          <a href={import.meta.env.BASE_URL + "info#report"} class="hover:underline transition-colors hover:text-slate-900">ΑΝΑΦΟΡΑ ΠΡΟΒΛΗΜΑΤΟΣ</a>
           <span class="text-slate-300">/</span>
-          <a href={import.meta.env.BASE_URL + "notifications"} class="hover:underline transition-all hover:text-slate-900">ΕΝΗΜΕΡΩΣΕΙΣ</a>
+          <a href={import.meta.env.BASE_URL + "notifications"} class="hover:underline transition-colors hover:text-slate-900">ΕΝΗΜΕΡΩΣΕΙΣ</a>
           <span class="text-slate-300">/</span>
           <span class="font-bold text-slate-800">v{pkg.version}</span>
         </div>

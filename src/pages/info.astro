@@ -140,7 +140,7 @@ import Layout from '../layouts/Layout.astro';
               name="name" 
               required
               placeholder="Πώς να σας αποκαλούμε;"
-              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all duration-200"
+              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-[border-color,box-shadow,background-color] duration-150 ease-out"
             />
           </div>
 
@@ -152,7 +152,7 @@ import Layout from '../layouts/Layout.astro';
               name="email" 
               required
               placeholder="Για να μπορέσουμε να σας απαντήσουμε..."
-              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all duration-200"
+              class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-[border-color,box-shadow,background-color] duration-150 ease-out"
             />
           </div>
         </div>
@@ -165,7 +165,7 @@ import Layout from '../layouts/Layout.astro';
             required
             rows="4"
             placeholder="Περιγράψτε το πρόβλημα ή την πρότασή σας..."
-            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all duration-200 resize-y"
+            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-[border-color,box-shadow,background-color] duration-150 ease-out resize-y"
           ></textarea>
         </div>
 
@@ -175,7 +175,7 @@ import Layout from '../layouts/Layout.astro';
         <div>
           <button 
             type="submit" 
-            class="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+            class="w-full sm:w-auto px-6 py-3 bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white text-sm font-bold rounded-lg transition-[transform,background-color] duration-100 flex items-center justify-center gap-2"
           >
             <span>Αποστολή Μηνύματος</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
