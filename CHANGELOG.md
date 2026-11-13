@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.6] - 2026-11-13
+
+### Fixed
+- Fixed double-starring collision when a club schedules multiple excursions on the same date (e.g. `ΕΟΣ Ηλιούπολης` on 15 November) by including event title in `fallbackId` and guarding `eventId` against non-unique URLs in `src/pages/index.astro`.
+- Fixed temporary orange-outline third star state on unstar by removing `hover:text-orange-500`, scoping grey/orange hover accents to `@media (hover: hover)`, and synchronizing SVG fill/stroke states in CSS so stars strictly show grey outline (unstarred) or filled orange (starred).
+- Added accessible toggle semantics (`aria-pressed`, per-event `aria-label`, `aria-hidden="true"` on decorative SVG), `:focus-visible` ring, and 44x44px coarse-pointer touch targets on `.star-toggle-btn`.
+- Prevented the PWA Service Worker (`public/sw.js` and `src/layouts/Layout.astro`) from caching or serving stale offline assets on `localhost`/`127.0.0.1`, and bumped `CACHE_NAME` to `mount-athens-v2` to purge older caches.
+
 ## [1.7.5] - 2026-11-11
 
 ### Fixed

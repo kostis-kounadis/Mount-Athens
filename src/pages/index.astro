@@ -112,6 +112,10 @@ const groupedByMonthAndDate = Object.entries(groupedEvents).reduce((acc: Record<
 
 const totalEvents = eventsData.length;
 const uniqueClubs = [...new Set(eventsData.map(e => e.club))];
+const urlCounts = eventsData.reduce((map, ev) => {
+  if (ev.url) map.set(ev.url, (map.get(ev.url) || 0) + 1);
+  return map;
+}, new Map<string, number>());
 
 function getDifficultyTiers(diff?: string): string {
   if (!diff || !diff.trim()) return 'unknown';
@@ -167,6 +171,79 @@ function getDifficultyTiers(diff?: string): string {
 
     .star-pop .star-icon {
       animation: starPop 350ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Star Toggle States: strictly grey outline (unstarred) or filled orange (starred) */
+    .star-toggle-btn {
+      position: relative;
+      color: #cbd5e1;
+      border-radius: 0.5rem;
+      transition: color 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out;
+    }
+
+    .star-toggle-btn .star-icon {
+      fill: rgb(249 115 22 / 0);
+      transition: fill 150ms ease-out, transform 150ms ease-out;
+    }
+
+    .star-toggle-btn.is-starred {
+      color: #f97316;
+    }
+
+    .star-toggle-btn.is-starred .star-icon {
+      fill: rgb(249 115 22 / 1);
+    }
+
+    @media (hover: hover) {
+      .star-toggle-btn:not(.is-starred):hover {
+        color: #94a3b8;
+        background-color: #f1f5f9;
+      }
+
+      .star-toggle-btn.is-starred:hover {
+        color: #ea580c;
+        background-color: #fff7ed;
+      }
+
+      .star-toggle-btn.is-starred:hover .star-icon {
+        fill: #ea580c;
+      }
+    }
+
+    .star-toggle-btn:focus:not(:focus-visible) {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+
+    .star-toggle-btn:focus-visible {
+      outline: 2px solid #0f172a;
+      outline-offset: 2px;
+    }
+
+    @media (pointer: coarse) {
+      .star-toggle-btn::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .star-toggle-btn {
+        color: ButtonText;
+      }
+
+      .star-toggle-btn .star-icon {
+        fill: none;
+      }
+
+      .star-toggle-btn.is-starred {
+        color: Highlight;
+      }
+
+      .star-toggle-btn.is-starred .star-icon {
+        fill: Highlight;
+      }
     }
   </style>
 
@@ -662,8 +739,9 @@ function getDifficultyTiers(diff?: string): string {
                     {events.map((event, idx) => {
                       const theme = CLUB_THEMES[event.club] || defaultTheme;
                       const isMultiDay = event.startDate !== event.endDate;
-                      const eventId = event.url || `${event.club}_${event.startDate}_${event.title}`;
-                      const fallbackId = `${event.club}_${event.startDate}`;
+                      const hasUniqueUrl = Boolean(event.url) && urlCounts.get(event.url) === 1;
+                      const fallbackId = `${event.club}_${event.startDate}_${event.title}`;
+                      const eventId = hasUniqueUrl ? event.url : fallbackId;
                       const difficultyTiers = getDifficultyTiers(event.difficulty);
                       
                       const searchText = `${event.title} ${event.club} ${monthYear} ${isMultiDay ? 'πολυήμερο' : 'μονοήμερο'} ${event.difficulty ? `Β.Δ. ${event.difficulty}` : ''}`;
@@ -682,13 +760,14 @@ function getDifficultyTiers(diff?: string): string {
                           <!-- Star Toggle Button -->
                           <button 
                               type="button"
-                              class="star-toggle-btn group p-1 -ml-1 text-slate-300 hover:text-orange-500 active:scale-90 focus:outline-none transition-[color,transform] duration-150 flex-shrink-0 cursor-pointer"
+                              class="star-toggle-btn group p-1 -ml-1 active:scale-90 flex-shrink-0 cursor-pointer"
                               data-event-id={eventId}
                               data-event-fallback-id={fallbackId}
-                              aria-label="Προσθήκη στα αγαπημένα"
+                              aria-label={`Αγαπημένο: ${event.title}`}
+                              aria-pressed="false"
                               title="Προσθήκη στα αγαπημένα"
                             >
-                              <svg class="w-5 h-5 star-icon stroke-current fill-none transition-[fill,stroke,transform] duration-150" stroke-width="1.8" viewBox="0 0 24 24">
+                              <svg class="w-5 h-5 star-icon stroke-current" fill="none" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385c.116.489-.413.873-.83.619l-4.708-2.884a.563.563 0 00-.582 0l-4.708 2.884c-.417.254-.946-.13-.83-.619l1.285-5.385a.563.563 0 00-.182-.557l-4.204-3.602c-.38-.325-.178-.948.32-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                               </svg>
                             </button>
@@ -845,6 +924,7 @@ function getDifficultyTiers(diff?: string): string {
     }
 
     let starredEvents = getStarredEvents();
+    const starPopTimers = new WeakMap<HTMLButtonElement, number>();
 
     function isEventStarred(eventId: string | null, fallbackId: string | null): boolean {
       if (eventId && starredEvents.has(eventId)) return true;
@@ -859,25 +939,17 @@ function getDifficultyTiers(diff?: string): string {
         const b = btn as HTMLButtonElement;
         const eventId = b.getAttribute('data-event-id');
         const fallbackId = b.getAttribute('data-event-fallback-id');
-        const svg = b.querySelector('.star-icon');
-        
-        if (isEventStarred(eventId, fallbackId)) {
+        const isStarred = isEventStarred(eventId, fallbackId);
+
+        if (isStarred) {
           activeStarredRows++;
-          b.classList.remove('text-slate-300');
-          b.classList.add('text-orange-500', 'is-starred');
+          b.classList.add('is-starred');
+          b.setAttribute('aria-pressed', 'true');
           b.setAttribute('title', 'Αφαίρεση από τα αγαπημένα');
-          if (svg) {
-            svg.classList.remove('fill-none');
-            svg.classList.add('fill-orange-500');
-          }
         } else {
-          b.classList.remove('text-orange-500', 'is-starred');
-          b.classList.add('text-slate-300');
+          b.classList.remove('is-starred');
+          b.setAttribute('aria-pressed', 'false');
           b.setAttribute('title', 'Προσθήκη στα αγαπημένα');
-          if (svg) {
-            svg.classList.remove('fill-orange-500');
-            svg.classList.add('fill-none');
-          }
         }
       });
 
@@ -906,10 +978,18 @@ function getDifficultyTiers(diff?: string): string {
       if (!eventId) return;
 
       // Add transient bouncy pop animation
+      const prevTimer = starPopTimers.get(starBtn);
+      if (prevTimer) window.clearTimeout(prevTimer);
       starBtn.classList.remove('star-pop');
       void starBtn.offsetWidth; // trigger reflow
       starBtn.classList.add('star-pop');
-      setTimeout(() => starBtn.classList.remove('star-pop'), 400);
+      starPopTimers.set(
+        starBtn,
+        window.setTimeout(() => {
+          starBtn.classList.remove('star-pop');
+          starPopTimers.delete(starBtn);
+        }, 400)
+      );
 
       if (isEventStarred(eventId, fallbackId)) {
         starredEvents.delete(eventId);
