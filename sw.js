@@ -1,5 +1,6 @@
 // Service Worker for Mount Athens PWA
-const CACHE_NAME = 'mount-athens-v1';
+const CACHE_NAME = 'mount-athens-v2';
+const IS_LOCALHOST = self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1';
 
 // Install event - activate immediately
 self.addEventListener('install', (event) => {
@@ -23,6 +24,11 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - network-first with cache fallback
 self.addEventListener('fetch', (event) => {
+  // Never intercept or serve stale offline cache in local dev/preview
+  if (IS_LOCALHOST) {
+    return;
+  }
+
   // Only handle GET requests and http/https schemes
   if (event.request.method !== 'GET' || !event.request.url.startsWith('http')) {
     return;
