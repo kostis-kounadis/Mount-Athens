@@ -547,6 +547,15 @@
       "difficulty": "Β"
     },
     {
+      "startDate": "2027-05-22",
+      "endDate": "2027-05-30",
+      "displayDate": "22-30/5",
+      "title": "ΕΞΟΡΜΗΣΗ ΣΤΗΝ ΠΟΡΤΟΓΑΛΙΑ",
+      "club": "ΕΟΣ Αχαρνών",
+      "url": "https://eosacharnon.xmiddleware.com/el/booking/cmwfxylto01edt40168b10yx3",
+      "difficulty": "Α"
+    },
+    {
       "startDate": "2027-07-03",
       "endDate": "2027-07-04",
       "displayDate": "3-4/7",
@@ -922,15 +931,6 @@
   ],
   "ΕΟΣ Ηλιούπολης": [
     {
-      "startDate": "2026-11-14",
-      "endDate": "2026-11-14",
-      "displayDate": "14/11",
-      "title": "Σηματοδότηση- καθαρισμός Εθνικού Μονοπατιού νο10 Υμηττού",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/signaling-cleaning-of-national-trail-no-10-hymettus-5",
-      "difficulty": ""
-    },
-    {
       "startDate": "2026-11-15",
       "endDate": "2026-11-15",
       "displayDate": "15/11",
@@ -997,9 +997,9 @@
       "startDate": "2026-12-13",
       "endDate": "2026-12-13",
       "displayDate": "13/12",
-      "title": "Παρνασσός (Επτάλοφος-Κωρύκειο Άντρο)",
+      "title": "Παρνασσός: Πολύδροσος-Αγία Ελεούσα-Ιερό Δήμητρας-Πολύδροσος  (κυκλική)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/13-dek-2026-parnassos-eptalofos-korykeio-antro",
+      "url": "https://eosh.gr/expeditions/parnassus-polydrosos-agia-eleusa-sanctuary-of-demeter-polydrosos-circular",
       "difficulty": "1"
     },
     {
