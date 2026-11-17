@@ -1,7 +1,7 @@
-Debug run at 2026-11-16T04:31:41.913Z
+Debug run at 2026-11-17T06:17:08.426Z
 
 === Inspecting Saved File: poa_gr_index_php-programma.html ===
-Size: 167727 chars
+Size: 168730 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el">
@@ -19,13 +19,10 @@ Snippet (first 1000 chars):
 	<meta property="og:title" content="Πρόγραμμα - POA" />
 	<meta property="og:description" content="προγραμμα Στις εξορμήσεις του Συλλόγου μας μπορούν να συμμετέχουν ΜΟΝΟ τα μέλη του ΠΟΑ, ή τα μέλη λοιπών σωματείων της Ε.Ο.Ο.Α (Ελληνική Ομοσπονδία Ορειβασίας και Αναρρίχησης). Σεπτέμβριος 2026 5-6/9 Συντήρηση και εφοδιασμός καταφυγίων Ένα Σαββατοκύριακο αφιερωμένο στην εθελοντική προσφορά των μελώ
 Snippet (last 1000 chars):
-orPreferences":[]},"kit":{"body_background_background":"classic","active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":905,"title":"%CE%A0%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1%20-%20POA","excerpt":"","featuredImage":false}};
+s}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(o),u.toString(),c.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"});const a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=e=>{i(n=e.data),a.terminate(),t(n)})}catch(e){}i(n=f(o,u,c,p))}t(n)}).then(e=>{for(const n in e)r.supports[n]=e[n],r.supports.everything=r.supports.everything&&r.supports[n],"flag"!==n&&(r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&r.supports[n]);var t;r.supports.everythingExceptFlag=r.supports.everythingExceptFlag&&!r.supports.flag,r.supports.everything||((t=r.source||{}).concatemoji?a(t.concatemoji):t.wpemoji&&t.twemoji&&(a(t.twemoji),a(t.wpemoji)))});
+//# sourceURL=https://poa.gr/wp-includes/js/wp-emoji-loader.min.js
 </script>
-<script src="https://poa.gr/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.27.7" id="elementor-frontend-js"></script>
-			<script>
-			/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
-			</script>
-				</body>
+	</body>
 </html>
 
 === Inspecting Saved File: eosh_gr_wp-product-category-greek-mountains-climbs.html ===
@@ -36,12 +33,12 @@ Headers:
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=UTF-8
-  date: Mon, 16 Nov 2026 04:31:43 GMT
-  link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
+  date: Tue, 17 Nov 2026 06:17:09 GMT
+  link: <https://poa.gr/index.php/wp-json/>; rel="https://api.w.org/", <https://poa.gr/index.php/wp-json/wp/v2/pages/905>; rel="alternate"; title="JSON"; type="application/json", <https://poa.gr/?p=905>; rel=shortlink
   server: nginx
   transfer-encoding: chunked
   vary: Accept-Encoding
-Length: 167727 chars
+Length: 168730 chars
 Snippet (first 1000 chars):
 <!DOCTYPE html>
 <html lang="el">
@@ -62,17 +59,17 @@ Snippet (first 1000 chars):
 Status: 200 OK
 Headers:
   cache-control: no-cache, no-store, must-revalidate
-  cf-ray: a5b3c48bfdd6c1cf-IAD
+  cf-ray: a5bc9c5f7a711345-MSP
   connection: keep-alive
   content-encoding: gzip
   content-type: text/html; charset=utf-8
-  date: Mon, 16 Nov 2026 04:31:44 GMT
+  date: Tue, 17 Nov 2026 06:17:11 GMT
   expires: 0
   pragma: no-cache
   referrer-policy: strict-origin-when-cross-origin
   server: cloudflare
-  set-cookie: __emg_vid=35aec5c7-6192-4077-91d8-debfe048817f; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
-  set-cookie: __emg_sid=ecfe78bc-5105-4a7b-94ec-5f0811feb166; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_vid=a12c300e-a558-45c3-bf10-0e31fc2f2d93; Max-Age=31536000; Path=/; HttpOnly; Secure; SameSite=Lax
+  set-cookie: __emg_sid=8a3c00ac-eaef-4b0c-bed1-0792ba055046; Max-Age=1800; Path=/; HttpOnly; Secure; SameSite=Lax
   strict-transport-security: max-age=63072000; includeSubDomains; preload
   transfer-encoding: chunked
   x-content-type-options: nosniff
