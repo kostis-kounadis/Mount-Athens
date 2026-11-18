@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-17T06:17:08.384Z",
+  "lastUpdated": "2026-11-18T05:44:18.802Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -11,7 +11,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 77380
+          "size": 77381
         }
       ]
     },
@@ -25,7 +25,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 87867
+          "size": 87824
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
@@ -39,70 +39,70 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 980518
+          "size": 1035142
         }
       ]
     },
     {
       "club": "ΠΟΑ",
-      "status": "success",
-      "details": "Parsed 31 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 17 healthy events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 168730
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "success",
-      "details": "Parsed 45 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 12 healthy events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 174097
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 223475
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 8 events",
+      "details": "Parsed 25 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 286164
+          "size": 396076
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "success",
-      "details": "Parsed 21 events",
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 2 healthy events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 669718
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150939
+          "size": 150952
         }
       ]
     }

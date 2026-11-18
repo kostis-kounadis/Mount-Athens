@@ -1,13 +1,9 @@
 {
-  "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "03ee5191a37877234cea9d5927815a271949b753e9c53f2f75cbaa26bb6ef8a4",
-  "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "b6108b2b12470234d25f922f5381bc1e26eb2fe051bc5a825b24c19e95e8b230",
-  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "5e53b9f496cbc6d5f4605070956cd693694046a6101bd6f85227882ea0172be8",
-  "https://www.eosathinon.gr/anavaseis/programma/": "c91db3c942e8fd585ded5d26be9bb9ce57eefaf06763b820c8b321a327ee18e3",
-  "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/": "44d2a0f20f96a2b31cdaf89ac3a90f26d0c2cec7b3c239ed5317187f3d9e73b5",
-  "https://eosacharnon.xmiddleware.com/api/events": "c92541faa9f6a40a40407970deec2593cb8a022eb96fcbdc34a0556c1d96a74e",
-  "https://eosh.gr/api/trips": "70cb639fc06d9b3d11bb7010b3c042cd99681771b6430135f58308902ee7a976",
+  "https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/": "e03e251cf9799fc4c2ced37683e7d02ef49f1687686939e656d2c3ae58d3c2b8",
+  "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/": "f0634333f5c831100ef07824c9b60514f3079586eecdd9d51e98682249d7b358",
+  "https://aos.gr/wp-json/wp/v2/posts?per_page=25": "e466ea4a5a99759c9006cc803067439fa9fb897cb1c159678b1f4d6d914e88e7",
+  "https://eosacharnon.xmiddleware.com/api/events": "588bc35ccdd68272b824717bda4880145e423899df1c87a951697544d2956845",
+  "https://eosh.gr/api/trips": "b19d5a7f648c836160d8224337749f0de5a462b22d7b75cc8a0ca1b01b9f10a2",
   "https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50": "6c6b0808c3bb5b6b96b2a2e98af39bf94e4bc2b4786366da3dbf4dce000af475",
-  "https://poa.gr/index.php/programma/": "9b0deb8ce3e4d75151f13bd00d415f6423d64a3f4587d7dd6114d87f5ab00583",
-  "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25": "f25a6fa240a882a786ff96b78e5cc919774b11bb64801c0b9c9d1302c57827b8",
-  "https://fop.gr/": "3a4582152a273d4d541bf6a11a98b5ac7a849a95aae1789487ca916de5b17282"
+  "https://fop.gr/": "872631e5fd6785656d91336c5c6fd3dc32157576a67aca236a2489140ebee78d"
 }

@@ -947,6 +947,159 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/24-28-dek-2026-oreivatika-christoygenna-sti-voreia-ellada",
       "difficulty": "2"
+    },
+    {
+      "startDate": "2027-01-16",
+      "endDate": "2027-01-17",
+      "displayDate": "16-17/1",
+      "title": "Παρνασσός χειμερινή (Γεροντόβραχος-Λιάκουρα)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/parnassus-winter-gerontovrachos-liakura",
+      "difficulty": "5+"
+    },
+    {
+      "startDate": "2027-01-23",
+      "endDate": "2027-01-24",
+      "displayDate": "23-24/1",
+      "title": "Κίσσαβος χειμερινή (κτφ Κισσάβου-κορυφή Παλαμιώτης)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/kissavos-winter-kissavos-refuge-palamiotis-summit",
+      "difficulty": "5+"
+    },
+    {
+      "startDate": "2027-02-06",
+      "endDate": "2027-02-07",
+      "displayDate": "6-7/2",
+      "title": "Άγραφα χειμερινή (Κέδρος-Ελατάκος-Μπορλέρο)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/agrapha-winter-cedros-elatakos-borlero",
+      "difficulty": "5+"
+    },
+    {
+      "startDate": "2027-02-14",
+      "endDate": "2027-02-14",
+      "displayDate": "14/2",
+      "title": "Ολίγυρτος χειμερινή (κορυφή Σκίπιζα)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/oligyrtos-winter-skipiza-peak",
+      "difficulty": "5+"
+    },
+    {
+      "startDate": "2027-02-21",
+      "endDate": "2027-02-21",
+      "displayDate": "21/2",
+      "title": "Πάρνηθα διάσχιση (Θρακομακεδόνες-Μόλα-Πύργος Λοιμικού-Αυλώνας)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/parnitha-traverse-thrakomacedones-mola-limiko-tower-aulona",
+      "difficulty": "2"
+    },
+    {
+      "startDate": "2027-02-27",
+      "endDate": "2027-02-28",
+      "displayDate": "27-28/2",
+      "title": "Ντουρντουβάνα χειμερινή",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/duvet-winter",
+      "difficulty": "6+"
+    },
+    {
+      "startDate": "2027-03-06",
+      "endDate": "2027-03-07",
+      "displayDate": "6-7/3",
+      "title": "Ταΰγετος χειμερινή (Μαγγανιάρης-κτφ ΕΟΣ Σπάρτης-Προφ Ηλίας)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/taygetus-winter-manganiari-shelter-eos-sparta-prophet-elias",
+      "difficulty": "6"
+    },
+    {
+      "startDate": "2027-03-13",
+      "endDate": "2027-03-15",
+      "displayDate": "13-15/3",
+      "title": "Σμόλικας χειμερινή (τριήμερο Κ. Δευτέρας)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/smolika-winter-three-day-trip-starting-on-clean-monday",
+      "difficulty": "5+"
+    },
+    {
+      "startDate": "2027-03-21",
+      "endDate": "2027-03-21",
+      "displayDate": "21/3",
+      "title": "Μαραθώνας (πύργος Οινόης-Οινόη)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/marathon-oinoe-oinoe-tower",
+      "difficulty": "1"
+    },
+    {
+      "startDate": "2027-04-03",
+      "endDate": "2027-04-04",
+      "displayDate": "3-4/4",
+      "title": "Κόψη Βαράσοβας",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/varassova-ridge",
+      "difficulty": "4+"
+    },
+    {
+      "startDate": "2027-04-11",
+      "endDate": "2027-04-11",
+      "displayDate": "11/4",
+      "title": "Καλλίδρομο (Μονοπάτι Εφιάλτη-Ανοπαία ατραπός)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/kallidromo-efialtis-trail-anopaia-atrapos",
+      "difficulty": "1"
+    },
+    {
+      "startDate": "2027-04-17",
+      "endDate": "2027-04-18",
+      "displayDate": "17-18/4",
+      "title": "Οίτη με αντίσκηνα (Υπάτη-Γρεβενό-Πύργος)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/oeta-hardcore-ypati-greveno-pyrgos",
+      "difficulty": "2"
+    },
+    {
+      "startDate": "2027-04-25",
+      "endDate": "2027-04-25",
+      "displayDate": "25/4",
+      "title": "Πάρνηθα κυκλική (Άγιος Μερκούριος-Παλιομήλεσι)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/parnitha-circular-ag-merkourios-paliomilesi",
+      "difficulty": "1"
+    },
+    {
+      "startDate": "2027-05-15",
+      "endDate": "2027-05-16",
+      "displayDate": "15-16/5",
+      "title": "Χελμός (Νησί-Καράβι)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/chelmos-nisi-karavi",
+      "difficulty": "2"
+    },
+    {
+      "startDate": "2027-05-29",
+      "endDate": "2027-05-30",
+      "displayDate": "29-30/5",
+      "title": "Πήλιο (3 κορφές & μονοπάτι Καταρρακτών)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/pelio-3-summits-waterfalls-trail",
+      "difficulty": "1"
+    },
+    {
+      "startDate": "2027-06-19",
+      "endDate": "2027-06-21",
+      "displayDate": "19-21/6",
+      "title": "Γράμμος (Τριήμερο Αγ. Πνεύματος)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/gramms-pentecost-three-day-festival",
+      "difficulty": "2+"
+    },
+    {
+      "startDate": "2027-07-02",
+      "endDate": "2027-07-04",
+      "displayDate": "2-4/7",
+      "title": "Βόρεια Πίνδος (Βοβούσα-Δίστρατο-Σαμαρίνα)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/northern-pindus-vovousa-distrato-samarina",
+      "difficulty": "2+"
     }
   ],
   "ΦΟΝΙ": [
