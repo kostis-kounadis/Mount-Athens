@@ -284,6 +284,15 @@
       "difficulty": "1+"
     },
     {
+      "startDate": "2027-01-24",
+      "endDate": "2027-01-24",
+      "displayDate": "24/1",
+      "title": "Εύβοια: κορυφή Ορτάρι (869 μ.), Κύμη",
+      "club": "ΕΠΟΣ Φυλής",
+      "url": "https://eposfilis.gr/event/24-1-27-%ce%b5%cf%8d%ce%b2%ce%bf%ce%b9%ce%b1-%ce%ba%ce%bf%cf%81%cf%85%cf%86%ce%ae-%ce%bf%cf%81%cf%84%ce%ac%cf%81%ce%b9-869-%ce%bc-%ce%ba%cf%8d%ce%bc%ce%b7/",
+      "difficulty": "2"
+    },
+    {
       "startDate": "2027-02-04",
       "endDate": "2027-02-14",
       "displayDate": "4-14/2",
@@ -300,6 +309,15 @@
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/14-2-2027-%cf%86%ce%b8%ce%b9%cf%8e%cf%84%ce%b9%ce%b4%ce%b1-%ce%ba%ce%b1%ce%bb%ce%bb%ce%af%ce%b4%cf%81%ce%bf%ce%bc%ce%bf-%ce%bc%ce%b5%ce%bd%ce%b4%ce%b5%ce%bd%ce%af%cf%84%cf%83%ce%b1-%ce%bc%ce%bf/",
       "difficulty": "1"
+    },
+    {
+      "startDate": "2027-02-27",
+      "endDate": "2027-02-28",
+      "displayDate": "27-28/2",
+      "title": "Αχαϊα: Καλλιφώνι (1.997μ.). Καταρράκτης Γκρεμιστός . Καλογερικό (1.646μ.). Κάτω Βλασία.",
+      "club": "ΕΠΟΣ Φυλής",
+      "url": "https://eposfilis.gr/event/27-28-2-2027-%ce%b1%cf%87%ce%b1%cf%8a%ce%b1-%ce%ba%ce%b1%ce%bb%ce%bb%ce%b9%cf%86%cf%8e%ce%bd%ce%b9-1-997%ce%bc-%ce%ba%ce%b1%cf%84%ce%b1%cf%81%cf%81%ce%ac%ce%ba%cf%84%ce%b7%cf%82-%ce%b3%ce%ba/",
+      "difficulty": "1, 2"
     },
     {
       "startDate": "2027-03-12",
@@ -904,6 +922,15 @@
       "difficulty": "2"
     },
     {
+      "startDate": "2026-11-29",
+      "endDate": "2026-11-29",
+      "displayDate": "29/11",
+      "title": "Υμηττός (Ηλιούπολη-Γούβα-Κίτρινο-Μιχαηλίδης-Αρχαίων-κτφ ΕΟΣΗ)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-gouva-kitrino-michaelides-ancient-path-eosh-refuge",
+      "difficulty": "1+"
+    },
+    {
       "startDate": "2026-12-05",
       "endDate": "2026-12-05",
       "displayDate": "5/12",
@@ -916,10 +943,28 @@
       "startDate": "2026-12-06",
       "endDate": "2026-12-06",
       "displayDate": "6/12",
+      "title": "Υμηττός (Ηλιούπολη-πλατεία Προσκόπων-μονή Καρέα-κτφ ΕΟΣΗ)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-scouts-square-kareas-closter-eosh-refuge",
+      "difficulty": "1"
+    },
+    {
+      "startDate": "2026-12-06",
+      "endDate": "2026-12-06",
+      "displayDate": "6/12",
       "title": "Ελικώνας (Αγ Άννα-Δύο Τσούμπες-Παλιοβούνα)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/6-dek-2026-elikonas-kyriaki-megali-loytsa",
       "difficulty": "2"
+    },
+    {
+      "startDate": "2026-12-13",
+      "endDate": "2026-12-13",
+      "displayDate": "13/12",
+      "title": "Υμηττός (Καισαριανή-OTE-κεραίες-Καλοπούλα)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/hymettus-kaisariani-ote-keraies-kalopoula",
+      "difficulty": "1+"
     },
     {
       "startDate": "2026-12-13",
@@ -967,6 +1012,15 @@
       "difficulty": "5+"
     },
     {
+      "startDate": "2027-01-31",
+      "endDate": "2027-01-31",
+      "displayDate": "31/1",
+      "title": "Κοπή Βασιλόπιτας",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/kopi-vasilopitas",
+      "difficulty": ""
+    },
+    {
       "startDate": "2027-02-06",
       "endDate": "2027-02-07",
       "displayDate": "6-7/2",
@@ -1010,6 +1064,15 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/taygetus-winter-manganiari-shelter-eos-sparta-prophet-elias",
       "difficulty": "6"
+    },
+    {
+      "startDate": "2027-03-07",
+      "endDate": "2027-03-07",
+      "displayDate": "7/3",
+      "title": "Υμηττός (Α Γλυφάδα-προφ Ηλίας-Στρώμα-Μαυροβούνι-Τρύπια Σπηλιά)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/hymettus-a-glyfada-prof-helias-stroma-mavrovouni-trypia-spilia",
+      "difficulty": "2"
     },
     {
       "startDate": "2027-03-13",
@@ -1090,6 +1153,15 @@
       "title": "Χελμός (Νησί-Καράβι)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/chelmos-nisi-karavi",
+      "difficulty": "2"
+    },
+    {
+      "startDate": "2027-05-22",
+      "endDate": "2027-05-23",
+      "displayDate": "22-23/5",
+      "title": "Γκιώνα (Μονοπάτι Καραγιάννη & Πεζοπορικό)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/gkiona-karagiannis-trail-hiking",
       "difficulty": "2"
     },
     {
