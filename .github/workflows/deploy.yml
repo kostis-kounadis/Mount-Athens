@@ -5,7 +5,10 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 * * *'
+    # GitHub Actions cron uses UTC. In EET (UTC+2, winter): 11:00 UTC = 13:00 Athens, 21:00 UTC = 23:00 Athens.
+    # Note: In EEST (UTC+3, summer), these correspond to 14:00 and 00:00 Athens time.
+    - cron: '0 11 * * *'
+    - cron: '0 21 * * *'
   workflow_dispatch:
     inputs:
       test_alert:
