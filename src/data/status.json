@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-19T02:28:04.508Z",
+  "lastUpdated": "2026-11-19T19:25:06.739Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -39,7 +39,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 976482
+          "size": 976483
         }
       ]
     },
@@ -60,14 +60,14 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 45 events",
+      "details": "Parsed 53 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 174100
+          "size": 186118
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
@@ -88,7 +88,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 454019
+          "size": 454038
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150957
+          "size": 150961
         }
       ]
     }
