@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-20T02:11:51.916Z",
+  "lastUpdated": "2026-11-20T19:00:21.294Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -25,21 +25,21 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 87829
+          "size": 88065
         },
         {
           "url": "https://aos.gr/programma-exormiseon-ianouarios-2026-septemvrios-2026/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 101918
+          "size": 102201
         },
         {
           "url": "https://aos.gr/wp-json/wp/v2/posts?per_page=25",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 976481
+          "size": 887815
         }
       ]
     },
@@ -60,21 +60,21 @@
     {
       "club": "ΕΟΣ Αθηνών",
       "status": "success",
-      "details": "Parsed 53 events",
+      "details": "Parsed 45 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 186118
+          "size": 170862
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 223448
+          "size": 223473
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150954
+          "size": 150958
         }
       ]
     }
