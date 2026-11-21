@@ -1273,6 +1273,15 @@
       "club": "ΦΟΝΙ",
       "url": "https://www.foni.org.gr/06-dekemvriou-2026-kamari-panagia-i-korfiotissa/",
       "difficulty": "1"
+    },
+    {
+      "startDate": "2026-12-13",
+      "endDate": "2026-12-13",
+      "displayDate": "13 Δεκε",
+      "title": "Οι Λόφοι της Αθήνας",
+      "club": "ΦΟΝΙ",
+      "url": "https://www.foni.org.gr/13-dekemvriou-2026-pezoporiki-oi-lofoi-tis-athinas/",
+      "difficulty": "1, 2"
     }
   ]
 }
