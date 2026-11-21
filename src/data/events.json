@@ -606,18 +606,18 @@
     "startDate": "2027-01-31",
     "endDate": "2027-01-31",
     "displayDate": "31/1",
-    "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
+    "title": "Παρνασσός - Λιάκουρα",
     "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
     "difficulty": "Δ"
   },
   {
     "startDate": "2027-01-31",
     "endDate": "2027-01-31",
     "displayDate": "31/1",
-    "title": "Παρνασσός - Λιάκουρα",
+    "title": "Διάσχιση Παρνασσού με ορειβατικά σκι",
     "club": "ΕΟΣ Αχαρνών",
-    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvia2gbu004kk801hkd6jrsi",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmvsg3cvz00smt401zoqk3af9",
     "difficulty": "Δ"
   },
   {
@@ -1123,6 +1123,15 @@
     "club": "ΕΟΣ Ηλιούπολης",
     "url": "https://eosh.gr/expeditions/parnitha-circular-ag-merkourios-paliomilesi",
     "difficulty": "1"
+  },
+  {
+    "startDate": "2027-04-30",
+    "endDate": "2027-05-04",
+    "displayDate": "30/4 - 4/5",
+    "title": "ΤΟΥΡΙΣΤΙΚΗ-ΠΕΖΟΠΟΡΙΚΗ ΕΞΟΡΜΗΣΗ ΣΤΗΝ ΚΑΡΠΑΘΟ ΠΑΣΧΑ 2027",
+    "club": "ΕΟΣ Αχαρνών",
+    "url": "https://eosacharnon.xmiddleware.com/el/booking/cmwqjejec01xft401f5ed1lq8",
+    "difficulty": "Α, Β"
   },
   {
     "startDate": "2027-05-09",
