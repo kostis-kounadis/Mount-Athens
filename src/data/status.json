@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-25T04:03:51.387Z",
+  "lastUpdated": "2026-11-25T20:24:57.702Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -39,7 +39,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 884344
+          "size": 825671
         }
       ]
     },
@@ -67,28 +67,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 170919
+          "size": 170917
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 224233
+          "size": 223473
         }
       ]
     },
     {
       "club": "ΕΟΣ Ηλιούπολης",
       "status": "success",
-      "details": "Parsed 31 events",
+      "details": "Parsed 30 events",
       "fetch": [
         {
           "url": "https://eosh.gr/api/trips",
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 437632
+          "size": 437726
         }
       ]
     },
@@ -130,7 +130,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150938
+          "size": 150955
         }
       ]
     }
