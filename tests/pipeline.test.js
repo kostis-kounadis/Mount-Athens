@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse as parseYaml } from 'yaml';
 
 import {
   isDedicatedEventUrl,
@@ -791,6 +792,8 @@ test('send-notifications: subscriber messages & plain-language admin alerts cont
 
 test('workflow and sidecar static invariants hold', () => {
   const workflow = fs.readFileSync(path.join(REPO_ROOT, '.github/workflows/deploy.yml'), 'utf-8');
+  const parsedWorkflow = parseYaml(workflow);
+  assert.ok(parsedWorkflow && parsedWorkflow.jobs && parsedWorkflow.jobs.scrape && parsedWorkflow.jobs['build-and-deploy'], 'deploy.yml must be valid YAML with scrape and build-and-deploy jobs');
   assert.ok(!workflow.includes(' -jq '), 'Workflow must not have broken single-dash -jq flag');
   assert.ok(workflow.includes('--jq '), 'Workflow must use --jq');
   assert.ok(workflow.includes('concurrency:'), 'Workflow must define concurrency');

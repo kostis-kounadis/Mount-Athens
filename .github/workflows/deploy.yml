@@ -218,7 +218,7 @@ jobs:
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
           IS_SCRAPE_RUN: ${{ needs.scrape.result == 'success' && 'true' || 'false' }}
-          IS_SELF_HEAL_PUSH: ${{ (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'chore(data): self-heal')) && 'true' || 'false' }}
+          IS_SELF_HEAL_PUSH: "${{ (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'chore(data): self-heal')) && 'true' || 'false' }}"
           IS_TEST_ALERT: ${{ needs.scrape.outputs.is_test_alert == 'true' && 'true' || 'false' }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           ANOMALY_ISSUE_URL: ${{ needs.scrape.outputs.anomaly_issue_url }}
