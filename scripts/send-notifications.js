@@ -224,6 +224,7 @@ export function diffClubEvents({
   const pastActiveLedger = allActiveLedger.filter(ev => (ev.endDate || ev.startDate) < todayStr);
   const activeLedger = allActiveLedger.filter(ev => (ev.endDate || ev.startDate) >= todayStr);
   const cancelledLedger = ledgerEntries.filter(ev => ev.status === 'cancelled' && (ev.endDate || ev.startDate) >= cutoffDate);
+  const recentExpired = ledgerEntries.filter(ev => ev.status === 'expired' && (ev.endDate || ev.startDate) >= cutoffDate);
 
   const matchedCurrentIdx = new Set();
   const matchedActiveIdx = new Set();
@@ -289,14 +290,17 @@ export function diffClubEvents({
       const prevNormTitle = normalizeTitle(prev.title);
       const shorterLen = Math.min(currNormTitle.length, prevNormTitle.length);
       const isSubset = shorterLen >= 6 && (currNormTitle.includes(prevNormTitle) || prevNormTitle.includes(currNormTitle));
-      const stats = titleSimilarityStats(prev.title, curr.title);
+      const stats = fuzzyTitleSimilarityStats(prev.title, curr.title);
+      const minSize = Math.min(stats.wordsA.length, stats.wordsB.length);
+      const maxSize = Math.max(stats.wordsA.length, stats.wordsB.length);
+      const minOverlapRatio = minSize > 0 ? stats.matched / minSize : 0;
       const sameEnd = (prev.endDate || prev.startDate) === (curr.endDate || curr.startDate);
       const isStrongWordMatch =
-        (stats.intersection >= 2 && stats.minOverlapRatio >= 0.5) ||
-        (stats.intersection === 1 && stats.maxSize <= 2 && sameEnd);
+        (stats.matched >= 2 && minOverlapRatio >= 0.5) ||
+        (stats.matched === 1 && maxSize <= 2 && sameEnd);
 
       if (isSubset || isStrongWordMatch) {
-        const score = (isSubset ? 1.0 : 0) + stats.jaccard + stats.minOverlapRatio;
+        const score = (isSubset ? 1.0 : 0) + stats.jaccard + minOverlapRatio;
         sameDateCandidates.push({ prevIdx: p, currIdx: c, score });
       }
     }
@@ -376,13 +380,32 @@ export function diffClubEvents({
     }
   }
 
-  // Unmatched current events -> ADDED (also reactivates any matching previously-cancelled entry)
+  // Unmatched current events -> ADDED (silently restores reappearing recently-expired started events; reactivates previously-cancelled entries)
   const reactivatedCancelledIdx = new Set();
+  const reactivatedExpiredIdx = new Set();
   for (let c = 0; c < upcomingCurrent.length; c++) {
     if (matchedCurrentIdx.has(c)) continue;
     const curr = upcomingCurrent[c];
     const currNormUrl = isDedicatedEventUrl(curr.url) ? normalizeUrl(curr.url) : '';
     const currNormTitle = normalizeTitle(curr.title);
+
+    // If an already-started multi-day event was silently expired earlier and flickers back,
+    // restore it silently to active without sending a duplicate "added" broadcast.
+    let restoredFromExpired = false;
+    for (let k = 0; k < recentExpired.length; k++) {
+      if (reactivatedExpiredIdx.has(k)) continue;
+      const oldExp = recentExpired[k];
+      const sameUrl = currNormUrl && isDedicatedEventUrl(oldExp.url) && normalizeUrl(oldExp.url) === currNormUrl;
+      const sameTitleDate = oldExp.startDate === curr.startDate && normalizeTitle(oldExp.title) === currNormTitle;
+      if (sameUrl || sameTitleDate) {
+        reactivatedExpiredIdx.add(k);
+        silentMutation = true;
+        nextClubLedger.push(createLedgerEntry(curr, nowIso, 'active', oldExp.firstNotifiedAt));
+        restoredFromExpired = true;
+        break;
+      }
+    }
+    if (restoredFromExpired) continue;
 
     for (let k = 0; k < cancelledLedger.length; k++) {
       if (reactivatedCancelledIdx.has(k)) continue;
@@ -475,12 +498,11 @@ export function diffClubEvents({
     }
   }
 
-  // Keep non-expired expired-status entries only within retention window
-  const recentExpired = ledgerEntries.filter(
-    ev => ev.status === 'expired' && (ev.endDate || ev.startDate) >= cutoffDate
-  );
-  for (const exp of recentExpired) {
-    nextClubLedger.push(exp);
+  // Keep non-reactivated expired-status entries only within retention window
+  for (let k = 0; k < recentExpired.length; k++) {
+    if (!reactivatedExpiredIdx.has(k)) {
+      nextClubLedger.push(recentExpired[k]);
+    }
   }
   if (ledgerEntries.some(ev => (ev.status === 'expired' || ev.status === 'cancelled') && (ev.endDate || ev.startDate) < cutoffDate)) {
     silentMutation = true;
@@ -879,7 +901,8 @@ export function buildAdminHealthAlert({
 
   const transientClubs = clubEntries.filter(([, c]) => c.status === 'transient_fallback');
   const criticalFallbackClubs = clubEntries.filter(([, c]) => c.status === 'critical_fallback');
-  const parserErrorClubs = clubEntries.filter(([, c]) => c.status === 'parser_error' || c.status === 'data_loss');
+  const parserErrorClubs = clubEntries.filter(([, c]) => c.status === 'parser_error');
+  const fetchDataLossClubs = clubEntries.filter(([, c]) => c.status === 'data_loss');
   const eventDropClubs = clubEntries.filter(([, c]) => c.status === 'event_drop');
 
   // Fallback to raw statusLogs only on scrape/self-heal runs when clubHealth is absent or stale
@@ -887,18 +910,34 @@ export function buildAdminHealthAlert({
     ? effectiveLogs.filter(l => l.status === 'warning' || l.status === 'error')
     : [];
 
-  const hasIssues =
+  const hasPerClubOrLogIssues =
     transientClubs.length > 0 ||
     criticalFallbackClubs.length > 0 ||
     parserErrorClubs.length > 0 ||
+    fetchDataLossClubs.length > 0 ||
     eventDropClubs.length > 0 ||
-    rawDegradedLogs.length > 0 ||
+    rawDegradedLogs.length > 0;
+
+  // Catch global critical anomalies (e.g. Massive Overall Data Loss or clubless invalid date)
+  // that triggered a real anomaly issue even when no individual club entry is flagged.
+  const hasOverallCriticalAnomaly = Boolean(
+    checkClubHealth &&
+    !hasPerClubOrLogIssues &&
+    (
+      (healthMatchesStatus && clubHealth?.hasCriticalAnomalies) ||
+      (!isTestAlert && isScrapeRun && (issueAction === 'created' || issueAction === 'commented'))
+    )
+  );
+
+  const hasIssues =
+    hasPerClubOrLogIssues ||
+    hasOverallCriticalAnomaly ||
     suppressedMassCancellations.length > 0 ||
     broadcastErrors.length > 0;
 
   const isRecovery = !hasIssues && isScrapeRun && !isTestAlert && issueAction === 'closed';
   const isSelfHealConfirmation = !hasIssues && isSelfHealPush && !isTestAlert;
-  const isTestAlertNotification = !hasIssues && (Boolean(isTestAlert) || (isScrapeRun && (issueAction === 'created' || issueAction === 'commented')));
+  const isTestAlertNotification = !hasIssues && Boolean(isTestAlert);
   if (!hasIssues && !isRecovery && !isSelfHealConfirmation && !isTestAlertNotification) {
     return null;
   }
@@ -963,10 +1002,13 @@ export function buildAdminHealthAlert({
 
   let title = '';
   const hasRealParserOrDrop = parserErrorClubs.length > 0 || eventDropClubs.length > 0 || suppressedMassCancellations.length > 0;
+  const hasFetchDataLoss = fetchDataLossClubs.length > 0;
   const hasCriticalBlock = criticalFallbackClubs.length > 0;
   const hasOnlyBroadcastErrors =
     broadcastErrors.length > 0 &&
     !hasRealParserOrDrop &&
+    !hasFetchDataLoss &&
+    !hasOverallCriticalAnomaly &&
     !hasCriticalBlock &&
     transientClubs.length === 0 &&
     rawDegradedLogs.length === 0;
@@ -975,6 +1017,10 @@ export function buildAdminHealthAlert({
     title = `🔴 <b>Mount Athens — Σφάλμα Αποστολής Ειδοποιήσεων</b>`;
   } else if (hasRealParserOrDrop) {
     title = `🔴 <b>Mount Athens — Πρόβλημα Ανάγνωσης Σελίδας (Parser / Αλλαγή Site)</b>`;
+  } else if (hasFetchDataLoss) {
+    title = `🔴 <b>Mount Athens — Αποτυχία Ανάκτησης Χωρίς Cache (Data Loss)</b>`;
+  } else if (hasOverallCriticalAnomaly) {
+    title = `🔴 <b>Mount Athens — Κρίσιμη Ανωμαλία Δεδομένων</b>`;
   } else if (hasCriticalBlock) {
     title = `🟠 <b>Mount Athens — Επίμονο Μπλοκάρισμα IP (2+ runs)</b>`;
   } else {
@@ -985,8 +1031,15 @@ export function buildAdminHealthAlert({
   for (const [club, info] of parserErrorClubs) {
     const cacheNote = info.preservedCount > 0
       ? `διατηρήθηκαν ${info.preservedCount} αποθηκευμένες εξορμήσεις (fallback)`
-      : `χωρίς διαθέσιμο cache`;
+      : (info.parsedCount > 0
+          ? `παραμένουν ${info.parsedCount} εξορμήσεις στο site`
+          : `χωρίς διαθέσιμο cache`);
     whatHappenedLines.push(`• <b>${escapeHtml(club)}</b>: ${escapeHtml(info.lastError || 'Σφάλμα parser')} — ${escapeHtml(cacheNote)}.`);
+  }
+  for (const [club, info] of fetchDataLossClubs) {
+    whatHappenedLines.push(
+      `• <b>${escapeHtml(club)}</b>: Αποτυχία ανάκτησης (${escapeHtml(info.lastError || 'HTTP / Network error')}) — χωρίς διαθέσιμο cache.`
+    );
   }
   for (const [club, info] of eventDropClubs) {
     whatHappenedLines.push(`• <b>${escapeHtml(club)}</b>: ${escapeHtml(info.lastError || 'Απότομη πτώση εξορμήσεων')} (κρατήθηκε το baseline, δεν στάλθηκαν ακυρώσεις).`);
@@ -1004,6 +1057,9 @@ export function buildAdminHealthAlert({
   for (const log of rawDegradedLogs) {
     whatHappenedLines.push(`• <b>${escapeHtml(log.club)}</b>: ${escapeHtml(log.details || 'Προειδοποίηση scraper')}.`);
   }
+  if (hasOverallCriticalAnomaly) {
+    whatHappenedLines.push(`• Εντοπίστηκε γενική κρίσιμη ανωμαλία δεδομένων (π.χ. μαζική συνολική πτώση εξορμήσεων) — δες το ανοιχτό GitHub Issue / Actions Run.`);
+  }
   for (const mc of suppressedMassCancellations) {
     whatHappenedLines.push(
       `• <b>${escapeHtml(mc.club)}</b>: Εντοπίστηκαν ${mc.count}/${mc.totalActive} πιθανές ακυρώσεις — κρατήθηκαν σε αναμονή για επιβεβαίωση ώστε να μην σταλεί εσφαλμένο μήνυμα.`
@@ -1017,8 +1073,8 @@ export function buildAdminHealthAlert({
     ? `<i>Ειδοποιήσεις συνδρομητών: ${escapeHtml(subscriberSummary)}</i>`
     : `<i>Ειδοποιήσεις συνδρομητών: Δεν υπήρχαν νέες αλλαγές από τους υγιείς συλλόγους.</i>`;
 
-  const noCacheClubs = [...parserErrorClubs, ...criticalFallbackClubs]
-    .filter(([, info]) => !info.preservedCount || info.preservedCount === 0)
+  const noCacheClubs = [...parserErrorClubs, ...fetchDataLossClubs, ...criticalFallbackClubs]
+    .filter(([, info]) => (!info.preservedCount || info.preservedCount === 0) && (!info.parsedCount || info.parsedCount === 0))
     .map(([club]) => club);
 
   let impactMainLine = `Οι χρήστες ΔΕΝ βλέπουν τεχνικά σφάλματα — το site δείχνει κανονικά τις αποθηκευμένες εξορμήσεις (fallback). Οι υγιείς σύλλογοι (${healthyClubsCount}/${totalClubsCount}) λειτουργούν κανονικά.`;
@@ -1041,13 +1097,19 @@ export function buildAdminHealthAlert({
   if (parserErrorClubs.length > 0) {
     guidanceLines.push(`• <b>Καλύτερη επιλογή (Parser/Site):</b> Άνοιξε το GitHub Issue και στείλε το έτοιμο prompt στον Antigravity Remote Agent για να διορθώσει τον parser ή το URL.`);
   }
+  if (hasFetchDataLoss) {
+    guidanceLines.push(`• <b>Καλύτερη επιλογή (Αποτυχία ανάκτησης χωρίς cache):</b> Άφησε το local self-heal στο Mac σου να ανακτήσει τα δεδομένα από οικιακή IP (ή τρέξε <code>npm run scrape</code> τοπικά) και έλεγξε αν η σελίδα του συλλόγου είναι προσωρινά εκτός λειτουργίας.`);
+  }
   if (eventDropClubs.length > 0 || suppressedMassCancellations.length > 0) {
     guidanceLines.push(`• <b>Για πτώση εξορμήσεων:</b> Έλεγξε τη σελίδα του συλλόγου. Αν όντως ακυρώθηκαν εξορμήσεις, τρέξε <code>npm run baseline:accept</code> και κάνε push (έπειτα θα σταλούν κανονικά οι ειδοποιήσεις ακύρωσης).`);
   }
   if (criticalFallbackClubs.length > 0) {
     guidanceLines.push(`• <b>Καλύτερη επιλογή (IP block 2+ runs):</b> Άφησε το local self-heal στο Mac σου να το λύσει αυτόματα από οικιακή IP. Αν το Mac είναι κλειστό, τρέξε <code>npm run scrape</code> όταν επιστρέψεις.`);
   }
-  if (transientClubs.length > 0 && !hasRealParserOrDrop && !hasCriticalBlock && broadcastErrors.length === 0) {
+  if (hasOverallCriticalAnomaly) {
+    guidanceLines.push(`• <b>Καλύτερη επιλογή:</b> Άνοιξε το GitHub Issue και το Actions Run για να ελέγξεις την αιτία της συνολικής πτώσης. Αν οι αλλαγές είναι πραγματικές, τρέξε <code>npm run baseline:accept</code> και κάνε push.`);
+  }
+  if (transientClubs.length > 0 && !hasRealParserOrDrop && !hasFetchDataLoss && !hasOverallCriticalAnomaly && !hasCriticalBlock && broadcastErrors.length === 0) {
     guidanceLines.push(`• <b>Καμία ενέργεια τώρα.</b> Είναι η 1η φορά (πιθανό προσωρινό μπλοκάρισμα IP του GitHub) και δεν άνοιξε GitHub Issue. Αν συνεχιστεί και στο επόμενο run, θα ανοίξει Issue και θα τρέξει αυτόματα το local self-heal.`);
   }
   if (rawDegradedLogs.length > 0 && guidanceLines.length === 1) {

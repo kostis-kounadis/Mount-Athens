@@ -349,22 +349,30 @@ export function detectAnomalies(options = {}) {
   // 4. Data Quality & Date Validity Checks
   const invalidDateClubs = new Set();
   for (const ev of newEvents) {
-    if (!isValidCalendarDate(ev.startDate)) {
+    const startInvalid = !isValidCalendarDate(ev.startDate);
+    const endInvalid = Boolean(ev.endDate && !isValidCalendarDate(ev.endDate));
+    const endBeforeStart = Boolean(!startInvalid && !endInvalid && ev.endDate && ev.endDate < ev.startDate);
+    if (startInvalid || endInvalid || endBeforeStart) {
       const clubKey = ev.club || '__unknown__';
+      const dateErrDetail = startInvalid
+        ? `Invalid startDate "${ev.startDate}"`
+        : (endInvalid ? `Invalid endDate "${ev.endDate}"` : `endDate "${ev.endDate}" precedes startDate "${ev.startDate}"`);
       if (!invalidDateClubs.has(clubKey)) {
         invalidDateClubs.add(clubKey);
         if (ev.club) {
+          const prevClub = prevClubHealth.clubs?.[ev.club] || {};
           degradedClubs.add(ev.club);
           criticalClubs.add(ev.club);
           nextClubsHealth[ev.club] = {
             ...(nextClubsHealth[ev.club] || {}),
             status: 'parser_error',
-            lastError: `Invalid startDate "${ev.startDate}" on "${ev.title}"`,
+            consecutiveFailures: isSameScrapeRun ? Math.max(1, prevClub.consecutiveFailures || 0) : (prevClub.consecutiveFailures || 0) + 1,
+            lastError: `${dateErrDetail} on "${ev.title}"`,
             recommendedAction: 'fix_parser_or_url'
           };
         }
         criticalAnomalies.push(
-          `- **🚨 Invalid Date Format:** Event "${ev.title}" for club ${ev.club} has invalid startDate "${ev.startDate}".`
+          `- **🚨 Invalid Date Format:** Event "${ev.title}" for club ${ev.club} has ${dateErrDetail}.`
         );
       }
       continue;
@@ -480,7 +488,7 @@ export function detectAnomalies(options = {}) {
     }).join('\n');
 
     const onlyPersistentFetchBlocks = failingClubs.length > 0 && failingClubs.every(
-      c => nextClubsHealth[c]?.status === 'critical_fallback'
+      c => nextClubsHealth[c]?.recommendedAction === 'local_self_heal'
     );
 
     const bestOptionGuidance = onlyPersistentFetchBlocks

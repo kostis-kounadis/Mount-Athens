@@ -19,6 +19,7 @@ import { probeFailedFetches } from '../scripts/debug-fetch.js';
 import {
   deduplicateEvents,
   sortEventsDeterministically,
+  isValidUpcomingEvent,
   resolveClubEventsWithFallback
 } from '../scripts/parse-events.js';
 import { detectAnomalies } from '../scripts/detect-anomalies.js';
@@ -821,6 +822,8 @@ test('workflow and sidecar static invariants hold', () => {
   assert.ok(!workflow.includes('git diff-index'), 'Workflow commit steps must not use git diff-index (unstaged files could break git commit)');
   const cachedDiffMatches = workflow.match(/git diff --cached --quiet/g) || [];
   assert.equal(cachedDiffMatches.length, 2, 'Both commit steps in deploy.yml must guard commits with git diff --cached --quiet');
+  const commitScrapeStep = parsedWorkflow.jobs.scrape.steps.find(s => s.name === 'Commit Updated Scrape Data');
+  assert.ok(commitScrapeStep && String(commitScrapeStep.if || '').includes('inputs.test_alert != true'), 'Commit Updated Scrape Data must skip on test_alert runs so status.json never desyncs from club-health.json');
 
   // Verify .gitignore anchors /data/
   const gitignore = fs.readFileSync(path.join(REPO_ROOT, '.gitignore'), 'utf-8');
@@ -1399,4 +1402,170 @@ test('regression: buildAdminHealthAlert handles isSelfHealPush confirmations/err
   assert.ok(pureTestAlert[0].includes('issues/100'));
   assert.ok(pureTestAlert[0].includes('GitHub Issue #100'));
   assert.ok(pureTestAlert[0].includes('actions/runs/601'));
+});
+
+test('regression: global critical anomalies are never misclassified as test alerts, fetch data_loss gives self-heal guidance, Pass 3 handles Greek inflection, expired re-appearance stays silent, and endDate is validated', () => {
+  // 1. Real unattributed critical anomaly (e.g. Massive Overall Data Loss) must NOT be misclassified as Test Alert
+  const globalAnomalyAlert = buildAdminHealthAlert({
+    clubHealth: {
+      lastProcessedStatusTimestamp: '2026-11-27T11:17:00.000Z',
+      hasCriticalAnomalies: true,
+      clubs: { 'ΦΟΠ': { status: 'healthy' } }
+    },
+    statusData: { lastUpdated: '2026-11-27T11:17:00.000Z', logs: [{ club: 'ΦΟΠ', status: 'success' }] },
+    issueUrl: 'https://github.com/kostis-kounadis/Mount-Athens/issues/42',
+    issueAction: 'created',
+    runUrl: 'https://github.com/kostis-kounadis/Mount-Athens/actions/runs/700',
+    isScrapeRun: true,
+    isTestAlert: false
+  });
+  assert.ok(globalAnomalyAlert && globalAnomalyAlert[0].includes('Κρίσιμη Ανωμαλία Δεδομένων'));
+  assert.ok(!globalAnomalyAlert[0].includes('Δοκιμαστική Ειδοποίηση'));
+  assert.ok(globalAnomalyAlert[0].includes('GitHub Issue #42'));
+
+  // 2. Fetch data_loss (fetchFailed with 0 cache) must be reported as fetch data loss with self-heal guidance, NOT parser error
+  const fetchLossAlert = buildAdminHealthAlert({
+    clubHealth: {
+      lastProcessedStatusTimestamp: '2026-11-27T11:17:00.000Z',
+      clubs: { 'ΦΟΝΙ': { status: 'data_loss', lastError: 'HTTP 500', preservedCount: 0, parsedCount: 0, recommendedAction: 'local_self_heal' } }
+    },
+    statusData: { lastUpdated: '2026-11-27T11:17:00.000Z', logs: [] },
+    isScrapeRun: true
+  });
+  assert.ok(fetchLossAlert && fetchLossAlert[0].includes('Αποτυχία Ανάκτησης Χωρίς Cache'));
+  assert.ok(fetchLossAlert[0].includes('local self-heal'));
+  assert.ok(fetchLossAlert[0].includes('δεν υπήρχε διαθέσιμο cache'));
+  assert.ok(!fetchLossAlert[0].includes('Parser/Site'));
+
+  // 2b. parser_error with parsedCount > 0 (e.g. invalid date on 1 event) must NOT claim zero events shown on site
+  const invalidDateParserAlert = buildAdminHealthAlert({
+    clubHealth: {
+      lastProcessedStatusTimestamp: '2026-11-27T11:17:00.000Z',
+      clubs: { 'ΦΟΠ': { status: 'parser_error', lastError: 'Invalid endDate', preservedCount: 0, parsedCount: 15, recommendedAction: 'fix_parser_or_url' } }
+    },
+    statusData: { lastUpdated: '2026-11-27T11:17:00.000Z', logs: [] },
+    isScrapeRun: true
+  });
+  assert.ok(invalidDateParserAlert && invalidDateParserAlert[0].includes('Πρόβλημα Ανάγνωσης Σελίδας'));
+  assert.ok(invalidDateParserAlert[0].includes('παραμένουν 15 εξορμήσεις'));
+  assert.ok(!invalidDateParserAlert[0].includes('δεν υπήρχε διαθέσιμο cache'));
+
+  // 3. Pass 3 fuzzy Greek matching prevents false cancel + add on non-dedicated URL clubs (real commit c622dc5 title edit)
+  const fuzzyNonDedicated = diffEventsWithLedger({
+    currentEvents: [{
+      startDate: '2026-12-13',
+      endDate: '2026-12-13',
+      displayDate: '13 Δεκε',
+      title: 'Μικρή Ζήρεια – Χαράδρα Φλαμπουρίτσας',
+      club: 'ΑΟΣ',
+      url: 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=Zireia',
+      difficulty: '1'
+    }],
+    ledger: {
+      version: 1,
+      updatedAt: '2026-11-26T00:00:00.000Z',
+      events: [createLedgerEntry({
+        startDate: '2026-12-13',
+        endDate: '2026-12-13',
+        displayDate: '13 Δεκε',
+        title: 'Μικρή Ζήρια – Φλαμπουρίτσα',
+        club: 'ΑΟΣ',
+        url: 'https://aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/#:~:text=Ziria',
+        difficulty: '1'
+      }, '2026-11-26T00:00:00.000Z')]
+    },
+    statusData: { lastUpdated: '2026-11-27T11:17:00.000Z', logs: [{ club: 'ΑΟΣ', status: 'success' }] },
+    todayStr: '2026-11-27',
+    nowIso: '2026-11-27T11:17:00.000Z'
+  });
+  assert.equal(fuzzyNonDedicated.addedEvents.length, 0);
+  assert.equal(fuzzyNonDedicated.changedEvents.length, 0);
+  assert.equal(fuzzyNonDedicated.cancelledEvents.length, 0);
+  assert.equal(fuzzyNonDedicated.hasSilentLedgerChanges, true);
+
+  // 4. Already-started multi-day event flickering from expired back to active must NOT re-broadcast or duplicate ledger entry
+  const expiredFlicker = diffEventsWithLedger({
+    currentEvents: [{
+      startDate: '2026-11-27',
+      endDate: '2026-11-29',
+      displayDate: '27-29/11',
+      title: 'Παρνασσός',
+      club: 'ΕΟΣ Ηλιούπολης',
+      url: 'https://eosh.gr/expeditions/parnassos',
+      difficulty: '2'
+    }],
+    ledger: {
+      version: 1,
+      updatedAt: '2026-11-27T11:17:00.000Z',
+      events: [createLedgerEntry({
+        startDate: '2026-11-27',
+        endDate: '2026-11-29',
+        displayDate: '27-29/11',
+        title: 'Παρνασσός',
+        club: 'ΕΟΣ Ηλιούπολης',
+        url: 'https://eosh.gr/expeditions/parnassos',
+        difficulty: '2'
+      }, '2026-11-20T00:00:00.000Z', 'expired')]
+    },
+    statusData: { lastUpdated: '2026-11-27T21:23:00.000Z', logs: [{ club: 'ΕΟΣ Ηλιούπολης', status: 'success' }] },
+    todayStr: '2026-11-27',
+    nowIso: '2026-11-27T21:23:00.000Z'
+  });
+  assert.equal(expiredFlicker.addedEvents.length, 0);
+  assert.equal(expiredFlicker.nextLedger.events.length, 1);
+  assert.equal(expiredFlicker.nextLedger.events[0].status, 'active');
+  assert.equal(expiredFlicker.nextLedger.events[0].firstNotifiedAt, '2026-11-20T00:00:00.000Z');
+
+  // 5. Invalid endDate and endDate < startDate rejected by isValidUpcomingEvent & flagged by detectAnomalies
+  const todayDate = new Date('2026-11-27');
+  assert.equal(isValidUpcomingEvent({ startDate: '2026-12-10', endDate: '2026-12-32', title: 'Bad End', club: 'ΦΟΠ', url: 'https://fop.gr/' }, todayDate), false);
+  assert.equal(isValidUpcomingEvent({ startDate: '2026-12-10', endDate: '2026-12-09', title: 'Inverted Range', club: 'ΦΟΠ', url: 'https://fop.gr/' }, todayDate), false);
+  assert.equal(isValidUpcomingEvent({ startDate: '2026-12-10', endDate: '2026-12-12', title: 'Valid Range', club: 'ΦΟΠ', url: 'https://fop.gr/' }, todayDate), true);
+
+  const dir = makeTempDir();
+  try {
+    const paths = {
+      eventsFile: path.join(dir, 'events.json'),
+      baselineFile: path.join(dir, 'health-baseline.json'),
+      statusFile: path.join(dir, 'status.json'),
+      clubHealthFile: path.join(dir, 'club-health.json'),
+      linkConfigFile: path.join(dir, 'link-config.json'),
+      linksMdFile: path.join(dir, 'LINKS.md'),
+      currentHashesFile: path.join(dir, 'content-hashes.json'),
+      oldHashesFile: path.join(dir, 'content-hashes-old.json'),
+      reportFile: path.join(dir, 'anomaly_report.md')
+    };
+    fs.writeFileSync(paths.linkConfigFile, JSON.stringify({ 'ΠΟΑ': ['https://poa.gr/'], 'ΦΟΠ': ['https://fop.gr/'], 'ΦΟΝΙ': ['https://foni.org.gr/'] }));
+    fs.writeFileSync(paths.baselineFile, JSON.stringify({}));
+    fs.writeFileSync(paths.statusFile, JSON.stringify({
+      lastUpdated: '2026-11-27T11:17:00.000Z',
+      logs: [
+        { club: 'ΠΟΑ', status: 'success', parsedCount: 1, preservedCount: 0, fetchFailed: false },
+        { club: 'ΦΟΠ', status: 'success', parsedCount: 1, preservedCount: 0, fetchFailed: false },
+        { club: 'ΦΟΝΙ', status: 'error', parsedCount: 0, preservedCount: 0, fetchFailed: true, fetchErrorSummary: 'HTTP 500' }
+      ]
+    }));
+    fs.writeFileSync(paths.eventsFile, JSON.stringify([
+      { startDate: '2026-12-10', endDate: '2026-12-32', title: 'Bad End POA', club: 'ΠΟΑ', url: 'https://poa.gr/' },
+      { startDate: '2026-12-10', endDate: '2026-12-09', title: 'Inverted FOP', club: 'ΦΟΠ', url: 'https://fop.gr/' }
+    ]));
+    const r = detectAnomalies({ paths, todayStr: '2026-11-27' });
+    assert.equal(r.clubHealth.clubs['ΠΟΑ'].status, 'parser_error');
+    assert.ok(r.clubHealth.clubs['ΠΟΑ'].lastError.includes('Invalid endDate'));
+    assert.equal(r.clubHealth.clubs['ΦΟΠ'].status, 'parser_error');
+    assert.ok(r.clubHealth.clubs['ΦΟΠ'].lastError.includes('precedes startDate'));
+    assert.equal(r.clubHealth.clubs['ΦΟΝΙ'].status, 'data_loss');
+    assert.equal(r.clubHealth.clubs['ΦΟΝΙ'].recommendedAction, 'local_self_heal');
+
+    // When ONLY fetch data_loss fails (no parser errors), anomaly report must recommend Mount Athens Self-Heal
+    fs.writeFileSync(paths.eventsFile, JSON.stringify([
+      { startDate: '2026-12-10', endDate: '2026-12-10', title: 'OK POA', club: 'ΠΟΑ', url: 'https://poa.gr/' },
+      { startDate: '2026-12-10', endDate: '2026-12-10', title: 'OK FOP', club: 'ΦΟΠ', url: 'https://fop.gr/' }
+    ]));
+    const rDataLossOnly = detectAnomalies({ paths, todayStr: '2026-11-27' });
+    assert.equal(rDataLossOnly.hasCriticalAnomalies, true);
+    assert.ok(fs.readFileSync(paths.reportFile, 'utf-8').includes('Mount Athens Self-Heal'));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });

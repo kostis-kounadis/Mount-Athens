@@ -1963,6 +1963,7 @@ export function sortEventsDeterministically(events) {
 
 export function isValidUpcomingEvent(e, today = TODAY) {
   if (!e || !e.startDate || !isValidCalendarDate(e.startDate)) return false;
+  if (e.endDate && (!isValidCalendarDate(e.endDate) || e.endDate < e.startDate)) return false;
   if (isSchoolTitle(e.title)) return false;
   const evEndDate = new Date(e.endDate || e.startDate);
   const evStartDate = new Date(e.startDate);
