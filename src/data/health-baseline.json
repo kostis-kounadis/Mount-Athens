@@ -934,28 +934,19 @@
       "startDate": "2026-12-06",
       "endDate": "2026-12-06",
       "displayDate": "6/12",
-      "title": "Υμηττός (Ηλιούπολη-πλατεία Προσκόπων-μονή Καρέα-κτφ ΕΟΣΗ)",
-      "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-scouts-square-kareas-closter-eosh-refuge",
-      "difficulty": "1"
-    },
-    {
-      "startDate": "2026-12-06",
-      "endDate": "2026-12-06",
-      "displayDate": "6/12",
       "title": "Ελικώνας (Αγ Άννα-Δύο Τσούμπες-Παλιοβούνα)",
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/6-dek-2026-elikonas-kyriaki-megali-loytsa",
       "difficulty": "2"
     },
     {
-      "startDate": "2026-12-13",
-      "endDate": "2026-12-13",
-      "displayDate": "13/12",
-      "title": "Υμηττός (Καισαριανή-OTE-κεραίες-Καλοπούλα)",
+      "startDate": "2026-12-06",
+      "endDate": "2026-12-06",
+      "displayDate": "6/12",
+      "title": "Υμηττός (Ηλιούπολη-πλατεία Προσκόπων-μονή Καρέα-κτφ ΕΟΣΗ)",
       "club": "ΕΟΣ Ηλιούπολης",
-      "url": "https://eosh.gr/expeditions/hymettus-kaisariani-ote-keraies-kalopoula",
-      "difficulty": "1+"
+      "url": "https://eosh.gr/expeditions/hymettus-ilioupoli-scouts-square-kareas-closter-eosh-refuge",
+      "difficulty": "1"
     },
     {
       "startDate": "2026-12-13",
@@ -965,6 +956,15 @@
       "club": "ΕΟΣ Ηλιούπολης",
       "url": "https://eosh.gr/expeditions/parnassus-polydrosos-agia-eleusa-sanctuary-of-demeter-polydrosos-circular",
       "difficulty": "1"
+    },
+    {
+      "startDate": "2026-12-13",
+      "endDate": "2026-12-13",
+      "displayDate": "13/12",
+      "title": "Υμηττός (Καισαριανή-OTE-κεραίες-Καλοπούλα)",
+      "club": "ΕΟΣ Ηλιούπολης",
+      "url": "https://eosh.gr/expeditions/hymettus-kaisariani-ote-keraies-kalopoula",
+      "difficulty": "1+"
     },
     {
       "startDate": "2026-12-20",
