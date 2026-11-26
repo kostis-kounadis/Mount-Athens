@@ -212,13 +212,13 @@
       "difficulty": "1, 2"
     },
     {
-      "startDate": "2026-12-11",
+      "startDate": "2026-12-12",
       "endDate": "2026-12-13",
-      "displayDate": "11-13/12",
-      "title": "Αχαϊα: Α) Χελμός, «Χτένια» Ψηλή Κορφή (2.355μ.) διάσχιση κορυφογραμμής Β) Πεζοπορίες: Λίμνη Δόξας – διάσελο του Κυνηγού – Πλανητέρο. Ε4> Σπήλαιο Λιμνών – Πλανητέρο – Κλειτορία (διάσχιση)",
+      "displayDate": "12-13/12",
+      "title": "Αχαϊα: Χελμός, «Χτένια» Ψηλή Κορφή (2.355μ.) διάσχιση κορυφογραμμής (Λίμνη Δόξας – Ψηλή Κορφή – Χτένια – Χιονοδρομικό Κέντρο Καλαβρύτων)",
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/11-13-12-%ce%b1%cf%87%ce%b1%cf%8a%ce%b1-%cf%87%ce%b5%ce%bb%ce%bc%cf%8c%cf%82-%cf%87%cf%84%ce%ad%ce%bd%ce%b9%ce%b1-%ce%b3%ce%b1%cf%81%ce%b4%ce%af%ce%ba%ce%b9-2-182%ce%bc/",
-      "difficulty": "1, 1+, 3, 4"
+      "difficulty": "3, 4"
     },
     {
       "startDate": "2026-12-19",
@@ -239,6 +239,15 @@
       "difficulty": "1, 2, 3, 5"
     },
     {
+      "startDate": "2027-01-10",
+      "endDate": "2027-01-10",
+      "displayDate": "10/1",
+      "title": "Νότιος Υμηττός : Τρύπια Σπηλιά – Διάσελο Σταυρού – Ρέμα Πρινάρι – βάραθρο Θρακιάς Σταυρού",
+      "club": "ΕΠΟΣ Φυλής",
+      "url": "https://eposfilis.gr/event/10-1-2027-%ce%bd%cf%8c%cf%84%ce%b9%ce%bf%cf%82-%cf%85%ce%bc%ce%b7%cf%84%cf%84%cf%8c%cf%82-%cf%84%cf%81%cf%8d%cf%80%ce%b9%ce%b1-%cf%83%cf%80%ce%b7%ce%bb%ce%b9%ce%ac-%ce%b4%ce%b9%ce%ac%cf%83%ce%b5/",
+      "difficulty": "1+"
+    },
+    {
       "startDate": "2027-01-17",
       "endDate": "2027-01-17",
       "displayDate": "17/1",
@@ -251,10 +260,10 @@
       "startDate": "2027-01-24",
       "endDate": "2027-01-24",
       "displayDate": "24/1",
-      "title": "Εύβοια: κορυφή Ορτάρι (869 μ.), Κύμη",
+      "title": "Εύβοια: Α) κορυφή Ορτάρι (869 μ.), Β) Κοτυλαία όρη (1.005μ.), διάσχιση, Κύμη.",
       "club": "ΕΠΟΣ Φυλής",
       "url": "https://eposfilis.gr/event/24-1-27-%ce%b5%cf%8d%ce%b2%ce%bf%ce%b9%ce%b1-%ce%ba%ce%bf%cf%81%cf%85%cf%86%ce%ae-%ce%bf%cf%81%cf%84%ce%ac%cf%81%ce%b9-869-%ce%bc-%ce%ba%cf%8d%ce%bc%ce%b7/",
-      "difficulty": "2"
+      "difficulty": "1, 2"
     },
     {
       "startDate": "2027-02-04",
