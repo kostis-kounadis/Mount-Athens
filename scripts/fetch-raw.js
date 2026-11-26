@@ -10,15 +10,10 @@ const __dirname = path.dirname(__filename);
 const INPUT_DIR = path.join(__dirname, '..', '_input');
 const LINKS_FILE = path.join(__dirname, '..', 'LINKS.md');
 
-// Ensure output directory exists
-if (!fs.existsSync(INPUT_DIR)) {
-  fs.mkdirSync(INPUT_DIR, { recursive: true });
-}
-
 // User-Agent to mimic a browser
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
-function isChallengeOrBlockPage(html) {
+export function isChallengeOrBlockPage(html) {
   if (!html) return true;
   if (html.includes('Περιμένε μια στιγμή') || html.includes('Περιμένετε μια στιγμή')) return true;
   if (html.includes('Just a moment...') && html.includes('Cloudflare')) return true;
@@ -27,11 +22,105 @@ function isChallengeOrBlockPage(html) {
   return false;
 }
 
+export function getSlug(url) {
+  try {
+    const parsed = new URL(url);
+    let name = parsed.hostname.replace('www.', '');
+    let pathname = parsed.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-');
+    if (pathname) {
+      name = `${name}_${pathname}`;
+    }
+    if (parsed.search) {
+      const searchClean = parsed.search.replace(/^\?/, '').replace(/[&=]/g, '-');
+      name = `${name}_${searchClean}`;
+    }
+    // Limit name length and remove non-alphanumeric chars for filename safety
+    return name.replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 100);
+  } catch (e) {
+    return url.replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 50);
+  }
+}
+
+/**
+ * Clears stale scraped artifacts in _input/ before a fresh fetch run
+ * so old club pages or retired URLs can never pollute parse-events.js.
+ */
+export function cleanInputDir(inputDir = INPUT_DIR) {
+  if (!fs.existsSync(inputDir)) {
+    fs.mkdirSync(inputDir, { recursive: true });
+    return 0;
+  }
+
+  let removed = 0;
+  for (const entry of fs.readdirSync(inputDir)) {
+    const fullPath = path.join(inputDir, entry);
+    try {
+      const stat = fs.statSync(fullPath);
+      if (!stat.isFile()) continue;
+      if (
+        entry.endsWith('.html') ||
+        entry.endsWith('.txt') ||
+        entry === 'fetch-status.json' ||
+        entry === 'link-config.json' ||
+        entry === 'content-hashes.json' ||
+        entry === 'content-hashes-old.json'
+      ) {
+        fs.unlinkSync(fullPath);
+        removed++;
+      }
+    } catch (err) {
+      console.warn(`Warning: could not remove stale file ${entry}:`, err.message);
+    }
+  }
+  return removed;
+}
+
+/**
+ * Merges newly fetched content hashes with previous hashes so URLs that failed
+ * to fetch (e.g. Cloudflare 403 / timeout) retain their last known hash instead
+ * of being wiped out.
+ */
+export function mergeContentHashes(previousHashes = {}, newHashes = {}, fetchLogs = {}) {
+  const merged = { ...newHashes };
+  const failedHosts = new Set();
+
+  for (const [url, log] of Object.entries(fetchLogs)) {
+    if (!log || !log.success) {
+      if (previousHashes[url]) {
+        merged[url] = previousHashes[url];
+      }
+      try {
+        failedHosts.add(new URL(url).hostname.replace(/^www\./, '').toLowerCase());
+      } catch {
+        // Ignore malformed URLs
+      }
+    }
+  }
+
+  // Also preserve hashes for dynamically discovered child URLs on hosts whose parent URL failed
+  if (failedHosts.size > 0) {
+    for (const [prevUrl, prevHash] of Object.entries(previousHashes)) {
+      if (merged[prevUrl]) continue;
+      try {
+        const host = new URL(prevUrl).hostname.replace(/^www\./, '').toLowerCase();
+        if (failedHosts.has(host)) {
+          merged[prevUrl] = prevHash;
+        }
+      } catch {
+        // Ignore malformed URLs
+      }
+    }
+  }
+
+  return merged;
+}
+
 async function fetchPage(url, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     console.log(`Fetching (attempt ${attempt}/${retries}): ${url}...`);
     try {
       const response = await fetch(url, {
+        signal: AbortSignal.timeout(25000),
         headers: {
           'User-Agent': USER_AGENT,
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
@@ -80,35 +169,26 @@ async function fetchPage(url, retries = 3) {
   }
 }
 
-function getSlug(url) {
-  try {
-    const parsed = new URL(url);
-    let name = parsed.hostname.replace('www.', '');
-    let pathname = parsed.pathname.replace(/^\/|\/$/g, '').replace(/\//g, '-');
-    if (pathname) {
-      name = `${name}_${pathname}`;
-    }
-    if (parsed.search) {
-      const searchClean = parsed.search.replace(/^\?/, '').replace(/[&=]/g, '-');
-      name = `${name}_${searchClean}`;
-    }
-    // Limit name length and remove non-alphanumeric chars for filename safety
-    return name.replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 100);
-  } catch (e) {
-    return url.replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 50);
-  }
-}
-
-async function main() {
+export async function main() {
   if (!fs.existsSync(LINKS_FILE)) {
     console.error(`LINKS.md not found at ${LINKS_FILE}`);
     process.exit(1);
   }
 
+  // Clear stale _input files so retired/old pages can never contaminate parsing
+  const removedCount = cleanInputDir(INPUT_DIR);
+  console.log(`Prepared ${INPUT_DIR} (removed ${removedCount} stale file(s)).`);
+
   // Preserve previous content hashes if file exists
   const currentHashFile = path.join(__dirname, '../src/data/content-hashes.json');
   const oldHashFile = path.join(__dirname, '../src/data/content-hashes-old.json');
+  let previousHashes = {};
   if (fs.existsSync(currentHashFile)) {
+    try {
+      previousHashes = JSON.parse(fs.readFileSync(currentHashFile, 'utf-8'));
+    } catch {
+      previousHashes = {};
+    }
     fs.copyFileSync(currentHashFile, oldHashFile);
   }
 
@@ -142,7 +222,7 @@ async function main() {
 
   // Flatten active URLs for crawling
   const urls = [];
-  for (const [club, clubUrls] of Object.entries(linkConfig)) {
+  for (const [, clubUrls] of Object.entries(linkConfig)) {
     for (const url of clubUrls) {
       if (!urls.includes(url)) {
         urls.push(url);
@@ -151,30 +231,31 @@ async function main() {
   }
 
   console.log(`Found ${urls.length} initial URLs to fetch in LINKS.md:`);
-  urls.forEach((u, i) => console.log(`  [${i+1}] ${u}`));
+  urls.forEach((u, i) => console.log(`  [${i + 1}] ${u}`));
 
   const fetchLogs = {};
-  const contentHashes = {};
+  const newHashes = {};
 
   // Process queue to allow dynamic link discovery
   for (let idx = 0; idx < urls.length; idx++) {
     const url = urls[idx];
     const slug = getSlug(url);
     const outputPath = path.join(INPUT_DIR, `${slug}.html`);
-    
+
     const result = await fetchPage(url);
     fetchLogs[url] = {
       success: result.success,
       status: result.status,
       code: result.code,
-      size: result.html ? result.html.length : 0
+      size: result.html ? result.html.length : 0,
+      slug
     };
 
     if (result.html) {
       fs.writeFileSync(outputPath, result.html, 'utf-8');
       console.log(`Saved ${url} -> ${outputPath} (${result.html.length} bytes)`);
       const hash = crypto.createHash('sha256').update(result.html).digest('hex');
-      contentHashes[url] = hash;
+      newHashes[url] = hash;
 
       // Dynamic discovery for AOS seasonal program URLs
       if (url.includes('aos.gr/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis')) {
@@ -226,7 +307,6 @@ async function main() {
           const nextHref = $('a.tribe-events-c-nav__next').attr('href');
           if (nextHref && nextHref.startsWith('https://eposfilis.gr/')) {
             const cleanNext = nextHref.split('#')[0].trim();
-            // Cap pagination depth at 5 pages as a safety guard
             const pageMatch = cleanNext.match(/\/page\/(\d+)/);
             const pageNum = pageMatch ? parseInt(pageMatch[1], 10) : 2;
             if (pageNum <= 5 && !urls.includes(cleanNext)) {
@@ -279,10 +359,14 @@ async function main() {
   fs.writeFileSync(reportPath, JSON.stringify(fetchLogs, null, 2), 'utf-8');
   console.log(`Saved fetch report to ${reportPath}`);
 
+  const contentHashes = mergeContentHashes(previousHashes, newHashes, fetchLogs);
   fs.writeFileSync(currentHashFile, JSON.stringify(contentHashes, null, 2), 'utf-8');
   console.log(`Saved content SHA-256 hashes to ${currentHashFile}`);
 
   console.log('\nAll crawls finished.');
 }
 
-main();
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === __filename;
+if (isMain) {
+  main();
+}

@@ -11,10 +11,10 @@ Because Remote Agents boot from a fresh `git clone` of `main`:
 * `src/data/anomaly_report.md` is generated in CI to open the GitHub Issue and **is not committed to Git**; the anomaly details are provided in the prompt or reproduced by running the scraper.
 
 The data pipeline runs sequentially via `npm run scrape`:
-1. `LINKS.md` $\to$ `scripts/fetch-raw.js`: Crawls club pages/APIs into `_input/*.html`, writes `_input/link-config.json` and `_input/fetch-status.json`, and updates `src/data/content-hashes.json`.
+1. `LINKS.md` $\to$ `scripts/fetch-raw.js`: Clears stale `_input/` artifacts, crawls club pages/APIs into `_input/*.html`, writes `_input/link-config.json` and `_input/fetch-status.json`, and updates `src/data/content-hashes.json` (preserving previous hashes for failed URLs).
 2. `scripts/extract-text.js`: Converts `_input/*.html` to plain text `_input/*.txt`.
 3. `scripts/parse-events.js`: Parses HTML/JSON/text into `src/data/events.json` and writes `src/data/status.json`.
-4. `scripts/detect-anomalies.js`: Compares `src/data/events.json` against `src/data/health-baseline.json`.
+4. `scripts/detect-anomalies.js`: Compares `src/data/events.json` against `src/data/health-baseline.json`, tracks consecutive fetch-fallback runs in `src/data/club-health.json` (escalating fetch blocks to GitHub Issues after 2 consecutive runs, while escalating real HTTP 200 parser errors/drops immediately), and writes `src/data/anomaly_report.md` only when critical anomalies exist.
 
 ---
 
@@ -91,5 +91,5 @@ All three commands MUST succeed with `0` critical alerts (so `src/data/anomaly_r
 
 1. Create a branch: `fix/scraper-<club-slug>` (or `chore/baseline-<club-slug>` for Case C).
 2. Log the change under `## [Unreleased]` in `CHANGELOG.md` (following `.gemini/rules/versioning.md`).
-3. Stage the modified code/data files (`scripts/parse-events.js`, `LINKS.md`, `src/data/events.json`, `src/data/health-baseline.json`, `src/data/status.json`, `CHANGELOG.md`). Never force-add `_input/` or `src/data/anomaly_report.md`.
+3. Stage the modified code/data files (`scripts/parse-events.js`, `LINKS.md`, `src/data/events.json`, `src/data/health-baseline.json`, `src/data/status.json`, `src/data/club-health.json`, `CHANGELOG.md`). Never add `_input/`, `debug-output.txt`, or `src/data/anomaly_report.md`.
 4. Commit and open a Pull Request targeting `main` with a concise summary of the root cause (Case A/B/C/D) and the before/after event counts.

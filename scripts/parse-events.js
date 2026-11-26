@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import * as cheerio from 'cheerio';
+import { isDedicatedEventUrl, normalizeUrl, isValidCalendarDate } from './lib/event-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -561,7 +562,15 @@ function parseAos() {
   const isPlaceholderTitle = (t) => /^αναμ[εέ]ν(εται|ονται)/i.test(stripGreekAccents(t).trim());
   const isMetadataLine = (t) => /^(αρχηγοι|ομαδα|ω\.?π|ωρα|διαθεσιμοτητα|συμμετοχες|κοστος|αναχωρηση|σημειωση|λεπτομερειες|για λεπτομερειες|ετικετες|τρεχουσες και επερχομενες)/i.test(stripGreekAccents(t).trim());
 
-  for (const file of aosHtmlFiles.filter(f => !f.includes('wp-json-wp-v2-posts'))) {
+  const orderedAosHtmlFiles = aosHtmlFiles
+    .filter(f => !f.includes('wp-json-wp-v2-posts'))
+    .sort((a, b) => {
+      const aTrech = a.includes('trechouses') ? 0 : 1;
+      const bTrech = b.includes('trechouses') ? 0 : 1;
+      return aTrech - bTrech || a.localeCompare(b);
+    });
+
+  for (const file of orderedAosHtmlFiles) {
     const filePath = path.join(INPUT_DIR, file);
     if (!fs.existsSync(filePath)) continue;
 
@@ -1854,10 +1863,200 @@ function parseFop() {
   });
 }
 
+export function deduplicateEvents(events, genericUrls = []) {
+  const dedupedEvents = [];
+  for (const ev of events) {
+    const t1 = stripGreekAccents(ev.title).toLowerCase().trim();
+    const words1 = getSignificantWords(ev.title);
+    const evUrl = (ev.url || '').trim();
+    const evHasFrag = evUrl.includes(':~:text=');
+    const evIsDedicated = isDedicatedEventUrl(evUrl, genericUrls);
+    const evNormUrl = evIsDedicated ? normalizeUrl(evUrl) : '';
+
+    const duplicate = dedupedEvents.find(u => {
+      if (u.club !== ev.club) return false;
+
+      const uUrl = (u.url || '').trim();
+      const uHasFrag = uUrl.includes(':~:text=');
+      const uIsDedicated = isDedicatedEventUrl(uUrl, genericUrls);
+      const isSameDedicatedUrl = evIsDedicated && uIsDedicated && evNormUrl === normalizeUrl(uUrl);
+
+      // Deduplicate identical dedicated URLs within the same club even when startDate changed (rescheduled event)
+      if (isSameDedicatedUrl) return true;
+
+      if (u.startDate !== ev.startDate) return false;
+
+      const t2 = stripGreekAccents(u.title).toLowerCase().trim();
+      const words2 = getSignificantWords(u.title);
+      const overlap = words1.filter(w => words2.includes(w)).length;
+
+      const isSubset = t1.includes(t2) || t2.includes(t1);
+      const minWords = Math.min(words1.length, words2.length);
+      const isWordMatch = minWords > 0 && overlap >= 1 && (overlap / minWords) >= 0.4;
+
+      if (u.endDate === ev.endDate) {
+        return isSubset || isWordMatch;
+      }
+      // Also deduplicate if endDate differs slightly (e.g. single-day summary vs multi-day detail) when title clearly matches
+      return isSubset || (minWords >= 2 && (overlap / minWords) >= 0.6);
+    });
+
+    if (duplicate) {
+      // Cross-date match on identical dedicated URL: preserve the primary (first/fresher) entry's date & title
+      if (duplicate.startDate !== ev.startDate) {
+        if (!duplicate.difficulty && ev.difficulty) {
+          duplicate.difficulty = ev.difficulty;
+        }
+        continue;
+      }
+
+      const t2 = stripGreekAccents(duplicate.title).toLowerCase().trim();
+      const words2 = getSignificantWords(duplicate.title);
+      const isSubset = t1.includes(t2) || t2.includes(t1);
+
+      if (isSubset) {
+        // Keep shorter clean title ONLY if it has at least 2 significant words; never overwrite a descriptive title with a 1-word generic mountain name
+        if (ev.title.length < duplicate.title.length && words1.length >= 2) {
+          duplicate.title = ev.title;
+        } else if (duplicate.title.length < ev.title.length && words2.length < 2 && words1.length >= 2) {
+          duplicate.title = ev.title;
+        }
+      } else if (ev.title.length > duplicate.title.length) {
+        duplicate.title = ev.title;
+      }
+
+      if (ev.endDate > duplicate.endDate) {
+        duplicate.endDate = ev.endDate;
+        duplicate.displayDate = ev.displayDate;
+      }
+
+      if (!duplicate.difficulty && ev.difficulty) {
+        duplicate.difficulty = ev.difficulty;
+      }
+
+      const dupHasFrag = (duplicate.url || '').includes(':~:text=');
+      if (!evHasFrag && dupHasFrag) {
+        duplicate.url = ev.url;
+      } else if (evHasFrag && dupHasFrag && evUrl.length > (duplicate.url || '').length) {
+        duplicate.url = ev.url;
+      }
+      continue;
+    }
+    dedupedEvents.push({ ...ev });
+  }
+  return dedupedEvents;
+}
+
+export function sortEventsDeterministically(events) {
+  return [...events].sort((a, b) => {
+    const startCmp = String(a.startDate || '').localeCompare(String(b.startDate || ''));
+    if (startCmp !== 0) return startCmp;
+    const endCmp = String(a.endDate || '').localeCompare(String(b.endDate || ''));
+    if (endCmp !== 0) return endCmp;
+    const clubCmp = String(a.club || '').localeCompare(String(b.club || ''), 'el');
+    if (clubCmp !== 0) return clubCmp;
+    const titleCmp = String(a.title || '').localeCompare(String(b.title || ''), 'el');
+    if (titleCmp !== 0) return titleCmp;
+    return String(a.url || '').localeCompare(String(b.url || ''));
+  });
+}
+
+export function isValidUpcomingEvent(e, today = TODAY) {
+  if (!e || !e.startDate || !isValidCalendarDate(e.startDate)) return false;
+  if (isSchoolTitle(e.title)) return false;
+  const evEndDate = new Date(e.endDate || e.startDate);
+  const evStartDate = new Date(e.startDate);
+  return evEndDate >= today || evStartDate >= today;
+}
+
+/**
+ * Resolves a single club's parsed events against its healthy baseline so that
+ * if 0 valid upcoming events are parsed (even when past archive events exist)
+ * or a partial URL failure drops events, cached baseline events remain intact.
+ */
+export function resolveClubEventsWithFallback({
+  club,
+  parsedList = [],
+  baselineEvents = [],
+  anyUrlFailed = false,
+  allConfiguredUrls = [],
+  today = TODAY
+}) {
+  const validParsed = (parsedList || []).filter(e => isValidUpcomingEvent(e, today));
+  const activeBase = (baselineEvents || []).filter(e => isValidUpcomingEvent(e, today));
+
+  if (validParsed.length > 0) {
+    let mergedList = [...validParsed];
+    if (anyUrlFailed && activeBase.length > 0) {
+      const existingKeys = new Set(mergedList.map(e => `${e.startDate}_${e.title}`));
+      const existingDedicatedUrls = new Set(
+        mergedList
+          .filter(e => isDedicatedEventUrl(e.url, allConfiguredUrls))
+          .map(e => normalizeUrl(e.url))
+      );
+      const recovered = activeBase.filter(e => {
+        if (existingKeys.has(`${e.startDate}_${e.title}`)) return false;
+        if (isDedicatedEventUrl(e.url, allConfiguredUrls) && existingDedicatedUrls.has(normalizeUrl(e.url))) {
+          return false;
+        }
+        return true;
+      });
+      if (recovered.length > 0) {
+        mergedList = mergedList.concat(recovered);
+        return {
+          events: mergedList,
+          status: 'warning',
+          countOrError: `${validParsed.length} parsed (partial fetch error) - preserved ${recovered.length} healthy events`,
+          meta: {
+            parsedCount: validParsed.length,
+            preservedCount: recovered.length,
+            fallback: 'partial'
+          },
+          warningMsg: `⚠️ [PARTIAL RESILIENCE FALLBACK] ${club} had a partial URL fetch failure. Merged ${recovered.length} active baseline events with ${validParsed.length} parsed upcoming events.`
+        };
+      }
+    }
+    return {
+      events: mergedList,
+      status: 'success',
+      countOrError: mergedList.length,
+      meta: {
+        parsedCount: mergedList.length,
+        preservedCount: 0,
+        fallback: 'none'
+      },
+      warningMsg: null
+    };
+  }
+
+  if (activeBase.length > 0) {
+    const reason = anyUrlFailed ? 'bot challenge/network error' : '0 upcoming events parsed on HTTP 200';
+    return {
+      events: activeBase,
+      status: 'warning',
+      countOrError: `0 parsed (${reason}) - preserved ${activeBase.length} healthy events`,
+      meta: {
+        parsedCount: 0,
+        preservedCount: activeBase.length,
+        fallback: 'full'
+      },
+      warningMsg: `⚠️ [RESILIENCE FALLBACK] ${club} yielded 0 upcoming events (${reason}). Preserving ${activeBase.length} active events from healthy baseline!`
+    };
+  }
+
+  return {
+    events: [],
+    status: 'error',
+    countOrError: 0,
+    meta: { parsedCount: 0, preservedCount: 0, fallback: 'none' },
+    warningMsg: null
+  };
+}
+
 // ----------------------------------------------------
 // MAIN AGGREGATOR
 // ----------------------------------------------------
-function main() {
+export function main() {
   console.log('Starting parsing across all clubs...');
   
   let allEvents = [];
@@ -1883,18 +2082,50 @@ function main() {
     }
   }
 
-  const addLog = (club, status, countOrError) => {
+  const allConfiguredUrls = Object.values(CLUB_URLS).flat();
+
+  const summarizeFetchErrors = (fetchEntries = []) => {
+    const failed = fetchEntries.filter(f => !f.success);
+    if (failed.length === 0) return null;
+    const uniqueReasons = [...new Set(failed.map(f => {
+      if (f.code === 403 && /cloudflare|anti-bot|challenge/i.test(f.status || '')) {
+        return 'HTTP 403 (Cloudflare / anti-bot)';
+      }
+      if (f.code && f.code > 0) {
+        return `HTTP ${f.code} (${f.status || 'error'})`;
+      }
+      return f.status || 'Network error';
+    }))];
+    return uniqueReasons.join('; ');
+  };
+
+  const addLog = (club, status, countOrError, meta = {}) => {
+    const fetchEntries = (fetchReport && CLUB_URLS[club])
+      ? CLUB_URLS[club].map(url => {
+          const urlLog = fetchReport[url];
+          return urlLog ? { url, ...urlLog } : { url, success: false, status: 'Not fetched', code: 0, size: 0 };
+        })
+      : [];
+
+    const fetchFailed = fetchEntries.some(f => !f.success);
+    const fetchErrorSummary = summarizeFetchErrors(fetchEntries);
+    const parsedCount = meta.parsedCount ?? (status === 'success' && typeof countOrError === 'number' ? countOrError : 0);
+    const preservedCount = meta.preservedCount ?? 0;
+
     const logEntry = {
       club,
       status,
-      details: status === 'success' ? `Parsed ${countOrError} events` : `Error: ${countOrError}`
+      details: status === 'success' ? `Parsed ${countOrError} events` : `Error: ${countOrError}`,
+      parsedCount,
+      preservedCount,
+      totalCount: parsedCount + preservedCount,
+      fallback: meta.fallback || 'none',
+      fetchFailed,
+      fetchErrorSummary
     };
 
-    if (fetchReport && CLUB_URLS[club]) {
-      logEntry.fetch = CLUB_URLS[club].map(url => {
-        const urlLog = fetchReport[url];
-        return urlLog ? { url, ...urlLog } : { url, success: false, status: 'Not fetched', code: 0, size: 0 };
-      });
+    if (fetchEntries.length > 0) {
+      logEntry.fetch = fetchEntries;
     }
 
     statusLogs.push(logEntry);
@@ -1912,47 +2143,24 @@ function main() {
 
   const addClubEvents = (club, parsedList) => {
     const clubUrls = CLUB_URLS[club] || [];
-    const anyUrlFailed = fetchReport && clubUrls.some(u => {
+    const anyUrlFailed = Boolean(fetchReport && clubUrls.some(u => {
       const r = fetchReport[u];
       return !r || (!r.success && !r.ok);
-    });
+    }));
 
-    if (parsedList && parsedList.length > 0) {
-      let mergedList = [...parsedList];
-      if (anyUrlFailed && baselineData[club] && baselineData[club].length > 0) {
-        const activeBase = baselineData[club].filter(e => {
-          const evEndDate = new Date(e.endDate || e.startDate);
-          const evStartDate = new Date(e.startDate);
-          return evEndDate >= TODAY || evStartDate >= TODAY;
-        });
-        const existingKeys = new Set(mergedList.map(e => `${e.startDate}_${e.title}`));
-        const recovered = activeBase.filter(e => !existingKeys.has(`${e.startDate}_${e.title}`));
-        if (recovered.length > 0) {
-          console.warn(`⚠️ [PARTIAL RESILIENCE FALLBACK] ${club} had a partial URL fetch failure. Merged ${recovered.length} active baseline events with ${parsedList.length} parsed events.`);
-          mergedList = mergedList.concat(recovered);
-          allEvents = allEvents.concat(mergedList);
-          addLog(club, 'warning', `${parsedList.length} parsed (partial fetch error) - preserved ${recovered.length} healthy events`);
-          return;
-        }
-      }
-      allEvents = allEvents.concat(mergedList);
-      addLog(club, 'success', mergedList.length);
-    } else if (baselineData[club] && baselineData[club].length > 0) {
-      const activeBase = baselineData[club].filter(e => {
-        const evEndDate = new Date(e.endDate || e.startDate);
-        const evStartDate = new Date(e.startDate);
-        return evEndDate >= TODAY || evStartDate >= TODAY;
-      });
-      if (activeBase.length > 0) {
-        console.warn(`⚠️ [RESILIENCE FALLBACK] ${club} yielded 0 newly parsed events (e.g. anti-bot challenge or server down). Preserving ${activeBase.length} active events from healthy baseline!`);
-        allEvents = allEvents.concat(activeBase);
-        addLog(club, 'warning', `0 parsed (bot challenge/network error) - preserved ${activeBase.length} healthy events`);
-        return;
-      }
-      addLog(club, 'error', 0);
-    } else {
-      addLog(club, 'error', 0);
+    const resolved = resolveClubEventsWithFallback({
+      club,
+      parsedList,
+      baselineEvents: baselineData[club] || [],
+      anyUrlFailed,
+      allConfiguredUrls,
+      today: TODAY
+    });
+    if (resolved.warningMsg) {
+      console.warn(resolved.warningMsg);
     }
+    allEvents = allEvents.concat(resolved.events);
+    addLog(club, resolved.status, resolved.countOrError, resolved.meta);
   };
 
   try {
@@ -2027,83 +2235,14 @@ function main() {
     addClubEvents('ΦΟΠ', []);
   }
 
-  // Filter out invalid dates, training schools (Σχολές), and keep only upcoming / current events (endDate >= TODAY or startDate >= TODAY)
-  allEvents = allEvents.filter(e => {
-    if (!e.startDate || e.startDate === 'NaN-NaN-NaN' || !/^\d{4}-\d{2}-\d{2}$/.test(e.startDate)) return false;
-    if (isSchoolTitle(e.title)) return false;
-    const evEndDate = new Date(e.endDate || e.startDate);
-    const evStartDate = new Date(e.startDate);
-    return evEndDate >= TODAY || evStartDate >= TODAY;
-  });
+  // Defensive filter for valid upcoming non-school events
+  allEvents = allEvents.filter(e => isValidUpcomingEvent(e, TODAY));
 
-  // Global Smarter Deduplication
-  const dedupedEvents = [];
-  for (const ev of allEvents) {
-    const t1 = stripGreekAccents(ev.title).toLowerCase().trim();
-    const words1 = getSignificantWords(ev.title);
-    const evHasFrag = ev.url.includes('#:~:text=');
+  // Global Smarter Deduplication (including same-club dedicated URL across date changes)
+  allEvents = deduplicateEvents(allEvents, allConfiguredUrls);
 
-    const duplicate = dedupedEvents.find(u => {
-      if (u.club !== ev.club || u.startDate !== ev.startDate) return false;
-
-      const t2 = stripGreekAccents(u.title).toLowerCase().trim();
-      const words2 = getSignificantWords(u.title);
-      const overlap = words1.filter(w => words2.includes(w)).length;
-
-      const uHasFrag = u.url.includes('#:~:text=');
-      const isSameDedicatedUrl = !evHasFrag && !uHasFrag && ev.url === u.url && !ev.url.endsWith('/trechouses-kai-eperchomenes-anavaseis-kai-ekdiloseis/');
-      const isSubset = t1.includes(t2) || t2.includes(t1);
-      const minWords = Math.min(words1.length, words2.length);
-      const isWordMatch = minWords > 0 && overlap >= 1 && (overlap / minWords) >= 0.4;
-
-      if (u.endDate === ev.endDate) {
-        return isSameDedicatedUrl || isSubset || isWordMatch;
-      }
-      // Also deduplicate if endDate differs slightly (e.g. single-day summary vs multi-day detail) when URL or title clearly matches
-      return isSameDedicatedUrl || isSubset || (minWords >= 2 && (overlap / minWords) >= 0.6);
-    });
-
-    if (duplicate) {
-      const t2 = stripGreekAccents(duplicate.title).toLowerCase().trim();
-      const words2 = getSignificantWords(duplicate.title);
-      const isSubset = t1.includes(t2) || t2.includes(t1);
-
-      if (isSubset) {
-        // Keep shorter clean title ONLY if it has at least 2 significant words; never overwrite a descriptive title with a 1-word generic mountain name
-        if (ev.title.length < duplicate.title.length && words1.length >= 2) {
-          duplicate.title = ev.title;
-        } else if (duplicate.title.length < ev.title.length && words2.length < 2 && words1.length >= 2) {
-          duplicate.title = ev.title;
-        }
-      } else if (ev.title.length > duplicate.title.length) {
-        duplicate.title = ev.title;
-      }
-
-      if (ev.endDate > duplicate.endDate) {
-        duplicate.endDate = ev.endDate;
-        duplicate.displayDate = ev.displayDate;
-      }
-
-      if (!duplicate.difficulty && ev.difficulty) {
-        duplicate.difficulty = ev.difficulty;
-      }
-
-      const dupHasFrag = duplicate.url.includes('#:~:text=');
-      if (!evHasFrag && dupHasFrag) {
-        duplicate.url = ev.url;
-      } else if (evHasFrag && dupHasFrag && ev.url.length > duplicate.url.length) {
-        duplicate.url = ev.url;
-      }
-      continue;
-    }
-    dedupedEvents.push(ev);
-  }
-  allEvents = dedupedEvents;
-
-  // Sort chronologically by startDate
-  allEvents.sort((a, b) => {
-    return new Date(a.startDate) - new Date(b.startDate);
-  });
+  // Deterministic chronological sort
+  allEvents = sortEventsDeterministically(allEvents);
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(allEvents, null, 2), 'utf-8');
   console.log(`\nSuccessfully aggregated and saved ${allEvents.length} upcoming events to ${OUTPUT_FILE}`);
@@ -2117,4 +2256,7 @@ function main() {
   console.log(`Saved execution status logs to ${statusFile}`);
 }
 
-main();
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === __filename;
+if (isMain) {
+  main();
+}

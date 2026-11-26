@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-27
+
+### Added
+- Replaced stateless `events_old.json` diffing with a persistent notification ledger (`src/data/notified-events.json`) committed after broadcast succeeds, preventing duplicate sends, preserving pending updates across fallbacks/self-heals, and fixing dropped same-date replacements.
+- Added subscriber notifications for **changed** excursions (rescheduled dates, changed difficulty ratings, and substantive route/title changes) and **cancelled** future excursions alongside new additions, with noise suppression for minor typo/slug edits and a mass-cancellation safety guard.
+- Added consecutive failure tracking per club (`src/data/club-health.json`) in `scripts/detect-anomalies.js` so single-run transient datacenter IP blocks serve cached baseline silently to users and only escalate to a Critical GitHub Issue after 2 consecutive failed runs (while real HTTP 200 parser errors and event drops escalate immediately).
+- Added plain-language Greek Admin Telegram alerts (`scripts/send-notifications.js`) with clickable links to the GitHub Actions run & Issue, per-club status, subscriber notification summary, and clear guidance on the best action to take, plus clean automatic Issue closure, recovery alerts, and local self-heal completion confirmations.
+- Added automated `node:test` test suite (`tests/pipeline.test.js`, `npm test`) covering ledger diffing, added/changed/cancelled classification, chunking, consecutive failure escalation, deduplication, and workflow/sidecar invariants.
+
+### Changed
+- Removed the global `anomaly_report.md` notification kill-switch so healthy clubs always notify subscribers even when other clubs are in resilience fallback, while keeping technical issues strictly admin-only.
+- Split `.github/workflows/deploy.yml` into separate `scrape` (`schedule`/`workflow_dispatch`) and `build-and-deploy` jobs (stopping redundant re-scraping on `push`), added `concurrency`, removed `continue-on-error: true` from `Fetch & Parse`, moved crons off `:00` (`17 11` and `23 21` UTC), and stopped committing `src/data/debug-output.txt`.
+- Updated `scripts/fetch-raw.js` to clear stale `_input/` artifacts at startup and preserve previous SHA-256 hashes for URLs that fail to fetch, and updated `scripts/debug-fetch.js` to dynamically probe only failed URLs from `_input/fetch-status.json` into `_input/debug-output.txt`.
+- Updated `scripts/parse-events.js` to deduplicate identical same-club dedicated URLs across date changes, sort output deterministically, and record structured fetch/fallback metadata in `src/data/status.json`.
+- Updated user-facing notification copy in `src/pages/notifications.astro` and `src/pages/index.astro` to reflect new, changed, and cancelled excursion alerts.
+- Simplified the local self-heal sidecar configuration to run only on real escalated 2-run / parser issues, use `issue_write`, align schedule & freshness window, and clearly report what it did.
+
+### Fixed
+- Fixed broken `-jq` flag (changed to `--jq`) in `.github/workflows/deploy.yml` GitHub Issue lookup/comment/close steps.
+- Fixed unanchored `data/` pattern in `.gitignore` to `/data/` so tracked `src/data/*.json` files do not require `git add -f`.
+- Fixed raw Markdown-in-HTML and unchunked >4,096-character message bugs in Admin Telegram alerts.
+
+### Removed
+- Removed noisy `src/data/debug-output.txt` from Git tracking (now archived as `_input/debug-output.txt` CI artifact only).
+
 ## [1.7.6] - 2026-11-13
 
 ### Fixed

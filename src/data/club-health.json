@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "lastRunAt": "2026-11-26T22:52:44.866Z",
+  "lastProcessedStatusTimestamp": "2026-11-26T21:27:38.167Z",
+  "baselineAcceptedForTimestamp": null,
+  "overallStatus": "healthy",
+  "hasCriticalAnomalies": false,
+  "degradedClubs": [],
+  "transientFallbackClubs": [],
+  "criticalClubs": [],
+  "clubs": {
+    "ΑΟΣ": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 59,
+      "preservedCount": 0,
+      "baselineCount": 5,
+      "recommendedAction": null
+    },
+    "ΕΟΣ Αθηνών": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 45,
+      "preservedCount": 0,
+      "baselineCount": 18,
+      "recommendedAction": null
+    },
+    "ΕΟΣ Αχαρνών": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 22,
+      "preservedCount": 0,
+      "baselineCount": 21,
+      "recommendedAction": null
+    },
+    "ΕΟΣ Ηλιούπολης": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 30,
+      "preservedCount": 0,
+      "baselineCount": 30,
+      "recommendedAction": null
+    },
+    "ΕΠΟΣ Φυλής": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 15,
+      "preservedCount": 0,
+      "baselineCount": 15,
+      "recommendedAction": null
+    },
+    "ΠΟΑ": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 31,
+      "preservedCount": 0,
+      "baselineCount": 16,
+      "recommendedAction": null
+    },
+    "ΦΟΝΙ": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 21,
+      "preservedCount": 0,
+      "baselineCount": 2,
+      "recommendedAction": null
+    },
+    "ΦΟΠ": {
+      "status": "healthy",
+      "consecutiveFetchFallbacks": 0,
+      "consecutiveFailures": 0,
+      "lastHealthyAt": "2026-11-26T21:27:38.167Z",
+      "lastError": null,
+      "parsedCount": 35,
+      "preservedCount": 0,
+      "baselineCount": 25,
+      "recommendedAction": null
+    }
+  }
+}

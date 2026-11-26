@@ -4,29 +4,44 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'src/data/notified-events.json'
   schedule:
-    # GitHub Actions cron uses UTC. In EET (UTC+2, winter): 11:00 UTC = 13:00 Athens, 21:00 UTC = 23:00 Athens.
-    # Note: In EEST (UTC+3, summer), these correspond to 14:00 and 00:00 Athens time.
-    - cron: '0 11 * * *'
-    - cron: '0 21 * * *'
+    # Off-:00 crons avoid GitHub Actions top-of-hour queue delays.
+    # GitHub Actions uses UTC:
+    # - 11:17 UTC = 13:17 Athens (EET winter) / 14:17 Athens (EEST summer)
+    # - 21:23 UTC = 23:23 Athens (EET winter) / 00:23 Athens (EEST summer)
+    - cron: '17 11 * * *'
+    - cron: '23 21 * * *'
   workflow_dispatch:
     inputs:
       test_alert:
-        description: 'Simulate an anomaly alert to verify issue creation and agent triage pipeline'
+        description: 'Simulate an anomaly alert to verify issue creation and admin alert pipeline'
         required: false
         type: boolean
         default: false
+
+concurrency:
+  group: mount-athens-deploy
+  cancel-in-progress: false
 
 permissions:
   contents: write
   issues: write
 
 jobs:
-  build-and-deploy:
+  scrape:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    outputs:
+      anomaly_issue_url: ${{ steps.issue_report.outputs.issue_url }}
+      anomaly_issue_action: ${{ steps.issue_report.outputs.issue_action }}
+      is_test_alert: ${{ steps.issue_report.outputs.is_test_alert }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,14 +50,10 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Fetch & Parse Latest Excursions
-        continue-on-error: true
         run: |
-          cp src/data/events.json src/data/events_old.json || true
-          cp src/data/health-baseline.json src/data/health-baseline-old.json || true
-          cp src/data/content-hashes.json src/data/content-hashes-old.json || true
           node scripts/fetch-raw.js
           node scripts/extract-text.js
           node scripts/parse-events.js
@@ -53,28 +64,61 @@ jobs:
             node scripts/detect-anomalies.js
           fi
 
-      - name: Report Anomalies via GitHub Issues
-        if: always()
+      - name: Report or Auto-Close Anomalies via GitHub Issues
+        id: issue_report
+        if: success()
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IS_TEST_ALERT: ${{ inputs.test_alert == true && 'true' || 'false' }}
         run: |
+          set -o pipefail
+          echo "issue_url=" >> "$GITHUB_OUTPUT"
+          echo "issue_action=none" >> "$GITHUB_OUTPUT"
+          echo "is_test_alert=${IS_TEST_ALERT}" >> "$GITHUB_OUTPUT"
+
+          if [ "$IS_TEST_ALERT" = "true" ]; then
+            if [ -f src/data/anomaly_report.md ]; then
+              gh label create "test-alert" --color "fbca04" --description "Pipeline verification test alert" --force || true
+              CREATED_URL=$(gh issue create --title "🧪 [Mount Athens] Test Alert (Pipeline Verification)" --body-file src/data/anomaly_report.md --label "test-alert" --assignee "kostis-kounadis" | tail -n 1 | tr -d '\r\n')
+              if [ -n "$CREATED_URL" ]; then
+                echo "issue_url=${CREATED_URL}" >> "$GITHUB_OUTPUT"
+                echo "issue_action=created" >> "$GITHUB_OUTPUT"
+              fi
+            fi
+            exit 0
+          fi
+
+          ISSUE_TITLE="⚠️ [Mount Athens] Parsing Anomaly Detected!"
+          OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number,title --jq '[.[] | select(.title == "⚠️ [Mount Athens] Parsing Anomaly Detected!")][0].number // empty' 2>/dev/null || true)
+
           if [ -f src/data/anomaly_report.md ]; then
-            # Ensure anomaly label exists
             gh label create "anomaly" --color "d73a4a" --description "Data parsing anomaly detected" --force || true
-            # Check if an anomaly issue is already open
-            OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number' 2>/dev/null || true)
-            if [ -z "$OPEN_ISSUE_NUM" ] || [ "$OPEN_ISSUE_NUM" == "null" ]; then
-              gh issue create --title "⚠️ [Mount Athens] Parsing Anomaly Detected!" --body-file src/data/anomaly_report.md --label "anomaly,bug" --assignee "kostis-kounadis"
+            if [ -z "$OPEN_ISSUE_NUM" ] || [ "$OPEN_ISSUE_NUM" = "null" ]; then
+              CREATED_URL=$(gh issue create --title "$ISSUE_TITLE" --body-file src/data/anomaly_report.md --label "anomaly,bug" --assignee "kostis-kounadis" | tail -n 1 | tr -d '\r\n')
+              if [ -n "$CREATED_URL" ]; then
+                echo "issue_url=${CREATED_URL}" >> "$GITHUB_OUTPUT"
+                echo "issue_action=created" >> "$GITHUB_OUTPUT"
+              fi
             else
               gh issue comment "$OPEN_ISSUE_NUM" --body-file src/data/anomaly_report.md
+              echo "issue_url=https://github.com/${GITHUB_REPOSITORY}/issues/${OPEN_ISSUE_NUM}" >> "$GITHUB_OUTPUT"
+              echo "issue_action=commented" >> "$GITHUB_OUTPUT"
             fi
-          else
-            # If no anomalies detected, notify open issue without closing it automatically
-            OPEN_ISSUE_NUM=$(gh issue list --state open --label "anomaly" --json number -jq '.[0].number' 2>/dev/null || true)
-            if [ -n "$OPEN_ISSUE_NUM" ] && [ "$OPEN_ISSUE_NUM" != "null" ]; then
-              gh issue comment "$OPEN_ISSUE_NUM" --body "ℹ️ **Daily Scrape Update:** The latest daily scrape ran successfully with 0 anomalies across all clubs relative to baseline. If all events look correct, you can close this issue."
+          elif [ -n "$OPEN_ISSUE_NUM" ] && [ "$OPEN_ISSUE_NUM" != "null" ]; then
+            ALL_HEALTHY=$(node --input-type=module -e '
+              import fs from "fs";
+              if (!fs.existsSync("src/data/club-health.json")) { console.log("false"); process.exit(0); }
+              const h = JSON.parse(fs.readFileSync("src/data/club-health.json", "utf-8"));
+              const ok = !h.hasCriticalAnomalies && (!h.degradedClubs || h.degradedClubs.length === 0);
+              console.log(ok ? "true" : "false");
+            ')
+            if [ "$ALL_HEALTHY" = "true" ]; then
+              gh issue comment "$OPEN_ISSUE_NUM" --body "✅ **Automatic Recovery:** All 8 clubs scraped cleanly with 0 anomalies and 0 active fallbacks in the latest run. Closing this issue automatically."
+              gh issue close "$OPEN_ISSUE_NUM" --reason completed
+              echo "issue_url=https://github.com/${GITHUB_REPOSITORY}/issues/${OPEN_ISSUE_NUM}" >> "$GITHUB_OUTPUT"
+              echo "issue_action=closed" >> "$GITHUB_OUTPUT"
             fi
           fi
 
@@ -84,20 +128,77 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: scraper-diagnostics
+          if-no-files-found: ignore
           path: |
             src/data/anomaly_report.md
             src/data/status.json
-            src/data/debug-output.txt
+            src/data/club-health.json
             src/data/health-baseline.json
+            _input/debug-output.txt
             _input/fetch-status.json
           retention-days: 7
 
-      - name: Commit Updated Events
+      - name: Notify Admin on Fatal Scraper Crash
+        if: failure()
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node --input-type=module -e '
+            const token = process.env.TELEGRAM_BOT_TOKEN;
+            const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
+            const runUrl = process.env.GITHUB_RUN_URL;
+            if (!token || !chatId) process.exit(0);
+            const text = [
+              "🔴 <b>Mount Athens — Απρόσμενο σφάλμα στο scraper job</b>",
+              "",
+              "<b>Τι συνέβη:</b> Το αυτοματοποιημένο scrape σταμάτησε με απρόσμενο τεχνικό σφάλμα (crash), οπότε δεν έγινε νέο deploy για προστασία του site.",
+              "",
+              "<b>Επίδραση στους χρήστες:</b> Το live site συνεχίζει να δείχνει κανονικά το τελευταίο υγιές πρόγραμμα.",
+              "",
+              "<b>Τι προτείνεται να κάνεις:</b> Άνοιξε τα logs του GitHub Actions Run παρακάτω για να δεις το ακριβές σφάλμα.",
+              "",
+              `🔗 <a href="${runUrl}">GitHub Actions Run</a>`
+            ].join("\n");
+            await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ chat_id: chatId, text, parse_mode: "HTML", disable_web_page_preview: true })
+            });
+          '
+
+      - name: Commit Updated Scrape Data
+        if: success()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f src/data/events.json src/data/status.json src/data/debug-output.txt src/data/content-hashes.json src/data/health-baseline.json
-          git diff-index --quiet HEAD || (git commit -m "Auto-update parsed events [cron]" && git push origin main)
+          git add src/data/events.json src/data/status.json src/data/content-hashes.json src/data/health-baseline.json src/data/club-health.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Auto-update parsed events [cron]"
+            git pull --rebase origin main
+            git push origin main
+          fi
+
+  build-and-deploy:
+    needs: [scrape]
+    if: always() && (needs.scrape.result == 'success' || needs.scrape.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Latest Main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Build Astro Site
         run: npm run build
@@ -108,7 +209,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
 
-      - name: Send Event Notifications
+      - name: Send Event & Admin Notifications
         if: success()
         continue-on-error: true
         env:
@@ -116,5 +217,34 @@ jobs:
           TELEGRAM_ADMIN_CHAT_ID: ${{ secrets.TELEGRAM_ADMIN_CHAT_ID }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          IS_SCRAPE_RUN: ${{ needs.scrape.result == 'success' && 'true' || 'false' }}
+          IS_SELF_HEAL_PUSH: ${{ (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'chore(data): self-heal')) && 'true' || 'false' }}
+          IS_TEST_ALERT: ${{ needs.scrape.outputs.is_test_alert == 'true' && 'true' || 'false' }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          ANOMALY_ISSUE_URL: ${{ needs.scrape.outputs.anomaly_issue_url }}
+          ANOMALY_ISSUE_ACTION: ${{ needs.scrape.outputs.anomaly_issue_action }}
         run: node scripts/send-notifications.js
 
+      - name: Commit Updated Notification Ledger
+        if: success()
+        run: |
+          if [ -f src/data/notified-events.json ]; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/data/notified-events.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore(notifications): update notified events ledger [skip ci]"
+              git pull --rebase origin main
+              git push origin main
+            fi
+          fi
+
+      - name: Upload Sync Summary Artifact
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: notification-sync-summary
+          if-no-files-found: ignore
+          path: _input/last_sync_summary.md
+          retention-days: 7

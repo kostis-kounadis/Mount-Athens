@@ -28,5 +28,12 @@ logs/
 # project specific exclusions
 _old-codebase_AVOID/
 _input/
-data/
+/data/
 archive-legacy/
+
+# transient scraper artifacts inside src/data
+/src/data/anomaly_report.md
+/src/data/debug-output.txt
+/src/data/events_old.json
+/src/data/health-baseline-old.json
+/src/data/content-hashes-old.json
