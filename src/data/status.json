@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-26T23:05:43.193Z",
+  "lastUpdated": "2026-11-26T23:21:15.072Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -54,7 +54,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 825670,
+          "size": 825671,
           "slug": "aos_gr_wp-json-wp-v2-posts_per_page-25"
         }
       ]
