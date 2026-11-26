@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-26T20:02:46.792Z",
+  "lastUpdated": "2026-11-26T20:37:46.041Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -45,36 +45,36 @@
     },
     {
       "club": "ΠΟΑ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 16 healthy events",
+      "status": "success",
+      "details": "Parsed 31 events",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 168730
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 18 healthy events",
+      "status": "success",
+      "details": "Parsed 45 events",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 170550
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 223106
         }
       ]
     },
@@ -94,22 +94,22 @@
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 2 healthy events",
+      "status": "success",
+      "details": "Parsed 21 events",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 683262
         }
       ]
     },
     {
       "club": "ΕΠΟΣ Φυλής",
       "status": "success",
-      "details": "Parsed 15 events",
+      "details": "Parsed 20 events",
       "fetch": [
         {
           "url": "https://eposfilis.gr/wp-json/tribe/events/v1/events?per_page=50",
