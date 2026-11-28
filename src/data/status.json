@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-27T20:03:43.880Z",
+  "lastUpdated": "2026-11-28T03:22:17.398Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -54,57 +54,57 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 826067,
+          "size": 826068,
           "slug": "aos_gr_wp-json-wp-v2-posts_per_page-25"
         }
       ]
     },
     {
       "club": "ΠΟΑ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 16 healthy events",
-      "parsedCount": 0,
-      "preservedCount": 16,
-      "totalCount": 16,
-      "fallback": "full",
-      "fetchFailed": true,
-      "fetchErrorSummary": "HTTP 403 (Cloudflare / anti-bot)",
+      "status": "success",
+      "details": "Parsed 17 events",
+      "parsedCount": 17,
+      "preservedCount": 0,
+      "totalCount": 17,
+      "fallback": "none",
+      "fetchFailed": false,
+      "fetchErrorSummary": null,
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0,
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 168730,
           "slug": "poa_gr_index_php-programma"
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 18 healthy events",
-      "parsedCount": 0,
-      "preservedCount": 18,
+      "status": "success",
+      "details": "Parsed 18 events",
+      "parsedCount": 18,
+      "preservedCount": 0,
       "totalCount": 18,
-      "fallback": "full",
-      "fetchFailed": true,
-      "fetchErrorSummary": "HTTP 403 (Cloudflare / anti-bot)",
+      "fallback": "none",
+      "fetchFailed": false,
+      "fetchErrorSummary": null,
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0,
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 170917,
           "slug": "eosathinon_gr_anavaseis-programma"
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0,
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 223473,
           "slug": "eosathinon_gr_anavaseis-anavaseis-exoterikoy"
         }
       ]
@@ -132,21 +132,21 @@
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "warning",
-      "details": "Error: 0 parsed (bot challenge/network error) - preserved 2 healthy events",
-      "parsedCount": 0,
-      "preservedCount": 2,
+      "status": "success",
+      "details": "Parsed 2 events",
+      "parsedCount": 2,
+      "preservedCount": 0,
       "totalCount": 2,
-      "fallback": "full",
-      "fetchFailed": true,
-      "fetchErrorSummary": "HTTP 403 (Cloudflare / anti-bot)",
+      "fallback": "none",
+      "fetchFailed": false,
+      "fetchErrorSummary": null,
       "fetch": [
         {
           "url": "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25",
-          "success": false,
-          "status": "Cloudflare / Anti-bot Challenge Detected",
-          "code": 403,
-          "size": 0,
+          "success": true,
+          "status": "OK",
+          "code": 200,
+          "size": 683262,
           "slug": "foni_org_gr_wp-json-wp-v2-posts_categories-59-per_page-25"
         }
       ]
@@ -188,7 +188,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150948,
+          "size": 150951,
           "slug": "fop_gr"
         }
       ]
