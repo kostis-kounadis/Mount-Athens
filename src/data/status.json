@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-28T03:22:17.398Z",
+  "lastUpdated": "2026-11-28T19:01:10.355Z",
   "logs": [
     {
       "club": "ΕΟΣ Αχαρνών",
@@ -54,57 +54,57 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 826068,
+          "size": 826065,
           "slug": "aos_gr_wp-json-wp-v2-posts_per_page-25"
         }
       ]
     },
     {
       "club": "ΠΟΑ",
-      "status": "success",
-      "details": "Parsed 17 events",
-      "parsedCount": 17,
-      "preservedCount": 0,
-      "totalCount": 17,
-      "fallback": "none",
-      "fetchFailed": false,
-      "fetchErrorSummary": null,
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 16 healthy events",
+      "parsedCount": 0,
+      "preservedCount": 16,
+      "totalCount": 16,
+      "fallback": "full",
+      "fetchFailed": true,
+      "fetchErrorSummary": "HTTP 403 (Cloudflare / anti-bot)",
       "fetch": [
         {
           "url": "https://poa.gr/index.php/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 168730,
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0,
           "slug": "poa_gr_index_php-programma"
         }
       ]
     },
     {
       "club": "ΕΟΣ Αθηνών",
-      "status": "success",
-      "details": "Parsed 18 events",
-      "parsedCount": 18,
-      "preservedCount": 0,
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 18 healthy events",
+      "parsedCount": 0,
+      "preservedCount": 18,
       "totalCount": 18,
-      "fallback": "none",
-      "fetchFailed": false,
-      "fetchErrorSummary": null,
+      "fallback": "full",
+      "fetchFailed": true,
+      "fetchErrorSummary": "HTTP 403 (Cloudflare / anti-bot)",
       "fetch": [
         {
           "url": "https://www.eosathinon.gr/anavaseis/programma/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 170917,
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0,
           "slug": "eosathinon_gr_anavaseis-programma"
         },
         {
           "url": "https://www.eosathinon.gr/anavaseis/anavaseis-exoterikoy/",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 223473,
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0,
           "slug": "eosathinon_gr_anavaseis-anavaseis-exoterikoy"
         }
       ]
@@ -125,28 +125,28 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 416490,
+          "size": 416489,
           "slug": "eosh_gr_api-trips"
         }
       ]
     },
     {
       "club": "ΦΟΝΙ",
-      "status": "success",
-      "details": "Parsed 2 events",
-      "parsedCount": 2,
-      "preservedCount": 0,
+      "status": "warning",
+      "details": "Error: 0 parsed (bot challenge/network error) - preserved 2 healthy events",
+      "parsedCount": 0,
+      "preservedCount": 2,
       "totalCount": 2,
-      "fallback": "none",
-      "fetchFailed": false,
-      "fetchErrorSummary": null,
+      "fallback": "full",
+      "fetchFailed": true,
+      "fetchErrorSummary": "HTTP 403 (Cloudflare / anti-bot)",
       "fetch": [
         {
           "url": "https://www.foni.org.gr/wp-json/wp/v2/posts?categories=59&per_page=25",
-          "success": true,
-          "status": "OK",
-          "code": 200,
-          "size": 683262,
+          "success": false,
+          "status": "Cloudflare / Anti-bot Challenge Detected",
+          "code": 403,
+          "size": 0,
           "slug": "foni_org_gr_wp-json-wp-v2-posts_categories-59-per_page-25"
         }
       ]
@@ -188,7 +188,7 @@
           "success": true,
           "status": "OK",
           "code": 200,
-          "size": 150951,
+          "size": 150957,
           "slug": "fop_gr"
         }
       ]
